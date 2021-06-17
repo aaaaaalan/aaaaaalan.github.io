@@ -12,8 +12,7 @@
   <entry>
     <title>玩过的21种运动</title>
     <url>/2021/06/16/21-sports/</url>
-    <content><![CDATA[<p>如下所列目前玩过的21种运动，更多运动持续探索ing。</p>
-<ul>
+    <content><![CDATA[<ul>
 <li>跳绳</li>
 <li>跳皮筋</li>
 <li>丢沙包</li>
@@ -125,8 +124,7 @@
   <entry>
     <title>BC challenge 2019 Top5队伍 技术分析</title>
     <url>/2020/03/09/bc2019top5/</url>
-    <content><![CDATA[<p>评估指标：Naturalness(MOS), similarity, Pinyin Error Rate(PER) test, Pinyin with Tone Error Rate(PTER) test</p>
-<table>
+    <content><![CDATA[<table>
 <thead>
 <tr>
 <th></th>
@@ -418,86 +416,6 @@
 <td>CNN</td>
 <td>Heiga Zen</td>
 <td><a href="https://arxiv.org/pdf/2009.00713.pdf">https://arxiv.org/pdf/2009.00713.pdf</a></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
 </tr>
 </tbody></table>
 ]]></content>
