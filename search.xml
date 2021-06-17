@@ -200,4 +200,309 @@
         <category>工作</category>
       </categories>
   </entry>
+  <entry>
+    <title>speech_papers</title>
+    <url>/2020/12/03/speech-papers/</url>
+    <content><![CDATA[<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>会议地点</strong></th>
+<th><strong>离线论文包</strong></th>
+<th><strong>论文集网址</strong></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Icassp 2020</strong></td>
+<td>Virtual</td>
+<td>Y</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Interspeech 2020</strong></td>
+<td>Virtual</td>
+<td>Y</td>
+<td><a href="https://www.isca-speech.org/archive/Interspeech_2020/">https://www.isca-speech.org/archive/Interspeech_2020/</a></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Neurips</strong></td>
+<td>Virtual</td>
+<td>N</td>
+<td><a href="https://proceedings.neurips.cc/">https://proceedings.neurips.cc</a></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>BC 2020 &amp; VC 2020</strong></td>
+<td>Virtual</td>
+<td>N</td>
+<td><a href="https://www.isca-speech.org/archive/VCC_BC_2020/">https://www.isca-speech.org/archive/VCC_BC_2020/</a></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Iclr 2020</strong></td>
+<td>Virtual</td>
+<td>N</td>
+<td><a href="https://iclr.cc/virtual_2020/papers.html?filter=titles&amp;search=speech">https://iclr.cc/virtual_2020/papers.html?filter=titles&amp;search=speech</a></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>论文合集网址</strong></td>
+<td>-</td>
+<td>-</td>
+<td><a href="https://www.isca-speech.org/iscaweb/index.php/archive/online-archive">https://www.isca-speech.org/iscaweb/index.php/archive/online-archive</a></td>
+<td>含interspeech、ssw等论文合集</td>
+</tr>
+<tr>
+<td><a href="https://openreview.net/">https://openreview.net</a></td>
+<td>含iclr、icml、acm等论文集</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Vocoders 模型总结</title>
+    <url>/2020/12/03/vocoders/</url>
+    <content><![CDATA[<p>语音合成声码器脉络总结如下，持续更新ing</p>
+<table>
+<thead>
+<tr>
+<th><strong>Order</strong></th>
+<th><strong>Model</strong></th>
+<th><strong>Year</strong></th>
+<th><strong>Institution</strong></th>
+<th><strong>Conference</strong></th>
+<th><strong>Inherited Model (Base model)</strong></th>
+<th><strong>Corresponding Author (Team leader)</strong></th>
+<th><strong>URL</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1</strong></td>
+<td>WaveNet</td>
+<td>2016.9</td>
+<td>Google DeepMind</td>
+<td>SSW 2016</td>
+<td>CNN</td>
+<td>Nal Kalchbrenner</td>
+<td><a href="https://arxiv.org/pdf/1609.03499.pdf">https://arxiv.org/pdf/1609.03499.pdf</a></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>WaveRNN</td>
+<td>2018.6</td>
+<td>DeepMind &amp; Google Brain</td>
+<td>ICML 2018</td>
+<td>RNN</td>
+<td>Nal Kalchbrenner</td>
+<td><a href="https://arxiv.org/pdf/1802.08435.pdf">https://arxiv.org/pdf/1802.08435.pdf</a></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>WaveGlow</td>
+<td>2018.10</td>
+<td>Nvidia</td>
+<td>ICASSP 2019</td>
+<td>WaveNet</td>
+<td>Rafael Valle</td>
+<td><a href="https://arxiv.org/pdf/1811.00002.pdf">https://arxiv.org/pdf/1811.00002.pdf</a></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>LPCNet</td>
+<td>2019.2</td>
+<td>Mozilla, Google</td>
+<td>ICASSP 2019</td>
+<td>WaveRNN</td>
+<td>Jean-Marc Valin</td>
+<td><a href="https://arxiv.org/pdf/1810.11846.pdf">https://arxiv.org/pdf/1810.11846.pdf</a></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>WaveGAN</td>
+<td>2019.2</td>
+<td>UC San Diego</td>
+<td>ICLR 2019</td>
+<td>GAN</td>
+<td>Miller Puckette</td>
+<td><a href="https://arxiv.org/pdf/1802.04208.pdf">https://arxiv.org/pdf/1802.04208.pdf</a></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Multi-band WaveRNN</td>
+<td>2019.4</td>
+<td>Tecent AI Lab</td>
+<td>Interspeech 2020</td>
+<td>DurIAN, WaveRNN</td>
+<td>Dong Yu</td>
+<td><a href="https://arxiv.org/pdf/1909.01700.pdf">https://arxiv.org/pdf/1909.01700.pdf</a></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>MelGAN</td>
+<td>2019.12</td>
+<td>University of Montreal, Mila, Lyrebird AI</td>
+<td>NeurIPS 2019</td>
+<td>GAN</td>
+<td>Yoshua Bengio</td>
+<td><a href="https://arxiv.org/pdf/1910.06711.pdf">https://arxiv.org/pdf/1910.06711.pdf</a></td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>SqueezeWave</td>
+<td>2020.1</td>
+<td>UC Berkeley</td>
+<td></td>
+<td>WaveGlow</td>
+<td>Bichen Wu</td>
+<td><a href="https://arxiv.org/pdf/2001.05685.pdf">https://arxiv.org/pdf/2001.05685.pdf</a></td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Parallel WaveGAN (PWG)</td>
+<td>2020.2</td>
+<td>LINE Corp., NAVER Corp.</td>
+<td></td>
+<td>GAN</td>
+<td>Ryuichi Yamamoto</td>
+<td><a href="https://arxiv.org/pdf/1910.11480.pdf">https://arxiv.org/pdf/1910.11480.pdf</a></td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>Multi-band MelGAN</td>
+<td>2020.5</td>
+<td>西北工业大学，sogou</td>
+<td></td>
+<td>melgan, multi-band</td>
+<td>Xielei</td>
+<td><a href="https://arxiv.org/pdf/2005.05106.pdf">https://arxiv.org/pdf/2005.05106.pdf</a></td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td>FeatherWave</td>
+<td>2020.10</td>
+<td>Tecent</td>
+<td>Interspeech 2020</td>
+<td>MB LP, WaveRNN</td>
+<td>Shan Liu</td>
+<td><a href="https://isca-speech.org/archive/Interspeech_2020/pdfs/1156.pdf">https://isca-speech.org/archive/Interspeech_2020/pdfs/1156.pdf</a></td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td>WaveGrad</td>
+<td>2020.10</td>
+<td>Johns Hopkins University, Google Brain</td>
+<td></td>
+<td>CNN</td>
+<td>Heiga Zen</td>
+<td><a href="https://arxiv.org/pdf/2009.00713.pdf">https://arxiv.org/pdf/2009.00713.pdf</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
 </search>
