@@ -423,4 +423,70 @@
         <category>工作</category>
       </categories>
   </entry>
+  <entry>
+    <title>ASRU 2019 语音合成相关论文</title>
+    <url>/2021/06/17/asru-2019-papers/</url>
+    <content><![CDATA[<table>
+<thead>
+<tr>
+<th><strong>序号</strong></th>
+<th><strong>论文题目</strong></th>
+<th><strong>作者</strong></th>
+<th><strong>单位</strong></th>
+<th><strong>摘要</strong></th>
+<th><strong>关键词</strong></th>
+<th><strong>论文链接</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1</strong></td>
+<td>MIMO-SPEECH: END-TO-END MULTI-CHANNEL MULTI-SPEAKER SPEECH RECOGNITION</td>
+<td><em>Xuankai Chang</em>1,2*, Wangyou Zhang<em>2</em>, Yanmin Qian<em>2†</em>, Jonathan Le Roux<em>3</em>, Shinji Watanabe*1†</td>
+<td>1Center for Language and Speech Processing, Johns Hopkins University, USA 2<strong>SpeechLab</strong>, Department of Computer Science and Engineering, <strong>Shanghai Jiao Tong University</strong>, China 3Mitsubishi Electric Research Laboratories (MERL), USA</td>
+<td>MIMO-Speech, which extends the original seq2seq to deal with <strong>multi-channel input and multi-channel output</strong> so that it can <strong>fully model multi-channel multi-speaker speech separation and recognition</strong>. MIMO-Speech is a fully neural end-to- end framework, which is optimized only via an ASR criterion. It is comprised of: 1) a monaural masking network, 2) a multi-source neural beamformer, and 3) a multi-output speech recognition model.</td>
+<td><strong>Overlapped speech recognition</strong>, end-to-end, neural beamforming, <strong>speech separation</strong>, curriculum learning.</td>
+<td><a href="https://arxiv.org/pdf/1910.06522.pdf">https://arxiv.org/pdf/1910.06522.pdf</a></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>IMPROVING MANDARIN END-TO-END SPEECH SYNTHESIS BY SELF-ATTENTION AND LEARNABLE GAUSSIAN BIAS</td>
+<td><em>Fengyu Yang</em>1*, Shan Yang<em>1</em>, Pengcheng Zhu<em>2</em>, Pengju Yan<em>2</em>,* ***Lei Xie***1∗</td>
+<td>1Shaanxi Provincial Key Laboratory of Speech and Image Information Processing, School of Computer Science, <strong>Northwestern Polytechnical University</strong>, Xian, China 2Tongdun AI Lab</td>
+<td>We introduce a novel self-attention based encoder with learnable Gaussian bias in Tacotron. The proposed approach has the ability to generate stable and natural speech with minimum language-dependent front-end modules.</td>
+<td>Tacotron, end-to-end, speech synthesis, <strong>self-attention, Gaussian bias</strong></td>
+<td><a href="http://lxie.nwpu-aslp.org/papers/2019ASRU_YFY.pdf">http://lxie.nwpu-aslp.org/papers/2019ASRU_YFY.pdf</a></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>LEARNING HIERARCHICAL REPRESENTATIONS FOR EXPRESSIVE SPEAKING STYLE IN END-TO-END SPEECH SYNTHESIS</td>
+<td><em>Xiaochun An</em>1†*, Yuxuan Wang<em>2</em>, Shan Yang<em>1,2</em>, Zejun Ma<em>2</em>,* ***Lei Xie***1⇤</td>
+<td>1Shaanxi Provincial Key Laboratory of Speech and Image Information Processing, School of Computer Science, <strong>Northwestern Polytechnical University,</strong> Xi’an, China 2 ByteDance AI Lab</td>
+<td>we introduce a hierarchical GST archi- tecture with residuals to Tacotron, which learns multiple-level disentangled representations to model and control different style granularities in synthesized speech.</td>
+<td>Speaking style, disentangled representations, <strong>hierarchical GST,</strong> style transfer</td>
+<td><a href="http://lxie.npu-aslp.org/papers/2019ASRU_AXC.pdf">http://lxie.npu-aslp.org/papers/2019ASRU_AXC.pdf</a></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>BOOTSTRAPPING NON-PARALLEL VOICE CONVERSION FROM SPEAKER-ADAPTIVE TEXT-TO-SPEECH</td>
+<td><em>Hieu-Thi Luong*<em>1,2</em></em>, Junichi Yamagishi*<em>1,2,3</em></td>
+<td>1SOKENDAI (The Graduate University for Advanced Studies), Kanagawa, Japan 2National Institute of Informatics, Tokyo, Japan 3<strong>The University of Edinburgh</strong>, Edinburgh, UK</td>
+<td>Bootstrap a VC system from a pretrained speaker-adaptive TTS model and unify the techniques as well as the interpretations of these two tasks. Our subjective evaluations show that the proposed framework is able to not only achieve competitive performance in the standard intra-language scenario but also adapt and convert using speech utterances in an unseen language.</td>
+<td><strong>voice conversion,</strong> cross-lingual, speaker adaptation, transfer learning, text-to-speech</td>
+<td><a href="https://export.arxiv.org/pdf/1909.06532">https://export.arxiv.org/pdf/1909.06532</a></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>WAVENET FACTORIZATION WITH SINGULAR VALUE DECOMPOSITION FOR VOICE</td>
+<td><em>Hongqiang Du*<em>1,2</em></em>, Xiaohai Tian<strong>2</strong>,* **<em>Lei Xie*<em><strong><strong>1*</strong></strong></em></em>, Haizhou Li****<strong>2*</strong></td>
+<td>1School of Computer Science, <strong>Northwestern Polytechnical University</strong>, xi’an, China 2Department of Electrical and Computer Engineering, National University of Singapore, Singapore <a href="mailto:hongqiang.du@u.nus.edu">hongqiang.du@u.nus.edu</a>, <a href="mailto:eletia@nus.edu.sg">eletia@nus.edu.sg</a>, <a href="mailto:lxie@nwpu.edu.cn">lxie@nwpu.edu.cn</a>, <a href="mailto:haizhou.li@nus.edu.sg">haizhou.li@nus.edu.sg</a></td>
+<td>We propose to use singular value decomposition (SVD) to reduce WaveNet parame- ters while maintaining its output voice quality. Specifically, we apply SVD on dilated convolution layers, and impose semi-orthogonal constraint to improve the performance.</td>
+<td>Voice Conversion (VC), <strong>WaveNet, Sin- gular Value Decomposition (SVD)</strong></td>
+<td><a href="http://lxie.nwpu-aslp.org/papers/2019ASRU_DHQ.pdf">http://lxie.nwpu-aslp.org/papers/2019ASRU_DHQ.pdf</a></td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
 </search>
