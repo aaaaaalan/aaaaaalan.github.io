@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ICASSP 2020 XMind Overview</title>
+    <title>ICASSP 2020 Overview 思维导图</title>
     <url>/2021/06/16/ICASSP-2020-XMind-Overview/</url>
     <content><![CDATA[<p><img src="/images/ICASSP_2020.png" alt="ICASSP 2020 Overview"></p>
 ]]></content>
@@ -190,7 +190,7 @@
       </categories>
   </entry>
   <entry>
-    <title>韵律建模</title>
+    <title>韵律建模思维导图</title>
     <url>/2020/09/20/prosody-modelling/</url>
     <content><![CDATA[<p><img src="/images/%E6%83%85%E6%84%9F%E5%BB%BA%E6%A8%A1.png" alt="韵律建模论文思维导图"></p>
 ]]></content>
@@ -199,7 +199,7 @@
       </categories>
   </entry>
   <entry>
-    <title>speech_papers</title>
+    <title>语音顶会论文集总结</title>
     <url>/2020/12/03/speech-papers/</url>
     <content><![CDATA[<table>
 <thead>
