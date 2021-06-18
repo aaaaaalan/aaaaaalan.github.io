@@ -484,6 +484,62 @@
 <td><a href="http://lxie.nwpu-aslp.org/papers/2019ASRU_DHQ.pdf">http://lxie.nwpu-aslp.org/papers/2019ASRU_DHQ.pdf</a></td>
 </tr>
 </tbody></table>
+<h1 id="Paper-1-MIMO-SPEECH-END-TO-END-MULTI-CHANNEL-MULTI-SPEAKER-SPEECH-RECOGNITION"><a href="#Paper-1-MIMO-SPEECH-END-TO-END-MULTI-CHANNEL-MULTI-SPEAKER-SPEECH-RECOGNITION" class="headerlink" title="Paper 1: MIMO-SPEECH: END-TO-END MULTI-CHANNEL MULTI-SPEAKER SPEECH RECOGNITION"></a>Paper 1: MIMO-SPEECH: END-TO-END MULTI-CHANNEL MULTI-SPEAKER SPEECH RECOGNITION</h1><h2 id="MIMO-Speech：端到端多通道多说话人语音识别（ASRU-2019-Best-paper）https-arxiv-org-pdf-1910-06522-pdf"><a href="#MIMO-Speech：端到端多通道多说话人语音识别（ASRU-2019-Best-paper）https-arxiv-org-pdf-1910-06522-pdf" class="headerlink" title="MIMO-Speech：端到端多通道多说话人语音识别（ASRU 2019 Best paper）https://arxiv.org/pdf/1910.06522.pdf"></a>MIMO-Speech：端到端多通道多说话人语音识别（ASRU 2019 Best paper）<a href="https://arxiv.org/pdf/1910.06522.pdf">https://arxiv.org/pdf/1910.06522.pdf</a></h2><h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>MIMO-Speech，采用“多通道-输入”和“多通道-输出”，以建模 多通道 多说话人 情景下的语音分离和语音识别。</p>
+<ul>
+<li><p>模型结构由三部分组成：</p>
+<p>1）单声道masking网络；</p>
+<p>2）多源神经波束形成器；</p>
+<p>3）多输出-语音识别模型；</p>
+</li>
+<li><p>学习策略：a curriculum learning strategy</p>
+</li>
+<li><p>实验结果：60% WER reduction</p>
+</li>
+</ul>
+<h3 id="Introduction-1-page"><a href="#Introduction-1-page" class="headerlink" title="Introduction (1 page)"></a>Introduction (1 page)</h3><ul>
+<li><p>待解决问题：鸡尾酒聚会课题，分为 单通道 / 多通道 语音识别问题</p>
+<ul>
+<li><p>单通道多说话人语音分离：</p>
+<p>1） Deep clustering (DPCL), 将时域单元映射到嵌入向量，再采用聚类算法将每个单元聚类到说话人源。此方法之后被嵌入到端到端训练框架中。</p>
+<p>2）Permutation-invariant training (PIT)：用一个permutation-free目标函数来最小化重构损失。PIT之后被应用于多说话人ASR，在一个DNN-HMM混合ASR框架下。</p>
+</li>
+<li><p>多通道多说话人语音分离：</p>
+<p>1）PIT，语音分离</p>
+<p>2）unmixing transducer (a mask-based beamformer)，语音分离</p>
+<p>3）DPCL：将inter-channel differences作为空间特征，和单通道频谱特征，语音分离</p>
+</li>
+</ul>
+</li>
+<li><p>本文贡献：多通道-多说话人-语音识别，输入multi-channel input (MI), 输出 multiple output (MO) text sequences, one for each speaker, 所以称为 MIMO-Speech。</p>
+</li>
+<li><p>可行性：最近的单说话人-远场-语音识别展示了 “神经波束”技巧对于去噪的价值，并且一些研究证实了end-to-end的可行性。[27] 进一步证实了神经波束方法在多通道端到端系统能够增强信号。</p>
+</li>
+</ul>
+<h3 id="MIMO-Speech-2-pages"><a href="#MIMO-Speech-2-pages" class="headerlink" title="MIMO-Speech (2 pages)"></a>MIMO-Speech (2 pages)</h3><p><img src="/images/MIMO-Speech.png" alt="MIMO-Speech"></p>
+<h4 id="Model-architecture"><a href="#Model-architecture" class="headerlink" title="Model architecture"></a>Model architecture</h4><ul>
+<li>Stage 1: a single-channel masking network，通过预测多说话人和各通道噪音masks来实现<strong>预分离</strong></li>
+<li>Stage 2: 多源 “神经波束” 来<strong>空间上分离多说话人的源头</strong></li>
+<li>Stage 3: 端到端ASR来实现<strong>多说话人语音识别</strong></li>
+</ul>
+<p>创新点：masking network + neural beamformer，单目标函数进行模型训练。</p>
+<p>Stage1 (Monaural masking network) 可以预分离开噪音和多说话人音源；Stage 2 生成多个beamforming filters $g^{i}(f)$ 用来分离和降噪输入的多声道信号；Stage3有多个说话人的encoder，和一个attention decoder组成，来生成多个说话人的文本序列输出。</p>
+<h4 id="Data-scheduling-and-curriculum-learning"><a href="#Data-scheduling-and-curriculum-learning" class="headerlink" title="Data scheduling and curriculum learning"></a>Data scheduling and curriculum learning</h4><ul>
+<li><p>问题痛点：端到端训练难以收敛</p>
+</li>
+<li><p>解决方案<strong>（Data scheduling）</strong>：随机从以下两个数据集中选择一个batch</p>
+<p>1） 不仅采用多空间域的多说话人数据集</p>
+<p>2） 也采用单说话人的数据集</p>
+</li>
+<li><p>细节<strong>（Curriculum learning）</strong> 配Algorithm：</p>
+<p>1） 当选择到单说话人的数据集的时候，数据不经过 masking network 和 neural beamformer 模型，以加强end-to-end ASR模型的训练。</p>
+<p>2） 计算出最大声和最小声说话人声音之间的信噪比SNR，然后按“升序”排列，从SNR=1的数据集开始训练</p>
+<p>3） 将单说话人的数据集从短到长进行排序，让seq2seq模型首先学习短语句。</p>
+</li>
+</ul>
+<h3 id="Experiments-3-pages"><a href="#Experiments-3-pages" class="headerlink" title="Experiments (3 pages)"></a>Experiments (3 pages)</h3><h4 id="3-1-Configurations"><a href="#3-1-Configurations" class="headerlink" title="3.1 Configurations"></a>3.1 Configurations</h4><h5 id="3-1-1-Neural-Beamformer"><a href="#3-1-1-Neural-Beamformer" class="headerlink" title="3.1.1 Neural Beamformer"></a>3.1.1 Neural Beamformer</h5><h5 id="3-1-2-Encoder-Decoder-Network"><a href="#3-1-2-Encoder-Decoder-Network" class="headerlink" title="3.1.2 Encoder-Decoder Network"></a>3.1.2 Encoder-Decoder Network</h5><h4 id="3-2-Performance-on-ASR"><a href="#3-2-Performance-on-ASR" class="headerlink" title="3.2 Performance on ASR"></a>3.2 Performance on ASR</h4><p>Motivation: 验证提出的模型好于baselines</p>
+<p>Baselines / Ours</p>
+<h4 id="3-3-Performance-on-Speech-seperation"><a href="#3-3-Performance-on-Speech-seperation" class="headerlink" title="3.3 Performance on Speech seperation"></a>3.3 Performance on Speech seperation</h4><p>Motivation: 验证 neural beamformer 学习了一个波束行为，能够用于语音分离。</p>
+<h4 id="3-4-Evaluation-on-spatialized-reverberant-data-在空间混响数据上的实验"><a href="#3-4-Evaluation-on-spatialized-reverberant-data-在空间混响数据上的实验" class="headerlink" title="3.4 Evaluation on spatialized reverberant data (在空间混响数据上的实验)"></a>3.4 Evaluation on spatialized reverberant data (在空间混响数据上的实验)</h4><p>Motivation: 验证在实际情况下的模型性能。</p>
 ]]></content>
       <categories>
         <category>工作</category>
