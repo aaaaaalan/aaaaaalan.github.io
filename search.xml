@@ -540,6 +540,54 @@
 <p>Baselines / Ours</p>
 <h4 id="3-3-Performance-on-Speech-seperation"><a href="#3-3-Performance-on-Speech-seperation" class="headerlink" title="3.3 Performance on Speech seperation"></a>3.3 Performance on Speech seperation</h4><p>Motivation: 验证 neural beamformer 学习了一个波束行为，能够用于语音分离。</p>
 <h4 id="3-4-Evaluation-on-spatialized-reverberant-data-在空间混响数据上的实验"><a href="#3-4-Evaluation-on-spatialized-reverberant-data-在空间混响数据上的实验" class="headerlink" title="3.4 Evaluation on spatialized reverberant data (在空间混响数据上的实验)"></a>3.4 Evaluation on spatialized reverberant data (在空间混响数据上的实验)</h4><p>Motivation: 验证在实际情况下的模型性能。</p>
+<h1 id="Paper-2-IMPROVING-MANDARIN-END-TO-END-SPEECH-SYNTHESIS-BY-SELF-ATTENTION-AND-LEARNABLE-GAUSSIAN-BIAS"><a href="#Paper-2-IMPROVING-MANDARIN-END-TO-END-SPEECH-SYNTHESIS-BY-SELF-ATTENTION-AND-LEARNABLE-GAUSSIAN-BIAS" class="headerlink" title="Paper 2: IMPROVING MANDARIN END-TO-END SPEECH SYNTHESIS BY SELF-ATTENTION AND LEARNABLE GAUSSIAN BIAS"></a>Paper 2: IMPROVING MANDARIN END-TO-END SPEECH SYNTHESIS BY SELF-ATTENTION AND LEARNABLE GAUSSIAN BIAS</h1><h2 id="Paper-2-通过自注意力机制和学习高斯bias来提升中文普通话端到端语音合成系统-http-lxie-nwpu-aslp-org-papers-2019ASRU-YFY-pdf"><a href="#Paper-2-通过自注意力机制和学习高斯bias来提升中文普通话端到端语音合成系统-http-lxie-nwpu-aslp-org-papers-2019ASRU-YFY-pdf" class="headerlink" title="Paper 2: 通过自注意力机制和学习高斯bias来提升中文普通话端到端语音合成系统 http://lxie.nwpu-aslp.org/papers/2019ASRU_YFY.pdf"></a>Paper 2: 通过自注意力机制和学习高斯bias来提升中文普通话端到端语音合成系统 <a href="http://lxie.nwpu-aslp.org/papers/2019ASRU_YFY.pdf">http://lxie.nwpu-aslp.org/papers/2019ASRU_YFY.pdf</a></h2><h3 id="Abstract-1"><a href="#Abstract-1" class="headerlink" title="Abstract"></a>Abstract</h3><p>问题痛点：虽然对于英文来讲，现有的如Tacotron等模型已经能够实现端到端的语音合成过程，即从英文字母直接转换至语音。但是对于如中文这样的语言，仍旧需要繁复的前处理过程（如词边界、韵律边界等），使得这个文本处理前端的过程和传统方法一样复杂。</p>
+<p>解决方案：为了保持生成语音的自然度、以及摒弃特定语言的特殊性，普通话语音合成过程中，我们引入了一个创新性的自注意力机制作为编码器，并且引入可学习的高斯bias到Tacotron中</p>
+<p>实验结果：我们评估了不同的系统（在 有/无 韵律信息的情况下），结果显示提出的方法能够在最小的语言-依赖的前端模块的情况下，生成稳定和自然的语音。</p>
+<h3 id="Introduction-1页"><a href="#Introduction-1页" class="headerlink" title="Introduction (1页)"></a>Introduction (1页)</h3><ul>
+<li><p>待解决问题</p>
+<p>传统的端到端方法包含复杂的特征提取过程，如：Part-of-speech tagging, pronunciation prediction, prosody labelling. 即便如Tacotron的端到端语音合成系统被提出，但是单纯的输入音素也无法使得语音合成模型得到良好的效果，所以学者提出嵌入PW、PPH、IPH，来进行韵律边界的特征建模。但是这使得违背了端到端语音合成的初衷，使得这个系统再次变得更加复杂。</p>
+</li>
+<li><p>本文贡献</p>
+<p>1）<strong>全局韵律建模：</strong>由于self-attention被证明对于简单的音素序列进行全局建模时有良好的效果，所以本文尝试采用自-注意力机制作为编码器来获取全局的韵律信息。</p>
+<p>2）<strong>局部韵律建模：</strong>至于局部的韵律信息，我们采用了一个可学习的高斯bias引入到自注意力机制中，因为Gaussian分布更加集中于当前位置的局部关系。</p>
+</li>
+</ul>
+<h3 id="Proposed-SAG-Tacotron-1-5页"><a href="#Proposed-SAG-Tacotron-1-5页" class="headerlink" title="Proposed SAG-Tacotron (1.5页)"></a>Proposed SAG-Tacotron (1.5页)</h3><h4 id="3-1-Motivation"><a href="#3-1-Motivation" class="headerlink" title="3.1 Motivation"></a>3.1 Motivation</h4><ul>
+<li><p>目的：为了采用最少的文本分析模块，所以引入自-注意力学习机制，来进行全局依赖建模。</p>
+</li>
+<li><p>方案：1）将Encoder的CBHG模块，用自-注意力机制替换；2）可学习的高斯bias来提升局部建模。</p>
+</li>
+</ul>
+<p><img src="/images/SAG-Tacotron.png" alt="SAG-Tacotron"></p>
+<h4 id="3-2-基于-自注意力机制-的-编码器"><a href="#3-2-基于-自注意力机制-的-编码器" class="headerlink" title="3.2 基于 自注意力机制 的 编码器"></a>3.2 基于 自注意力机制 的 编码器</h4><p>Encoder 的 Pre-net是一个3层-CNN + Batch Norm + ReLU，尽管自-注意力机制不包含序列信息，我们注入类似于Transformer的位置信息。<br>$$<br>PE_{pos,2i}=sin(pos/10000^{2i/d})<br>$$</p>
+<p>$$<br>PE_{pos, 2i+1} = cos(pos/10000^{2i/d})<br>$$</p>
+<p>其中，$pos$是当前位置，$d$是特征维度，$i$是当前维度。PE也被输入到自-注意力模块。自注意力模块包含了一个自注意力层+全连接层+tanh激活函数。残差连接被应用于上述层。</p>
+<p>对于多头注意力机制的每一个$head_i$, 对于一个有$n$个元素的序列$x$，我们想要获得有相同长度n的隐状态向量$head_i$, 这里采用scale-product注意力机制。<br>$$<br>Head_{i}=\sum_{j=1}^{n}ATT(Q,K)V<br>$$</p>
+<p>$$<br>ATT(Q, K)=softmax(energy)​<br>$$</p>
+<p>$$<br>energy = \frac {QK^{T}} {\sqrt{d}}<br>$$</p>
+<p>最终的多头注意力机制为：<br>$$<br>MultiHead(Q,K,V)=Concat(head_{1}, …, head_{h})W^{O}<br>$$<br>其中的$W^{O}$是最后一层线性层的参数矩阵。</p>
+<h4 id="3-3-可学习的Gaussian-bias"><a href="#3-3-可学习的Gaussian-bias" class="headerlink" title="3.3 可学习的Gaussian bias"></a>3.3 可学习的Gaussian bias</h4><p>在序列-序列模型中，对于中文来讲，相近的位置是十分重要的。在这种情况下，我们想要为注意力机制提升编码器对于临近状态的局部贡献。</p>
+<p><img src="/images/Gaussian-bias.png" alt="Gaussian-bias"></p>
+<p>如上图所示，首先，假设一个以e5为中心的高斯bias，窗长为3（实际上，窗长是一个可学习的参数）。然后将注意力机制的分布通过高斯bias来进行正则化，以生成最终的分布。如图3所示，最终的分布是会在e5附近有更多的权重的。</p>
+<p>具体来讲，Gaussian bias $G$被mask到energy上，即<br>$$<br>ATT(Q, K)=softmax(energy + G)<br>$$</p>
+<p>其中$G \in R^{N\times N}$，$G \in (-1;0]$ 度量了当前的query $x_i$与position $j$ 之间的关系：<br>$$<br>G_{ij}=-\frac {(j - P_{i})^2}{2\sigma_i^2}<br>$$</p>
+<p>其中的$P_i$是$x_i$的中心位置，当给定输入序列 $x=(x_1, x_2, …, x_n)$，$\sigma_i$是标准差。如何选择合适的$P_i$和$\sigma_i$是关键。<br>$$<br>P_i = N\cdot sigmoid(v_p^{T}tanh(W_{p}x_i))<br>$$</p>
+<p>$$<br>D_i = N\cdot sigmoid(v_d^{T}tanh(W_{d}x_i))<br>$$</p>
+<p>其中$\sigma_i = \frac {D_i}{2}$, $W_p$ 和$W_d$是模型参数矩阵。</p>
+<h3 id="Experiments-2-5页"><a href="#Experiments-2-5页" class="headerlink" title="Experiments (2.5页)"></a>Experiments (2.5页)</h3><h4 id="4-1-Basic-setups"><a href="#4-1-Basic-setups" class="headerlink" title="4.1 Basic setups"></a>4.1 Basic setups</h4><h4 id="4-2-System-comparison"><a href="#4-2-System-comparison" class="headerlink" title="4.2 System comparison"></a>4.2 System comparison</h4><ul>
+<li>Baseline: Tacotron1</li>
+<li>Baseline-prosody: Tacotron1 with complex inputs</li>
+<li>SAE-Tacotron: Self-attention as encoder without Gaussian bias with simply inputs</li>
+<li>SAG-Tacotron: Self-attention as encoder with Gaussian bias with simple inputs</li>
+<li>Transformer with simple inputs</li>
+</ul>
+<p><img src="/images/simple_inputs.png" alt="simple_inputs"></p>
+<p><img src="/images/complex_inputs.png" alt="complex_inputs"></p>
+<h4 id="4-3-Model-details"><a href="#4-3-Model-details" class="headerlink" title="4.3 Model details"></a>4.3 Model details</h4><h4 id="4-4-Results"><a href="#4-4-Results" class="headerlink" title="4.4 Results"></a>4.4 Results</h4><h5 id="4-4-1-Robustness-test"><a href="#4-4-1-Robustness-test" class="headerlink" title="4.4.1 Robustness test"></a>4.4.1 Robustness test</h5><p>Motivation: 评估attention对齐（Repeats / Skips）的鲁棒性</p>
+<h5 id="4-4-2-Prosody-analysis"><a href="#4-4-2-Prosody-analysis" class="headerlink" title="4.4.2 Prosody analysis"></a>4.4.2 Prosody analysis</h5><p>Motivation: 评估重读音节的pitch以及trajectory pattern of F0</p>
+<h5 id="4-4-3-Objective-test"><a href="#4-4-3-Objective-test" class="headerlink" title="4.4.3 Objective test"></a>4.4.3 Objective test</h5><p>Motivation: 采用MCD评估学习到的频谱的质量，MCD越低越好。</p>
+<h5 id="4-4-4-Subjective-test"><a href="#4-4-4-Subjective-test" class="headerlink" title="4.4.4 Subjective test"></a>4.4.4 Subjective test</h5><p>Motivation: 评估模型主管听测效果</p>
+<p>评估方式：20个人，30句随机抽取的语音</p>
 ]]></content>
       <categories>
         <category>工作</category>
