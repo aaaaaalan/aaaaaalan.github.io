@@ -426,7 +426,8 @@
   <entry>
     <title>ASRU 2019 语音合成相关论文</title>
     <url>/2021/06/17/asru-2019-papers/</url>
-    <content><![CDATA[<table>
+    <content><![CDATA[<div class="table-container">
+<table>
 <thead>
 <tr>
 <th><strong>序号</strong></th>
@@ -438,10 +439,11 @@
 <th><strong>论文链接</strong></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>1</strong></td>
 <td>MIMO-SPEECH: END-TO-END MULTI-CHANNEL MULTI-SPEAKER SPEECH RECOGNITION</td>
-<td><em>Xuankai Chang</em>1,2*, Wangyou Zhang<em>2</em>, Yanmin Qian<em>2†</em>, Jonathan Le Roux<em>3</em>, Shinji Watanabe*1†</td>
+<td><em>Xuankai Chang</em>1,2<em>, Wangyou Zhang</em>2<em>, Yanmin Qian</em>2†<em>, Jonathan Le Roux</em>3<em>, Shinji Watanabe</em>1†</td>
 <td>1Center for Language and Speech Processing, Johns Hopkins University, USA 2<strong>SpeechLab</strong>, Department of Computer Science and Engineering, <strong>Shanghai Jiao Tong University</strong>, China 3Mitsubishi Electric Research Laboratories (MERL), USA</td>
 <td>MIMO-Speech, which extends the original seq2seq to deal with <strong>multi-channel input and multi-channel output</strong> so that it can <strong>fully model multi-channel multi-speaker speech separation and recognition</strong>. MIMO-Speech is a fully neural end-to- end framework, which is optimized only via an ASR criterion. It is comprised of: 1) a monaural masking network, 2) a multi-source neural beamformer, and 3) a multi-output speech recognition model.</td>
 <td><strong>Overlapped speech recognition</strong>, end-to-end, neural beamforming, <strong>speech separation</strong>, curriculum learning.</td>
@@ -450,7 +452,7 @@
 <tr>
 <td><strong>2</strong></td>
 <td>IMPROVING MANDARIN END-TO-END SPEECH SYNTHESIS BY SELF-ATTENTION AND LEARNABLE GAUSSIAN BIAS</td>
-<td><em>Fengyu Yang</em>1*, Shan Yang<em>1</em>, Pengcheng Zhu<em>2</em>, Pengju Yan<em>2</em>,* ***Lei Xie***1∗</td>
+<td><em>Fengyu Yang</em>1<em>, Shan Yang</em>1<em>, Pengcheng Zhu</em>2<em>, Pengju Yan</em>2<em>,</em> <strong><em>Lei Xie\</em></strong>1∗</td>
 <td>1Shaanxi Provincial Key Laboratory of Speech and Image Information Processing, School of Computer Science, <strong>Northwestern Polytechnical University</strong>, Xian, China 2Tongdun AI Lab</td>
 <td>We introduce a novel self-attention based encoder with learnable Gaussian bias in Tacotron. The proposed approach has the ability to generate stable and natural speech with minimum language-dependent front-end modules.</td>
 <td>Tacotron, end-to-end, speech synthesis, <strong>self-attention, Gaussian bias</strong></td>
@@ -459,7 +461,7 @@
 <tr>
 <td><strong>3</strong></td>
 <td>LEARNING HIERARCHICAL REPRESENTATIONS FOR EXPRESSIVE SPEAKING STYLE IN END-TO-END SPEECH SYNTHESIS</td>
-<td><em>Xiaochun An</em>1†*, Yuxuan Wang<em>2</em>, Shan Yang<em>1,2</em>, Zejun Ma<em>2</em>,* ***Lei Xie***1⇤</td>
+<td><em>Xiaochun An</em>1†<em>, Yuxuan Wang</em>2<em>, Shan Yang</em>1,2<em>, Zejun Ma</em>2<em>,</em> <strong><em>Lei Xie\</em></strong>1⇤</td>
 <td>1Shaanxi Provincial Key Laboratory of Speech and Image Information Processing, School of Computer Science, <strong>Northwestern Polytechnical University,</strong> Xi’an, China 2 ByteDance AI Lab</td>
 <td>we introduce a hierarchical GST archi- tecture with residuals to Tacotron, which learns multiple-level disentangled representations to model and control different style granularities in synthesized speech.</td>
 <td>Speaking style, disentangled representations, <strong>hierarchical GST,</strong> style transfer</td>
@@ -468,7 +470,7 @@
 <tr>
 <td><strong>4</strong></td>
 <td>BOOTSTRAPPING NON-PARALLEL VOICE CONVERSION FROM SPEAKER-ADAPTIVE TEXT-TO-SPEECH</td>
-<td><em>Hieu-Thi Luong*<em>1,2</em></em>, Junichi Yamagishi*<em>1,2,3</em></td>
+<td><em>Hieu-Thi Luong<strong>1,2</strong>, Junichi Yamagishi**1,2,3</em></td>
 <td>1SOKENDAI (The Graduate University for Advanced Studies), Kanagawa, Japan 2National Institute of Informatics, Tokyo, Japan 3<strong>The University of Edinburgh</strong>, Edinburgh, UK</td>
 <td>Bootstrap a VC system from a pretrained speaker-adaptive TTS model and unify the techniques as well as the interpretations of these two tasks. Our subjective evaluations show that the proposed framework is able to not only achieve competitive performance in the standard intra-language scenario but also adapt and convert using speech utterances in an unseen language.</td>
 <td><strong>voice conversion,</strong> cross-lingual, speaker adaptation, transfer learning, text-to-speech</td>
@@ -477,13 +479,15 @@
 <tr>
 <td><strong>5</strong></td>
 <td>WAVENET FACTORIZATION WITH SINGULAR VALUE DECOMPOSITION FOR VOICE</td>
-<td><em>Hongqiang Du*<em>1,2</em></em>, Xiaohai Tian<strong>2</strong>,* **<em>Lei Xie*<em><strong><strong>1*</strong></strong></em></em>, Haizhou Li****<strong>2*</strong></td>
+<td><em>Hongqiang Du<strong>1,2</strong>, Xiaohai Tian<strong>2</strong>,</em> <strong><em>Lei Xie***</em></strong>1*<strong>**</strong>, Haizhou Li*<strong>*</strong>2***</td>
 <td>1School of Computer Science, <strong>Northwestern Polytechnical University</strong>, xi’an, China 2Department of Electrical and Computer Engineering, National University of Singapore, Singapore <a href="mailto:hongqiang.du@u.nus.edu">hongqiang.du@u.nus.edu</a>, <a href="mailto:eletia@nus.edu.sg">eletia@nus.edu.sg</a>, <a href="mailto:lxie@nwpu.edu.cn">lxie@nwpu.edu.cn</a>, <a href="mailto:haizhou.li@nus.edu.sg">haizhou.li@nus.edu.sg</a></td>
 <td>We propose to use singular value decomposition (SVD) to reduce WaveNet parame- ters while maintaining its output voice quality. Specifically, we apply SVD on dilated convolution layers, and impose semi-orthogonal constraint to improve the performance.</td>
 <td>Voice Conversion (VC), <strong>WaveNet, Sin- gular Value Decomposition (SVD)</strong></td>
 <td><a href="http://lxie.nwpu-aslp.org/papers/2019ASRU_DHQ.pdf">http://lxie.nwpu-aslp.org/papers/2019ASRU_DHQ.pdf</a></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h1 id="Paper-1-MIMO-SPEECH-END-TO-END-MULTI-CHANNEL-MULTI-SPEAKER-SPEECH-RECOGNITION"><a href="#Paper-1-MIMO-SPEECH-END-TO-END-MULTI-CHANNEL-MULTI-SPEAKER-SPEECH-RECOGNITION" class="headerlink" title="Paper 1: MIMO-SPEECH: END-TO-END MULTI-CHANNEL MULTI-SPEAKER SPEECH RECOGNITION"></a>Paper 1: MIMO-SPEECH: END-TO-END MULTI-CHANNEL MULTI-SPEAKER SPEECH RECOGNITION</h1><h2 id="MIMO-Speech：端到端多通道多说话人语音识别（ASRU-2019-Best-paper）https-arxiv-org-pdf-1910-06522-pdf"><a href="#MIMO-Speech：端到端多通道多说话人语音识别（ASRU-2019-Best-paper）https-arxiv-org-pdf-1910-06522-pdf" class="headerlink" title="MIMO-Speech：端到端多通道多说话人语音识别（ASRU 2019 Best paper）https://arxiv.org/pdf/1910.06522.pdf"></a>MIMO-Speech：端到端多通道多说话人语音识别（ASRU 2019 Best paper）<a href="https://arxiv.org/pdf/1910.06522.pdf">https://arxiv.org/pdf/1910.06522.pdf</a></h2><h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>MIMO-Speech，采用“多通道-输入”和“多通道-输出”，以建模 多通道 多说话人 情景下的语音分离和语音识别。</p>
 <ul>
 <li><p>模型结构由三部分组成：</p>
@@ -559,21 +563,28 @@
 </li>
 </ul>
 <p><img src="/images/SAG-Tacotron.png" alt="SAG-Tacotron"></p>
-<h4 id="3-2-基于-自注意力机制-的-编码器"><a href="#3-2-基于-自注意力机制-的-编码器" class="headerlink" title="3.2 基于 自注意力机制 的 编码器"></a>3.2 基于 自注意力机制 的 编码器</h4><p>Encoder 的 Pre-net是一个3层-CNN + Batch Norm + ReLU，尽管自-注意力机制不包含序列信息，我们注入类似于Transformer的位置信息。<br>$$<br>PE_{pos,2i}=sin(pos/10000^{2i/d})<br>$$</p>
-<p>$$<br>PE_{pos, 2i+1} = cos(pos/10000^{2i/d})<br>$$</p>
-<p>其中，$pos$是当前位置，$d$是特征维度，$i$是当前维度。PE也被输入到自-注意力模块。自注意力模块包含了一个自注意力层+全连接层+tanh激活函数。残差连接被应用于上述层。</p>
-<p>对于多头注意力机制的每一个$head_i$, 对于一个有$n$个元素的序列$x$，我们想要获得有相同长度n的隐状态向量$head_i$, 这里采用scale-product注意力机制。<br>$$<br>Head_{i}=\sum_{j=1}^{n}ATT(Q,K)V<br>$$</p>
-<p>$$<br>ATT(Q, K)=softmax(energy)​<br>$$</p>
-<p>$$<br>energy = \frac {QK^{T}} {\sqrt{d}}<br>$$</p>
-<p>最终的多头注意力机制为：<br>$$<br>MultiHead(Q,K,V)=Concat(head_{1}, …, head_{h})W^{O}<br>$$<br>其中的$W^{O}$是最后一层线性层的参数矩阵。</p>
+<h4 id="3-2-基于-自注意力机制-的-编码器"><a href="#3-2-基于-自注意力机制-的-编码器" class="headerlink" title="3.2 基于 自注意力机制 的 编码器"></a>3.2 基于 自注意力机制 的 编码器</h4><p>Encoder 的 Pre-net是一个3层-CNN + Batch Norm + ReLU，尽管自-注意力机制不包含序列信息，我们注入类似于Transformer的位置信息。</p>
+<script type="math/tex; mode=display">
+PE_{pos,2i}=sin(pos/10000^{2i/d})</script><script type="math/tex; mode=display">
+PE_{pos, 2i+1} = cos(pos/10000^{2i/d})</script><p>其中，$pos$是当前位置，$d$是特征维度，$i$是当前维度。PE也被输入到自-注意力模块。自注意力模块包含了一个自注意力层+全连接层+tanh激活函数。残差连接被应用于上述层。</p>
+<p>对于多头注意力机制的每一个$head_i$, 对于一个有$n$个元素的序列$x$，我们想要获得有相同长度n的隐状态向量$head_i$, 这里采用scale-product注意力机制。</p>
+<script type="math/tex; mode=display">
+Head_{i}=\sum_{j=1}^{n}ATT(Q,K)V</script><script type="math/tex; mode=display">
+ATT(Q, K)=softmax(energy)​</script><script type="math/tex; mode=display">
+energy = \frac {QK^{T}} {\sqrt{d}}</script><p>最终的多头注意力机制为：</p>
+<script type="math/tex; mode=display">
+MultiHead(Q,K,V)=Concat(head_{1}, ..., head_{h})W^{O}</script><p>其中的$W^{O}$是最后一层线性层的参数矩阵。</p>
 <h4 id="3-3-可学习的Gaussian-bias"><a href="#3-3-可学习的Gaussian-bias" class="headerlink" title="3.3 可学习的Gaussian bias"></a>3.3 可学习的Gaussian bias</h4><p>在序列-序列模型中，对于中文来讲，相近的位置是十分重要的。在这种情况下，我们想要为注意力机制提升编码器对于临近状态的局部贡献。</p>
 <p><img src="/images/Gaussian-bias.png" alt="Gaussian-bias"></p>
 <p>如上图所示，首先，假设一个以e5为中心的高斯bias，窗长为3（实际上，窗长是一个可学习的参数）。然后将注意力机制的分布通过高斯bias来进行正则化，以生成最终的分布。如图3所示，最终的分布是会在e5附近有更多的权重的。</p>
-<p>具体来讲，Gaussian bias $G$被mask到energy上，即<br>$$<br>ATT(Q, K)=softmax(energy + G)<br>$$</p>
-<p>其中$G \in R^{N\times N}$，$G \in (-1;0]$ 度量了当前的query $x_i$与position $j$ 之间的关系：<br>$$<br>G_{ij}=-\frac {(j - P_{i})^2}{2\sigma_i^2}<br>$$</p>
-<p>其中的$P_i$是$x_i$的中心位置，当给定输入序列 $x=(x_1, x_2, …, x_n)$，$\sigma_i$是标准差。如何选择合适的$P_i$和$\sigma_i$是关键。<br>$$<br>P_i = N\cdot sigmoid(v_p^{T}tanh(W_{p}x_i))<br>$$</p>
-<p>$$<br>D_i = N\cdot sigmoid(v_d^{T}tanh(W_{d}x_i))<br>$$</p>
-<p>其中$\sigma_i = \frac {D_i}{2}$, $W_p$ 和$W_d$是模型参数矩阵。</p>
+<p>具体来讲，Gaussian bias $G$被mask到energy上，即</p>
+<script type="math/tex; mode=display">
+ATT(Q, K)=softmax(energy + G)</script><p>其中$G \in R^{N\times N}$，$G \in (-1;0]$ 度量了当前的query $x_i$与position $j$ 之间的关系：</p>
+<script type="math/tex; mode=display">
+G_{ij}=-\frac {(j - P_{i})^2}{2\sigma_i^2}</script><p>其中的$P_i$是$x_i$的中心位置，当给定输入序列 $x=(x_1, x_2, …, x_n)$，$\sigma_i$是标准差。如何选择合适的$P_i$和$\sigma_i$是关键。</p>
+<script type="math/tex; mode=display">
+P_i = N\cdot sigmoid(v_p^{T}tanh(W_{p}x_i))</script><script type="math/tex; mode=display">
+D_i = N\cdot sigmoid(v_d^{T}tanh(W_{d}x_i))</script><p>其中$\sigma_i = \frac {D_i}{2}$, $W_p$ 和$W_d$是模型参数矩阵。</p>
 <h3 id="Experiments-2-5页"><a href="#Experiments-2-5页" class="headerlink" title="Experiments (2.5页)"></a>Experiments (2.5页)</h3><h4 id="4-1-Basic-setups"><a href="#4-1-Basic-setups" class="headerlink" title="4.1 Basic setups"></a>4.1 Basic setups</h4><h4 id="4-2-System-comparison"><a href="#4-2-System-comparison" class="headerlink" title="4.2 System comparison"></a>4.2 System comparison</h4><ul>
 <li>Baseline: Tacotron1</li>
 <li>Baseline-prosody: Tacotron1 with complex inputs</li>
