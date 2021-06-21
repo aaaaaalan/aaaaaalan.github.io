@@ -620,7 +620,20 @@ D_i = N\cdot sigmoid(v_d^{T}tanh(W_{d}x_i))</script><p>其中$\sigma_i = \frac {
 <h5 id="2-1-2-系统发育语言特征"><a href="#2-1-2-系统发育语言特征" class="headerlink" title="2.1.2 系统发育语言特征"></a>2.1.2 系统发育语言特征</h5><p>基于BCP-47标注，我们采用语言和边界识别特征来建模同语种的不同口音。+ 一个系统语言分类树</p>
 <h4 id="2-2-LSTM-RNN-声学模型"><a href="#2-2-LSTM-RNN-声学模型" class="headerlink" title="2.2 LSTM-RNN 声学模型"></a>2.2 LSTM-RNN 声学模型</h4><p>给定语言特征后，LSTM-RNN时长模型的作用是预测每个音素的发音时长。然后再将这个时长和语言特征一同输入到声学模型。以预测音频波形。音频波形的平滑性，是采用RNN的循环单元来建模的。</p>
 <p>由于本文需要处理更大数量的数据集和更加多样的语言特征，所以本文的模型与baseline的区别在于ReLU的单元数量和LSTM的层数，以及声学模型输出层的循环单元的个数。</p>
-<h3 id="Experiments-2-page"><a href="#Experiments-2-page" class="headerlink" title="Experiments (2 page)"></a>Experiments (2 page)</h3>]]></content>
+<h3 id="Experiments-2-page"><a href="#Experiments-2-page" class="headerlink" title="Experiments (2 page)"></a>Experiments (2 page)</h3><p>用于训练声学模型的数据集语料有超过800小时的语音，包含了37种不同的语言种类。这些语言属于原始的59组语言/地区对，一些语种，如英语，有不同的说话人数据集，对应不同的地域口音。对于一些口音（如EN-US）有多个说话人。一些音频是在消声室（anechoic chambers）录制的，而一些就是常规的录音室录制的（a regular recording studio）</p>
+<h4 id="3-1-方法论：系统细节"><a href="#3-1-方法论：系统细节" class="headerlink" title="3.1 方法论：系统细节"></a>3.1 方法论：系统细节</h4><p>语音数据采用22.05KHz的数据集，LSTM-RNN模型输出的特征是音素的发音时长</p>
+<h4 id="3-2-模型参数和评估"><a href="#3-2-模型参数和评估" class="headerlink" title="3.2 模型参数和评估"></a>3.2 模型参数和评估</h4><p>实验被设计为两种情景：</p>
+<ul>
+<li>模型被在除去12种语言的语料上训练（其中有6种，是毫无语料的情况）。但每一种被排除的语种（除了其中2种）都有“亲戚”语种在训练数据集中。在对这些被排除在外的目标语种进行语音合成。其中的模型称为H</li>
+<li>用所有语种的数据集来训练模型。其中的模型称为I</li>
+</ul>
+<p>因为声学模型可以被speaker和gender identifying特征控制，所以以下实验被设计来观察如何影响合成质量。</p>
+<ul>
+<li>speaker和gender特征 unset （default，D），set to the highest quality female speaker (EN-US, F), highest quality male speaker (EN-GB, M), speaker of the closet language (C).</li>
+<li>Setting the speaker and gender features for this speaker (S)</li>
+</ul>
+<p>实验评估：100句集外话术，每个人最多听100句话。每句话有1min的评估时间。每一种语言有8个评分者。</p>
+<h4 id="3-3-实验结果和讨论"><a href="#3-3-实验结果和讨论" class="headerlink" title="3.3 实验结果和讨论"></a>3.3 实验结果和讨论</h4>]]></content>
       <categories>
         <category>工作</category>
       </categories>

@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Paper title: Uniform Multilingual Multi-Speaker Acoustic Model for Statistical Parametric Speech Synthesis of Low-Resourced Languages —— Google UK (Interspeech 2017)论文题目：用于低资源语言统计参数语音合成的统一多语言多说话者声学模型">
+  <meta name="description" content="用于低资源语言统计参数语音合成的统一多语言多说话者声学模型，采用MLMS模型以及IPA统一的具象文本信息表征空间解决集外目标语种的语音合成问题 ---- 谷歌UK （Interspeech 2017）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Uniform Multilingual Multi-Speaker Acoustic Model for Statistical Parametric Speech Synthesis of Low-Resourced Languages">
 <meta property="og:url" content="http://example.com/2021/06/21/mlms/index.html">
 <meta property="og:site_name" content="海阔天空蓝">
-<meta property="og:description" content="Paper title: Uniform Multilingual Multi-Speaker Acoustic Model for Statistical Parametric Speech Synthesis of Low-Resourced Languages —— Google UK (Interspeech 2017)论文题目：用于低资源语言统计参数语音合成的统一多语言多说话者声学模型">
+<meta property="og:description" content="用于低资源语言统计参数语音合成的统一多语言多说话者声学模型，采用MLMS模型以及IPA统一的具象文本信息表征空间解决集外目标语种的语音合成问题 ---- 谷歌UK （Interspeech 2017）">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-21T03:00:09.000Z">
-<meta property="article:modified_time" content="2021-06-21T04:07:24.469Z">
+<meta property="article:modified_time" content="2021-06-21T06:21:51.580Z">
 <meta property="article:author" content="Alan Sun">
 <meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
 <meta name="twitter:card" content="summary">
@@ -186,7 +186,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-06-21 11:00:09 / 修改时间：12:07:24" itemprop="dateCreated datePublished" datetime="2021-06-21T11:00:09+08:00">2021-06-21</time>
+              <time title="创建时间：2021-06-21 11:00:09 / 修改时间：14:21:51" itemprop="dateCreated datePublished" datetime="2021-06-21T11:00:09+08:00">2021-06-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -199,6 +199,7 @@
             </span>
 
           
+            <div class="post-description">用于低资源语言统计参数语音合成的统一多语言多说话者声学模型，采用MLMS模型以及IPA统一的具象文本信息表征空间解决集外目标语种的语音合成问题 ---- 谷歌UK （Interspeech 2017）</div>
 
         </div>
       </header>
@@ -222,7 +223,20 @@
 <h5 id="2-1-2-系统发育语言特征"><a href="#2-1-2-系统发育语言特征" class="headerlink" title="2.1.2 系统发育语言特征"></a>2.1.2 系统发育语言特征</h5><p>基于BCP-47标注，我们采用语言和边界识别特征来建模同语种的不同口音。+ 一个系统语言分类树</p>
 <h4 id="2-2-LSTM-RNN-声学模型"><a href="#2-2-LSTM-RNN-声学模型" class="headerlink" title="2.2 LSTM-RNN 声学模型"></a>2.2 LSTM-RNN 声学模型</h4><p>给定语言特征后，LSTM-RNN时长模型的作用是预测每个音素的发音时长。然后再将这个时长和语言特征一同输入到声学模型。以预测音频波形。音频波形的平滑性，是采用RNN的循环单元来建模的。</p>
 <p>由于本文需要处理更大数量的数据集和更加多样的语言特征，所以本文的模型与baseline的区别在于ReLU的单元数量和LSTM的层数，以及声学模型输出层的循环单元的个数。</p>
-<h3 id="Experiments-2-page"><a href="#Experiments-2-page" class="headerlink" title="Experiments (2 page)"></a>Experiments (2 page)</h3>
+<h3 id="Experiments-2-page"><a href="#Experiments-2-page" class="headerlink" title="Experiments (2 page)"></a>Experiments (2 page)</h3><p>用于训练声学模型的数据集语料有超过800小时的语音，包含了37种不同的语言种类。这些语言属于原始的59组语言/地区对，一些语种，如英语，有不同的说话人数据集，对应不同的地域口音。对于一些口音（如EN-US）有多个说话人。一些音频是在消声室（anechoic chambers）录制的，而一些就是常规的录音室录制的（a regular recording studio）</p>
+<h4 id="3-1-方法论：系统细节"><a href="#3-1-方法论：系统细节" class="headerlink" title="3.1 方法论：系统细节"></a>3.1 方法论：系统细节</h4><p>语音数据采用22.05KHz的数据集，LSTM-RNN模型输出的特征是音素的发音时长</p>
+<h4 id="3-2-模型参数和评估"><a href="#3-2-模型参数和评估" class="headerlink" title="3.2 模型参数和评估"></a>3.2 模型参数和评估</h4><p>实验被设计为两种情景：</p>
+<ul>
+<li>模型被在除去12种语言的语料上训练（其中有6种，是毫无语料的情况）。但每一种被排除的语种（除了其中2种）都有“亲戚”语种在训练数据集中。在对这些被排除在外的目标语种进行语音合成。其中的模型称为H</li>
+<li>用所有语种的数据集来训练模型。其中的模型称为I</li>
+</ul>
+<p>因为声学模型可以被speaker和gender identifying特征控制，所以以下实验被设计来观察如何影响合成质量。</p>
+<ul>
+<li>speaker和gender特征 unset （default，D），set to the highest quality female speaker (EN-US, F), highest quality male speaker (EN-GB, M), speaker of the closet language (C).</li>
+<li>Setting the speaker and gender features for this speaker (S)</li>
+</ul>
+<p>实验评估：100句集外话术，每个人最多听100句话。每句话有1min的评估时间。每一种语言有8个评分者。</p>
+<h4 id="3-3-实验结果和讨论"><a href="#3-3-实验结果和讨论" class="headerlink" title="3.3 实验结果和讨论"></a>3.3 实验结果和讨论</h4>
     </div>
 
     
@@ -299,7 +313,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Paper-title-Uniform-Multilingual-Multi-Speaker-Acoustic-Model-for-Statistical-Parametric-Speech-Synthesis-of-Low-Resourced-Languages-%E2%80%94%E2%80%94-Google-UK-Interspeech-2017"><span class="nav-number">1.</span> <span class="nav-text">Paper title: Uniform Multilingual Multi-Speaker Acoustic Model for Statistical Parametric Speech Synthesis of Low-Resourced Languages —— Google UK (Interspeech 2017)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E9%A2%98%E7%9B%AE%EF%BC%9A%E7%94%A8%E4%BA%8E%E4%BD%8E%E8%B5%84%E6%BA%90%E8%AF%AD%E8%A8%80%E7%BB%9F%E8%AE%A1%E5%8F%82%E6%95%B0%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90%E7%9A%84%E7%BB%9F%E4%B8%80%E5%A4%9A%E8%AF%AD%E8%A8%80%E5%A4%9A%E8%AF%B4%E8%AF%9D%E8%80%85%E5%A3%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B-%E2%80%94%E2%80%94-%E8%B0%B7%E6%AD%8CUK"><span class="nav-number">1.1.</span> <span class="nav-text">论文题目：用于低资源语言统计参数语音合成的统一多语言多说话者声学模型 —— 谷歌UK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-number">1.1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction-1-page"><span class="nav-number">1.1.2.</span> <span class="nav-text">Introduction (1 page)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multilingual-Architecture-1-page"><span class="nav-number">1.1.3.</span> <span class="nav-text">Multilingual Architecture (1 page)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E6%96%87%E6%9C%AC%E7%89%B9%E5%BE%81"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">2.1 文本特征</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-%E5%85%B8%E5%9E%8B%E8%AF%AD%E8%A8%80%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.1.3.1.1.</span> <span class="nav-text">2.1.1 典型语言表示</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-%E7%B3%BB%E7%BB%9F%E5%8F%91%E8%82%B2%E8%AF%AD%E8%A8%80%E7%89%B9%E5%BE%81"><span class="nav-number">1.1.3.1.2.</span> <span class="nav-text">2.1.2 系统发育语言特征</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-LSTM-RNN-%E5%A3%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">2.2 LSTM-RNN 声学模型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiments-2-page"><span class="nav-number">1.1.4.</span> <span class="nav-text">Experiments (2 page)</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Paper-title-Uniform-Multilingual-Multi-Speaker-Acoustic-Model-for-Statistical-Parametric-Speech-Synthesis-of-Low-Resourced-Languages-%E2%80%94%E2%80%94-Google-UK-Interspeech-2017"><span class="nav-number">1.</span> <span class="nav-text">Paper title: Uniform Multilingual Multi-Speaker Acoustic Model for Statistical Parametric Speech Synthesis of Low-Resourced Languages —— Google UK (Interspeech 2017)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E9%A2%98%E7%9B%AE%EF%BC%9A%E7%94%A8%E4%BA%8E%E4%BD%8E%E8%B5%84%E6%BA%90%E8%AF%AD%E8%A8%80%E7%BB%9F%E8%AE%A1%E5%8F%82%E6%95%B0%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90%E7%9A%84%E7%BB%9F%E4%B8%80%E5%A4%9A%E8%AF%AD%E8%A8%80%E5%A4%9A%E8%AF%B4%E8%AF%9D%E8%80%85%E5%A3%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B-%E2%80%94%E2%80%94-%E8%B0%B7%E6%AD%8CUK"><span class="nav-number">1.1.</span> <span class="nav-text">论文题目：用于低资源语言统计参数语音合成的统一多语言多说话者声学模型 —— 谷歌UK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-number">1.1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction-1-page"><span class="nav-number">1.1.2.</span> <span class="nav-text">Introduction (1 page)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multilingual-Architecture-1-page"><span class="nav-number">1.1.3.</span> <span class="nav-text">Multilingual Architecture (1 page)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E6%96%87%E6%9C%AC%E7%89%B9%E5%BE%81"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">2.1 文本特征</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-%E5%85%B8%E5%9E%8B%E8%AF%AD%E8%A8%80%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.1.3.1.1.</span> <span class="nav-text">2.1.1 典型语言表示</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-%E7%B3%BB%E7%BB%9F%E5%8F%91%E8%82%B2%E8%AF%AD%E8%A8%80%E7%89%B9%E5%BE%81"><span class="nav-number">1.1.3.1.2.</span> <span class="nav-text">2.1.2 系统发育语言特征</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-LSTM-RNN-%E5%A3%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">2.2 LSTM-RNN 声学模型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiments-2-page"><span class="nav-number">1.1.4.</span> <span class="nav-text">Experiments (2 page)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E6%96%B9%E6%B3%95%E8%AE%BA%EF%BC%9A%E7%B3%BB%E7%BB%9F%E7%BB%86%E8%8A%82"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">3.1 方法论：系统细节</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0%E5%92%8C%E8%AF%84%E4%BC%B0"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">3.2 模型参数和评估</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%E5%92%8C%E8%AE%A8%E8%AE%BA"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">3.3 实验结果和讨论</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
