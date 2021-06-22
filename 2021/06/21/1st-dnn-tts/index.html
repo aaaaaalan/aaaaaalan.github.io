@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文考古了两篇TTS的开山之作，Paper1是Google公司Heiga Zen发表于ICASSP 2013的，对于采用Deep Neural Networks进行语音合成Text-to-speech的开山之作。自此以后，语音合成开始从基于HMM的统计参数合成模型，转向深度学习模型，论文思想虽简单，但理论和实验部分逻辑清晰，验证充分，实验结论清晰可靠，有多处可学习之处，建议精读。Paper2是Mo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STATISTICAL PARAMETRIC SPEECH SYNTHESIS USING DEEP NEURAL NETWORKS">
+<meta property="og:url" content="http://example.com/2021/06/21/1st-dnn-tts/index.html">
+<meta property="og:site_name" content="海阔天空蓝">
+<meta property="og:description" content="本文考古了两篇TTS的开山之作，Paper1是Google公司Heiga Zen发表于ICASSP 2013的，对于采用Deep Neural Networks进行语音合成Text-to-speech的开山之作。自此以后，语音合成开始从基于HMM的统计参数合成模型，转向深度学习模型，论文思想虽简单，但理论和实验部分逻辑清晰，验证充分，实验结论清晰可靠，有多处可学习之处，建议精读。Paper2是Mo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/DNN-based-tts.png">
+<meta property="og:image" content="http://example.com/images/5th-mcep-comparison.png">
+<meta property="og:image" content="http://example.com/images/dnn-tts-exp-res.png">
+<meta property="og:image" content="http://example.com/images/dnn-tts-mos.png">
+<meta property="og:image" content="http://example.com/images/tts-diagram.png">
+<meta property="article:published_time" content="2021-06-21T07:21:46.000Z">
+<meta property="article:modified_time" content="2021-06-22T10:40:49.195Z">
+<meta property="article:author" content="Alan Sun">
+<meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/DNN-based-tts.png">
+
+<link rel="canonical" href="http://example.com/2021/06/21/1st-dnn-tts/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>STATISTICAL PARAMETRIC SPEECH SYNTHESIS USING DEEP NEURAL NETWORKS | 海阔天空蓝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">海阔天空蓝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个玩过21种运动的语音合成算法攻城狮</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/21/1st-dnn-tts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alan Sun">
+      <meta itemprop="description" content="记录工作与生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空蓝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          STATISTICAL PARAMETRIC SPEECH SYNTHESIS USING DEEP NEURAL NETWORKS
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-21 15:21:46" itemprop="dateCreated datePublished" datetime="2021-06-21T15:21:46+08:00">2021-06-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-22 18:40:49" itemprop="dateModified" datetime="2021-06-22T18:40:49+08:00">2021-06-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">本文考古了两篇TTS的开山之作，Paper1是Google公司Heiga Zen发表于ICASSP 2013的，对于采用Deep Neural Networks进行语音合成Text-to-speech的开山之作。自此以后，语音合成开始从基于HMM的统计参数合成模型，转向深度学习模型，论文思想虽简单，但理论和实验部分逻辑清晰，验证充分，实验结论清晰可靠，有多处可学习之处，建议精读。Paper2是Motorola公司Orhan Karaali在World Congress on Neural Networks 的Invited paper，是首次采用Neural network解决TTS任务。（不禁感叹前人的高瞻远瞩，在90年代就在做25年后火热的事情了。）</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Paper-1-STATISTICAL-PARAMETRIC-SPEECH-SYNTHESIS-USING-DEEP-NEURAL-NETWORKS-——-Google-Heiga-Zen-ICASSP-2013"><a href="#Paper-1-STATISTICAL-PARAMETRIC-SPEECH-SYNTHESIS-USING-DEEP-NEURAL-NETWORKS-——-Google-Heiga-Zen-ICASSP-2013" class="headerlink" title="Paper 1: STATISTICAL PARAMETRIC SPEECH SYNTHESIS USING DEEP NEURAL NETWORKS —— Google, Heiga Zen (ICASSP 2013)"></a>Paper 1: STATISTICAL PARAMETRIC SPEECH SYNTHESIS USING DEEP NEURAL NETWORKS —— Google, Heiga Zen (ICASSP 2013)</h1><h2 id="https-storage-googleapis-com-pub-tools-public-publication-data-pdf-40837-pdf"><a href="#https-storage-googleapis-com-pub-tools-public-publication-data-pdf-40837-pdf" class="headerlink" title="https://storage.googleapis.com/pub-tools-public-publication-data/pdf/40837.pdf"></a><a target="_blank" rel="noopener" href="https://storage.googleapis.com/pub-tools-public-publication-data/pdf/40837.pdf">https://storage.googleapis.com/pub-tools-public-publication-data/pdf/40837.pdf</a></h2><h2 id="总结以及感想"><a href="#总结以及感想" class="headerlink" title="总结以及感想"></a>总结以及感想</h2><p>看了考古文对科研又产生了新的理解，目前的论文大多修修补补，灌水严重，实验部分不是很充分，无法印证论文的可复现性和实验结论的可靠性。这篇论文虽然采用的DNN技术还是最早期的神经网络系统架构，但是对于系统设计的每一个细小的结构都进行了充分的实验对比验证，得到了可靠的实验结论。在结论处也给同行留下了更多想象和探索的空间。强烈建议TTS从业者逐字逐行阅读本文，学习论文构思和写作的思想，并且了解深度学习在TTS领域应用的起源，至少从实验部分的objective /subjective evaluation可以学习到客观评估TTS合成效果的方法，使得自己的TTS研究更加扎实可靠。</p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>痛点：传统的统计参数语音合成方式通常采用决策树，上下文依赖的HMM模型来表示给定文本的语音的概率密度。其中，语音参数是从概率密度中生成的来最大化它们的输出概率，然后再用生成的语音参数，重构语音波形。这种方法的缺点是，决策树对于建模复杂的上下文依赖关系是比较无效的。</p>
+<p>解决方案：本文基于深度神经网络（DNN）。输入文本和声学表示的关系通过一个DNN来建模。DNN的使用能够解决许多传统方法的局限性。</p>
+<p>实验结果：DNN效果优于HMM</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>基于HMM的参数方法在过去十年间盛行，相对于波形拼接算法来讲，它的优势在于能够灵活地替换音色，小的踪迹和鲁棒性。然而，它的主要局限性是合成语音的质量。Zen等提出了合成质量的三个主要特征：声码器，声学模型的准确度，和过拟合。本文的方法主要在于解决声学模型的准确度。</p>
+<p>影响语音的一定数量的上下文特征包含音素、语言和语法特征，会在统计参数合成过程中，参与建模。典型系统包含50种上下文。因此，这些复杂的上下文依赖的有效建模是统计参数语音合成的关键点。为了解决这种上下文问题的标准方法是基于HMM的统计参数语音合成算法。对于每一种独立的上下文组合，都采用一个独立的HMM模型，作为一个上下文相关的HMM模型。通常来讲，对于这种全部上下文依赖的HMM模型来说，训练数据是不充分的，难以学习到一个稳定的模型，能够覆盖到所有所需的上下文组合。</p>
+<p>为了解决这种问题，基于自上而下的决策树算法的上下文聚类被广泛使用。在这种方法中，上下文-依赖的HMM的状态被区分为多个“簇”，并且每个“簇”的分布参数是共享的。HMM模型的任务是通过二分类决策树，检验每一个HMM的上下文组合，其中一个上下文相关的二分类问题是与每一个 非叶子结点 相关的。“簇”的数量，也是 叶子结点 的数量，决定了模型的复杂程度。决策树通过序列化挑选能够在训练数据集上产生最高mle的分数来挑选问题。树的大小是通过一个预定义的mle阈值，一个模型复杂度惩罚，以及交叉验证来决定的。采用了上下文相关的问题和状态参数共享后，未知的上下文和数据稀疏性问题得到了有效解决。就像在语音识别中所成功解决的，基于HMM的方法自然地对于有丰富数据的上下文有较好的效果。</p>
+<p>尽管基于上下文决策树的HMM模型在统计参数语音合成方法中是有效的。但是，有以下局限性：</p>
+<ul>
+<li>对于复杂上下文依赖如“XOR”，奇偶校验和复用问题，这种方法是无效的；</li>
+<li>这种方法将输入的空间区分开，并且对于每个区域都采用了独立的参数，每个区域对应着一个决策树的叶子结点。这导致了分裂训练数据集，并且在聚类和估计分布的时候，使得每个簇的数据不充分。</li>
+</ul>
+<p>有一个相对大的决策树，并且分裂训练数据集都会导致过拟合，损害合成语音的质量。</p>
+<p>为了解决上述局限性，本文采用基于DNN的结构。上述基于决策树的方案，建模了从 文本中抽取的语言上下文到语音参数的映射。在这里的决策树被一个DNN模型所替代。值得注意的是，自从90年代开始，NN就尝试被应用于TTS中。</p>
+<h2 id="DNN-VS-Decision-tree-DT"><a href="#DNN-VS-Decision-tree-DT" class="headerlink" title="DNN VS Decision tree (DT)"></a>DNN VS Decision tree (DT)</h2><ul>
+<li>DT 在表达输入特征的复杂关系时无效，如XOR、d 位奇偶校验函数、或者多路复用的问题。为了表达上述情境下的问题，决策树可能会十分巨大。然而，这些关系能够被DNN模型来具象表示</li>
+<li>决策树致力于分割输入空间，对每个空间采用一组独立的参数和一个叶子结点。这样会导致在每个区域的数据数量少和较差的泛化性能。Yu et al 证明了在采用决策树建模时，一些较弱的输入特征如语音中词级别的重读会被丢失。由于DNN的权重是从整体的训练数据得到的，所以DNN会得到更好的泛化性能。DNN也提供了输入高维、多种输入特征的可能性。</li>
+<li>相较于决策树，通过反向传播来训练一个DNN模型通常需要大量的计算过程。在预测过程中，DNN需要在每一层都有一个矩阵乘法，但是决策树仅仅需要通过一个输入特征的子集从根结点遍历树直至叶子结点。</li>
+<li>决策树的推理是更加可解释的，DNN中的权重很难在直观上获得解释。</li>
+</ul>
+<h2 id="基于DNN的语音合成"><a href="#基于DNN的语音合成" class="headerlink" title="基于DNN的语音合成"></a>基于DNN的语音合成</h2><p>由于人类的发声系统是多层级的，才能够将文本信息转换为语音波形，所以本文尝试采用深度神经网络来进行语音建模。</p>
+<p><img src="/images/DNN-based-tts.png" alt="DNN-based-tts"></p>
+<p>上图展示了一个基于DNN的语音合成框架。输入文本首先被转换为输入特征序列$\{x^t_n\}$，其中的$x^t_n$表示在第$t$帧的第$n$维输入特征。输入的特征是对于文本上下文关系的二分类问题，包含如（e.g is-current-phoneme-aa?）和数值（e.g. 在短语中的单词数量，在当前音素序列的当前帧的相对位置，和当前音素的发音时长）</p>
+<p>然后输入特征通过一个训练好的DNN，采用前向传播的方法被映射到输出特征$\{y^t_m\}$，其中$y^t_m$表示在第$t$帧的第$m$个输出特征。输出特征包含频谱和激励参数以及他们的时间导数（动态特征）。DNN的权重能够采用从训练数据集中抽取的成对的输入和输出特征来进行训练。类似于HMM的方法，这样是可以生成语音参数的。通过从DNN中设定预测的输出特征作为均值向量，再加上从所有训练数据预先计算的方差作为协方差矩阵，语音参数的生成算法能够生成平滑的语音参数特征轨迹，满足了静态和动态特征的统计情况。最终，一个语音合成模块通过得到的语音参数来生成语音波形。</p>
+<p>注意到，文本分析，语音参数生成，和波形生成模块可以与HMM模型共享，<strong>即仅仅从上下文依赖关系的标签生成统计参数的过程需要被替换。</strong></p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="4-1-实验条件"><a href="#4-1-实验条件" class="headerlink" title="4.1 实验条件"></a>4.1 实验条件</h3><p>实验数据：US-EN 女性语音数据，约33000条。语音分析的条件和方法论类似于Nitech-HTS2005系统的方法。语音数据首先从48KHz降采样到16KHz，然后每5ms抽取一次40维的Mel倒谱系数，$log F_0$，和5段非周期性系数。每一个观察向量包含40维的mel倒谱系数，$log F_0$，和5段非周期性系数，以及他们的delta和delta-delta特征。从左至右，包含5个状态的无跳过隐藏半马尔可夫模型 (HSMM)被采用。为了建模 $log F_0$序列包含了声学和非声学观察序列。一个多空间的密度分布被使用（multi-space probability distribution (MSD)）。基于决策树的上下文聚类的问题数量是2554个。在HMM系统中的决策树大小是通过改变模型复杂度惩罚因子$\alpha$来控制的（最小描述长度标准（MDL）是（$\alpha=16,8,4,2,1,0.5,0.375,or 0.25$）。当$\alpha=1$时，Mel频谱，$log F_0$和频带非周期性的叶子结点的数量分别是12342, 26209, 和401（总共有3209991个参数）。</p>
+<p>基于DNN系统的输入特征包含表征类别语言上下文（例如音素身份、重音标记）的342个二分类特征和表征数字语言上下文（例如，单词中的音节数、短语中当前音节的位置）的25个数值特征。除去文本上下文相关的输入特征，还包含了3个用于粗略编码当前音素序列中当前帧位置的数值特征，以及一个用于估计当前音节时长的数值特征。输出特征与HMM系统基本一致。为了通过DNN模型建模$log F_0$序列，我们采用了显式发声建模（explicit voicing modeling）的方法来获取连续$F_0$ ，发声/不发声的二分类特征值被用于添加到输出特征，并且在不发声值中的 $log F_0$ 通过插值得到。为了降低计算成本，80%的静音段从训练数据中移除。DNN的权重被随机初始化，然后在最小化MSE的目标函数下得到最优化。优化策略为基于小批次的随机梯度下降（SGD）的后向传播算法。DNN的输入和输出特征均被正则化，其中输入特征被正则化至(0,1)分布，然后输出特征根据训练数据中的最大最小值被正则化至0.01-0.99隐藏层采用sigmoid激活函数。建模频谱和激励特征参数的DNN神经网络被训练。</p>
+<p>在评估的语句中，语音参数通过语音参数生成算法被生成。在倒谱域采用了基于后过滤的频谱增强算法。语音波形通过source-filter模型来重构语音波形。</p>
+<p><strong>为了客观评估HMM和DNN模型系统，MCD（mel-cepstral distortion）(dB)，Linear aperiodicity distortion (dB), 发声/不发声错误率（%），和$log F_0$的RMSE被使用。</strong>音素发音时长在后面被使用，我们挑选了173句训练集外的语句用于模型评估。</p>
+<h3 id="4-2-客观评估"><a href="#4-2-客观评估" class="headerlink" title="4.2 客观评估"></a>4.2 客观评估</h3><p><img src="/images/5th-mcep-comparison.png" alt="5th-mcep-comparison"></p>
+<p>上图绘制了Ground-Truth、HMM预测值和DNN预测值的第五个mel倒谱系数，从图中可以观察到，三个模型都可以产生合理的语音参数轨迹。</p>
+<p>在客观评估中，我们调查了预测结果和DNN结构（1，2，3，4，5层）的关系，以及与每层神经元个数（256，512，1024，2048）的关系，下图展示了实验结果。</p>
+<p><img src="/images/dnn-tts-exp-res.png" alt="dnn-tts-exp-res"></p>
+<p>基于DNN的系统一直都比HMM系统要好在 “voiced/unvoiced error rate”和”aperiodicity prediction”。在MCD中，有多层的DNN模型要相似于或者好于HMM模型。然而，在$log F_0$的预测中，HMM在大多数情况下要好于DNN模型。其中，所有的不发音帧都被插值作为发音帧来建模。我们认为这种方法会降低$log F_0$的预测效果，因为这些插值的$F_0$对于DNN模型来说是一个bias。对于MCD和aperiodicity预测中，模型深度的提升比在每一层上增加神经元的个数更加有效。</p>
+<p>以上的客观指标并不能评估合成语音的自然度，但是可以作为评估声学模型准确率的指标。</p>
+<h3 id="4-3-主观评估"><a href="#4-3-主观评估" class="headerlink" title="4.3 主观评估"></a>4.3 主观评估</h3><p>173句话被评估，每个评估人最多评估30句话，这些话术是随机打乱的。每一对语音被5个人评估。评估人有带耳机。在听完一对语音后，评估人需要选择一个更喜欢的语音，如果觉得两个语音很相似的话，可以选择“中立”，在这个评估过程中，HMM系统和DNN系统采用相似的模型数量来被评估。DNN模型采用了4个隐藏层，神经元的个数也进行了多组实验（256，512，1024个神经元）</p>
+<p><img src="/images/dnn-tts-mos.png" alt="dnn-tts-mos"></p>
+<p>上表展示了实验结果，可以从以上结果看出，在相似的参数数量配置的情况下，DNN模型要远优于HMM模型。我们认为较好的MCD代表了更佳的效果。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>这篇文章examined the use of the DNNs to perform speech synthesis. DNN模型有潜力解决传统DT-HMM模型的局限性。主观评估和客观评估均显示DNN能够实现较好的效果。HMM的一个优势在于模型参数较少，计算开销较小。在合成时，HMM模型便利决策树来找到每一个状态的参数。然而，本文提出的DNN算法是在每一帧进行输入到输出的预测，接下来的工作可以在如何降低DNN模型的计算开销，添加更多的输入特征包括一些弱特征如重读，并且可以探索如果获得一个更好的 $log F_0$建模方案。</p>
+<h1 id="Paper-2-Speech-Synthesis-with-Neural-Networks-——-Motorola-Orhan-Karaali-1996-Sep-World-Congress-on-Neural-Networks-Invited-Paper"><a href="#Paper-2-Speech-Synthesis-with-Neural-Networks-——-Motorola-Orhan-Karaali-1996-Sep-World-Congress-on-Neural-Networks-Invited-Paper" class="headerlink" title="Paper 2: Speech Synthesis with Neural Networks —— Motorola, Orhan Karaali (1996, Sep, World Congress on Neural Networks Invited Paper)"></a>Paper 2: Speech Synthesis with Neural Networks —— Motorola, Orhan Karaali (1996, Sep, World Congress on Neural Networks Invited Paper)</h1><h2 id="https-arxiv-org-pdf-cs-9811031-pdf"><a href="#https-arxiv-org-pdf-cs-9811031-pdf" class="headerlink" title="https://arxiv.org/pdf/cs/9811031.pdf"></a><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/cs/9811031.pdf">https://arxiv.org/pdf/cs/9811031.pdf</a></h2><h2 id="Abstact"><a href="#Abstact" class="headerlink" title="Abstact"></a>Abstact</h2><p>传统的文本-语音转换通过拼接短的语音单元或者采用基于规则的系统来将语音的音素表示转换为声学表示形式，然后被转换为语音。本文描述了一种采用时延神经网络（time-delay neural network TDNN）的方案来进行音素-声学特征的建模，不需要额外的神经网络来控制生成语音的timing。这个神经网络系统相较于拼接算法可以降低对于系统存储资源的需求，对比于其他的商业系统表现良好。</p>
+<h2 id="Introduction-1"><a href="#Introduction-1" class="headerlink" title="Introduction"></a>Introduction</h2><h3 id="1-1-Description-of-Problem"><a href="#1-1-Description-of-Problem" class="headerlink" title="1.1 Description of Problem"></a>1.1 Description of Problem</h3><p>文语转换通常包含了先将文本转换为语音参数，再将语音参数转换为语音波形。计算机交互可以采用对话沟通交互方式，也可以配置到移动端。拼接系统首先制作拼接数据库，然后再拼接时，调整音素的发音时长，平滑转接点来生成语音参数。拼接系统的主要问题是存储成本高昂。基于规则的合成方法将每一种可能的音素表示存储好目标声学参数。然后根据衔接点的情况来根据规则选择语音参数，主要问题是：拼接点不自然，因为转接规则倾向于只生成少量的转接风格。另外，大量的转接规则需要进行存储，会造成合成的机械音。</p>
+<h3 id="1-2-Discussion-of-the-use-of-networks"><a href="#1-2-Discussion-of-the-use-of-networks" class="headerlink" title="1.2 Discussion of the use of networks"></a>1.2 Discussion of the use of networks</h3><ul>
+<li><p>先前提到的两种方法都是语言-依赖的，而NN方法是语言-不相关的；</p>
+</li>
+<li><p>拼接系统的高昂存储成本导致了难以配置到移动端，而NN通过生成具象的表示方式，能够降低拼接系统的冗余性；</p>
+</li>
+</ul>
+<p>下图展示了TTS的流程图（终于找到了现有的TTS流程设计的出处）</p>
+<p><img src="/images/tts-diagram.png" alt="tts-diagram"></p>
+<h2 id="系统描述"><a href="#系统描述" class="headerlink" title="系统描述"></a>系统描述</h2><h3 id="2-1-数据库"><a href="#2-1-数据库" class="headerlink" title="2.1 数据库"></a>2.1 数据库</h3><p>38岁男性，居住在Florida和Chicago。录制时采用了类似于近距离麦克风的DAT录制起。文本包含480个音素均衡的语句，是从Harvard sentence list中筛选出来的。除此之外，160句在其他情境下的话术也被录制了下来。录音音频通过数字方式转移到计算机，每句话对应一个音频。每句话被归一化，以使得每句话都在非静音段有相同的平均信号能量。文本信息被标记为音素、节奏和音调信息。</p>
+<p>标记方式采用了类似于TIMIT数据库的标记方式（是ARPABET的变种），停止标记为关闭和释放作为单独的音素。这使得模型能够有效预测到停顿，以及开始。精准的对齐对于帧级的损失函数是有效的。</p>
+<p>音素不是唯一的输入特征，音素时长，F0曲线（通常被音节重读和语法边界影响）。语法边界（syntactic labelling）标记了音节，词，短语，从句和句子的开始和结束时间。语法重读（lexical stress：primary, secondary, or none）被应用到词汇的每一个字母中。词性(function word (article, pronoun, conjunction or preposition) or content word)；每个词语都有一个层级(level)，基于生成F0的rule-based系统。</p>
+<p>尽管语法（syntactic）和重读（lexical stress）对于语音的韵律变化很重要，但是这些信息没有完全决定了这些韵律变化。<strong>说话者对于语句的重读可能取决于句子中的对比度，比如在遇到陌生词汇的时候，可能会不自觉的重读。</strong>因此标记如此音调重读的实际位置到字幕上，或者词语间的强对比性是有效的。在英文中的标准是ToBI（Tone and Break Index）系统。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/21/mlms/" rel="prev" title="Uniform Multilingual Multi-Speaker Acoustic Model for Statistical Parametric Speech Synthesis of Low-Resourced Languages">
+      <i class="fa fa-chevron-left"></i> Uniform Multilingual Multi-Speaker Acoustic Model for Statistical Parametric Speech Synthesis of Low-Resourced Languages
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Paper-1-STATISTICAL-PARAMETRIC-SPEECH-SYNTHESIS-USING-DEEP-NEURAL-NETWORKS-%E2%80%94%E2%80%94-Google-Heiga-Zen-ICASSP-2013"><span class="nav-number">1.</span> <span class="nav-text">Paper 1: STATISTICAL PARAMETRIC SPEECH SYNTHESIS USING DEEP NEURAL NETWORKS —— Google, Heiga Zen (ICASSP 2013)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#https-storage-googleapis-com-pub-tools-public-publication-data-pdf-40837-pdf"><span class="nav-number">1.1.</span> <span class="nav-text">https:&#x2F;&#x2F;storage.googleapis.com&#x2F;pub-tools-public-publication-data&#x2F;pdf&#x2F;40837.pdf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E4%BB%A5%E5%8F%8A%E6%84%9F%E6%83%B3"><span class="nav-number">1.2.</span> <span class="nav-text">总结以及感想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.3.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.4.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNN-VS-Decision-tree-DT"><span class="nav-number">1.5.</span> <span class="nav-text">DNN VS Decision tree (DT)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8EDNN%E7%9A%84%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90"><span class="nav-number">1.6.</span> <span class="nav-text">基于DNN的语音合成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experiments"><span class="nav-number">1.7.</span> <span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%AE%9E%E9%AA%8C%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.7.1.</span> <span class="nav-text">4.1 实验条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%AE%A2%E8%A7%82%E8%AF%84%E4%BC%B0"><span class="nav-number">1.7.2.</span> <span class="nav-text">4.2 客观评估</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E4%B8%BB%E8%A7%82%E8%AF%84%E4%BC%B0"><span class="nav-number">1.7.3.</span> <span class="nav-text">4.3 主观评估</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.8.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Paper-2-Speech-Synthesis-with-Neural-Networks-%E2%80%94%E2%80%94-Motorola-Orhan-Karaali-1996-Sep-World-Congress-on-Neural-Networks-Invited-Paper"><span class="nav-number">2.</span> <span class="nav-text">Paper 2: Speech Synthesis with Neural Networks —— Motorola, Orhan Karaali (1996, Sep, World Congress on Neural Networks Invited Paper)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#https-arxiv-org-pdf-cs-9811031-pdf"><span class="nav-number">2.1.</span> <span class="nav-text">https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;cs&#x2F;9811031.pdf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstact"><span class="nav-number">2.2.</span> <span class="nav-text">Abstact</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction-1"><span class="nav-number">2.3.</span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Description-of-Problem"><span class="nav-number">2.3.1.</span> <span class="nav-text">1.1 Description of Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Discussion-of-the-use-of-networks"><span class="nav-number">2.3.2.</span> <span class="nav-text">1.2 Discussion of the use of networks</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%8F%8F%E8%BF%B0"><span class="nav-number">2.4.</span> <span class="nav-text">系统描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.1 数据库</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Alan Sun</p>
+  <div class="site-description" itemprop="description">记录工作与生活</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人来过
+</span>
+</div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Sun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
