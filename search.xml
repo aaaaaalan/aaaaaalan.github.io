@@ -694,6 +694,23 @@ D_i = N\cdot sigmoid(v_d^{T}tanh(W_{d}x_i))</script><p>其中$\sigma_i = \frac {
 <p>标记方式采用了类似于TIMIT数据库的标记方式（是ARPABET的变种），停止标记为关闭和释放作为单独的音素。这使得模型能够有效预测到停顿，以及开始。精准的对齐对于帧级的损失函数是有效的。</p>
 <p>音素不是唯一的输入特征，音素时长，F0曲线（通常被音节重读和语法边界影响）。语法边界（syntactic labelling）标记了音节，词，短语，从句和句子的开始和结束时间。语法重读（lexical stress：primary, secondary, or none）被应用到词汇的每一个字母中。词性(function word (article, pronoun, conjunction or preposition) or content word)；每个词语都有一个层级(level)，基于生成F0的rule-based系统。</p>
 <p>尽管语法（syntactic）和重读（lexical stress）对于语音的韵律变化很重要，但是这些信息没有完全决定了这些韵律变化。<strong>说话者对于语句的重读可能取决于句子中的对比度，比如在遇到陌生词汇的时候，可能会不自觉的重读。</strong>因此标记如此音调重读的实际位置到字幕上，或者词语间的强对比性是有效的。在英文中的标准是ToBI（Tone and Break Index）系统。</p>
+<h3 id="2-2-从音素表示上生成片段时长"><a href="#2-2-从音素表示上生成片段时长" class="headerlink" title="2.2 从音素表示上生成片段时长"></a>2.2 从音素表示上生成片段时长</h3><p>神经网络的两个任务之一是去决策，从音素顺序和语法和韵律信息上，每一个音素的发音时长。</p>
+<p>网络的输入大多数采用二分类数值，分类数值代表了采用1-out-of-n codes和一些通过bar codes表示的小的整数值。表示音素片段的输入数据包含音素片段，它的发音特点，字幕凸起的描述和包含片段的词语，以及片段接近的任何语法边界。网络结构被训练来生成时长的log。</p>
+<p>时长预测网络结构如图2所示，网络有两个输入值（2和3），通过I/O block 1 和 2 输入。（Stream 2 包含了通过shift register来给一个音素提供上下文描述），stream 3 包含了仅仅用于一个特定音素时长的生成过程。当神经网络被用于生成时长的过程中，I/O block 6写入输出的数据流。在训练过程中，Block 6 读取目标值并且生成error value。Block 3、4和5是单层的神经网络模块，模块7、8和recurrent buffer控制了循环生成的机制。</p>
+<p><img src="/images/duration-prediction.png" alt="duration-prediction"></p>
+<h3 id="2-3-从音素和时长信息生成声学信息"><a href="#2-3-从音素和时长信息生成声学信息" class="headerlink" title="2.3 从音素和时长信息生成声学信息"></a>2.3 从音素和时长信息生成声学信息</h3><p>系统中使用的第二个神经网络从音素、语法和时长信息来生成语音参数信息。更精准地来说，网络从一个帧级的音素上下文信息生成语音10-ms帧的声学表示。</p>
+<h4 id="2-3-1-网络输出-—-Coder"><a href="#2-3-1-网络输出-—-Coder" class="headerlink" title="2.3.1 网络输出 — Coder"></a>2.3.1 网络输出 — Coder</h4><p>神经网络不会直接生成语音，这个的计算资源十分昂贵，并且不太可能生成好的结果。该网络为声码器的分析-合成风格的合成部分生成数据帧。许多语音编码的研究致力于数据压缩的问题；然而，神经网络对于coder的需求没有被大多数的数据压缩技术所满足。具体来讲，将语音编码成每帧的数值向量是有价值的，这样的话，向量的每个元素对于每一帧都会有一个定义好的数值，因此用于训练的神经网络的错误度量是合适的。（例如，如果神经网络生成向量，并且错误度量相对于训练向量是较小的话，生成语音的质量，即通过running these vectors通过coder的合成部分的话，将得到较好的语音质量。）加权Euclidean距离被用作error criterion使得coder没有使用二分类输出值是明智的，并且根据其他的向量元素，向量元素的含义没有改变。</p>
+<p>coder是LPC声码器的形式，采用线性频谱（line spectral frequencies）来表示filter coefficients和一个2-band的激励模型（不同的filter coefficients的表示形式被测试，模型对于线性频谱表现良好）。2-band激励模型是一个multi-band激励模型的变种，包含一个低频带的voiced band，和一个高频带的unvoiced band。两个bands之间的边界是coder之一的参数。F0 和 power of the voice signam是剩下的参数。F0在不发音的帧级，被插值为一个高频的数值。</p>
+<h4 id="2-3-2-网络输入"><a href="#2-3-2-网络输入" class="headerlink" title="2.3.2 网络输入"></a>2.3.2 网络输入</h4><p>音素网络的输入包含了时长网络的所有输入，和时长网络输出的timing information。网络采用了一定数量的不同的输入coding技术。blocks 5，6，20和21采用了300毫秒的TDNN的风格输入窗口。窗口的采样不是均匀的，最优的采样区间是通过分析神经网络从TDNN窗口的不同部分来决策神经网络对信息的使用。Blocks 6 和20 处理了一组与输入音素相关的特征，Blocks 7和8为音素和语法边界编码时长和距离信息。网络的输入数据是二分类数据的混合，1-out-of-codes和bar codes</p>
+<h4 id="2-3-3-网络结构"><a href="#2-3-3-网络结构" class="headerlink" title="2.3.3 网络结构"></a>2.3.3 网络结构</h4><p>决定好的网络结构需要大量的实验，也就需要大量的计算资源，然而本课题的复杂程度和数据集的大小使得训练时间成为了主要瓶颈。因此，一个 in house neural network simulator被开发来降低训练时间（多个月-&gt;几天），并且可以同时验证多个方法。一些神经网络的技术和理论通过这种方式被pass掉了。</p>
+<p>最终的网络结构整合了TDNN、recurrent、和modular网络，和一些实验过程中演化的技巧。下图是当前方法的图示，其中六边形模块是I/O或者用户写入的子程序，方块是神经网络的模块。神经网络的模块采用后向传播来训练。网络的模块化是通过专家知识来手动调整的。</p>
+<p>网络通过逐渐降低的学习率和momentum方法来训练，以一种新型的顺序和随机混合的训练模式来训练。训练的网络需要&lt;100 Kilobyters of 8-bit quantized weights ，对比于拼接算法，得到了显著降低。</p>
+<p><img src="/images/phonetic-network.png" alt="phonetic-network"></p>
+<h2 id="系统效果"><a href="#系统效果" class="headerlink" title="系统效果"></a>系统效果</h2><h3 id="3-1-语音质量和自然度"><a href="#3-1-语音质量和自然度" class="headerlink" title="3.1 语音质量和自然度"></a>3.1 语音质量和自然度</h3><p><img src="/images/tts-nn-exp-results.png" alt="tts-nn-exp-results"></p>
+<p>上图展示了GT语音频谱和系统生成的语音频谱（生成的频谱没有采用ToBI标注系统）。为了对比更加清晰，有两种合成语音频谱被展示出来。第一种，phonetic 特征是网络预测的，而duration是真实的，为了仅仅展示phonetic network的效果。第二种，duration和phonetic都是预测的。对比实验发现，在语音接受度（Acceptability）上，本方法生成的质量远好于其他的系统。在片段的拟人度方面（Segmental Intelligibility），本方法仍旧有提升空间，而本次试验中的较差的数据可能是由于缺少单字语音样本所导致的。</p>
+<p><img src="/images/tts-nn-table1.png" alt="tts-nn-table1"></p>
+<h3 id="实时合成"><a href="#实时合成" class="headerlink" title="实时合成"></a>实时合成</h3><p>最开始模型是在Sun SPARCstation平台来通过ANSI C语言实现的。最近这个被插入到Power Macintosh 8500/120，PowerPC快速的乘法和加法使得合成器能够实时合成。</p>
+<h2 id="结论-1"><a href="#结论-1" class="headerlink" title="结论"></a>结论</h2><p>本方法从Acceptability角度来看，是优于传统算法的，但是仍旧可以有一些提升，如数据库可以扩充，来获得更多的音调变化，包含更多的音素上下文特征，数据库可以包含更多的短语，单字，和长段的语句。在coder、network architecture、和训练方法上也可以做出一些提升。</p>
 ]]></content>
       <categories>
         <category>工作</category>
