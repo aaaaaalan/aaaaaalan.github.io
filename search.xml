@@ -801,4 +801,32 @@ L = -log(x|\hat z(x), s) + ||sg(z(x))-e_j||^2_2 + \beta \ast ||z(x) - sg(e_j)||^
         <category>工作</category>
       </categories>
   </entry>
+  <entry>
+    <title>Unsupervised speech representation learning using WaveNet autoencoders</title>
+    <url>/2021/06/28/unsupervised-representation-learning/</url>
+    <content><![CDATA[<h1 id="Unsupervised-speech-representation-learning-using-WaveNet-autoencoders"><a href="#Unsupervised-speech-representation-learning-using-WaveNet-autoencoders" class="headerlink" title="Unsupervised speech representation learning using WaveNet autoencoders"></a>Unsupervised speech representation learning using WaveNet autoencoders</h1><h2 id="Abastract"><a href="#Abastract" class="headerlink" title="Abastract"></a>Abastract</h2><p>现状：无监督的语音表示学习可以通过对语音进行自编码来实现。目标是从语音中抽取出高层级语义特征，例如，音素id，与语音信号低层级的混淆信息如音高轮廓或者背景噪声无关。</p>
+<p>解决方案：因为learned representation 被tuned来仅仅包含音素内容，我们借助于一个高容量的WaveNet decoder来从之前的样本点中推理encoder丢失的信息。除此之外，自编码器模型的行为依赖于被应用到隐状态表示的约束条件。我们将三种variants进行对比：一个简单的dimensionality reduction瓶颈特征，一个高斯VAE，和一个离散的VQ-VAE。</p>
+<p>实验分析：我们通过speaker independence，预测音素内容的能力，准确重构独立频谱帧的能力三个方面来评估learned representation的质量。除此之外，对于采用VQ-VAE模型提取的离散编码，我们度量从它们映射到phonemes的难度。我们引入了一个“正则化”的机制，来强迫representations集中于语句的音素内容的建模，并且报告出效果是与Zerospeech 2017 无监督声学单元发现任务的前几名能够匹敌的。</p>
+<p>关键字：autoencoder，speech representation learning，unsupervised learning, acoustic unit discovery</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Deep learning被高层级表示学习算法所触发，如stacked Restricted Boltzman Machines和Denoising Autoencoders. 然而，近期在计算机视觉，机器翻译，语音识别和语言理解的突破，依赖于大规模的标记数据集，而几乎没有利用无监督表示学习。这样有两点缺陷：1）大规模人工标注的数据集的需求经常使得deep learning models的发展十分昂贵。2）尽管一个深度模型能够擅长于解决一个given task，但是这种方法对于问题域产生有限的启发，主要的启发是从显著输入特征的可视化中组成的，一种仅仅能够应用于问题域的策略，很容易被人类所解释。</p>
+<p>本文集中于评估和提高无监督语音表示学习。具体来讲，我们集中于从音素内容中学习能够区分说话人特征（特别是说话人性别和id）的表示，这种特性类似于从语音识别器学习到的内部表示特征。这样的特征在多个任务中都有价值，例如低资源语音识别（当仅仅小数据量的标签训练数据被提供）。在这种情景下，有限的数据可能足够基于无监督发现的表征训练一个声学模型，但是对于训练一个声学模型或者以一种有监督的方式来学习数据表征是不充足的。</p>
+<p>我们集中于将自编码器学习到的表征应用到原始语音和频谱特征，并且采用LibriSpeech来调研learned representations的质量。我们tune learned 隐状态表征来仅仅编码phonetic content并且移除其他的混淆特征。然而，为了做信号重构，我们采用了一个自回归的WaveNet模型作为解码器， 来推理被编码器拒绝掉的信息。这个解码器的作用是一个inductive bias，使得编码器无需使用它的capacity来表示低层级细节，而是允许编码器集中于高层级的语义特征。我们发现当使用ASR特征，如MFCC作为输入，原始语音作为decoder targets的时候，能够得到最好的representations. 这强迫系统学习生成在特征抽取的过程中，被移除的sample level的细节。此外，我们注意到VQ-VAE模型可以生成在声学内容和说话人信息之间最好的分割。我们调研VQ-VAE的可视化直观性，通过将它们映射到phonemes，展示了模型超参数在可视化上的影响，并且提出了一个新的正则化机制，能够提高latent representation -&gt; phonetic content 的质量。最终，我们展示了模型在ZeroSpeech 2017声学单元发现任务上的有效性，度量了当一句话的音素发生了最小改变的时候，learned representation的区分度。</p>
+<h2 id="Representation-learning-with-neural-networks"><a href="#Representation-learning-with-neural-networks" class="headerlink" title="Representation learning with neural networks"></a>Representation learning with neural networks</h2><p>神经网络是高层级信息处理的模型，常用多层计算单元来进行实现。每一层可以被理解为是一个特征抽取器，它的输出被传递到上游单元。特别是在图像领域，神经网络学习到的特征可以被展示出一个可视化原子的层级结构，能够与可视化的脑皮层组织在一定程度上匹配。相似地，当应用到语音领域时，神经网络倾向于在音乐，语音的低层级上学习到听觉的频谱特征。</p>
+<p>A. 有监督特征学习</p>
+<p>神经网络能够采用有监督或者无监督的方式学习到数据表征。在有监督的情况下，从大规模数据集中学习的特征是能直接被使用的，除了data-poor tasks。例如，在视觉领域，ImageNet中发现的特征也会被用作其他计算机视觉任务的输入表示。相似的，语音社区采用从在音素预测任务的网络中抽取的瓶颈特征也可以作为ASR的特征表示。相似的，在NLP，可以从机器翻译或者语言推理任务训练的网络抽取通用文本特征。</p>
+<p>B. 无监督特征学习</p>
+<p>在这篇文章中，我们关注于无监督特征学习。因为没有训练标签，所以我们采用自编码器，i.e. 网络任务是重构她们的输入。自编码器采用一个encoding network来抽取隐状态表示，然后这个隐状态表示被输入到一个解码器网络来恢复原始数据。理想情况下，隐状态表示保留了原始数据的显著特征，是容易分析和解决的，e.g. 通过解耦数据中不同因子的变化，并且摒弃虚假特征（噪音）。这些渴望的性质典型是通过一个包含正则化技巧和contraints or bottlenecks的明智的应用。因此，自动编码器学习到的表示会受到两种相互竞争的力量的影响。一方面，它会提供给解码器以必要信息为了完美的重构，因此会在隐状态提取尽可能多的输入数据特征模式。另一方面，contraints限制了一些信息需要被摒弃，避免了latent representation颠倒到微不足道。因此，瓶颈特征对于强迫网络学习到一个非-微不足道的数据转换是必要的。</p>
+<p>降低隐表示的维度是应用到隐向量的最基本的约束，autoencoder扮演作为一个非线性的variant of 线性低维数据映射，如PCA和SVD。然而，这样的表示是很难直观解释的，因为输入的重构完全依赖于所有的隐状态特征。对比来讲，字典学习的技巧(dictionary learning techniques)，例如sparse和non-negative decompositions，从一个大池子里使用了小数据量的挑选特征来表示每一种输入特征，能够帮助他们的可解释性。基于VQ的离散特征学习能够被视为sparseness的一种极端形式，其中，重构仅需使用字典中唯一的一个元素。</p>
+<p>VAE提出了一种特征学习的不同的表示方式，follows 概率框架。自编码网络结构是从一个latent variable generative model衍生的。首先，一个latent vector $z$ 被从一个先验概率$p(z)$ 采样（典型情况下，是一个多维的正态分布）。然后，数据采样点$x$是采用一个深度解码器神经网络来生成的，神经网络的参数是$\theta$, $x \sim p(x|z;\theta)$。然而，在最大似然估计训练中，计算精准的后验概率分布$p(z|x)$是很困难的。取而代之的是，VAE给后验概率引入了一个变分估计，$q(z|x;\phi)$，这个变分估计是通过一个参数为$\phi$的编码器神经网络建模的。因此VAE模拟了一个传统的自编码器的过程，其中，其中，编码器生成隐状态的分布，而不是deterministic encodings，然而解码器是从这个分布生成的样本上进行训练。编码和解码网络是联合训练的，以最大化一个lower bound on the log-likelihood of data point x:</p>
+<script type="math/tex; mode=display">
+J_{VAE}(\theta, \phi; x) = E_{q(z|x;\phi)}[log p(x|z;\theta)] - \beta D_{KL}(q(z|x;\phi)||p(z))</script><p>以上公式中的两个terms分别是autoencoder的重构损失，以及一个对隐状态应用了penalty term。特别地，KL散度表示了网络中的信息数量，即隐表示携带的有关数据样本的信息数量。因此它作为一个隐表示的一个信息瓶颈，其中$\beta$控制了重构质量和表示相似度之间的trade-off。</p>
+<p>VAE目标函数的另一种表示方式明确的限制了隐表示的信息：</p>
+<script type="math/tex; mode=display">
+J_{VAE}(\theta, \phi; x) = E_{q(z|x;\phi)}[log p(x|z;\theta)] - max(B, D_{KL}(q(z|x;\phi)||p(z)))</script><p>其中常数$B$是指$q$中自由信息的数量，因为模型仅仅会被惩罚，如果它比隐状态的先验损失传递了超过B的信息。</p>
+<p>近期提出的一种VQ-VAE的方式，用确定的量化特征，取代了连续和随机的隐向量。VQ-VAE</p>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
 </search>
