@@ -1048,4 +1048,79 @@ E_{z∼Q(·|Y,X)} [log P(Y|z, X)] − \mathcal{D} [Q(z|Y, X)∥P(z|X)]</script><
         <category>工作</category>
       </categories>
   </entry>
+  <entry>
+    <title>ai-class-A-best-papers</title>
+    <url>/2021/07/08/ai-class-A-best-papers/</url>
+    <content><![CDATA[<h1 id="AI领域A类会议最佳论文"><a href="#AI领域A类会议最佳论文" class="headerlink" title="AI领域A类会议最佳论文"></a>AI领域A类会议最佳论文</h1><h2 id="List-of-papers"><a href="#List-of-papers" class="headerlink" title="List of papers"></a>List of papers</h2><p><strong>AAAI 2021</strong></p>
+<ul>
+<li>Best Paper Awards</li>
+</ul>
+<ol>
+<li><p><a href="https://arxiv.org/pdf/2012.07436.pdf"><strong><em>Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting</em></strong></a></p>
+<p><strong>Institution(s):</strong> Beihang University, UC Berkeley, Rutgers University, Beijing Guowang Fuda Science &amp; Technology Development Company</p>
+<p><strong>Authors:</strong> Haoyi Zhou, Shanghang Zhang, Jieqi Peng, Shuai Zhang, Jianxin Li, Hui Xiong, Wancai Zhang</p>
+</li>
+<li><p><a href="https://arxiv.org/pdf/2012.03083.pdf"><strong><em>Exploration-Exploitation in Multi-Agent Learning: Catastrophe Theory Meets Game Theory</em></strong></a></p>
+<p><strong>Institution(s):</strong> Singapore University of Technology and Design</p>
+<p><strong>Authors:</strong> Stefanos Leonardos, Georgios Piliouras</p>
+</li>
+<li><p><a href="https://arxiv.org/pdf/2012.03083.pdf"><strong><em>Exploration-Exploitation in Multi-Agent Learning: Catastrophe Theory Meets Game Theory</em></strong></a></p>
+<p><strong>Institution(s):</strong> Dartmouth College, University of Texas at Austin, Google AI</p>
+<p><strong>Authors:</strong> Ruibo Liu, Chenyan Jia, Jason Wei, Guangxuan Xu, Lili Wang, and Soroush Vosoughi</p>
+</li>
+</ol>
+<ul>
+<li>Best Paper Runners Up</li>
+</ul>
+<ol>
+<li><p><strong><em><a href="https://arxiv.org/pdf/2009.12947.pdf">Learning From Extreme Bandit Feedback</a></em></strong></p>
+<p><strong>Institution(s):</strong> UC Berkeley, University of Texas at Austin</p>
+<p><strong>Authors:</strong> Romain Lopez, Inderjit Dhillon, Michael I. Jordan</p>
+</li>
+<li><p><strong><em><a href="https://arxiv.org/pdf/2004.11207.pdf">Self-Attention Attribution: Interpreting Information Interactions Inside Transformer</a></em></strong></p>
+<p><strong>Institution(s):</strong> Beihang University, Microsoft Research</p>
+<p><strong>Authors:</strong> Yaru Hao, Li Dong, Furu Wei, Ke Xu</p>
+</li>
+<li><p><strong><em><a href="https://arxiv.org/pdf/2009.06560.pdf">Dual-Mandate Patrols: Multi-Armed Bandits for Green Security</a></em></strong></p>
+<p><strong>Institution(s):</strong> Harvard University, Carnegie Mellon University</p>
+<p><strong>Authors:</strong> Lily Xu, Elizabeth Bondi, Fei Fang, Andrew Perrault, Kai Wang, Milind Tambe</p>
+</li>
+</ol>
+<h2 id="AAAI-2021-Informer"><a href="#AAAI-2021-Informer" class="headerlink" title="AAAI 2021 - Informer"></a>AAAI 2021 - Informer</h2>]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Awesome-bloggers</title>
+    <url>/2021/07/08/awesome-bloggers/</url>
+    <content><![CDATA[<h1 id="Awesome-bloggers"><a href="#Awesome-bloggers" class="headerlink" title="Awesome bloggers"></a>Awesome bloggers</h1><h2 id="TTS"><a href="#TTS" class="headerlink" title="TTS"></a>TTS</h2><p><a href="https://rayeren.github.io">https://rayeren.github.io</a>   Yi Ren (任意)   FastSpeech</p>
+<p><a href="https://www.microsoft.com/en-us/research/people/xuta/">https://www.microsoft.com/en-us/research/people/xuta/</a> Xu Tan (谭旭) FastSpeech 二作</p>
+<h2 id="AI"><a href="#AI" class="headerlink" title="AI"></a>AI</h2><p><a href="https://dczha.com">https://dczha.com</a>   Daochen Zha    DouZero</p>
+<p><a href="https://www.alanshawn.com">https://www.alanshawn.com</a>   Alan Xiang （项子越） 中山大学勤奋博主  </p>
+<h2 id="Good-resources"><a href="#Good-resources" class="headerlink" title="Good resources"></a>Good resources</h2><p><a href="https://clemense.github.io">https://clemense.github.io</a>.  Clemens Eppner   Nvidia</p>
+<h2 id="Acadamy’s-great-scholar-leaders"><a href="#Acadamy’s-great-scholar-leaders" class="headerlink" title="Acadamy’s great scholar leaders"></a>Acadamy’s great scholar leaders</h2><p><a href="https://dl.acm.org/profile/81350580267/publications?Role=author&amp;pageSize=20&amp;startPage=1">https://dl.acm.org/profile/81350580267/publications?Role=author&amp;pageSize=20&amp;startPage=1</a>    Tie-Yan Liu   Microsoft</p>
+<h1 id="Awesome-Company’s-Bloggers"><a href="#Awesome-Company’s-Bloggers" class="headerlink" title="Awesome Company’s Bloggers"></a>Awesome Company’s Bloggers</h1><h2 id="TTS-1"><a href="#TTS-1" class="headerlink" title="TTS"></a>TTS</h2><p><a href="https://speechresearch.github.io">https://speechresearch.github.io</a></p>
+<p><a href="http://www.kecl.ntt.co.jp/people/kameoka.hirokazu/Demos/">http://www.kecl.ntt.co.jp/people/kameoka.hirokazu/Demos/</a></p>
+]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>简单的生活法则</title>
+    <url>/2021/07/08/simple-rules-for-life-decisions/</url>
+    <content><![CDATA[<h1 id="简单的生活法则"><a href="#简单的生活法则" class="headerlink" title="简单的生活法则"></a>简单的生活法则</h1><ol>
+<li><p>Mental Models I Find Repeatedly Useful</p>
+<p><a href="https://medium.com/@yegg/mental-models-i-find-repeatedly-useful-936f1cc405d">https://medium.com/@yegg/mental-models-i-find-repeatedly-useful-936f1cc405d</a></p>
+</li>
+<li><p>THREAD: 15 of the most useful razors and rules I’ve found. Rules of thumb that simplify decisions.</p>
+<p><a href="https://twitter.com/george__mack/status/1350513143387189248">https://twitter.com/george__mack/status/1350513143387189248</a></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+  </entry>
 </search>
