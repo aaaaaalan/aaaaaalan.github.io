@@ -1123,4 +1123,88 @@ E_{z∼Q(·|Y,X)} [log P(Y|z, X)] − \mathcal{D} [Q(z|Y, X)∥P(z|X)]</script><
         <category>生活</category>
       </categories>
   </entry>
+  <entry>
+    <title>End-to-end TTS &amp; VC 文章总结</title>
+    <url>/2021/07/20/end2end/</url>
+    <content><![CDATA[<h1 id="End-to-end-TTS-amp-VC"><a href="#End-to-end-TTS-amp-VC" class="headerlink" title="End-to-end TTS &amp; VC"></a>End-to-end TTS &amp; VC</h1><h2 id="TTS"><a href="#TTS" class="headerlink" title="TTS"></a>TTS</h2><p><a href="https://arxiv.org/pdf/2006.03575.pdf">END-TO-END ADVERSARIAL TEXT-TO-SPEECH</a> —- EATS ~ ICLR 2021</p>
+<p><a href="https://arxiv.org/pdf/2106.06103.pdf">Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech</a> —- VITS ~ ICML 2021</p>
+<p><a href="https://arxiv.org/pdf/2011.03568v1.pdf">WAVE-TACOTRON: SPECTROGRAM-FREE END-TO-END TEXT-TO-SPEECH SYNTHESIS</a> —- Wave-Tacotron ~ ICASSP 2021</p>
+<p><a href="https://arxiv.org/pdf/2106.09660.pdf">WaveGrad 2: Iterative Refinement for Text-to-Speech Synthesis</a> —- WaveGrad 2 ~ Interspeech 2021</p>
+<h2 id="VC"><a href="#VC" class="headerlink" title="VC"></a>VC</h2><p><a href="https://arxiv.org/pdf/1904.04169.pdf">Parrotron: An End-to-End Speech-to-Speech Conversion Model and its Applications to Hearing-Impaired Speech and Speech Separation</a> —- Parrotron ~ Interspeech 2019</p>
+<p><a href="https://export.arxiv.org/pdf/2104.07283">Towards end-to-end F0 voice conversion based on Dual-GAN with convolutional wavelet kernels</a></p>
+<p><a href="https://arxiv.org/pdf/2106.00992.pdf">NVC-Net: End-to-End Adversarial Voice Conversion</a> —- NVC-Net</p>
+<p><a href="https://arxiv.org/pdf/2010.14150.pdf">FRAGMENTVC: ANY-TO-ANY VOICE CONVERSION BY END-TO-END EXTRACTING AND FUSING FINE-GRAINED VOICE FRAGMENTS WITH ATTENTION</a> —- FRAGMENTVC ~ ICASSP 2021 ~ Audio2Mel</p>
+<p><a href="https://arxiv.org/pdf/2002.03808.pdf">Vocoder-free End-to-End Voice Conversion with Transformer Network</a> —- Transformer-VC ~ Raw_spectrum - to - raw_spectrum</p>
+<p><a href="https://arxiv.org/pdf/2104.02901v2.pdf">S2VC: A Framework for Any-to-Any Voice Conversion with Self-Supervised Pretrained Representations</a> S2VC ~ self-supervised</p>
+<h2 id="METRIC"><a href="#METRIC" class="headerlink" title="METRIC"></a>METRIC</h2><p><a href="https://arxiv.org/pdf/2107.09392.pdf">SVSNet: An End-to-end Speaker Voice Similarity Assessment Model</a> —- SVSNet ~ Similarity</p>
+<p><a href="https://arxiv.org/pdf/2104.03017v2.pdf">Utilizing Self-supervised Representations for MOS Prediction</a> —- MOS</p>
+<p><a href="https://arxiv.org/pdf/1904.08352v3.pdf">MOSNet: Deep Learning-based Objective Assessment for Voice Conversion</a> —- MOSNet </p>
+<p><a href="https://arxiv.org/pdf/2104.11673v1.pdf">Deep Learning Based Assessment of Synthetic Speech Naturalness</a> —- MOS </p>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>vits</title>
+    <url>/2021/07/15/vits/</url>
+    <content><![CDATA[<h1 id="Conditional-Variational-Autoencoder-with-Adversarial-Learning-for-End-to-End-Text-to-Speech"><a href="#Conditional-Variational-Autoencoder-with-Adversarial-Learning-for-End-to-End-Text-to-Speech" class="headerlink" title="Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech"></a>Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>最近提出了几种支持单阶段训练和并行采样的端到端文本到语音（TTS）模型，但它们的样本质量与两阶段 TTS 系统的样本质量不匹配。在这项工作中，我们提出了一种并行的端到端 TTS 方法，它比当前的两阶段模型生成更自然的声音。我们的方法采用变分推理，并通过归一化流程和对抗性训练过程进行增强，从而提高了生成建模的表达能力。我们还提出了一个随机持续时间预测器来从输入文本合成具有不同节奏的语音。通过对潜在变量和随机持续时间预测器的不确定性建模，我们的方法表达了自然的一对多关系，其中可以以多种方式以不同的音高和节奏说出文本输入。对 LJ Speech（单个说话者数据集）的主观人类评估（平均意见分数或 MOS）表明，我们的方法优于最好的公开可用的 TTS 系统，并实现了与地面实况相当的 MOS。 </p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>文本到语音 (TTS) 系统从给定文本通过多个组件合成原始语音波形。 随着深度神经网络的快速发展，除了文本规范化和音素化等文本预处理之外，TTS 系统管道已被简化为两阶段生成建模。 第一阶段是从预处理的文本中生成中间语音表示，如 Melspectrograms 或语言特征，第二阶段是生成以中间表示为条件的原始波形。 每个两级管道的模型都是独立开发的。</p>
+<p>基于神经网络的自回归 TTS 系统已经显示出合成真实语音的能力，但它们的顺序生成过程使得现代并行处理器难以充分利用。为了克服这个限制并提高合成速度，已经提出了几种非自回归方法。在文本到谱图生成步骤中，尝试从预训练的自回归教师网络中提取注意力图，以降低学习文本和谱图之间对齐的难度.最近，基于似然的方法通过估计或学习最大化目标梅尔谱图的可能性的比对来进一步消除对外部比对器的依赖。同时，在第二阶段模型中探索了生成对抗网络（GAN）。基于 GAN 的前馈网络具有多个鉴别器，每个鉴别器区分不同尺度或周期的样本，实现高质量的原始波形合成。</p>
+<p>尽管并行 TTS 系统取得了进展，但两级管道仍然存在问题，因为它们需要顺序训练或微调才能进行高质量的生产，其中后期模块使用早期模型生成的样本进行训练。此外，它们对预定义中间特征的依赖妨碍了应用学习到的隐藏表示来获得性能的进一步改进。最近，几项工作，即 FastSpeech 2s 和 EATS ，提出了有效的端到端训练方法，例如对短音频剪辑而不是整个波形进行训练，利用梅尔谱图解码器来帮助文本表示学习，并设计专门的谱图损失来放松目标和生成语音之间的长度不匹配。然而，尽管通过利用学习的表示可能提高性能，但它们的合成质量落后于两阶段系统。 </p>
+<p>在这项工作中，我们提出了一种并行的端到端 TTS 方法，它比当前的两阶段模型生成更自然的声音。使用变分自编码器 (VAE)，我们通过潜在变量连接 TTS 系统的两个模块，以实现高效的端到端学习。为了提高我们方法的表达能力，以便可以合成高质量的语音波形，我们将标准化流应用于我们的条件先验分布和波形域的对抗训练。除了生成细粒度的音频之外，TTS 系统表达一对多关系也很重要，在这种关系中，文本输入可以以多种方式以不同的变化（例如，音调和持续时间）说出。为了解决一对多的问题，我们还提出了一个随机持续时间预测器来从输入文本合成具有不同节奏的语音。通过对潜在变量的不确定性建模和随机持续时间预测器，我们的方法可以捕获无法用文本表示的语音变化。</p>
+<p>与最好的公开可用的 TTS 系统 Glow-TTS和 HiFi-GAN相比，我们的方法获得了更自然的语音和更高的采样效率。 我们公开演示页面和源代码。</p>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p>在本节中，我们将解释我们提出的方法及其架构。 所提出的方法主要在前三个小节中描述：条件 VAE 公式； 来自变分推理的对齐估计； 用于提高合成质量的对抗性训练。 本节末尾描述了整体架构。 图 1a 和 1b 分别显示了我们方法的训练和推理过程。 从现在开始，我们将把我们的方法称为端到端文本到语音（VITS）对抗学习的变分推理。</p>
+<h3 id="变分推断"><a href="#变分推断" class="headerlink" title="变分推断"></a>变分推断</h3><h4 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h4><p>VITS 可以表示为条件 VAE，其目标是最大化数据 $log p_θ (x|c)$ 的难以处理的边际对数似然的变分下界，也称为证据下界 (ELBO)：</p>
+<script type="math/tex; mode=display">
+log p_θ (x|c) ≥ E_{q_{φ(z|x)}}  [log p_θ (x|z)−log \frac{q_φ(z|x)} {p_θ (z|c)}]</script><p>其中 $p_θ(z|c)$ 表示给定条件 $c$ 的潜在变量 $z$ 的先验分布，$p_θ(x|z)$ 是数据点 $x$ 的似然函数，$q_φ(z|x)$ 是近似值 后分布。 训练损失是负的 ELBO，可以看作是重建损失的总和 - log pθ(x|z) 和 KL 散度 $log q_φ(z|x) - log p_θ(z|c)$，其中 $z ∼ q_φ(z|x)$。</p>
+<h4 id="重构损失"><a href="#重构损失" class="headerlink" title="重构损失"></a>重构损失</h4><p>作为重建损失中的目标数据点，我们使用梅尔谱图而不是原始波形，用 $x_{mel}$ 表示。 我们通过解码器将潜在变量 $z$ 上采样到波形域 $\hat y$，并将 $\hat y$ 变换到梅尔谱图域 $\hat x_{mel}$。 然后将预测和目标梅尔谱图之间的 $L_1$ 损失用作重建损失：</p>
+<script type="math/tex; mode=display">
+L_{recon} = ∥x_{mel} − \hat x_{mel}∥_1</script><p>这可以看作是最大似然估计，假设数据分布为拉普拉斯分布并忽略常数项。 我们定义了梅尔谱域中的重建损失，以通过使用近似人类听觉系统响应的梅尔尺度来提高感知质量。 请注意，来自原始波形的梅尔谱图估计不需要可训练的参数，因为它只使用 STFT 和线性投影到梅尔尺度上。 此外，估计仅在训练期间使用，而不是在推理期间使用。 在实践中，我们不会对整个潜在变量 $z$ 进行上采样，而是使用部分序列作为解码器的输入，这是用于高效端到端训练的窗口生成器训练。</p>
+<h4 id="KL-散度"><a href="#KL-散度" class="headerlink" title="KL-散度"></a>KL-散度</h4><p>先验编码器 $c$ 的输入条件由从文本中提取的音素 $c_{text}$ 和音素和潜在变量之间的对齐 $A$ 组成。 对齐是一个硬单调注意矩阵，带有 $|c_{text}| × |z|$ 维度表示每个输入音素扩展到与目标语音时间对齐的时间。 因为对齐没有真实标签，我们必须在每次训练迭代时估计对齐，我们将在第 2.2.1 节中讨论。 在我们的问题设置中，我们旨在为后验编码器提供更多高分辨率信息。 因此，我们使用目标语音 $x_<br>{lin}$ 的线性频谱图而不是梅尔频谱图作为输入。 请注意，修改后的输入不会违反变分推理的属性。 KL散度则为：</p>
+<script type="math/tex; mode=display">
+L_{kl} =logq_φ(z|x_{lin})−logp_θ(z|c_{text},A),</script><script type="math/tex; mode=display">
+z ∼ q_φ(z|x_{lin}) = N(z; μ_φ(x_{lin}), σ_φ(x_{lin}))</script><p>分解正态分布用于参数化我们的先验和后验编码器。 我们发现增加先验分布的表现力对于生成真实样本很重要。 因此，我们应用了归一化流 $f_θ$ ，它允许在分解的正态先验基础之上，按照变量变化规则将简单分布可逆变换为更复杂的分布分配：</p>
+<script type="math/tex; mode=display">
+p_{\theta} (z|c) = N(f_{\theta} (z);μ_{\theta} (c),σ_{\theta} (c))􏰀􏰀􏰀 | det \frac {∂f_θ(z)} {∂ z}􏰀􏰀􏰀,</script><script type="math/tex; mode=display">
+c = [c_{text}, A]</script><h3 id="对齐估计"><a href="#对齐估计" class="headerlink" title="对齐估计"></a>对齐估计</h3><h4 id="MONOTONIC-ALIGNMENT-SEARCH-单调对齐搜索"><a href="#MONOTONIC-ALIGNMENT-SEARCH-单调对齐搜索" class="headerlink" title="MONOTONIC ALIGNMENT SEARCH 单调对齐搜索"></a>MONOTONIC ALIGNMENT SEARCH 单调对齐搜索</h4><p>为了估计输入文本和目标语音之间的对齐 A，我们采用了单调对齐搜索 (MAS)（Kim 等人，2020 年），这是一种搜索对齐的方法，该方法可以最大化由归一化流 f 参数化的数据的可能性：</p>
+<script type="math/tex; mode=display">
+A = arg max_{\hat A} log p(x|c_{text} , \hat A) = arg max_{\hat A} log N(f(x); μ(c_{text}, \hat A), σ(c_{text}, \hat A))</script><p>在人类按顺序阅读文本而不跳过任何单词的事实之后，候选对齐被限制为单调和非跳过。 为了找到最佳对齐方式，Kim 等人 (2020) 使用动态规划。 在我们的设置中直接应用 MAS 很困难，因为我们的目标是 ELBO，而不是确切的对数似然。 因此，我们重新定义 MAS 以找到最大化 ELBO 的对齐，这简化为找到最大化潜在变量 $z$ 的对数似然的对齐：</p>
+<script type="math/tex; mode=display">
+arg max_{\hat A} log p_θ(x_{mel}|z) − log \frac {q_φ(z|x_{lin})} {p_θ(z|c_{text}, \hat A)}
+= arg max_{\hat A} log p_θ(z|c_{text}, \hat A)</script><script type="math/tex; mode=display">
+= log N(f_θ(z); μ_θ(c_{text}, \hat A), σ_θ(c_{text}, \hat A))</script><p>由于等式 5 与等式 6 相似，我们可以不加修改地使用原始 MAS 实现。 附录 A 包括 MAS 的伪代码。</p>
+<h4 id="来自文本的持续时间预测"><a href="#来自文本的持续时间预测" class="headerlink" title="来自文本的持续时间预测"></a>来自文本的持续时间预测</h4><p>我们可以通过对估计对齐$\sum_j A_{i,j}$的每一行中的所有列求和来计算每个输入标记 $d_i$ 的持续时间。 正如之前的工作（Kim 等人，2020 年）所提出的那样，持续时间可用于训练确定性持续时间预测器，但它无法表达一个人每次以不同语速说话的方式。 为了生成类似人类的语音节奏，我们设计了一个随机持续时间预测器，使其样本遵循给定音素的持续时间分布。随机持续时间预测器是基于流的生成模型，通常通过最大似然估计进行训练。 然而，最大似然估计的直接应用是困难的，因为每个输入音素的持续时间是 1) 一个离散整数，需要对其进行反量化以使用连续归一化流，以及 2) 一个标量，它阻止了高维 可逆性引起的变换。我们应用变分反量化（Ho et al., 2019）和变分数据增强（Chen et al., 2020）来解决这些问题。 具体来说，我们引入两个随机变量 $u$ 和 $ν$，它们具有与持续时间序列 $d$ 相同的时间分辨率和维数，分别用于变分去组化和变分数据增强。 我们将 $u$ 的支持度限制为 $[0, 1)$，以便差 $d - u$ 成为正实数序列，并且我们将 $ν$ 和 $d$ 通道级联以形成更高维的潜在表示。 我们通过近似后验分布 $q_φ(u, ν|d, c_{text})$ 对两个变量进行采样。 由此产生的目标是音素持续时间的对数似然的变分下界：</p>
+<script type="math/tex; mode=display">
+logp_θ(d|c_{text}) ≥ E_{q_φ (u,ν |d,c_{text} )} log \frac {p_θ(d-u,v|c_{text})} {q_φ (u, ν |d, c_{text} )}</script><p>训练损失 $L_{dur}$ 是负变分下界。 我们将停止梯度算子 (van den Oord et al., 2017) 应用于输入条件，以防止反向传播输入的梯度，以便持续时间预测器的训练不会影响其他模块的训练。</p>
+<p>取样程序比较简单； 通过随机持续时间预测器的逆变换从随机噪声中采样音素持续时间，然后将其转换为整数。</p>
+<h3 id="对抗训练"><a href="#对抗训练" class="headerlink" title="对抗训练"></a>对抗训练</h3><p>为了在我们的学习系统中采用对抗性训练，我们添加了一个鉴别器 $D$，用于区分解码器 $G$ 生成的输出和真实波形 $y$。 在这项工作中，我们使用了两种成功应用于语音合成的损失类型； 用于对抗训练的最小二乘损失函数 (Mao et al., 2017)，以及用于训练生成器的附加特征匹配损失 (Larsen et al., 2016)：</p>
+<script type="math/tex; mode=display">
+L_{adv}(D) = E_{(y,z)}􏰄 [(D(y) − 1)^2 + (D(G(z)))^2],</script><script type="math/tex; mode=display">
+L_{adv}(G) = E_z [(D(G(z)) − 1)^2] ,</script><script type="math/tex; mode=display">
+L_{fm}(G) = E_{(y,z)} [\sum_{l=1}^T \frac {1} {N_l} ∥D^l (y) − D^l (G(z))∥_1 ]</script><p>其中 $T$ 表示鉴别器中的总层数，$D_l$ 输出具有 $N_l$ 个特征的鉴别器第 $l$ 层的特征图。 值得注意的是，特征匹配损失可以看作是在鉴别器的隐藏层中测量的重建损失，建议作为 VAE 逐元素重建损失的替代方案。</p>
+<h3 id="最终的损失函数"><a href="#最终的损失函数" class="headerlink" title="最终的损失函数"></a>最终的损失函数</h3><p>通过 VAE 和 GAN 训练的结合，训练我们的条件 VAE 的总损失可以表示如下：</p>
+<script type="math/tex; mode=display">
+L_{vae} = L_{recon} +L_{kl} +L_{dur} +L_{adv}(G)+L_{fm}(G)</script><h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p>所提出模型的整体架构由后验编码器、先验编码器、解码器、鉴别器和随机持续时间预测器组成。 后验编码器和鉴别器仅用于训练，不用于推理。 附录 B 中提供了架构详细信息。</p>
+<h4 id="2-5-1-后验编码器"><a href="#2-5-1-后验编码器" class="headerlink" title="2.5.1 后验编码器"></a>2.5.1 后验编码器</h4><p>对于后验编码器，我们在 WaveGlow 和 Glow-TTS 中使用非因果 WaveNet 残差块。 WaveNet 残差块由带有门控激活单元 (gated activation unit) 和跳过连接 (skip connection) 的扩张卷积层 (dilated convolutions) 组成。 块上方的线性投影层产生正态后验分布的均值和方差。 对于多说话人的情况，我们在残差块中使用全局调节来添加说话人嵌入。 </p>
+<h4 id="2-5-2-先验编码器"><a href="#2-5-2-先验编码器" class="headerlink" title="2.5.2 先验编码器"></a>2.5.2 先验编码器</h4><p>先验编码器由处理输入音素 $c_{text}$ 的文本编码器和提高先验分布灵活性的归一化流 $f_θ$ 组成。 文本编码器是一个转换器 (Transformer) 编码器，它使用相对位置表示而不是绝对位置编码。 我们可以通过文本编码器和文本编码器上方的线性投影层从 $c_{text}$ 中获得隐藏表示 $h_{text}$，该线性投影层产生用于构建先验分布的均值和方差。 归一化流程是一堆仿射耦合层，由一堆 WaveNet 残差块组成。 为简单起见，我们将标准化流设计为一个体积保持变换 (volume-perserving transformation) ，雅可比行列式为 1。 对于多说话人的情况，我们通过全局条件将说话人嵌入添加到归一化流程中的残差块中。</p>
+<h4 id="2-5-3-解码器"><a href="#2-5-3-解码器" class="headerlink" title="2.5.3 解码器"></a>2.5.3 解码器</h4><p>解码器本质上是 HiFi-GAN V1 生成器。 它由一堆转置卷积组成，每个卷积后面跟着一个多感受野融合模块（MRF）。 MRF 的输出是具有不同感受野大小的残差块的输出之和。 对于多说话人设置，我们添加一个线性层来转换说话人嵌入并将其添加到输入潜在变量 $z$。</p>
+<h4 id="2-5-4-鉴别器"><a href="#2-5-4-鉴别器" class="headerlink" title="2.5.4 鉴别器"></a>2.5.4 鉴别器</h4><p>我们遵循 HiFi-GAN中提出的多周期鉴别器的鉴别器架构。 多周期鉴别器是基于马尔可夫窗口的子鉴别器的混合，每个子鉴别器都对输入波形的不同周期模式进行操作。</p>
+<h4 id="2-5-5-随机持续时间预测器"><a href="#2-5-5-随机持续时间预测器" class="headerlink" title="2.5.5 随机持续时间预测器"></a>2.5.5 随机持续时间预测器</h4><p>随机持续时间预测器根据条件输入 $h_{text}$ 估计音素持续时间的分布。 为了对随机持续时间预测器进行有效的参数化，我们用扩张的和深度可分离的卷积层堆叠残差块。 我们还将神经样条流应用于耦合层，该流通过使用单调有理二次样条采用可逆非线性变换的形式。 与常用的仿射耦合层相比，神经样条流以相似数量的参数提高了变换表达能力。 对于多说话人设置，我们添加一个线性层来转换扬声器嵌入并将其添加到输入 $h_{text}$。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h3 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h3><p>我们在两个不同的数据集上进行了实验。我们使用 LJ Speech 数据集与其他公开可用的模型和 VCTK 数据集进行比较，以验证我们的模型是否可以学习和表达不同的语音特征。 LJ Speech 数据集由单个扬声器的 13,100 个短音频剪辑组成，总长度约为 24 小时。音频格式为 16 位 PCM，采样率为 22 kHz，我们使用它时没有进行任何操作。我们将数据集随机分成训练集（12,500 个样本）、验证集（100 个样本）和测试集（500 个样本）。 VCTK 数据集包含大约 44,000 个短音频片段，由 109 位英语为母语的人发出，带有各种口音。音频剪辑的总长度约为 44 小时。音频格式为 16 位 PCM，采样率为 44 kHz。我们将采样率降低到 22 kHz。我们将数据集随机分为训练集（43,470 个样本）、验证集（100 个样本）和测试集（500 个样本）。</p>
+<h3 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h3><p>我们使用可以通过短时傅立叶变换 (STFT) 从原始波形中获得的线性频谱图作为后验编码器的输入。 变换的FFT大小、窗口大小和跳跃大小分别设置为1024、1024和256。 我们使用 80 波段梅尔尺度频谱图进行重建损失，这是通过将梅尔滤波器组应用于线性频谱图而获得的。 </p>
+<p>我们使用国际音标 (IPA) 序列作为先验编码器的输入。 我们使用开源软件将文本序列转换为 IPA 音素序列，并且在实现 Glow-TTS 之后，转换后的序列中穿插着空白标记。</p>
+<h3 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h3><p>网络使用 AdamW 优化器进行训练，其中 $β_1 = 0.8$、$β_2 = 0.99$ 和权重衰减 $λ = 0.01$。 学习率衰减按每个 epoch 的 $0.999^{1/8}$ 因子进行调度，初始学习率为 $2 × 10^{−4}$。 继之前的工作之后，我们采用了窗口生成器训练，这是一种仅生成一部分原始波形的方法，以减少训练期间的训练时间和内存使用量。 我们随机提取窗口大小为 32 的潜在表示片段以馈送至解码器，而不是馈送整个潜在表示，并且还从地面实况原始波形中提取相应的音频片段作为训练目标。 我们在 4 个 NVIDIA V100 GPU 上使用混合精度训练。 每个 GPU 的批量大小设置为 64，模型最多训练 800k 步。</p>
+<h3 id="用于比较的实验设置"><a href="#用于比较的实验设置" class="headerlink" title="用于比较的实验设置"></a>用于比较的实验设置</h3><p>我们将我们的模型与最好的公开可用模型进行了比较。 我们使用自回归模型 Tacotron 2 和基于流的非自回归模型 Glow-TTS 作为第一阶段模型，将 HiFi-GAN 作为第二阶段模型。 我们使用了他们的公开实现和预训练的权重。 由于两阶段 TTS 系统理论上可以通过顺序训练实现更高的合成质量，我们将微调的 HiFi-GAN 包括了高达 100k 步的预测输出 第一阶段模型。 我们根据经验发现，在教师强制模式下，使用 Tacotron 2 生成的梅尔谱图对 HiFi-GAN 进行微调，与使用生成的梅尔谱图微调相比，Tacotron 2 和 Glow-TTS 的质量更好。 Glow-TTS，因此我们在 Tacotron 2 和 Glow-TTS 中附加了更好的微调 HiFi-GAN。</p>
+<p>由于每个模型在采样过程中都有一定程度的随机性，我们在整个实验过程中固定了控制每个模型随机性的超参数。 Tactron 2 的 pre-net 中的 dropout 概率设置为 0.5。 对于 Glow-TTS，先验分布的标准偏差设置为 0.333。 对于 VITS，随机持续时间预测器的输入噪声标准差设置为 0.8，我们将比例因子 0.667 乘以先验分布的标准差。</p>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><h3 id="语音合成质量"><a href="#语音合成质量" class="headerlink" title="语音合成质量"></a>语音合成质量</h3><p>我们进行了众包 MOS 测试来评估质量。 评分者聆听随机选择的音频样本，并以 1 到 5 的 5 分制对它们的自然度进行评分。评分者被允许对每个音频样本进行一次评估，我们将所有音频片段标准化以避免幅度差异对分数的影响。 这项工作中的所有质量评估都是以这种方式进行的。</p>
+<p>评估结果如表 1 所示。 VITS 优于其他 TTS 系统，并实现了与地面实况相似的 MOS。 VITS (DDP) 采用 Glow-TTS 中使用的相同确定性持续时间预测器架构而不是随机持续时间预测器，在 MOS 评估中在 TTS 系统中得分第二高。 这些结果意味着 1）随机持续时间预测器比确定性持续时间预测器生成更真实的音素持续时间；2）我们的端到端训练方法是制作比其他 TTS 模型更好的样本的有效方法，即使保持相似 持续时间预测器架构。</p>
+<p>我们进行了一项消融研究以证明我们方法的有效性，包括先验编码器中的归一化流和线性尺度频谱图后验输入。 消融研究中的所有模型都经过最多 30 万步的训练。 结果如表 2 所示。去除先前编码器中的归一化流导致 1.52 MOS 比基线降低，这表明先验分布的灵活性显着影响合成质量。 用梅尔谱图替换后验输入的线性尺度谱图导致质量下降（-0.19 MOS），表明高分辨率信息对于 VITS 提高合成质量是有效的。</p>
+<p><img src="/images/vits_result1.png" alt="vits_result1"></p>
+<p><img src="/images/vits_result2.png" alt="vits_result2"></p>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
 </search>
