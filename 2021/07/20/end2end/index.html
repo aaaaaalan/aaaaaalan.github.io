@@ -28,7 +28,7 @@
 <meta property="og:description" content="TTS领域近些年的研究大多重点放在多阶段的模型建模和训练，如TTS分为前端文本处理、声学模型、声码器，而VC分为Audio2Mel，Mel2mel。我本人认为，端到端的模型才是TTS &#x2F; VC领域的重点，而end2end任务的难点主要在于声码器的合并，即对于高分辨率的语音采样点的降采样特征抽取和建模。近些年，一些学者和研究成员在end2end TTS 与end2end VC上发表了相关文章。因此本">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-20T03:28:15.000Z">
-<meta property="article:modified_time" content="2021-07-22T06:46:55.306Z">
+<meta property="article:modified_time" content="2021-07-28T08:12:08.366Z">
 <meta property="article:author" content="Alan Sun">
 <meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
 <meta name="twitter:card" content="summary">
@@ -192,7 +192,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-22 14:46:55" itemprop="dateModified" datetime="2021-07-22T14:46:55+08:00">2021-07-22</time>
+                <time title="修改时间：2021-07-28 16:12:08" itemprop="dateModified" datetime="2021-07-28T16:12:08+08:00">2021-07-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -216,20 +216,35 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="End-to-end-TTS-amp-VC"><a href="#End-to-end-TTS-amp-VC" class="headerlink" title="End-to-end TTS &amp; VC"></a>End-to-end TTS &amp; VC</h1><h2 id="TTS"><a href="#TTS" class="headerlink" title="TTS"></a>TTS</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.03575.pdf">END-TO-END ADVERSARIAL TEXT-TO-SPEECH</a> —- EATS ~ ICLR 2021</p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2106.06103.pdf">Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech</a> —- VITS ~ ICML 2021</p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2011.03568v1.pdf">WAVE-TACOTRON: SPECTROGRAM-FREE END-TO-END TEXT-TO-SPEECH SYNTHESIS</a> —- Wave-Tacotron ~ ICASSP 2021</p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2106.09660.pdf">WaveGrad 2: Iterative Refinement for Text-to-Speech Synthesis</a> —- WaveGrad 2 ~ Interspeech 2021</p>
-<h2 id="VC"><a href="#VC" class="headerlink" title="VC"></a>VC</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.04169.pdf">Parrotron: An End-to-End Speech-to-Speech Conversion Model and its Applications to Hearing-Impaired Speech and Speech Separation</a> —- Parrotron ~ Interspeech 2019</p>
-<p><a target="_blank" rel="noopener" href="https://export.arxiv.org/pdf/2104.07283">Towards end-to-end F0 voice conversion based on Dual-GAN with convolutional wavelet kernels</a></p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2106.00992.pdf">NVC-Net: End-to-End Adversarial Voice Conversion</a> —- NVC-Net</p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2010.14150.pdf">FRAGMENTVC: ANY-TO-ANY VOICE CONVERSION BY END-TO-END EXTRACTING AND FUSING FINE-GRAINED VOICE FRAGMENTS WITH ATTENTION</a> —- FRAGMENTVC ~ ICASSP 2021 ~ Audio2Mel</p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.03808.pdf">Vocoder-free End-to-End Voice Conversion with Transformer Network</a> —- Transformer-VC ~ Raw_spectrum - to - raw_spectrum</p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2104.02901v2.pdf">S2VC: A Framework for Any-to-Any Voice Conversion with Self-Supervised Pretrained Representations</a> S2VC ~ self-supervised</p>
-<h2 id="METRIC"><a href="#METRIC" class="headerlink" title="METRIC"></a>METRIC</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2107.09392.pdf">SVSNet: An End-to-end Speaker Voice Similarity Assessment Model</a> —- SVSNet ~ Similarity</p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2104.03017v2.pdf">Utilizing Self-supervised Representations for MOS Prediction</a> —- MOS</p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.08352v3.pdf">MOSNet: Deep Learning-based Objective Assessment for Voice Conversion</a> —- MOSNet </p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2104.11673v1.pdf">Deep Learning Based Assessment of Synthetic Speech Naturalness</a> —- MOS </p>
+        <h1 id="End-to-end-TTS-amp-VC"><a href="#End-to-end-TTS-amp-VC" class="headerlink" title="End-to-end TTS &amp; VC"></a>End-to-end TTS &amp; VC</h1><h2 id="TTS"><a href="#TTS" class="headerlink" title="TTS"></a>TTS</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.03575.pdf">END-TO-END ADVERSARIAL TEXT-TO-SPEECH</a> — EATS ~ ICLR 2021 ~ <strong>DeepMind</strong> ~ <a target="_blank" rel="noopener" href="https://github.com/yanggeng1995/EATS">repo</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2106.06103.pdf">Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech</a> — VITS ~ ICML 2021 ~ <strong>KAIST</strong> ~ <a target="_blank" rel="noopener" href="https://github.com/jaywalnut310/vits">repo</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2011.03568v1.pdf">WAVE-TACOTRON: SPECTROGRAM-FREE END-TO-END TEXT-TO-SPEECH SYNTHESIS</a> — Wave-Tacotron ~ ICASSP 2021 ~ <strong>Google</strong></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2106.09660.pdf">WaveGrad 2: Iterative Refinement for Text-to-Speech Synthesis</a> — WaveGrad 2 ~ Interspeech 2021 ~ <strong>Google (<em>Heiga Zen</em>)</strong> ~ <a target="_blank" rel="noopener" href="https://github.com/mindslab-ai/wavegrad2">repo</a></p>
+<h2 id="VC"><a href="#VC" class="headerlink" title="VC"></a>VC</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.04169.pdf">Parrotron: An End-to-End Speech-to-Speech Conversion Model and its Applications to Hearing-Impaired Speech and Speech Separation</a> — Parrotron ~ Interspeech 2019 ~ <strong>Google</strong> ~ <a target="_blank" rel="noopener" href="https://github.com/fd873630/Parrotron">repo</a></p>
+<p><a target="_blank" rel="noopener" href="https://export.arxiv.org/pdf/2104.07283">Towards end-to-end F0 voice conversion based on Dual-GAN with convolutional wavelet kernels</a> — F0-VC ~ WIP ~ <strong>Sorbonne</strong></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2106.00992.pdf">NVC-Net: End-to-End Adversarial Voice Conversion</a> — NVC-Net ~ UR ~ <strong>Sony</strong></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2010.14150.pdf">FRAGMENTVC: ANY-TO-ANY VOICE CONVERSION BY END-TO-END EXTRACTING AND FUSING FINE-GRAINED VOICE FRAGMENTS WITH ATTENTION</a> — FRAGMENTVC ~ ICASSP 2021 ~ Audio2Mel ~ <strong>NTU (<em>Hung-yi Lee</em>)</strong> ~ <a target="_blank" rel="noopener" href="https://github.com/yistLin/FragmentVC">repo</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.03808.pdf">Vocoder-free End-to-End Voice Conversion with Transformer Network</a> — Transformer-VC ~ WIP ~ Raw_spectrum - to - raw_spectrum ~ <strong>KNU</strong></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2104.02901v2.pdf">S2VC: A Framework for Any-to-Any Voice Conversion with Self-Supervised Pretrained Representations</a> S2VC ~ Interspeech 2021 ~ self-supervised ~ <strong>NTU (<em>Hung-yi Lee</em>)</strong> ~ <a target="_blank" rel="noopener" href="https://github.com/howard1337/S2VC">repo</a></p>
+<h2 id="METRIC"><a href="#METRIC" class="headerlink" title="METRIC"></a>METRIC</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2107.09392.pdf">SVSNet: An End-to-end Speaker Voice Similarity Assessment Model</a> — SVSNet ~ Similarity</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2104.03017v2.pdf">Utilizing Self-supervised Representations for MOS Prediction</a> — MOS ~ NTU (<em>Hung-yi Lee</em>) ~ <a target="_blank" rel="noopener" href="https://github.com/s3prl/s3prl">repo</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.08352v3.pdf">MOSNet: Deep Learning-based Objective Assessment for Voice Conversion</a> — MOSNet ~ IISAS ~ <a target="_blank" rel="noopener" href="https://github.com/lochenchou/MOSNet">repo</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2104.11673v1.pdf">Deep Learning Based Assessment of Synthetic Speech Naturalness</a> — MOS ~ QUTTUB ~ <a target="_blank" rel="noopener" href="https://github.com/gabrielmittag/NISQA">repo</a></p>
+<p>Tips: </p>
+<ul>
+<li><p>UR: Under Review</p>
+</li>
+<li><p>WIP: Work in Progress</p>
+</li>
+<li><p>KAIST：Korea Advanced Institute of Science and Technology，韩国科学技术院</p>
+</li>
+<li><p>KNU：Kyungpook National University，韩国庆北大学</p>
+</li>
+<li><p>IISAS：Institute of Information Science, Academia Sinica, Taipei, Taiwan，台湾中央研究院信息科学研究所</p>
+</li>
+<li><p>QUTTUB：Quality and Usability Lab, Technische Universita ̈t Berlin, Berlin, Germany，德国柏林工业大学质量和可用性实验室</p>
+</li>
+</ul>
 
     </div>
 
@@ -245,8 +260,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/07/15/vits/" rel="prev" title="vits">
-      <i class="fa fa-chevron-left"></i> vits
+    <a href="/2021/07/15/vits/" rel="prev" title="VITS">
+      <i class="fa fa-chevron-left"></i> VITS
     </a></div>
       <div class="post-nav-item"></div>
     </div>
