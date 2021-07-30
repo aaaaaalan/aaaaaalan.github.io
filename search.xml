@@ -1130,6 +1130,8 @@ E_{z∼Q(·|Y,X)} [log P(Y|z, X)] − \mathcal{D} [Q(z|Y, X)∥P(z|X)]</script><
 <p><a href="https://arxiv.org/pdf/2106.06103.pdf">Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech</a> — VITS ~ ICML 2021 ~ <strong>KAIST</strong> ~ <a href="https://github.com/jaywalnut310/vits">repo</a></p>
 <p><a href="https://arxiv.org/pdf/2011.03568v1.pdf">WAVE-TACOTRON: SPECTROGRAM-FREE END-TO-END TEXT-TO-SPEECH SYNTHESIS</a> — Wave-Tacotron ~ ICASSP 2021 ~ <strong>Google</strong></p>
 <p><a href="https://arxiv.org/pdf/2106.09660.pdf">WaveGrad 2: Iterative Refinement for Text-to-Speech Synthesis</a> — WaveGrad 2 ~ Interspeech 2021 ~ <strong>Google (<em>Heiga Zen</em>)</strong> ~ <a href="https://github.com/mindslab-ai/wavegrad2">repo</a></p>
+<p><a href="https://arxiv.org/pdf/2012.03500.pdf">EfficientTTS: An Efficient and High-Quality Text-to-Speech Architecture</a> — EFTS-Wac ~ ICML 2021 ~ <strong>PingAn (Chenfeng Miao)</strong> ~ <a href="https://github.com/liusongxiang/efficient_tts">repo</a></p>
+<p><a href="https://arxiv.org/pdf/2006.04558.pdf">FASTSPEECH 2: FAST AND HIGH-QUALITY END-TO- END TEXT TO SPEECH</a> — Fastspeech2 ~ ICLR 2021 ~ <strong>Zhejiang U &amp; Microsoft</strong> ~ <a href="https://github.com/ming024/FastSpeech2">repo</a></p>
 <h2 id="VC"><a href="#VC" class="headerlink" title="VC"></a>VC</h2><p><a href="https://arxiv.org/pdf/1904.04169.pdf">Parrotron: An End-to-End Speech-to-Speech Conversion Model and its Applications to Hearing-Impaired Speech and Speech Separation</a> — Parrotron ~ Interspeech 2019 ~ <strong>Google</strong> ~ <a href="https://github.com/fd873630/Parrotron">repo</a></p>
 <p><a href="https://export.arxiv.org/pdf/2104.07283">Towards end-to-end F0 voice conversion based on Dual-GAN with convolutional wavelet kernels</a> — F0-VC ~ WIP ~ <strong>Sorbonne</strong></p>
 <p><a href="https://arxiv.org/pdf/2106.00992.pdf">NVC-Net: End-to-End Adversarial Voice Conversion</a> — NVC-Net ~ UR ~ <strong>Sony</strong></p>
@@ -1140,7 +1142,7 @@ E_{z∼Q(·|Y,X)} [log P(Y|z, X)] − \mathcal{D} [Q(z|Y, X)∥P(z|X)]</script><
 <p><a href="https://arxiv.org/pdf/2104.03017v2.pdf">Utilizing Self-supervised Representations for MOS Prediction</a> — MOS ~ NTU (<em>Hung-yi Lee</em>) ~ <a href="https://github.com/s3prl/s3prl">repo</a></p>
 <p><a href="https://arxiv.org/pdf/1904.08352v3.pdf">MOSNet: Deep Learning-based Objective Assessment for Voice Conversion</a> — MOSNet ~ IISAS ~ <a href="https://github.com/lochenchou/MOSNet">repo</a></p>
 <p><a href="https://arxiv.org/pdf/2104.11673v1.pdf">Deep Learning Based Assessment of Synthetic Speech Naturalness</a> — MOS ~ QUTTUB ~ <a href="https://github.com/gabrielmittag/NISQA">repo</a></p>
-<p>Tips: </p>
+<p><strong>Tips:</strong> </p>
 <ul>
 <li><p>UR: Under Review</p>
 </li>
