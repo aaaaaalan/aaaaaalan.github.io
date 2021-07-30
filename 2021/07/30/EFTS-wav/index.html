@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本篇论文为一种高效的TTS方法，此种方法既可以实现高质量，也可以实现较快的推理效率。由平安技术研究院发表，代码在github社区有TTSer已经复现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EfficientTTS An Efficient and High-Quality Text-to-Speech Architecture">
+<meta property="og:url" content="http://example.com/2021/07/30/EFTS-wav/index.html">
+<meta property="og:site_name" content="海阔天空蓝">
+<meta property="og:description" content="本篇论文为一种高效的TTS方法，此种方法既可以实现高质量，也可以实现较快的推理效率。由平安技术研究院发表，代码在github社区有TTSer已经复现。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-30T02:47:41.000Z">
+<meta property="article:modified_time" content="2021-07-30T13:04:18.576Z">
+<meta property="article:author" content="Alan Sun">
+<meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/07/30/EFTS-wav/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>EfficientTTS An Efficient and High-Quality Text-to-Speech Architecture | 海阔天空蓝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">海阔天空蓝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个玩过n种运动的语音合成算法攻城狮</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/30/EFTS-wav/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alan Sun">
+      <meta itemprop="description" content="记录工作与生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空蓝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          EfficientTTS An Efficient and High-Quality Text-to-Speech Architecture
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-30 10:47:41 / 修改时间：21:04:18" itemprop="dateCreated datePublished" datetime="2021-07-30T10:47:41+08:00">2021-07-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">本篇论文为一种高效的TTS方法，此种方法既可以实现高质量，也可以实现较快的推理效率。由平安技术研究院发表，代码在github社区有TTSer已经复现。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="EfficientTTS：一种高效、高质量的文本转语音架构"><a href="#EfficientTTS：一种高效、高质量的文本转语音架构" class="headerlink" title="EfficientTTS：一种高效、高质量的文本转语音架构"></a>EfficientTTS：一种高效、高质量的文本转语音架构</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>在这项工作中，我们通过提出一种称为 EfficientTTS 的非自回归架构来解决文本到语音（TTS）任务。与主要的非自回归 TTS 模型需要外部对齐器进行训练不同，EfficientTTS 使用稳定的端到端训练程序来优化其所有参数，同时允许合成高质量的语音，是一种快速有效的方式。 EfficientTTS 是由一种新的单调对齐建模（monotonic alignment modeling）方法（也在本工作中引入）推动的，该方法在几乎不增加计算量的情况下指定对序列对齐的单调约束。通过将 EfficientTTS 与不同的前馈网络结构相结合，我们开发了一系列 TTS 模型，包括 text-to-melspectrogram 和 text-to-waveform 网络。我们的实验表明，所提出的模型在语音质量、训练效率和合成速度方面明显优于 Tacotron 2 (Shen et al., 2018) 和 Glow-TTS (Kim et al., 2020) 等对应模型，同时仍然产生强大的稳健性和多样性的演讲。此外，我们证明了所提出的方法可以轻松扩展到自回归模型，例如 Tacotron 2。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>文本到语音（TTS）是语音处理中的一项重要任务。随着深度学习的飞速发展，TTS 技术近年来受到了广泛关注。最流行的神经 TTS 模型是基于编码器-解码器框架的自回归模型。在这个框架中，编码器将文本序列作为输入并学习其隐藏表示，而解码器逐帧生成输出，即以自回归方式。随着自回归模型性能的大幅提升，综合效率正成为新的研究热点。</p>
+<p>最近，大量努力致力于非自回归 TTS 模型的开发。然而，大多数现有的非自回归 TTS 模型都存在训练过程复杂、计算成本或训练时间成本高的问题，使其不适合实际应用。在这项工作中，我们提出了 EfficientTTS，一种高效且高质量的文本转语音架构。我们的贡献总结如下，</p>
+<ul>
+<li>除了几乎不增加计算量的一般注意力机制之外，我们提出了一种新方法来为序列到序列模型产生软或硬单调对齐。 最重要的是，所提出的方法可以纳入任何注意力机制，而不受网络结构的限制。</li>
+<li>我们提出了 EfficientTTS，这是一种非自回归架构，可在没有额外对齐器的情况下从文本序列执行高质量语音生成。 EfficientTTS 是完全并行、完全卷积的，并且经过端到端训练，因此对于训练和推理都非常有效。</li>
+<li>我们开发了一系列基于 EfficientTTS 的 TTS 模型，包括： (1) EFTS-CNN，一个卷积模型以高训练效率学习 melspectrogram； (2) EFTS-Flow，一种基于流的模型，可实现具有可控语音变化的并行 melspectrogram 生成； (3) EFTS-Wav，一个完全端到端的模型，直接从文本序列中学习波形生成。 我们通过实验表明，与对应模型 Tacotron 2 和 Glow-TTS 相比，所提出的模型在语音质量、合成速度和训练效率方面取得了显着改善。</li>
+<li>我们还表明，所提出的方法可以很容易地扩展到自回归模型，如本文末尾的 Tacotron 2。</li>
+</ul>
+<p>本文的其余部分的结构如下。 第 2 节讨论相关工作。 我们在第 3 节中介绍了使用索引映射向量（index mapping vector）的单调对齐建模（monotonic alignment modeling）。第 4 节介绍了 EfficientTTS 架构。在第 5 节中，介绍了 EfficientTTS 模型。 第 6 节展示了实验结果和实现细节。 最后，第 7 节总结了本文。</p>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><h3 id="2-1-Non-Autoregressive-TTS-models"><a href="#2-1-Non-Autoregressive-TTS-models" class="headerlink" title="2.1 Non-Autoregressive TTS models"></a>2.1 Non-Autoregressive TTS models</h3><p>在 TTS 任务中，输入文本序列 $x = \{x_0,x_1,…,x_{T_1−1}\}$​​​​ 通过编码器-解码器帧转换为输出序列 $y = \{y_0 , y_1 , …, y_{T_2 −1} \}$​​​​​。 通常情况下，$x$​​首先通过编码器 $f: h = f(x)$​ 转换为一系列隐藏状态 $h = \{h_0,h_1,…,h_{T_1−1}\}$​，然后通过解码器产生输出$y$​。 对于每个输出时间步，注意力机制允许搜索 $h$ 的整个元素以生成上下文向量 $c$：</p>
+<script type="math/tex; mode=display">
+c_j = \sum^{T_1-1}_{i=0}􏰂 α_{i,j} ∗h_i,</script><p>其中 $α = \{α_{i,j} \} ∈ \mathcal{R}^{(T_1 ,T_2 )}$​ 是对齐矩阵。然后将 $c$ 馈送到另一个网络 $g$ 以生成输出 $y：y = g(c)$。 $f$ 和 $g$​ 的网络可以很容易地用并行结构替换，因为它们都获得一致的输入和输出长度。<strong>因此，构建非自回归 TTS 模型的关键在于并行对齐预测。</strong>在之前的工作中，大多数非自回归 TTS 模型从外部模型或工具中学习对齐，这使得训练变得复杂。最近，提出了 Flow-TTS（Miao 等，2020）、Glow-TTS（Kim 等，2020）和 EATS（Donahue 等，2020）。 Flow-TTS 和 EATS 在训练过程中直接从文本序列的隐藏表示中学习比对，没有考虑从输出序列中提取比对，使得训练效率低下。 Glow-TTS 使用独立算法提取每个输入token的持续时间，该算法排除了使用标准反向传播。另一方面，EfficientTTS 通过单个网络以完全端到端的方式联合学习序列对齐和语音生成，同时保持稳定高效的训练。</p>
+<h3 id="2-2-Monotonic-alignment-modeling"><a href="#2-2-Monotonic-alignment-modeling" class="headerlink" title="2.2 Monotonic alignment modeling"></a>2.2 Monotonic alignment modeling</h3><p>如第 2.1 节所述，通用注意力机制会在每个输出时间步检查每个输入步。 这种机制经常会遇到错位并且训练成本很高，尤其是对于长序列。 因此，如果结合了一些先验知识，它一定会有所帮助。 <strong>一般来说，单调对齐应该遵循严格的标准</strong>，如图1所示，包括：（1）<strong>单调性</strong>，在每个输出时间步，对齐位置永不倒退； (2) <strong>连续性</strong>，在每个输出时间步，对齐的位置最多向前移动一步； (3) <strong>完整性</strong>，对齐的位置必须覆盖输入标记的所有位置。 已经提出了许多先前的研究来确保正确的对齐（Li 等人，2020 年），但其中大多数需要连续的步骤，并且经常无法满足上述所有标准。 在这项工作中，我们提出了一种有效且高效地产生单调注意力的新方法。</p>
+<h2 id="采用IMV进行单调对齐建模"><a href="#采用IMV进行单调对齐建模" class="headerlink" title="采用IMV进行单调对齐建模"></a>采用IMV进行单调对齐建模</h2><p>我们通过提出<strong>索引映射向量 (IMV: index mapping vector)</strong> 开始本节，然后我们在单调对齐建模中利用 IMV。 我们进一步展示了如何将 IMV 合并到一般的序列到序列模型中。</p>
+<h3 id="3-1-IMV定义"><a href="#3-1-IMV定义" class="headerlink" title="3.1 IMV定义"></a>3.1 IMV定义</h3><p>设 $α∈\mathcal{R}^{(T_1,T_2)}$​​​ 为输入序列 $x∈\mathcal{R}^{(D_1,T_1)}$​​ ​和输出序列 $y∈ \mathcal{R}^{(D_2,T_2)}$​​ 之间的比对矩阵。 我们将索引映射向量 (IMV) $π$​​ 定义为索引向量 $p = \{0, 1, · · · , T_1 − 1\}$​ 的总和，由 $α$ 加权：</p>
+<script type="math/tex; mode=display">
+π_j = \sum^{T_1 -1}_{i=0} 􏰂 α_{i,j} ∗p_i,</script><p>其中，$0 ≤ j ≤ T_2 −1,π ∈ \mathcal{R}^{T_2},􏰂\sum^{T_1-1}_{i=0}α_{i,j} = 1$​​.</p>
+<p>我们可以将 IMV 理解为每个的预期位置输出时间步长，其中期望值是从 $0$ 到 $T_1-1$​ 的所有可能输入位置。</p>
+<h3 id="3-2-采用IMV进行单调对齐建模"><a href="#3-2-采用IMV进行单调对齐建模" class="headerlink" title="3.2 采用IMV进行单调对齐建模"></a>3.2 采用IMV进行单调对齐建模</h3><p><strong>连续性和单调性。</strong> 我们首先证明对齐矩阵 $α$​ 的连续性和单调性标准等价于以下约束：</p>
+<script type="math/tex; mode=display">
+0 ≤ ∆π_i ≤ 1</script><p>其中，$∆π_i = π_i −π_{i−1},1 ≤ i ≤ T_2 −1$​。 详细的验证见附录 A。</p>
+<p><strong>完整性。</strong> 给定 $π$​ 是连续单调的，完备性等价于边界条件：</p>
+<script type="math/tex; mode=display">
+π_0=0,</script><script type="math/tex; mode=display">
+π_{T_2−1} = T_1 − 1.</script><p>这可以从 $α_0 = \{1, 0, …, 0\}$​​​​​​ 和 $α_{T_2 −1} = \{0,0,…,1\}$​​​​​​ 推导出，其中$α_0 =\{α_{i,j} |0≤i≤T_1−1， j=0\}$​​​​​​ 和 $α_{T_2 −1} = \{α_{i,j} | 0 ≤ i ≤ T_1 − 1，j = T_2 − 1\}$​​​​​​​​。</p>
+<h3 id="3-3-将IMV融合到网络中"><a href="#3-3-将IMV融合到网络中" class="headerlink" title="3.3 将IMV融合到网络中"></a>3.3 将IMV融合到网络中</h3><p>我们提出了两种将 IMV 纳入序列到序列网络的策略：软单调比对 (SMA) 和硬单调比对 (HMA)。 </p>
+<p><strong>软单调对齐 (SMA)</strong>。 让序列到序列模型使用3.2节给出的3个约束条件进行训练。 一个自然的想法是将这些约束转化为训练目标。 我们将这些约束表述为 SMA 损失，计算如下：</p>
+<script type="math/tex; mode=display">
+L_{SMA} = λ_0∥|∆π| − ∆π∥_1 + λ_1∥|∆π − 1| + (∆π − 1)∥_1 + λ_2∥\frac {π_0} {T_1−1} ∥_2 + λ_3∥ \frac {π_{T_2−1}}{T_1 -1} − 1∥_2,</script><p>其中$∥·∥_1$和$∥·∥_2$​分别为L1范数和L2范数，$λ_0、λ_1、λ_2、λ_3$​​为正系数。 可以看出，$L_{SMA}$ 是非负的，只有当 $π$​ 满足所有约束时才为零。 $L_{SMA}$ 的计算只需要对齐矩阵 $α$（索引向量 $p$​ 总是已知的），因此，将 SMA 损失合并到序列到序列网络中而不改变它们的网络结构是很容易的。 一般来说，SMA 扮演着与引导注意（Guided Attention）相似的角色。 然而，SMA 优于引导注意，因为 SMA 理论上对对齐提供了更准确的约束。</p>
+<p><strong>硬单调对齐 (HMA)</strong>。 虽然 SMA 允许序列到序列网络通过结合 SMA 损失来产生单调对齐，但这些网络的训练可能仍然很昂贵，因为网络无法在训练的开始阶段产生单调对齐。 相反，他们一步一步地学习这种能力。 为了解决这个限制，我们提出了另一种单调策略，我们称之为 HMA，用于硬单调对齐。 HMA 的核心思想是建立一个具有战略设计结构的新网络，允许在没有监督的情况下产生单调对齐。</p>
+<p>首先，我们根据IMV的定义从对齐矩阵 $α$ 计算 IMV $π’$​。尽管 $π’$ 不是单调的，但它随后通过使用 ReLU 激活强制 $Δπ &gt; 0$ 被转换为 $π$，这是一个严格单调的 IMV。</p>
+<script type="math/tex; mode=display">
+∆π_j^′ =π_j^′ −π^′_{j−1}, 0<j≤T_2−1,</script><script type="math/tex; mode=display">
+∆π_j =\text{ReLU}(∆π_j^′), 0<j≤T_2−1,</script><script type="math/tex; mode=display">
+π_j= 
+\begin{cases}
+0, & j=0\\
+\sum_{m=0}^j  ∆π_m & 0<j≤T_2−1
+\end{cases}􏰁</script><p>此外，要将 $π$ 的域限制在完整性等式中给出的区间 $[0, T_1 − 1]$。我们将 $π$ 乘以一个正标量：</p>
+<script type="math/tex; mode=display">
+π_j^∗ = π_j ∗ \frac {T_1 − 1} {max(π)} =  π_j ∗ \frac {T_1 − 1} {π_{T_2} −1},0 ≤ j ≤ T_2 − 1.</script><p>回想一下，我们的目标是构建单调对齐。 为了实现这一点，我们引入了以下变换，通过利用以 $π^∗$为中心的高斯核来重建对齐：</p>
+<script type="math/tex; mode=display">
+α^′_{i,j} = \frac {exp (−σ^{−2}(p_i − π_j^∗)^2)} {􏰁\sum^{T_1−1}_{m=0} exp (−σ^{−2}(p_m − π_j^∗)^2)}</script><p>其中，$σ^2$​ 表示表示对齐变化的超参数。 $α’$​ 用作原始对齐 $α$ 的替代。 $α$ 和 $α’$ 之间的区别在于 $α’$ 保证是单调的，而 $α$ 对单调性没有约束。 HMA 降低了学习单调对齐的难度，从而提高了训练效率。 与 SMA 类似，HMA 可用于任何序列到序列网络。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/20/end2end/" rel="prev" title="End-to-end TTS & VC 文章总结">
+      <i class="fa fa-chevron-left"></i> End-to-end TTS & VC 文章总结
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#EfficientTTS%EF%BC%9A%E4%B8%80%E7%A7%8D%E9%AB%98%E6%95%88%E3%80%81%E9%AB%98%E8%B4%A8%E9%87%8F%E7%9A%84%E6%96%87%E6%9C%AC%E8%BD%AC%E8%AF%AD%E9%9F%B3%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">EfficientTTS：一种高效、高质量的文本转语音架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Related-Work"><span class="nav-number">1.3.</span> <span class="nav-text">Related Work</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Non-Autoregressive-TTS-models"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 Non-Autoregressive TTS models</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Monotonic-alignment-modeling"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.2 Monotonic alignment modeling</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%87%E7%94%A8IMV%E8%BF%9B%E8%A1%8C%E5%8D%95%E8%B0%83%E5%AF%B9%E9%BD%90%E5%BB%BA%E6%A8%A1"><span class="nav-number">1.4.</span> <span class="nav-text">采用IMV进行单调对齐建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-IMV%E5%AE%9A%E4%B9%89"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 IMV定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E9%87%87%E7%94%A8IMV%E8%BF%9B%E8%A1%8C%E5%8D%95%E8%B0%83%E5%AF%B9%E9%BD%90%E5%BB%BA%E6%A8%A1"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2 采用IMV进行单调对齐建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%B0%86IMV%E8%9E%8D%E5%90%88%E5%88%B0%E7%BD%91%E7%BB%9C%E4%B8%AD"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.3 将IMV融合到网络中</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Alan Sun</p>
+  <div class="site-description" itemprop="description">记录工作与生活</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人来过
+</span>
+</div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Sun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
