@@ -286,6 +286,7 @@
     <title>Vocoders 模型总结</title>
     <url>/2020/12/03/vocoders/</url>
     <content><![CDATA[<p>语音合成声码器脉络总结如下，持续更新ing</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -299,7 +300,8 @@
 <th><strong>URL</strong></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>1</strong></td>
 <td>WaveNet</td>
 <td>2016.9</td>
@@ -419,7 +421,11 @@
 <td>Heiga Zen</td>
 <td><a href="https://arxiv.org/pdf/2009.00713.pdf">https://arxiv.org/pdf/2009.00713.pdf</a></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
+<p><a href="https://arxiv.org/pdf/2103.05236.pdf">GAN Vocoder: Multi-Resolution Discriminator Is All You Need</a></p>
+<p>此篇论文尝试解释为什么近期涌现的GAN-based vocoders要好于过往的Flow-based或者Autoregressive的vocoders。文章通过消融实验分析认为原因主要在于Multi-Resolution Discriminator的设计使得GAN-based vocoders达到了一个新的水平。</p>
 ]]></content>
       <categories>
         <category>工作</category>
@@ -1096,8 +1102,11 @@ E_{z∼Q(·|Y,X)} [log P(Y|z, X)] − \mathcal{D} [Q(z|Y, X)∥P(z|X)]</script><
     <url>/2021/07/08/awesome-bloggers/</url>
     <content><![CDATA[<h1 id="Awesome-bloggers"><a href="#Awesome-bloggers" class="headerlink" title="Awesome bloggers"></a>Awesome bloggers</h1><h2 id="TTS"><a href="#TTS" class="headerlink" title="TTS"></a>TTS</h2><p><a href="https://rayeren.github.io">https://rayeren.github.io</a>   Yi Ren (任意)   FastSpeech</p>
 <p><a href="https://www.microsoft.com/en-us/research/people/xuta/">https://www.microsoft.com/en-us/research/people/xuta/</a> Xu Tan (谭旭) FastSpeech 二作</p>
+<p><a href="https://liusongxiang.github.io">https://liusongxiang.github.io</a> Songxiang Liu (刘颂湘)，PhD from Helen Meng 2021</p>
+<p><a href="https://entn.at">https://entn.at</a> Ewald Enzinger, </p>
 <h2 id="AI"><a href="#AI" class="headerlink" title="AI"></a>AI</h2><p><a href="https://dczha.com">https://dczha.com</a>   Daochen Zha    DouZero</p>
 <p><a href="https://www.alanshawn.com">https://www.alanshawn.com</a>   Alan Xiang （项子越） 中山大学勤奋博主  </p>
+<p><a href="https://kexue.fm">https://kexue.fm</a> 苏剑林 93年</p>
 <h2 id="Good-resources"><a href="#Good-resources" class="headerlink" title="Good resources"></a>Good resources</h2><p><a href="https://clemense.github.io">https://clemense.github.io</a>.  Clemens Eppner   Nvidia</p>
 <h2 id="Acadamy’s-great-scholar-leaders"><a href="#Acadamy’s-great-scholar-leaders" class="headerlink" title="Acadamy’s great scholar leaders"></a>Acadamy’s great scholar leaders</h2><p><a href="https://dl.acm.org/profile/81350580267/publications?Role=author&amp;pageSize=20&amp;startPage=1">https://dl.acm.org/profile/81350580267/publications?Role=author&amp;pageSize=20&amp;startPage=1</a>    Tie-Yan Liu   Microsoft</p>
 <h1 id="Awesome-Company’s-Bloggers"><a href="#Awesome-Company’s-Bloggers" class="headerlink" title="Awesome Company’s Bloggers"></a>Awesome Company’s Bloggers</h1><h2 id="TTS-1"><a href="#TTS-1" class="headerlink" title="TTS"></a>TTS</h2><p><a href="https://speechresearch.github.io">https://speechresearch.github.io</a></p>
@@ -1132,6 +1141,7 @@ E_{z∼Q(·|Y,X)} [log P(Y|z, X)] − \mathcal{D} [Q(z|Y, X)∥P(z|X)]</script><
 <p><a href="https://arxiv.org/pdf/2106.09660.pdf">WaveGrad 2: Iterative Refinement for Text-to-Speech Synthesis</a> — WaveGrad 2 ~ Interspeech 2021 ~ <strong>Google (<em>Heiga Zen</em>)</strong> ~ <a href="https://github.com/mindslab-ai/wavegrad2">repo</a></p>
 <p><a href="https://arxiv.org/pdf/2012.03500.pdf">EfficientTTS: An Efficient and High-Quality Text-to-Speech Architecture</a> — EFTS-Wac ~ ICML 2021 ~ <strong>PingAn (Chenfeng Miao)</strong> ~ <a href="https://github.com/liusongxiang/efficient_tts">repo</a></p>
 <p><a href="https://arxiv.org/pdf/2006.04558.pdf">FASTSPEECH 2: FAST AND HIGH-QUALITY END-TO- END TEXT TO SPEECH</a> — Fastspeech2 ~ ICLR 2021 ~ <strong>Zhejiang U &amp; Microsoft</strong> ~ <a href="https://github.com/ming024/FastSpeech2">repo</a></p>
+<p><a href="https://arxiv.org/pdf/2106.02830.pdf">Reinforce-Aligner: Reinforcement Alignment Search for Robust End-to-End Text-to-Speech</a> — Reinforce-Aligner ~ Interspeech 2021 ~ Korea University </p>
 <h2 id="VC"><a href="#VC" class="headerlink" title="VC"></a>VC</h2><p><a href="https://arxiv.org/pdf/1904.04169.pdf">Parrotron: An End-to-End Speech-to-Speech Conversion Model and its Applications to Hearing-Impaired Speech and Speech Separation</a> — Parrotron ~ Interspeech 2019 ~ <strong>Google</strong> ~ <a href="https://github.com/fd873630/Parrotron">repo</a></p>
 <p><a href="https://export.arxiv.org/pdf/2104.07283">Towards end-to-end F0 voice conversion based on Dual-GAN with convolutional wavelet kernels</a> — F0-VC ~ WIP ~ <strong>Sorbonne</strong></p>
 <p><a href="https://arxiv.org/pdf/2106.00992.pdf">NVC-Net: End-to-End Adversarial Voice Conversion</a> — NVC-Net ~ UR ~ <strong>Sony</strong></p>
@@ -1142,6 +1152,10 @@ E_{z∼Q(·|Y,X)} [log P(Y|z, X)] − \mathcal{D} [Q(z|Y, X)∥P(z|X)]</script><
 <p><a href="https://arxiv.org/pdf/2104.03017v2.pdf">Utilizing Self-supervised Representations for MOS Prediction</a> — MOS ~ NTU (<em>Hung-yi Lee</em>) ~ <a href="https://github.com/s3prl/s3prl">repo</a></p>
 <p><a href="https://arxiv.org/pdf/1904.08352v3.pdf">MOSNet: Deep Learning-based Objective Assessment for Voice Conversion</a> — MOSNet ~ IISAS ~ <a href="https://github.com/lochenchou/MOSNet">repo</a></p>
 <p><a href="https://arxiv.org/pdf/2104.11673v1.pdf">Deep Learning Based Assessment of Synthetic Speech Naturalness</a> — MOS ~ QUTTUB ~ <a href="https://github.com/gabrielmittag/NISQA">repo</a></p>
+<p><a href="https://arxiv.org/pdf/2103.00110.pdf">MBNet: MOS Prediction for Synthesized Speech with Mean-Bias Network</a> — MOS ~ ICASSP 2021 ~ USTC &amp; Microsoft (Xu Tan) ~ <a href="https://github.com/sky1456723/Pytorch-MBNet">repo</a></p>
+<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><p><a href="https://arxiv.org/pdf/2102.04040.pdf">LightSpeech: Lightweight and Fast Text to Speech with Neural Architecture Search</a> — LightSpeech ~ ICASSP 2021 ~ USTC &amp; Microsoft (Xu Tan) ~ <a href="https://github.com/rishikksh20/LightSpeech">repo</a></p>
+<h2 id="Inspirations-from-ASR"><a href="#Inspirations-from-ASR" class="headerlink" title="Inspirations from ASR"></a>Inspirations from ASR</h2><p><a href="https://arxiv.org/pdf/2107.09428.pdf">Streaming End-to-End ASR based on Blockwise Non-Autoregressive Models</a> — End2end ASR ~ Interspeech 2021 ~ Hopkins &amp; Yahoo Japan &amp; CMU </p>
+<p><a href="https://arxiv.org/pdf/2105.10042.pdf">A Streaming End-to-End Framework For Spoken Language Understanding</a> — StreamSLU ~  IJCAI 2021 ~ University of Waterloo &amp; Huawei Noah’s Ark Lab &amp; Tsinghua University </p>
 <p><strong>Tips:</strong> </p>
 <ul>
 <li><p>UR: Under Review</p>
@@ -1271,6 +1285,59 @@ L_{SMA} = λ_0∥|∆π| − ∆π∥_1 + λ_1∥|∆π − 1| + (∆π − 1)�
 π_j^∗ = π_j ∗ \frac {T_1 − 1} {max(π)} =  π_j ∗ \frac {T_1 − 1} {π_{T_2} −1},0 ≤ j ≤ T_2 − 1.</script><p>回想一下，我们的目标是构建单调对齐。 为了实现这一点，我们引入了以下变换，通过利用以 $π^∗$为中心的高斯核来重建对齐：</p>
 <script type="math/tex; mode=display">
 α^′_{i,j} = \frac {exp (−σ^{−2}(p_i − π_j^∗)^2)} {􏰁\sum^{T_1−1}_{m=0} exp (−σ^{−2}(p_m − π_j^∗)^2)}</script><p>其中，$σ^2$​ 表示表示对齐变化的超参数。 $α’$​ 用作原始对齐 $α$ 的替代。 $α$ 和 $α’$ 之间的区别在于 $α’$ 保证是单调的，而 $α$ 对单调性没有约束。 HMA 降低了学习单调对齐的难度，从而提高了训练效率。 与 SMA 类似，HMA 可用于任何序列到序列网络。</p>
+<h2 id="EfficientTTS-模型架构"><a href="#EfficientTTS-模型架构" class="headerlink" title="EfficientTTS 模型架构"></a>EfficientTTS 模型架构</h2><p>EfficientTTS 的整体架构设计如图 2 所示。在训练阶段，我们通过 IMV 生成器从文本序列和 melspectrogram 的隐藏表示中学习 IMV。 文本序列和梅尔谱图的隐藏表示分别从文本编码器和梅尔编码器中学习。 然后将 IMV 转换为二维对齐矩阵，该矩阵进一步用于通过对齐重建层生成时间对齐表示。 时间对齐的表示通过解码器生成输出梅尔光谱图或波形。 我们同时训练一个对齐位置预测器，它学习在每个输入文本标记的输出时间步长中预测对齐位置。 在推理阶段，我们从预测的对齐位置重建对齐矩阵。 我们在以下小节和附录 D 中每个组件的伪代码中展示了详细的实现。</p>
+<p><img src="/images/fig2.png" alt="fig2"></p>
+<h3 id="4-1-文本编码器和Mel谱编码器"><a href="#4-1-文本编码器和Mel谱编码器" class="headerlink" title="4.1 文本编码器和Mel谱编码器"></a>4.1 文本编码器和Mel谱编码器</h3><p>我们使用文本编码器和梅尔编码器将文本符号和梅尔谱图分别转换为强大的隐藏表示。</p>
+<p>在文本编码器的实现中，我们使用学习嵌入(learned embedding)将文本序列转换为高维向量序列。 然后，高维向量通过一堆卷积，散布着权重归一化和 Leaky ReLU 激活。 我们还为每个卷积添加了一个残差连接以允许深度网络。</p>
+<p>在梅尔编码器的实现中，我们首先通过线性投影将梅尔谱图转换为高维向量。 与文本编码器相同，mel-encoder 由一堆卷积组成，其中散布着权重归一化、Leaky ReLU 激活和残差连接。 请注意，mel-encoder 仅用于训练阶段。</p>
+<h3 id="4-2-IMV-生成器"><a href="#4-2-IMV-生成器" class="headerlink" title="4.2 IMV 生成器"></a>4.2 IMV 生成器</h3><p>为了在训练阶段生成单调 IMV，我们首先通过等式中给出的缩放点积注意力学习输入和输出之间的对齐 $α$。 然后从$α$​计算IMV。</p>
+<script type="math/tex; mode=display">
+α_{i,j}= \frac {\text{exp}(−D^{−0.5}(q_j ·k_i))} {\sum^{T_1−1}_{m=0}exp(−D^{−0.5}(q_j·k_m))}</script><p>其中，$q$ 和 $k$ 是 mel-encoder 和 text-encoder 的输出，$D$ 是 $q$ 和 $k$ 的维度。</p>
+<p>计算 IMV 的一种简单方法是遵循3.1中定义的等式 (2)。然而，由于缩放点积注意力对单调性没有限制，在我们的初步实验中，将 SMA 损失纳入训练。 但我们进一步发现 HMA 更有效。 我们遵循3.3中定义的方程 (7,8,9,10) 实施 HMA。 在实验中，我们比较了不同单调策略的效果。</p>
+<h3 id="4-3-对齐位置预测器"><a href="#4-3-对齐位置预测器" class="headerlink" title="4.3 对齐位置预测器"></a>4.3 对齐位置预测器</h3><p>在推理阶段，模型需要从文本序列 $h$​​ 的隐藏表示中预测 IMV $π$​​，这在实践中具有挑战性。 有两个限制：（1）$π$​​​是时间对齐的，分辨率高，但是$h$​​分辨率低； (2) 由于3.3中的等式（9）中引入的累积求和运算，$π_i$ 的每个预测都会影响 $π_j (j &gt; i)$​ 的后续预测，使得并行预测 $π$​变得困难。 幸运的是，可以通过预测每个输入标记的对齐位置 $e$ 来缓解这些限制。 我们定义3.1中的方程 (2) 作为变换 $m(·): π = m(q)$​。 由于 $π$ 和 $q$ 在时间步长上都是单调连续的，这意味着变换 $m(·)$​ 是单调连续的，因此 $m(·)$ 是可逆的：</p>
+<script type="math/tex; mode=display">
+q = m^{−1}(π),</script><p>每个输入标记的输出时间步长中对齐的位置 $e$ 可以计算为：</p>
+<script type="math/tex; mode=display">
+e=m^{−1}(p), p=\{0,1,...,T_1 −1\}.</script><p><img src="/images/fig3.png" alt="fig3">我们在图 3 中说明了 $m(·)$、$e$、$π$ 的关系。为了计算 $e$，我们首先利用与3.3中的方程（11) 类似的变换来计算概率密度矩阵 $γ$。  唯一的区别是概率密度是在不同维度上计算的。 对齐位置 $e$ 是由 $γ$ 加权的输出索引向量 $q$​ 的加权和。</p>
+<script type="math/tex; mode=display">
+γ_{i,j} = \frac {\text{exp}(−σ^{−2}(p_i −π_j)^2)} {􏰁\sum ^{T_2−1}_{n=0} \text{exp} (−σ^{−2}(p_i − π_n)^2)}</script><script type="math/tex; mode=display">
+e_i = \sum^{T_2-1}_{n=0}􏰂 γ_{i,n} ∗q_n</script><p>可以看出，$e$ 的计算是可微的，允许通过梯度方法进行训练，因此可以用于训练和推理。 此外，$e$​ 是可预测的，因为：(1) 分辨率 $e$​ 与 $h$ 相同； (2) 我们可以学习相对位置$∆e,(∆e_i =e_i−e_{i−1},1≤i≤T_1−1)$ 而不是直接学习$e$ 来克服第二个限制。</p>
+<p>对齐位置预测器由 2 个卷积组成，每个卷积之后是层归一化和 ReLU 激活。 我们将根据 $π$ 计算出的 $Δe$ 作为训练目标。 估计位置 $∆ \hat e$ 和目标位置 $∆e$​ 之间的损失函数计算如下：</p>
+<script type="math/tex; mode=display">
+L_{ap} =∥log(∆ \hat e+ε)−log(∆e+ε)∥_1,</script><p>其中，$ε$​ 是一个小数，以避免数值不稳定性。 对数尺度损失的目标是准确拟合小值，这对于训练的后期阶段往往更为重要。 对齐位置预测器与模型的其余部分共同学习。 因为我们通过利用对齐的位置来生成对齐，作为附带好处，EfficientTTS 继承了基于持续时间的非自回归 TTS 模型的语速控制的能力。</p>
+<h3 id="4-4-对齐重构"><a href="#4-4-对齐重构" class="headerlink" title="4.4 对齐重构"></a>4.4 对齐重构</h3><p>为了将输入隐藏表示 $h$ 映射到时间对齐表示，需要一个对齐矩阵，用于训练和推理。 我们也可以从 IMV 或对齐位置构建对齐。 对于大多数情况，3.3 的方程 (11) 是从 IMV 重建对齐矩阵的有效方法。 但是因为我们在推理过程中预测对齐位置而不是 IMV，为了保持一致，我们从对齐位置 $e$ 重建对齐矩阵，用于训练和推理。具体来说，我们采用从4.3中的方程 (15) 计算的对齐位置 $e$​​​​​ 用于训练，以及来自对齐位置预测器的预测用于推理。</p>
+<p>我们遵循 EATS 的类似思想，通过引入以对齐位置 $e$ 为中心的高斯核来重建对齐矩阵 $α’$​。</p>
+<script type="math/tex; mode=display">
+α^{'}_{i,j} = \frac {\text{exp}(−σ^{−2}(e_i −q_j)^2)} {􏰁\sum^{T_1−1}_{m=0} \text{exp}(−σ^{−2}(e_m −q_j)^2)}</script><p>其中 $q = \{0, 1, …, T_2 − 1\}$ 是输出序列的索引向量。 输出序列 $T_2$ 的长度在训练中已知，在推理中从 $e$​ 计算：</p>
+<script type="math/tex; mode=display">
+T_2 = e_{T_1−1} + ∆e_{T_1−1}</script><p>尽管重建的对齐矩阵可能不如由3.3中的等式(11)计算的矩阵准确（由于$e$的分辨率低），对输出的影响很小，因为网络能够补偿。 因此，由于训练和推理的一致性不断提高，我们享受到语音质量的提高。</p>
+<p>我们在图 4 中说明了 $π$ 和相同话术的重构 $α$​​​。可以看出，$α$ 在第一个训练步骤是对角线的，并且在第 $10k^{th}$ 个训练步骤快速收敛，这是非常快的。 我们通过使用遵循2.1中的等式(1)的 $α’$ 将文本编码器 $h$ 的输出映射到时间对齐的表示。然后将时间对齐的表示作为输入馈送到解码器。</p>
+<h3 id="4-5-解码器"><a href="#4-5-解码器" class="headerlink" title="4.5 解码器"></a>4.5 解码器</h3><p>由于解码器的输入和输出都是时间对齐的，因此很容易实现具有并行结构的解码器。 在下一节中，我们开发了三种基于具有不同解码器实现的 EfficientTTS 的模型。</p>
+<h2 id="EfficientTTS-Models"><a href="#EfficientTTS-Models" class="headerlink" title="EfficientTTS Models"></a>EfficientTTS Models</h2><h3 id="5-1-EFTS-CNN"><a href="#5-1-EFTS-CNN" class="headerlink" title="5.1 EFTS-CNN"></a>5.1 EFTS-CNN</h3><p>我们首先通过一堆卷积来参数化解码器。 每个卷积都穿插了权重归一化、Leaky ReLU 激活和残差连接。 我们在最后添加一个线性投影来生成melspectrogram。 均方误差 (MSE) 用作重建误差。 EFTS-CNN 的总体训练目标是 melspectrogram 的对齐位置损失和 MSE 损失的组合。</p>
+<h3 id="5-2-EFTS-Flow"><a href="#5-2-EFTS-Flow" class="headerlink" title="5.2 EFTS-Flow"></a>5.2 EFTS-Flow</h3><p>为了让 TTS 模型能够控制生成语音的变化，我们实现了一个基于流的解码器。 在训练阶段，我们通过直接最大化似然，以时间对齐表示为条件，学习从melspectrogram到高维高斯分布$\mathcal{N}(0, 1)$​的变换$f$​。 $f$​ 是可逆的，具有战略设计的结构。 具体来说，它由几个流程步骤组成，每个流程步骤由两个基本的可逆变换组成：一个可逆线性层和一个仿射耦合层。 为了提高生成语音的多样性，我们在推理过程中从高斯分布 $\mathcal{N} (0, 1)$ 中采样潜在变量 $z$，并使用温度因子 $t$ 用零向量 $o$ 解释 $z$，并逆变换 $f$ 以生成梅尔频谱图 .</p>
+<script type="math/tex; mode=display">
+z^{'} =t∗z+o∗(1−t),0≤t≤1</script><script type="math/tex; mode=display">
+x = f^{−1}(z^{'})</script><p>为简单起见，我们在实现基于流的解码器时遵循 Flow-TTS的解码器结构。 EFTS-Flow 的总体训练目标是对齐位置损失和最大似然估计 (MLE) 损失的组合。</p>
+<h3 id="5-3-EFTS-Wav"><a href="#5-3-EFTS-Wav" class="headerlink" title="5.3 EFTS-Wav"></a>5.3 EFTS-Wav</h3><p>为了简化 2 阶段训练管道并以完全端到端的方式训练 TTS 模型，我们通过将 EfficientTTS 与扩张卷积对抗解码器相结合来开发文本到 wav 模型。解码器结构类似于 MelGAN，除了： (1) 生成器的输入是高维隐藏表示，而不是 80 通道的梅尔频谱图； (2) 多分辨率 STFT 损耗包含在生成器的末端。我们采用与 MelGAN 鉴别器相同的结构进行对抗训练。与 ClariNet 和 EATS 类似，我们通过调节与 1s 音频剪辑相对应的切片输入来训练 MelGAN 部分，而其他部分则在全长话语上进行训练。我们在全长解码器输入上添加线性投影以同时生成melspectrogram，这允许EFTS-Wav学习每个训练步骤的全长对齐。 <strong>EFTS-Wav 生成器的总体训练目标是 melspectrogram 的重建损失、MelGAN 生成器损失、多分辨率 STFT 损失和对齐位置损失的线性组合。</strong></p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>在本节中，我们首先在语音保真度、训练和推理效率方面将提出的模型与其对应模型进行比较。 然后，我们分析了所提出的单调方法在 EFTS-CNN 和 Tacotron 2 上的有效性。我们还证明了所提出的模型可以在本节末尾生成非常多样化的语音。</p>
+<h3 id="6-1-实验设置"><a href="#6-1-实验设置" class="headerlink" title="6.1 实验设置"></a>6.1 实验设置</h3><p><strong>数据集。</strong> 我们在来自 DataBaker 的开源标准普通话数据集上进行了大部分实验，该数据集包含来自单个女性演讲者的 10,000 个中文片段，采样率为 22.05kHZ。 剪辑的长度从 1 秒到 10 秒不等，剪辑的总长度约为 12 小时。 我们遵循Tacotron将波形转换为 80 通道 melspectrogram，FFT 大小为 1024，跳长为 256，窗口大小为 1024。我们还使用 LJ-Speech 数据集进行了一些实验，这是一个由 13100条音频片段组成的单个女性演讲者的 24 小时波形音频集，采样率22.05kHZ。</p>
+<p><strong>实施细则。</strong> 我们的 EfficientTTS 实现由文本编码器（ 5 个卷积）和梅尔编码器（3 个卷积）组成，所有卷积的内核大小和维度大小分别设置为 5 和 512。 我们在具有相同卷积配置的 EFTS-CNN 解码器中使用 6 层卷积堆栈。 EFTS-Flow 的解码器由 8 个流程步骤组成，我们在实现多尺度架构时每 3 个流程步骤就提前输出 20 个通道。 我们遵循 MelGAN 的配置来实现 EFTS-wav。 我们使用 HiFi-GAN 声码器从 EFTS-CNN 和 EFTS-Flow 生成的梅尔谱图生成波形。 我们使用具有 HiFi-GAN-V1 配置的 <a href="https://github.com/jik876/hifi-gan">HiFi-GAN</a>的开放实现。</p>
+<p><strong>对照模型。</strong> 我们在以下实验中将提出的模型与自回归 Tacotron 2 和非自回归 Glow-TTS 进行比较。 我们直接使用带有默认配置的 <a href="https://github.com/NVIDIA/tacotron2">Tacotron 2</a> 和 <a href="https://github.com/jaywalnut310/glow-tts">Glow-TTS</a> 的开源实现。</p>
+<p><strong>训练。</strong> 我们在单个 Tesla V100 GPU 上训练所有模型。对于 EFTS-CNN 和 EFTS-Flow，我们使用 Adam 优化器，批量大小为 96，学习率为 $1 × 10^{−4}$。 对于 EFTS-Wav，我们使用批次大小为 48 的 Adam 优化器。我们对 EFTS-Wav 生成器使用 $1 × 10^{−4}$ 的学习率，对EFTS-Wav 鉴别器使用 $5 × 10^{−5}$​的学习率。 在 DataBaker 上训练 EFTS-CNN 需要 270k 步直到收敛，EFTS-Flow 需要 400k 训练步骤，EFTS-Wav 需要 560k 训练步骤。</p>
+<h3 id="6-2-与对照模型对比"><a href="#6-2-与对照模型对比" class="headerlink" title="6.2. 与对照模型对比"></a>6.2. 与对照模型对比</h3><p><img src="/images/efts-table2.png" alt="efts-table2"></p>
+<p><img src="/images/efts-table3.png" alt="efts-table3"></p>
+<p><strong>语音质量。</strong>我们对 DataBaker 数据集进行了 5 级平均意见得分 (MOS) 评估，以衡量合成音频的质量。每个音频至少由 15 名测试人员收听，他们都是母语人士。我们将 EfficientTTS 系列生成的音频样本的 MOS 与真实音频以及对应模型生成的音频样本进行比较。具有 95% 置信区间的 MOS 结果显示在上表2中。 我们观察到 EfficientTTS 系列优于对应模型。 Tacotron 2 由于教师强制训练和自回归推理之间的不一致导致语音质量下降，而 Glow-TTS 复制了文本序列的隐藏表示，这破坏了隐藏表示的连续性。 EfficientTTS 使用 IMV 重建对齐，这比令牌持续时间更具表现力，因此实现了更好的语音质量。此外，EfficientTTS 的对齐部分与模型的其余部分一起训练，进一步提高了语音质量。由于我们的训练设置可能与对应模型的原始设置不同，我们进一步将我们的模型 EFTS-CNN 与 LJ-Speech 数据集上的 Tacotron 2 和 Glow-TTS 的相关模型进行比较。如表3所示。 EFTS-CNN 在 LJ-Speech 上的表现也明显优于对应模型。</p>
+<p><img src="/images/efts-table1.png" alt="efts-table1"></p>
+<p><strong>训练和推理速度。</strong>由于非自回归和完全卷积，所提出的模型对于训练和推理都非常有效。 训练时间和推理延迟的定量结果显示在表1中。可以看出，<strong>EFTS-CNN 需要最少的训练时间</strong>。 尽管 EFTS-Flow 需要与 Tacotron 2 相当的训练时间，但它比 Glow-TTS 快得多。 至于推理延迟，EfficientTTS 模型比 Tacotron 2 和 Glow-TTS 更快。 特别是，EFTS-CNN 的推理延迟为 6ms，比 Tacotron 2 快 130 倍，并且比 Glow-TTS 快得多。 由于去除了 melspectrogram 生成，<strong>EFTS-Wav 明显快于 2-staged 模型，从文本序列合成测试音频仅需 16 毫秒，比 Tacotron 2 快 54 倍。</strong></p>
+<h3 id="6-3-单调对齐方法的评估"><a href="#6-3-单调对齐方法的评估" class="headerlink" title="6.3 单调对齐方法的评估"></a>6.3 单调对齐方法的评估</h3><p>为了评估所提出的单调方法的行为，我们在 EFTS-CNN 和 Tacotron 2 上进行了多次实验。我们首先比较了 EFTS-CNN 上的训练效率，然后对 Tacotron 2 和 EFTS-CNN 进行了稳健性测试。</p>
+<p><img src="/images/efts-fig5.png" alt="efts-fig5"></p>
+<p><img src="/images/efts-table4.png" alt="efts-table4"></p>
+<p><strong>EFTS-CNN 上的实验。</strong>我们用不同的设置训练 EFTS-CNN，包括：（1）EFTS-HMA，EFTS-CNN 的默认实现，带有硬单调 IMV 生成器。 (2) EFTS-SMA，一个带有软单调 IMV 生成器的 EFTS-CNN 模型。 (3) EFTS-NM，一个没有单调性常数的EFTS-CNN模型。 EFTS-NM 的网络结构与 EFTS-SMA 相同，不同之处在于 EFTS-SMA 是在 SMA 损失的情况下训练的，而 EFTS-NM 是在没有 SMA 损失的情况下训练的。我们首先发现EFTS-NM根本不收敛，它的对齐矩阵不是对角的，而EFTS-SMA和EFTS-HMA都能够产生合理的对齐。我们在图 5 中绘制了 EFTS-SMA 和 EFTS-HMA 的melspectrogram 损失曲线。<strong>可以看出，EFTS-HMA 比 EFTS-SMA 实现了显着的加速</strong>。因此，我们可以得出结论，单调对齐对于所提出的模型非常重要。我们的方法，对于 SMA 和 HMA，成功地学习了单调对齐，而原始注意力机制失败了。由于严格的单调对齐，EFTS-HMA 显着提高了模型性能。更多训练细节显示在表4中。</p>
+<p><img src="/images/efts-table5.png" alt="efts-table5"></p>
+<p><strong>稳健性。</strong>许多 TTS 模型在合成时遇到错位，特别是对于自回归模型。我们在本小节中分析了 EfficientTTS 的注意力错误，错误包括：重复单词、跳过单词和错误发音。我们对 50 个句子的测试集进行了稳健性评估，其中包括对 TTS 系统特别具有挑战性的案例，例如特别长的句子、重复的字母等。我们将 EFTS-CNN 与 Tacotron 2 进行比较。我们还将 SMA 和 HMA 合并到Tacotron 2 进行更详细的比较（Tacotron2-SMA 和 Tacotron2-HMA 的详细实现以及更多实验结果显示在附录 C 中）。稳健性测试的实验结果见表 5，可以看出EFTS-CNN在Tacotron 2遇到很多错误的情况下，有效地消除了重复错误和跳过错误。然而，通过利用 SMA 或 HMA，Tacotron 2 的合成错误显着减少，这表明所提出的单调方法可以提高 TTS 模型的鲁棒性。</p>
+<h3 id="6-4-多样性"><a href="#6-4-多样性" class="headerlink" title="6.4 多样性"></a>6.4 多样性</h3><p>为了合成多样化的语音样本，大多数 TTS 模型利用外部条件，例如样式嵌入或说话者嵌入，或者在推理过程中仅依靠 drop-out。 然而，EfficientTTS 能够以多种方式合成各种语音样本，包括：（1）用不同的对齐方案合成语音。 对齐方案可以是由mel编码器和IMV生成器从现有音频中提取的IMV，也可以是持续时间序列或对齐位置序列； (2) 通过在预测的对齐位置上乘以一个标量来合成不同语速的语音，这类似于其他基于时长的非自回归模型； (3) 通过在推理过程中改变潜在变量 $z$ 的温度 $t$​，为 EFTS-Flow 合成具有不同语音变体的语音。 我们在附录 B 中绘制了从相同文本序列生成的各种melspectrograms。</p>
+<h2 id="结论和未来工作"><a href="#结论和未来工作" class="headerlink" title="结论和未来工作"></a>结论和未来工作</h2><p>通常假设模型效率与语音质量之间存在不可避免的权衡。自回归模型，例如 Tacotron 2 和 TransformerTTS，可实现类似人类的语音质量，但由于其自回归结构，通常合成速度较慢。非自回归模型可以快速合成，但无法有效训练。在这项工作中，我们提出了一种非自回归架构，可以实现高质量的语音生成以及高效的训练和合成。我们开发了一系列基于 EfficientTTS 的模型，涵盖文本到光谱图和文本到波形的生成。通过大量实验，我们观察到改进的定量结果，包括训练效率、合成速度、鲁棒性以及语音质量。我们表明，与现有的 TTS 模型相比，所提出的模型非常具有竞争力。</p>
+<p>未来的工作有很多可能的方向。 EfficientTTS 不仅可以在给定的对齐方式下生成语音，还可以从给定的语音中提取对齐方式，使其成为语音转换和歌唱合成的绝佳选择。将所提出的单调方法应用于其他单调对齐很重要的序列到序列任务也是一个不错的选择，例如自动语音识别 (ASR)、神经机器翻译 (NMT) 和光学字符识别 (OCR) 。此外，我们也对 IMV 的进一步研究非常感兴趣，包括与对齐矩阵相比的优缺点。</p>
 ]]></content>
       <categories>
         <category>工作</category>
