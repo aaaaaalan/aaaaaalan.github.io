@@ -1104,6 +1104,7 @@ E_{z∼Q(·|Y,X)} [log P(Y|z, X)] − \mathcal{D} [Q(z|Y, X)∥P(z|X)]</script><
 <p><a href="https://www.microsoft.com/en-us/research/people/xuta/">https://www.microsoft.com/en-us/research/people/xuta/</a> Xu Tan (谭旭) FastSpeech 二作</p>
 <p><a href="https://liusongxiang.github.io">https://liusongxiang.github.io</a> Songxiang Liu (刘颂湘)，PhD from Helen Meng 2021</p>
 <p><a href="https://entn.at">https://entn.at</a> Ewald Enzinger, </p>
+<p><a href="https://jaywalnut310.github.io/#/about">https://jaywalnut310.github.io/#/about</a> Jaehyeon Kim (KAIST), VITS(一作)  / Glow-TTS（一作） / Hifi-GAN（二作） / FloWaveNet, KaKao</p>
 <h2 id="AI"><a href="#AI" class="headerlink" title="AI"></a>AI</h2><p><a href="https://dczha.com">https://dczha.com</a>   Daochen Zha    DouZero</p>
 <p><a href="https://www.alanshawn.com">https://www.alanshawn.com</a>   Alan Xiang （项子越） 中山大学勤奋博主  </p>
 <p><a href="https://kexue.fm">https://kexue.fm</a> 苏剑林 93年</p>
@@ -1136,10 +1137,10 @@ E_{z∼Q(·|Y,X)} [log P(Y|z, X)] − \mathcal{D} [Q(z|Y, X)∥P(z|X)]</script><
     <title>End-to-end TTS &amp; VC 文章总结</title>
     <url>/2021/07/20/end2end/</url>
     <content><![CDATA[<h1 id="End-to-end-TTS-amp-VC"><a href="#End-to-end-TTS-amp-VC" class="headerlink" title="End-to-end TTS &amp; VC"></a>End-to-end TTS &amp; VC</h1><h2 id="TTS"><a href="#TTS" class="headerlink" title="TTS"></a>TTS</h2><p><a href="https://arxiv.org/pdf/2006.03575.pdf">END-TO-END ADVERSARIAL TEXT-TO-SPEECH</a> — EATS ~ ICLR 2021 ~ <strong>DeepMind</strong> ~ <a href="https://github.com/yanggeng1995/EATS">repo</a></p>
-<p><a href="https://arxiv.org/pdf/2106.06103.pdf">Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech</a> — VITS ~ ICML 2021 ~ <strong>KAIST</strong> ~ <a href="https://github.com/jaywalnut310/vits">repo</a></p>
+<p><a href="https://arxiv.org/pdf/2106.06103.pdf">Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech</a> — VITS ~ ICML 2021 ~ <strong>Kakao</strong> ~ <a href="https://github.com/jaywalnut310/vits">repo</a></p>
 <p><a href="https://arxiv.org/pdf/2011.03568v1.pdf">WAVE-TACOTRON: SPECTROGRAM-FREE END-TO-END TEXT-TO-SPEECH SYNTHESIS</a> — Wave-Tacotron ~ ICASSP 2021 ~ <strong>Google</strong></p>
 <p><a href="https://arxiv.org/pdf/2106.09660.pdf">WaveGrad 2: Iterative Refinement for Text-to-Speech Synthesis</a> — WaveGrad 2 ~ Interspeech 2021 ~ <strong>Google (<em>Heiga Zen</em>)</strong> ~ <a href="https://github.com/mindslab-ai/wavegrad2">repo</a></p>
-<p><a href="https://arxiv.org/pdf/2012.03500.pdf">EfficientTTS: An Efficient and High-Quality Text-to-Speech Architecture</a> — EFTS-Wac ~ ICML 2021 ~ <strong>PingAn (Chenfeng Miao)</strong> ~ <a href="https://github.com/liusongxiang/efficient_tts">repo</a></p>
+<p><a href="https://arxiv.org/pdf/2012.03500.pdf">EfficientTTS: An Efficient and High-Quality Text-to-Speech Architecture</a> — EFTS-Wav ~ ICML 2021 ~ <strong>PingAn (Chenfeng Miao)</strong> ~ <a href="https://github.com/liusongxiang/efficient_tts">repo</a></p>
 <p><a href="https://arxiv.org/pdf/2006.04558.pdf">FASTSPEECH 2: FAST AND HIGH-QUALITY END-TO- END TEXT TO SPEECH</a> — Fastspeech2 ~ ICLR 2021 ~ <strong>Zhejiang U &amp; Microsoft</strong> ~ <a href="https://github.com/ming024/FastSpeech2">repo</a></p>
 <p><a href="https://arxiv.org/pdf/2106.02830.pdf">Reinforce-Aligner: Reinforcement Alignment Search for Robust End-to-End Text-to-Speech</a> — Reinforce-Aligner ~ Interspeech 2021 ~ Korea University </p>
 <h2 id="VC"><a href="#VC" class="headerlink" title="VC"></a>VC</h2><p><a href="https://arxiv.org/pdf/1904.04169.pdf">Parrotron: An End-to-End Speech-to-Speech Conversion Model and its Applications to Hearing-Impaired Speech and Speech Separation</a> — Parrotron ~ Interspeech 2019 ~ <strong>Google</strong> ~ <a href="https://github.com/fd873630/Parrotron">repo</a></p>
@@ -1179,7 +1180,9 @@ E_{z∼Q(·|Y,X)} [log P(Y|z, X)] − \mathcal{D} [Q(z|Y, X)∥P(z|X)]</script><
   <entry>
     <title>VITS</title>
     <url>/2021/07/15/vits/</url>
-    <content><![CDATA[<h1 id="Conditional-Variational-Autoencoder-with-Adversarial-Learning-for-End-to-End-Text-to-Speech"><a href="#Conditional-Variational-Autoencoder-with-Adversarial-Learning-for-End-to-End-Text-to-Speech" class="headerlink" title="Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech"></a>Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>最近提出了几种支持单阶段训练和并行采样的端到端文本到语音（TTS）模型，但它们的样本质量与两阶段 TTS 系统的样本质量不匹配。在这项工作中，我们提出了一种并行的端到端 TTS 方法，它比当前的两阶段模型生成更自然的声音。我们的方法采用变分推理，并通过归一化流程和对抗性训练过程进行增强，从而提高了生成建模的表达能力。我们还提出了一个随机持续时间预测器来从输入文本合成具有不同节奏的语音。通过对潜在变量和随机持续时间预测器的不确定性建模，我们的方法表达了自然的一对多关系，其中可以以多种方式以不同的音高和节奏说出文本输入。对 LJ Speech（单个说话者数据集）的主观人类评估（平均意见分数或 MOS）表明，我们的方法优于最好的公开可用的 TTS 系统，并实现了与Ground-Truth实况相当的 MOS。 </p>
+    <content><![CDATA[<h1 id="Conditional-Variational-Autoencoder-with-Adversarial-Learning-for-End-to-End-Text-to-Speech"><a href="#Conditional-Variational-Autoencoder-with-Adversarial-Learning-for-End-to-End-Text-to-Speech" class="headerlink" title="Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech"></a>Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech</h1><h2 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h2><p>基于VAE，GAN，Normaling flows的端到端TTS神经网络结构。文章简单综述了end2end TTS的发展情况，且指出当前的single-stage模型大多相较于multi-stage模型较差。模型的创新点在首次采用VAE的方式并行生成语音。模型实验效果从MOS和推理效率上都远好于目前的baseline模型。</p>
+<p><a href="https://arxiv.org/pdf/2106.06103.pdf">Paper</a> | <a href="https://jaywalnut310.github.io/vits-demo/index.html">Demo</a> | <a href="https://github.com/jaywalnut310/vits">Code</a> | ICML 2021 | Rate: 🌟🌟🌟🌟🌟</p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>最近提出了几种支持单阶段训练和并行采样的端到端文本到语音（TTS）模型，但它们的样本质量与两阶段 TTS 系统的样本质量不匹配。在这项工作中，我们提出了一种并行的端到端 TTS 方法，它比当前的两阶段模型生成更自然的声音。我们的方法采用变分推理，并通过归一化流程和对抗性训练过程进行增强，从而提高了生成建模的表达能力。我们还提出了一个随机持续时间预测器来从输入文本合成具有不同节奏的语音。通过对潜在变量和随机持续时间预测器的不确定性建模，我们的方法表达了自然的一对多关系，其中可以以多种方式以不同的音高和节奏说出文本输入。对 LJ Speech（单个说话者数据集）的主观人类评估（平均意见分数或 MOS）表明，我们的方法优于最好的公开可用的 TTS 系统，并实现了与Ground-Truth实况相当的 MOS。 </p>
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>文本到语音 (TTS) 系统从给定文本通过多个组件合成原始语音波形。 随着深度神经网络的快速发展，除了文本规范化和音素化等文本预处理之外，TTS 系统管道已被简化为两阶段生成建模。 第一阶段是从预处理的文本中生成中间语音表示，如 Melspectrograms 或语言特征，第二阶段是生成以中间表示为条件的原始波形。 每个两级管道的模型都是独立开发的。</p>
 <p>基于神经网络的自回归 TTS 系统已经显示出合成真实语音的能力，但它们的顺序生成过程使得现代并行处理器难以充分利用。为了克服这个限制并提高合成速度，已经提出了几种非自回归方法。在文本到谱图生成步骤中，尝试从预训练的自回归教师网络中提取注意力图，以降低学习文本和谱图之间对齐的难度.最近，基于似然的方法通过估计或学习最大化目标梅尔谱图的可能性的比对来进一步消除对外部比对器的依赖。同时，在第二阶段模型中探索了生成对抗网络（GAN）。基于 GAN 的前馈网络具有多个鉴别器，每个鉴别器区分不同尺度或周期的样本，实现高质量的原始波形合成。</p>
 <p>尽管并行 TTS 系统取得了进展，但两级管道仍然存在问题，因为它们需要顺序训练或微调才能进行高质量的生产，其中后期模块使用早期模型生成的样本进行训练。此外，它们对预定义中间特征的依赖妨碍了应用学习到的隐藏表示来获得性能的进一步改进。最近，几项工作，即 FastSpeech 2s 和 EATS ，提出了有效的端到端训练方法，例如对短音频剪辑而不是整个波形进行训练，利用梅尔谱图解码器来帮助文本表示学习，并设计专门的谱图损失来减轻目标和生成语音之间的长度不匹配问题。然而，尽管通过利用学习的表示可能提高性能，但它们的合成质量落后于两阶段系统。 </p>
@@ -1241,7 +1244,14 @@ L_{vae} = L_{recon} +L_{kl} +L_{dur} +L_{adv}(G)+L_{fm}(G)</script><h3 id="模�
 <p>类似于 Valle 等人。 （2021），这里的所有样本都是从一句话<em>How much variation is there?</em>生成的。图 2a 显示了每个模型生成的 100 个话语的长度的直方图。由于确定性的持续时间预测器，Glow-TTS 仅生成固定长度的话语，我们模型中的样本遵循与 Tacotron 2 相似的长度分布。图 2b 显示了在多说话人设置中，使用五个说话者身份，生成的 5*100 个话语的长度，以展示模型能够学习到说话人相关的音素持续时间。图 3 中使用 YIN 算法 (De Cheveigne ́ &amp; Kawahara, 2002) 提取的 10 个话语的 F0 轮廓显示我们的模型生成具有不同音高和节奏的语音，图 3d 中的每个不同说话者身份生成的五个样本证明我们的模型为每个说话者身份表达了非常不同的语音长度和音调。请注意，Glow-TTS 可以通过增加先验分布的标准偏差来增加音高的多样性，但相反，它会降低合成质量。</p>
 <h3 id="合成速度"><a href="#合成速度" class="headerlink" title="合成速度"></a>合成速度</h3><p><img src="/images/vits_tab4.png" alt="vits_tab4"></p>
 <p>我们将模型的合成速度与并行的两阶段 TTS 系统 Glow-TTS 和 HiFi-GAN 进行了比较。 我们测量了整个过程的同步经过时间，以从 LJ Speech 数据集的测试集中随机选择 100 个句子的音素序列生成原始波形。 我们使用了一个批处理大小为 1 的 NVIDIA V100 GPU。结果如表 4 所示。由于我们的模型不需要用于生成预定义中间表示的模块，因此其采样效率和速度得到了极大的提高。</p>
-<h2 id="结论和未来工作"><a href="#结论和未来工作" class="headerlink" title="结论和未来工作"></a>结论和未来工作</h2><p>在这项工作中，我们提出了一个并行的 TTS 系统 VITS，它可以以端到端的方式学习和生成。我们进一步引入了随机持续时间预测器来表达不同的语音节奏。由此产生的系统直接从文本合成自然发声的语音波形，而无需经过预定义的中间语音表示。我们的实验结果表明，我们的方法优于两阶段 TTS 系统并达到接近人类的质量。我们希望所提出的方法将用于许多语音合成任务，其中使用了两阶段 TTS 系统，以实现性能提升并享受简化的训练过程。我们还想指出，即使我们的方法在 TTS 系统中集成了两个分离的生成管道，仍然存在文本预处理的问题。研究语言表征的自监督学习可能是去除文本预处理步骤的一个可能方向。我们将发布我们的源代码和预训练模型，以促进未来许多方向的研究。</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><h3 id="端到端文本转语音"><a href="#端到端文本转语音" class="headerlink" title="端到端文本转语音"></a>端到端文本转语音</h3><p>目前，具有两级管道的神经 TTS 模型可以合成类人语音。 但是，它们通常需要使用第一阶段模型输出来进行训练或微调的声码器，这会导致训练和部署效率低下。 他们也无法获得端到端方法的潜在好处，该方法可以使用学习的隐藏表示而不是预定义的中间特征。</p>
+<p>最近，单阶段端到端 TTS 模型被提出来解决更具挑战性的任务，即直接从文本生成原始波形，其中包含比梅尔频谱图更丰富的信息（例如，高频响应和相位）。FastSpeech 2s 是 FastSpeech 2 的扩展，它通过采用对抗性训练和帮助学习文本表示的辅助梅尔谱解码器来实现端到端并行生成。然而，为了解决一对多问题，FastSpeech 2s 必须从作为训练输入条件的语音中提取音素持续时间、音调和能量。 EATS（Donahue 等人，2021 年）也采用对抗性训练和可微分对齐方案。为了解决生成语音和目标语音之间的长度不匹配问题，EATS采用通过动态规划计算的软动态时间规整损失(soft DTW loss)。 Wave Tacotron（Weiss 等人，2020 年）将标准化流(Normalizing flows)与 Tacotron 2 相结合，形成端到端结构，但仍保持自回归。上述所有端到端 TTS 模型的音频质量都低于两级模型。</p>
+<p>与前面提到的端到端模型不同，通过利用条件 VAE，我们的模型 1) 学习直接从文本中合成原始波形，而无需额外的输入条件，2) 使用动态规划方法 MAS 进行搜索 最佳对齐而不是计算损失，3）并行生成样本，4）优于最好的公开可用的两阶段模型。</p>
+<h3 id="VAE"><a href="#VAE" class="headerlink" title="VAE"></a>VAE</h3><p>VAE (Kingma &amp; Welling, 2014) 是使用最广泛的基于似然的深度生成模型之一。 我们对 TTS 系统采用有条件的 VAE。 条件 VAE 是一种条件生成模型，其中观察到的条件调节用于生成输出的潜在变量的先验分布。 在语音合成中，Hsu 等人。 (2019) 和 Zhang 等人 (2019) 结合 Tacotron 2 和 VAE 来学习说话风格和韵律。 BVAE-TTS（Lee 等人，2021 年）基于双向 VAE 并行生成梅尔谱图（Kingma 等人，2016 年）。 与之前将 VAE 应用于第一阶段模型的工作不同，我们将 VAE 应用于并行的端到端 TTS 系统。</p>
+<p>Rezende &amp; Mohamed (2015), Chen 等(2017) 和 Ziegler &amp; Rush (2019) 通过使用标准化流增强先验和后验分布的表达能力来提高 VAE 性能。 为了提高先验分布的表示能力，我们将归一化流添加到我们的条件先验网络中，从而生成更真实的样本。</p>
+<p>与我们的工作类似，Ma 等人 (2019) 提出了一种条件 VAE，在非自回归神经机器翻译 FlowSeq 的条件先验网络中对流进行归一化。 然而，我们的模型可以明确地将潜在序列与源序列对齐这一事实与 FlowSeq 不同，后者需要通过注意力机制学习隐式对齐。 我们的模型通过 MAS 将潜在序列与时间对齐的源序列进行匹配，从而消除了将潜在序列转换为标准正常随机变量的负担，这允许标准化流的更简单架构。</p>
+<h3 id="非自回归TTS中的持续时间预测"><a href="#非自回归TTS中的持续时间预测" class="headerlink" title="非自回归TTS中的持续时间预测"></a>非自回归TTS中的持续时间预测</h3><p>自回归 TTS 模型通过其自回归结构和一些技巧（包括在推理和启动期间保持丢失概率）生成具有不同节奏的多样化语音。 另一方面，并行 TTS 模型依赖于确定性持续时间预测。 这是因为并行模型必须在一个前馈路径中预测目标音素持续时间或目标语音的总长度，这使得很难捕获语音节奏的相关联合分布。 在这项工作中，我们提出了一种基于流的随机持续时间预测器，它可以学习估计音素持续时间的联合分布，从而并行生成不同的语音节奏。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>在这项工作中，我们提出了一个并行的 TTS 系统 VITS，它可以以端到端的方式学习和生成。我们进一步引入了随机持续时间预测器来表达不同的语音节奏。由此产生的系统直接从文本合成自然发声的语音波形，而无需经过预定义的中间语音表示。我们的实验结果表明，我们的方法优于两阶段 TTS 系统并达到接近人类的质量。我们希望所提出的方法将用于许多语音合成任务，其中使用了两阶段 TTS 系统，以实现性能提升并享受简化的训练过程。我们还想指出，即使我们的方法在 TTS 系统中集成了两个分离的生成管道，仍然存在文本预处理的问题。研究语言表征的自监督学习可能是去除文本预处理步骤的一个可能方向。我们将发布我们的源代码和预训练模型，以促进未来许多方向的研究。</p>
 ]]></content>
       <categories>
         <category>工作</category>
@@ -1250,7 +1260,9 @@ L_{vae} = L_{recon} +L_{kl} +L_{dur} +L_{adv}(G)+L_{fm}(G)</script><h3 id="模�
   <entry>
     <title>EfficientTTS An Efficient and High-Quality Text-to-Speech Architecture</title>
     <url>/2021/07/30/EFTS-wav/</url>
-    <content><![CDATA[<h1 id="EfficientTTS：一种高效、高质量的文本转语音架构"><a href="#EfficientTTS：一种高效、高质量的文本转语音架构" class="headerlink" title="EfficientTTS：一种高效、高质量的文本转语音架构"></a>EfficientTTS：一种高效、高质量的文本转语音架构</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>在这项工作中，我们通过提出一种称为 EfficientTTS 的非自回归架构来解决文本到语音（TTS）任务。与主要的非自回归 TTS 模型需要外部对齐器进行训练不同，EfficientTTS 使用稳定的端到端训练程序来优化其所有参数，同时允许合成高质量的语音，是一种快速有效的方式。 EfficientTTS 是由一种新的单调对齐建模（monotonic alignment modeling）方法（也在本工作中引入）推动的，该方法在几乎不增加计算量的情况下指定对序列对齐的单调约束。通过将 EfficientTTS 与不同的前馈网络结构相结合，我们开发了一系列 TTS 模型，包括 text-to-melspectrogram 和 text-to-waveform 网络。我们的实验表明，所提出的模型在语音质量、训练效率和合成速度方面明显优于 Tacotron 2 (Shen et al., 2018) 和 Glow-TTS (Kim et al., 2020) 等对应模型，同时仍然产生强大的稳健性和多样性的演讲。此外，我们证明了所提出的方法可以轻松扩展到自回归模型，例如 Tacotron 2。</p>
+    <content><![CDATA[<h1 id="EfficientTTS：一种高效、高质量的文本转语音架构"><a href="#EfficientTTS：一种高效、高质量的文本转语音架构" class="headerlink" title="EfficientTTS：一种高效、高质量的文本转语音架构"></a>EfficientTTS：一种高效、高质量的文本转语音架构</h1><h2 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h2><p>基于IMV的并行TTS框架，文章创新的重点在于IMV的提出，使得TTS任务可并行化，但听了几个EFTS-CNN复现的Demo之后，无法达到论文提到的效果。另外类似的模型框架被应用于歌声合成系统(EfficientSing)，通过改变模型的输入形式，也得到了合理的结果，EfficientSing 发表至Interspeech 2021。</p>
+<p><a href="https://arxiv.org/pdf/2012.03500.pdf">Paper</a> | <a href="https://github.com/mcf330/EfficientTTSAudioSamples">Demo</a> | <a href="https://github.com/liusongxiang/efficient_tts">Code</a> | ICML 2021 | Rate: 🌟🌟🌟🌟</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>在这项工作中，我们通过提出一种称为 EfficientTTS 的非自回归架构来解决文本到语音（TTS）任务。与主要的非自回归 TTS 模型需要外部对齐器进行训练不同，EfficientTTS 使用稳定的端到端训练程序来优化其所有参数，同时允许合成高质量的语音，是一种快速有效的方式。 EfficientTTS 是由一种新的单调对齐建模（monotonic alignment modeling）方法（也在本工作中引入）推动的，该方法在几乎不增加计算量的情况下指定对序列对齐的单调约束。通过将 EfficientTTS 与不同的前馈网络结构相结合，我们开发了一系列 TTS 模型，包括 text-to-melspectrogram 和 text-to-waveform 网络。我们的实验表明，所提出的模型在语音质量、训练效率和合成速度方面明显优于 Tacotron 2 (Shen et al., 2018) 和 Glow-TTS (Kim et al., 2020) 等对应模型，同时仍然产生强大的稳健性和多样性的演讲。此外，我们证明了所提出的方法可以轻松扩展到自回归模型，例如 Tacotron 2。</p>
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>文本到语音（TTS）是语音处理中的一项重要任务。随着深度学习的飞速发展，TTS 技术近年来受到了广泛关注。最流行的神经 TTS 模型是基于编码器-解码器框架的自回归模型。在这个框架中，编码器将文本序列作为输入并学习其隐藏表示，而解码器逐帧生成输出，即以自回归方式。随着自回归模型性能的大幅提升，综合效率正成为新的研究热点。</p>
 <p>最近，大量努力致力于非自回归 TTS 模型的开发。然而，大多数现有的非自回归 TTS 模型都存在训练过程复杂、计算成本或训练时间成本高的问题，使其不适合实际应用。在这项工作中，我们提出了 EfficientTTS，一种高效且高质量的文本转语音架构。我们的贡献总结如下，</p>
 <ul>
@@ -1348,6 +1360,14 @@ x = f^{−1}(z^{'})</script><p>为简单起见，我们在实现基于流的解�
 <h2 id="结论和未来工作"><a href="#结论和未来工作" class="headerlink" title="结论和未来工作"></a>结论和未来工作</h2><p>通常假设模型效率与语音质量之间存在不可避免的权衡。自回归模型，例如 Tacotron 2 和 TransformerTTS，可实现类似人类的语音质量，但由于其自回归结构，通常合成速度较慢。非自回归模型可以快速合成，但无法有效训练。在这项工作中，我们提出了一种非自回归架构，可以实现高质量的语音生成以及高效的训练和合成。我们开发了一系列基于 EfficientTTS 的模型，涵盖文本到光谱图和文本到波形的生成。通过大量实验，我们观察到改进的定量结果，包括训练效率、合成速度、鲁棒性以及语音质量。我们表明，与现有的 TTS 模型相比，所提出的模型非常具有竞争力。</p>
 <p>未来的工作有很多可能的方向。 EfficientTTS 不仅可以在给定的对齐方式下生成语音，还可以从给定的语音中提取对齐方式，使其成为语音转换和歌唱合成的绝佳选择。将所提出的单调方法应用于其他单调对齐很重要的序列到序列任务也是一个不错的选择，例如自动语音识别 (ASR)、神经机器翻译 (NMT) 和光学字符识别 (OCR) 。此外，我们也对 IMV 的进一步研究非常感兴趣，包括与对齐矩阵相比的优缺点。</p>
 ]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>GraphSpeech Syntax aware graph attention network for neural speech synthesis</title>
+    <url>/2021/08/03/graphspeech/</url>
+    <content><![CDATA[]]></content>
       <categories>
         <category>工作</category>
       </categories>
