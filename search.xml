@@ -462,6 +462,9 @@ D_i = N\cdot sigmoid(v_d^{T}tanh(W_{d}x_i))
     <title>Graphspeech syntax aware graph attention network for neural speech synthesis</title>
     <url>/2021/08/03/graphspeech/</url>
     <content><![CDATA[<h1 id="graphspeech用于神经语音合成的语法感知图注意力网络">GRAPHSPEECH：用于神经语音合成的语法感知图注意力网络</h1>
+<h2 id="感想">感想</h2>
+<p>读下来感觉与ICASSP 2020 发表的GraphTTS的方法差不多少，均是采用GGNN的方法进行TTS的图结构化建模。只不过GraphTTS基于Tacotron2建模，而Graphspeech 基于Transformer 建模，但是Graphspeech的实验部分相对充实简单清晰一些。</p>
+<p><a href="https://arxiv.org/pdf/2010.12423.pdf">Paper</a> | <a href="https://ttslr.github.io/GraphSpeech/">Demo</a> | ICASSP 2021 | Rate: 🌟🌟🌟</p>
 <h2 id="摘要">摘要</h2>
 <p>基于注意力的端到端文本到语音合成（TTS）在很多方面都优于传统的统计方法。 基于Transformer的 TTS 是此类成功的实现之一。 虽然 Transformer TTS 使用自注意力机制很好地模拟了语音帧序列，但它没有从句子级别的句法角度将输入文本与输出话语关联起来。 我们提出了一种新的神经 TTS 模型，表示为 GraphSpeech，它是在图神经网络框架下制定的。 GraphSpeech 对句子中输入词法标记的句法关系进行显式编码，并结合这些信息为 TTS 注意力机制推导出句法驱动的字符嵌入。 实验表明，GraphSpeech 在话语的频谱和韵律渲染方面始终优于 Transformer TTS 基线。</p>
 <p><strong>关键词：</strong>TTS, Graph Neural Network, Syntax</p>
@@ -504,10 +507,14 @@ a_i = \frac{\text{exp}(s_{ij}/{\sqrt d}) } { \sum^n_{􏰁j=1} \text{exp}(s_{ij}/
 </div>
 <p>为此，我们提出了语法图 <em>syntax graph</em>，它是图 2 所示的语法树的扩展。我们的想法是通过添加反向连接将单向连接变成双向连接。 此外，我们为每个单词引入了带有特定标签的自循环边。 这样，句子中的单词用节点表示，它们的连接用边表示。 通过图2（b）中的双向连接，一个词能够直接接收和发送信息给任何其他词，无论它们是否直接连接。</p>
 <p>为了对两个节点之间的关系建模，将节点对之间的关系描述为它们之间的最短关系路径。 我们使用带有门控循环单元 (GRU) 的循环神经网络将关系序列转换为分布式表示。 节点 <span class="math inline">\(i\)</span> 和节点<span class="math inline">\(j\)</span> 之间的最短关系路径 <span class="math inline">\(sp_{i→j}\)</span> 表示为 <span class="math inline">\([sp_1, ..., sp_t, ..., sp_{n+1}] = [e(i, k_1), e(k_1, k_2), ..., e(k_n, j)]\)</span>，其中 <span class="math inline">\(e(·, ·)\)</span> 表示边标签，<span class="math inline">\(k_{1:n}\)</span> 是中继节点。 我们使用双向 GRU 进行路径序列编码： <span class="math display">\[
+\begin{equation}\label{eq4}
 \vec s_t =GRU_f(\vec s_{t−1},sp_t)
+\end{equation}
 \]</span></p>
 <p><span class="math display">\[
+\begin{equation}\label{eq5}
 \stackrel{\leftarrow}s_t =GRU_b(\stackrel{\leftarrow} s_{t+1},sp_t)
+\end{equation}
 \]</span></p>
 <p>前向 GRU 网络和后向 GRU 网络的最后隐藏状态连接起来形成最终的关系编码 <span class="math inline">\(r_{ij} = [\vec s_{n+1} ; \stackrel{\leftarrow}s_0 ].\)</span> 最终的关系编码表示两个词之间的语言关系。 在神经 TTS 中，句子的基本单位是字符标记。 我们在这里将 NLP 中的词级关系编码扩展到字符级编码。 如果两个字符属于同一个词，我们使用自循环边编码<span class="math inline">\(r_{ii}\)</span>来定义它们的关系编码； 如果两个字符属于不同的词，我们直接使用<span class="math inline">\(r_{ij}\)</span>，即它们所属词的关系编码来分配它们的关系编码。</p>
 <p>关系编码为模型提供了一个关于如何收集和分发信息的全局视图，即在哪里参加。 接下来我们将讨论所提出的图编码器，该编码器旨在将句法关系编码合并到自注意力机制中以指示字符关系。</p>
@@ -515,10 +522,14 @@ a_i = \frac{\text{exp}(s_{ij}/{\sqrt d}) } { \sum^n_{􏰁j=1} \text{exp}(s_{ij}/
 <p>图编码器旨在将输入字符嵌入序列和关系编码转换为相应的由句法驱动的字符嵌入序列。 我们将两个节点之间的显式关系表示合并到注意力计算中，表示为语法感知图注意力。</p>
 <p>然后堆叠多个语法感知图注意和前馈层块以计算最终的字符表示。 在每个块中，基于所有其他字符嵌入和相应的关系编码更新字符嵌入。 最后一个块的结果字符嵌入被馈送到解码器以生成声学特征。</p>
 <p>关系编码只对两个字符之间的最短路径进行编码。 为了在计算注意力时对连接的方向进行编码，我们首先将关系编码 <span class="math inline">\(r_{ij}\)</span> 分为前向关系编码 <span class="math inline">\(r_{i→j}\)</span> 和后向关系编码 <span class="math inline">\(r_{j →i} ： [r_{i→j} ; r_{j →i} ] = W_r r_{ij}\)</span> 。 然后，使用语法感知图注意力来计算注意力分数，该分数基于字符表示及其双向关系表示： <span class="math display">\[
-s_{ij} =g(x_i,x_j,r_{ij}) \\
-= ( x_i + r_{i → j} ) W_q^T W_k ( x_j + r_{j → i} ) \\
-= \underbrace{x_i W_q^T W_k x_j}_{(a)} + \underbrace{x_i W_q^T W_k r_{j → i}}_{(b)} \\
-+ \underbrace{r_{i→j}W_q^TW_kx_j}_{(c)} + \underbrace{r_{i→j}W_q^TW_kr_{j→i}}_{(d)}
+\begin{equation}\label{eq6}
+\begin{aligned}
+s_{ij} &amp;=g(x_i,x_j,r_{ij}) \\
+&amp;= ( x_i + r_{i → j} ) W_q^T W_k ( x_j + r_{j → i} ) \\
+&amp;= \underbrace{x_i W_q^T W_k x_j}_{(a)} + \underbrace{x_i W_q^T W_k r_{j → i}}_{(b)} \\
+&amp;+ \underbrace{r_{i→j}W_q^TW_kx_j}_{(c)} + \underbrace{r_{i→j}W_q^TW_kr_{j→i}}_{(d)}
+\end{aligned}
+\end{equation}
 \]</span> 我们注意到以上方程中的项与公式的直观解释有关，如下所示：1) (a) 捕获纯粹基于内容的寻址，这与等式 (1) 一致; 2) (b) 项表示正向关系偏差； 3) (c) 项控制后向关系偏差； 和 4) (d) 项编码通用关系偏差。</p>
 <p>通过语法感知图注意力，通过将显式句法关系约束纳入注意力机制，语法知识用于指导字符编码。 最后，解码器采用句法驱动的字符嵌入进行声学特征预测。</p>
 <h3 id="解码器">3.3 解码器</h3>
