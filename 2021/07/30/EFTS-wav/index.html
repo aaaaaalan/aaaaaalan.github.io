@@ -225,10 +225,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="EfficientTTS：一种高效、高质量的文本转语音架构"><a href="#EfficientTTS：一种高效、高质量的文本转语音架构" class="headerlink" title="EfficientTTS：一种高效、高质量的文本转语音架构"></a>EfficientTTS：一种高效、高质量的文本转语音架构</h1><h2 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h2><p>基于IMV的并行TTS框架，文章创新的重点在于IMV的提出，使得TTS任务可并行化，但听了几个EFTS-CNN复现的Demo之后，无法达到论文提到的效果。另外类似的模型框架被应用于歌声合成系统(EfficientSing)，通过改变模型的输入形式，也得到了合理的结果，EfficientSing 发表至Interspeech 2021。</p>
+        <h1 id="efficienttts一种高效高质量的文本转语音架构">EfficientTTS：一种高效、高质量的文本转语音架构</h1>
+<h2 id="感想">感想</h2>
+<p>基于IMV的并行TTS框架，文章创新的重点在于IMV的提出，使得TTS任务可并行化，但听了几个EFTS-CNN复现的Demo之后，无法达到论文提到的效果。另外类似的模型框架被应用于歌声合成系统(EfficientSing)，通过改变模型的输入形式，也得到了合理的结果，EfficientSing 发表至Interspeech 2021。</p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2012.03500.pdf">Paper</a> | <a target="_blank" rel="noopener" href="https://github.com/mcf330/EfficientTTSAudioSamples">Demo</a> | <a target="_blank" rel="noopener" href="https://github.com/liusongxiang/efficient_tts">Code</a> | ICML 2021 | Rate: 🌟🌟🌟🌟</p>
-<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>在这项工作中，我们通过提出一种称为 EfficientTTS 的非自回归架构来解决文本到语音（TTS）任务。与主要的非自回归 TTS 模型需要外部对齐器进行训练不同，EfficientTTS 使用稳定的端到端训练程序来优化其所有参数，同时允许合成高质量的语音，是一种快速有效的方式。 EfficientTTS 是由一种新的单调对齐建模（monotonic alignment modeling）方法（也在本工作中引入）推动的，该方法在几乎不增加计算量的情况下指定对序列对齐的单调约束。通过将 EfficientTTS 与不同的前馈网络结构相结合，我们开发了一系列 TTS 模型，包括 text-to-melspectrogram 和 text-to-waveform 网络。我们的实验表明，所提出的模型在语音质量、训练效率和合成速度方面明显优于 Tacotron 2 (Shen et al., 2018) 和 Glow-TTS (Kim et al., 2020) 等对应模型，同时仍然产生强大的稳健性和多样性的演讲。此外，我们证明了所提出的方法可以轻松扩展到自回归模型，例如 Tacotron 2。</p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>文本到语音（TTS）是语音处理中的一项重要任务。随着深度学习的飞速发展，TTS 技术近年来受到了广泛关注。最流行的神经 TTS 模型是基于编码器-解码器框架的自回归模型。在这个框架中，编码器将文本序列作为输入并学习其隐藏表示，而解码器逐帧生成输出，即以自回归方式。随着自回归模型性能的大幅提升，综合效率正成为新的研究热点。</p>
+<h2 id="摘要">摘要</h2>
+<p>在这项工作中，我们通过提出一种称为 EfficientTTS 的非自回归架构来解决文本到语音（TTS）任务。与主要的非自回归 TTS 模型需要外部对齐器进行训练不同，EfficientTTS 使用稳定的端到端训练程序来优化其所有参数，同时允许合成高质量的语音，是一种快速有效的方式。 EfficientTTS 是由一种新的单调对齐建模（monotonic alignment modeling）方法（也在本工作中引入）推动的，该方法在几乎不增加计算量的情况下指定对序列对齐的单调约束。通过将 EfficientTTS 与不同的前馈网络结构相结合，我们开发了一系列 TTS 模型，包括 text-to-melspectrogram 和 text-to-waveform 网络。我们的实验表明，所提出的模型在语音质量、训练效率和合成速度方面明显优于 Tacotron 2 (Shen et al., 2018) 和 Glow-TTS (Kim et al., 2020) 等对应模型，同时仍然产生强大的稳健性和多样性的演讲。此外，我们证明了所提出的方法可以轻松扩展到自回归模型，例如 Tacotron 2。</p>
+<h2 id="introduction">Introduction</h2>
+<p>文本到语音（TTS）是语音处理中的一项重要任务。随着深度学习的飞速发展，TTS 技术近年来受到了广泛关注。最流行的神经 TTS 模型是基于编码器-解码器框架的自回归模型。在这个框架中，编码器将文本序列作为输入并学习其隐藏表示，而解码器逐帧生成输出，即以自回归方式。随着自回归模型性能的大幅提升，综合效率正成为新的研究热点。</p>
 <p>最近，大量努力致力于非自回归 TTS 模型的开发。然而，大多数现有的非自回归 TTS 模型都存在训练过程复杂、计算成本或训练时间成本高的问题，使其不适合实际应用。在这项工作中，我们提出了 EfficientTTS，一种高效且高质量的文本转语音架构。我们的贡献总结如下，</p>
 <ul>
 <li>除了几乎不增加计算量的一般注意力机制之外，我们提出了一种新方法来为序列到序列模型产生软或硬单调对齐。 最重要的是，所提出的方法可以纳入任何注意力机制，而不受网络结构的限制。</li>
@@ -237,92 +241,152 @@
 <li>我们还表明，所提出的方法可以很容易地扩展到自回归模型，如本文末尾的 Tacotron 2。</li>
 </ul>
 <p>本文的其余部分的结构如下。 第 2 节讨论相关工作。 我们在第 3 节中介绍了使用索引映射向量（index mapping vector）的单调对齐建模（monotonic alignment modeling）。第 4 节介绍了 EfficientTTS 架构。在第 5 节中，介绍了 EfficientTTS 模型。 第 6 节展示了实验结果和实现细节。 最后，第 7 节总结了本文。</p>
-<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><h3 id="2-1-Non-Autoregressive-TTS-models"><a href="#2-1-Non-Autoregressive-TTS-models" class="headerlink" title="2.1 Non-Autoregressive TTS models"></a>2.1 Non-Autoregressive TTS models</h3><p>在 TTS 任务中，输入文本序列 $x = \{x_0,x_1,…,x_{T_1−1}\}$​​​​ 通过编码器-解码器帧转换为输出序列 $y = \{y_0 , y_1 , …, y_{T_2 −1} \}$​​​​​。 通常情况下，$x$​​首先通过编码器 $f: h = f(x)$​ 转换为一系列隐藏状态 $h = \{h_0,h_1,…,h_{T_1−1}\}$​，然后通过解码器产生输出$y$​。 对于每个输出时间步，注意力机制允许搜索 $h$ 的整个元素以生成上下文向量 $c$：</p>
-<script type="math/tex; mode=display">
-c_j = \sum^{T_1-1}_{i=0}􏰂 α_{i,j} ∗h_i,</script><p>其中 $α = \{α_{i,j} \} ∈ \mathcal{R}^{(T_1 ,T_2 )}$​ 是对齐矩阵。然后将 $c$ 馈送到另一个网络 $g$ 以生成输出 $y：y = g(c)$。 $f$ 和 $g$​ 的网络可以很容易地用并行结构替换，因为它们都获得一致的输入和输出长度。<strong>因此，构建非自回归 TTS 模型的关键在于并行对齐预测。</strong>在之前的工作中，大多数非自回归 TTS 模型从外部模型或工具中学习对齐，这使得训练变得复杂。最近，提出了 Flow-TTS（Miao 等，2020）、Glow-TTS（Kim 等，2020）和 EATS（Donahue 等，2020）。 Flow-TTS 和 EATS 在训练过程中直接从文本序列的隐藏表示中学习比对，没有考虑从输出序列中提取比对，使得训练效率低下。 Glow-TTS 使用独立算法提取每个输入token的持续时间，该算法排除了使用标准反向传播。另一方面，EfficientTTS 通过单个网络以完全端到端的方式联合学习序列对齐和语音生成，同时保持稳定高效的训练。</p>
-<h3 id="2-2-Monotonic-alignment-modeling"><a href="#2-2-Monotonic-alignment-modeling" class="headerlink" title="2.2 Monotonic alignment modeling"></a>2.2 Monotonic alignment modeling</h3><p>如第 2.1 节所述，通用注意力机制会在每个输出时间步检查每个输入步。 这种机制经常会遇到错位并且训练成本很高，尤其是对于长序列。 因此，如果结合了一些先验知识，它一定会有所帮助。 <strong>一般来说，单调对齐应该遵循严格的标准</strong>，如图1所示，包括：（1）<strong>单调性</strong>，在每个输出时间步，对齐位置永不倒退； (2) <strong>连续性</strong>，在每个输出时间步，对齐的位置最多向前移动一步； (3) <strong>完整性</strong>，对齐的位置必须覆盖输入标记的所有位置。 已经提出了许多先前的研究来确保正确的对齐（Li 等人，2020 年），但其中大多数需要连续的步骤，并且经常无法满足上述所有标准。 在这项工作中，我们提出了一种有效且高效地产生单调注意力的新方法。</p>
-<h2 id="采用IMV进行单调对齐建模"><a href="#采用IMV进行单调对齐建模" class="headerlink" title="采用IMV进行单调对齐建模"></a>采用IMV进行单调对齐建模</h2><p>我们通过提出<strong>索引映射向量 (IMV: index mapping vector)</strong> 开始本节，然后我们在单调对齐建模中利用 IMV。 我们进一步展示了如何将 IMV 合并到一般的序列到序列模型中。</p>
-<h3 id="3-1-IMV定义"><a href="#3-1-IMV定义" class="headerlink" title="3.1 IMV定义"></a>3.1 IMV定义</h3><p>设 $α∈\mathcal{R}^{(T_1,T_2)}$​​​ 为输入序列 $x∈\mathcal{R}^{(D_1,T_1)}$​​ ​和输出序列 $y∈ \mathcal{R}^{(D_2,T_2)}$​​ 之间的比对矩阵。 我们将索引映射向量 (IMV) $π$​​ 定义为索引向量 $p = \{0, 1, · · · , T_1 − 1\}$​ 的总和，由 $α$ 加权：</p>
-<script type="math/tex; mode=display">
-π_j = \sum^{T_1 -1}_{i=0} 􏰂 α_{i,j} ∗p_i,</script><p>其中，$0 ≤ j ≤ T_2 −1,π ∈ \mathcal{R}^{T_2},􏰂\sum^{T_1-1}_{i=0}α_{i,j} = 1$​​.</p>
-<p>我们可以将 IMV 理解为每个的预期位置输出时间步长，其中期望值是从 $0$ 到 $T_1-1$​ 的所有可能输入位置。</p>
-<h3 id="3-2-采用IMV进行单调对齐建模"><a href="#3-2-采用IMV进行单调对齐建模" class="headerlink" title="3.2 采用IMV进行单调对齐建模"></a>3.2 采用IMV进行单调对齐建模</h3><p><strong>连续性和单调性。</strong> 我们首先证明对齐矩阵 $α$​ 的连续性和单调性标准等价于以下约束：</p>
-<script type="math/tex; mode=display">
-0 ≤ ∆π_i ≤ 1</script><p>其中，$∆π_i = π_i −π_{i−1},1 ≤ i ≤ T_2 −1$​。 详细的验证见附录 A。</p>
-<p><strong>完整性。</strong> 给定 $π$​ 是连续单调的，完备性等价于边界条件：</p>
-<script type="math/tex; mode=display">
-π_0=0,</script><script type="math/tex; mode=display">
-π_{T_2−1} = T_1 − 1.</script><p>这可以从 $α_0 = \{1, 0, …, 0\}$​​​​​​ 和 $α_{T_2 −1} = \{0,0,…,1\}$​​​​​​ 推导出，其中$α_0 =\{α_{i,j} |0≤i≤T_1−1， j=0\}$​​​​​​ 和 $α_{T_2 −1} = \{α_{i,j} | 0 ≤ i ≤ T_1 − 1，j = T_2 − 1\}$​​​​​​​​。</p>
-<h3 id="3-3-将IMV融合到网络中"><a href="#3-3-将IMV融合到网络中" class="headerlink" title="3.3 将IMV融合到网络中"></a>3.3 将IMV融合到网络中</h3><p>我们提出了两种将 IMV 纳入序列到序列网络的策略：软单调比对 (SMA) 和硬单调比对 (HMA)。 </p>
-<p><strong>软单调对齐 (SMA)</strong>。 让序列到序列模型使用3.2节给出的3个约束条件进行训练。 一个自然的想法是将这些约束转化为训练目标。 我们将这些约束表述为 SMA 损失，计算如下：</p>
-<script type="math/tex; mode=display">
-L_{SMA} = λ_0∥|∆π| − ∆π∥_1 + λ_1∥|∆π − 1| + (∆π − 1)∥_1 + λ_2∥\frac {π_0} {T_1−1} ∥_2 + λ_3∥ \frac {π_{T_2−1}}{T_1 -1} − 1∥_2,</script><p>其中$∥·∥_1$和$∥·∥_2$​分别为L1范数和L2范数，$λ_0、λ_1、λ_2、λ_3$​​为正系数。 可以看出，$L_{SMA}$ 是非负的，只有当 $π$​ 满足所有约束时才为零。 $L_{SMA}$ 的计算只需要对齐矩阵 $α$（索引向量 $p$​ 总是已知的），因此，将 SMA 损失合并到序列到序列网络中而不改变它们的网络结构是很容易的。 一般来说，SMA 扮演着与引导注意（Guided Attention）相似的角色。 然而，SMA 优于引导注意，因为 SMA 理论上对对齐提供了更准确的约束。</p>
+<h2 id="related-work">Related Work</h2>
+<h3 id="non-autoregressive-tts-models">2.1 Non-Autoregressive TTS models</h3>
+<p>在 TTS 任务中，输入文本序列 <span class="math inline">\(x = \{x_0,x_1,...,x_{T_1−1}\}\)</span>​​​​ 通过编码器-解码器帧转换为输出序列 <span class="math inline">\(y = \{y_0 , y_1 , ..., y_{T_2 −1} \}\)</span>​​​​​。 通常情况下，<span class="math inline">\(x\)</span>​​首先通过编码器 <span class="math inline">\(f: h = f(x)\)</span>​ 转换为一系列隐藏状态 <span class="math inline">\(h = \{h_0,h_1,...,h_{T_1−1}\}\)</span>​，然后通过解码器产生输出<span class="math inline">\(y\)</span>​。 对于每个输出时间步，注意力机制允许搜索 <span class="math inline">\(h\)</span> 的整个元素以生成上下文向量 <span class="math inline">\(c\)</span>： <span class="math display">\[
+c_j = \sum^{T_1-1}_{i=0}􏰂 α_{i,j} ∗h_i,
+\]</span></p>
+<p>其中 <span class="math inline">\(α = \{α_{i,j} \} ∈ \mathcal{R}^{(T_1 ,T_2 )}\)</span>​ 是对齐矩阵。然后将 <span class="math inline">\(c\)</span> 馈送到另一个网络 <span class="math inline">\(g\)</span> 以生成输出 <span class="math inline">\(y：y = g(c)\)</span>。 <span class="math inline">\(f\)</span> 和 <span class="math inline">\(g\)</span>​ 的网络可以很容易地用并行结构替换，因为它们都获得一致的输入和输出长度。<strong>因此，构建非自回归 TTS 模型的关键在于并行对齐预测。</strong>在之前的工作中，大多数非自回归 TTS 模型从外部模型或工具中学习对齐，这使得训练变得复杂。最近，提出了 Flow-TTS（Miao 等，2020）、Glow-TTS（Kim 等，2020）和 EATS（Donahue 等，2020）。 Flow-TTS 和 EATS 在训练过程中直接从文本序列的隐藏表示中学习比对，没有考虑从输出序列中提取比对，使得训练效率低下。 Glow-TTS 使用独立算法提取每个输入token的持续时间，该算法排除了使用标准反向传播。另一方面，EfficientTTS 通过单个网络以完全端到端的方式联合学习序列对齐和语音生成，同时保持稳定高效的训练。</p>
+<h3 id="monotonic-alignment-modeling">2.2 Monotonic alignment modeling</h3>
+<p>如第 2.1 节所述，通用注意力机制会在每个输出时间步检查每个输入步。 这种机制经常会遇到错位并且训练成本很高，尤其是对于长序列。 因此，如果结合了一些先验知识，它一定会有所帮助。 <strong>一般来说，单调对齐应该遵循严格的标准</strong>，如图1所示，包括：（1）<strong>单调性</strong>，在每个输出时间步，对齐位置永不倒退； (2) <strong>连续性</strong>，在每个输出时间步，对齐的位置最多向前移动一步； (3) <strong>完整性</strong>，对齐的位置必须覆盖输入标记的所有位置。 已经提出了许多先前的研究来确保正确的对齐（Li 等人，2020 年），但其中大多数需要连续的步骤，并且经常无法满足上述所有标准。 在这项工作中，我们提出了一种有效且高效地产生单调注意力的新方法。</p>
+<h2 id="采用imv进行单调对齐建模">采用IMV进行单调对齐建模</h2>
+<p>我们通过提出<strong>索引映射向量 (IMV: index mapping vector)</strong> 开始本节，然后我们在单调对齐建模中利用 IMV。 我们进一步展示了如何将 IMV 合并到一般的序列到序列模型中。</p>
+<h3 id="imv定义">3.1 IMV定义</h3>
+<p>设 <span class="math inline">\(α∈\mathcal{R}^{(T_1,T_2)}\)</span>​​​ 为输入序列 <span class="math inline">\(x∈\mathcal{R}^{(D_1,T_1)}\)</span>​​ ​和输出序列 <span class="math inline">\(y∈ \mathcal{R}^{(D_2,T_2)}\)</span>​​ 之间的比对矩阵。 我们将索引映射向量 (IMV) <span class="math inline">\(π\)</span>​​ 定义为索引向量 <span class="math inline">\(p = \{0, 1, · · · , T_1 − 1\}\)</span>​ 的总和，由 <span class="math inline">\(α\)</span> 加权： <span class="math display">\[
+π_j = \sum^{T_1 -1}_{i=0} 􏰂 α_{i,j} ∗p_i,
+\]</span> 其中，<span class="math inline">\(0 ≤ j ≤ T_2 −1,π ∈ \mathcal{R}^{T_2},􏰂\sum^{T_1-1}_{i=0}α_{i,j} = 1\)</span>​​.</p>
+<p>我们可以将 IMV 理解为每个的预期位置输出时间步长，其中期望值是从 <span class="math inline">\(0\)</span> 到 <span class="math inline">\(T_1-1\)</span>​ 的所有可能输入位置。</p>
+<h3 id="采用imv进行单调对齐建模-1">3.2 采用IMV进行单调对齐建模</h3>
+<p><strong>连续性和单调性。</strong> 我们首先证明对齐矩阵 <span class="math inline">\(α\)</span>​ 的连续性和单调性标准等价于以下约束： <span class="math display">\[
+0 ≤ ∆π_i ≤ 1
+\]</span> 其中，<span class="math inline">\(∆π_i = π_i −π_{i−1},1 ≤ i ≤ T_2 −1\)</span>​。 详细的验证见附录 A。</p>
+<p><strong>完整性。</strong> 给定 <span class="math inline">\(π\)</span>​ 是连续单调的，完备性等价于边界条件： <span class="math display">\[
+π_0=0,
+\]</span></p>
+<p><span class="math display">\[
+π_{T_2−1} = T_1 − 1.
+\]</span></p>
+<p>这可以从 <span class="math inline">\(α_0 = \{1, 0, ..., 0\}\)</span>​​​​​​ 和 <span class="math inline">\(α_{T_2 −1} = \{0,0,...,1\}\)</span>​​​​​​ 推导出，其中<span class="math inline">\(α_0 =\{α_{i,j} |0≤i≤T_1−1， j=0\}\)</span>​​​​​​ 和 <span class="math inline">\(α_{T_2 −1} = \{α_{i,j} | 0 ≤ i ≤ T_1 − 1，j = T_2 − 1\}\)</span>​​​​​​​​。</p>
+<h3 id="将imv融合到网络中">3.3 将IMV融合到网络中</h3>
+<p>我们提出了两种将 IMV 纳入序列到序列网络的策略：软单调比对 (SMA) 和硬单调比对 (HMA)。</p>
+<p><strong>软单调对齐 (SMA)</strong>。 让序列到序列模型使用3.2节给出的3个约束条件进行训练。 一个自然的想法是将这些约束转化为训练目标。 我们将这些约束表述为 SMA 损失，计算如下： <span class="math display">\[
+L_{SMA} = λ_0∥|∆π| − ∆π∥_1 + λ_1∥|∆π − 1| + (∆π − 1)∥_1 + λ_2∥\frac {π_0} {T_1−1} ∥_2 + λ_3∥ \frac {π_{T_2−1}}{T_1 -1} − 1∥_2,
+\]</span> 其中<span class="math inline">\(∥·∥_1\)</span>和<span class="math inline">\(∥·∥_2\)</span>​分别为L1范数和L2范数，<span class="math inline">\(λ_0、λ_1、λ_2、λ_3\)</span>​​为正系数。 可以看出，<span class="math inline">\(L_{SMA}\)</span> 是非负的，只有当 <span class="math inline">\(π\)</span>​ 满足所有约束时才为零。 <span class="math inline">\(L_{SMA}\)</span> 的计算只需要对齐矩阵 <span class="math inline">\(α\)</span>（索引向量 <span class="math inline">\(p\)</span>​ 总是已知的），因此，将 SMA 损失合并到序列到序列网络中而不改变它们的网络结构是很容易的。 一般来说，SMA 扮演着与引导注意（Guided Attention）相似的角色。 然而，SMA 优于引导注意，因为 SMA 理论上对对齐提供了更准确的约束。</p>
 <p><strong>硬单调对齐 (HMA)</strong>。 虽然 SMA 允许序列到序列网络通过结合 SMA 损失来产生单调对齐，但这些网络的训练可能仍然很昂贵，因为网络无法在训练的开始阶段产生单调对齐。 相反，他们一步一步地学习这种能力。 为了解决这个限制，我们提出了另一种单调策略，我们称之为 HMA，用于硬单调对齐。 HMA 的核心思想是建立一个具有战略设计结构的新网络，允许在没有监督的情况下产生单调对齐。</p>
-<p>首先，我们根据IMV的定义从对齐矩阵 $α$ 计算 IMV $π’$​。尽管 $π’$ 不是单调的，但它随后通过使用 ReLU 激活强制 $Δπ &gt; 0$ 被转换为 $π$，这是一个严格单调的 IMV。</p>
-<script type="math/tex; mode=display">
-∆π_j^′ =π_j^′ −π^′_{j−1}, 0<j≤T_2−1,</script><script type="math/tex; mode=display">
-∆π_j =\text{ReLU}(∆π_j^′), 0<j≤T_2−1,</script><script type="math/tex; mode=display">
+<p>首先，我们根据IMV的定义从对齐矩阵 <span class="math inline">\(α\)</span> 计算 IMV <span class="math inline">\(π&#39;\)</span>​。尽管 <span class="math inline">\(π&#39;\)</span> 不是单调的，但它随后通过使用 ReLU 激活强制 <span class="math inline">\(Δπ &gt; 0\)</span> 被转换为 <span class="math inline">\(π\)</span>，这是一个严格单调的 IMV。 <span class="math display">\[
+∆π_j^′ =π_j^′ −π^′_{j−1}, 0&lt;j≤T_2−1,
+\]</span></p>
+<p><span class="math display">\[
+∆π_j =\text{ReLU}(∆π_j^′), 0&lt;j≤T_2−1,
+\]</span></p>
+<p><span class="math display">\[
 π_j= 
 \begin{cases}
-0, & j=0\\
-\sum_{m=0}^j  ∆π_m & 0<j≤T_2−1
-\end{cases}􏰁</script><p>此外，要将 $π$ 的域限制在完整性等式中给出的区间 $[0, T_1 − 1]$。我们将 $π$ 乘以一个正标量：</p>
-<script type="math/tex; mode=display">
-π_j^∗ = π_j ∗ \frac {T_1 − 1} {max(π)} =  π_j ∗ \frac {T_1 − 1} {π_{T_2} −1},0 ≤ j ≤ T_2 − 1.</script><p>回想一下，我们的目标是构建单调对齐。 为了实现这一点，我们引入了以下变换，通过利用以 $π^∗$为中心的高斯核来重建对齐：</p>
-<script type="math/tex; mode=display">
-α^′_{i,j} = \frac {exp (−σ^{−2}(p_i − π_j^∗)^2)} {􏰁\sum^{T_1−1}_{m=0} exp (−σ^{−2}(p_m − π_j^∗)^2)}</script><p>其中，$σ^2$​ 表示表示对齐变化的超参数。 $α’$​ 用作原始对齐 $α$ 的替代。 $α$ 和 $α’$ 之间的区别在于 $α’$ 保证是单调的，而 $α$ 对单调性没有约束。 HMA 降低了学习单调对齐的难度，从而提高了训练效率。 与 SMA 类似，HMA 可用于任何序列到序列网络。</p>
-<h2 id="EfficientTTS-模型架构"><a href="#EfficientTTS-模型架构" class="headerlink" title="EfficientTTS 模型架构"></a>EfficientTTS 模型架构</h2><p>EfficientTTS 的整体架构设计如图 2 所示。在训练阶段，我们通过 IMV 生成器从文本序列和 melspectrogram 的隐藏表示中学习 IMV。 文本序列和梅尔谱图的隐藏表示分别从文本编码器和梅尔编码器中学习。 然后将 IMV 转换为二维对齐矩阵，该矩阵进一步用于通过对齐重建层生成时间对齐表示。 时间对齐的表示通过解码器生成输出梅尔光谱图或波形。 我们同时训练一个对齐位置预测器，它学习在每个输入文本标记的输出时间步长中预测对齐位置。 在推理阶段，我们从预测的对齐位置重建对齐矩阵。 我们在以下小节和附录 D 中每个组件的伪代码中展示了详细的实现。</p>
-<p><img src="/images/fig2.png" alt="fig2"></p>
-<h3 id="4-1-文本编码器和Mel谱编码器"><a href="#4-1-文本编码器和Mel谱编码器" class="headerlink" title="4.1 文本编码器和Mel谱编码器"></a>4.1 文本编码器和Mel谱编码器</h3><p>我们使用文本编码器和梅尔编码器将文本符号和梅尔谱图分别转换为强大的隐藏表示。</p>
+0, &amp; j=0\\
+\sum_{m=0}^j  ∆π_m &amp; 0&lt;j≤T_2−1
+\end{cases}􏰁
+\]</span></p>
+<p>此外，要将 <span class="math inline">\(π\)</span> 的域限制在完整性等式中给出的区间 <span class="math inline">\([0, T_1 − 1]\)</span>。我们将 <span class="math inline">\(π\)</span> 乘以一个正标量： <span class="math display">\[
+π_j^∗ = π_j ∗ \frac {T_1 − 1} {max(π)} =  π_j ∗ \frac {T_1 − 1} {π_{T_2} −1},0 ≤ j ≤ T_2 − 1.
+\]</span> 回想一下，我们的目标是构建单调对齐。 为了实现这一点，我们引入了以下变换，通过利用以 <span class="math inline">\(π^∗\)</span>为中心的高斯核来重建对齐： <span class="math display">\[
+α^′_{i,j} = \frac {exp (−σ^{−2}(p_i − π_j^∗)^2)} {􏰁\sum^{T_1−1}_{m=0} exp (−σ^{−2}(p_m − π_j^∗)^2)}
+\]</span> 其中，<span class="math inline">\(σ^2\)</span>​ 表示表示对齐变化的超参数。 <span class="math inline">\(α&#39;\)</span>​ 用作原始对齐 <span class="math inline">\(α\)</span> 的替代。 <span class="math inline">\(α\)</span> 和 <span class="math inline">\(α&#39;\)</span> 之间的区别在于 <span class="math inline">\(α&#39;\)</span> 保证是单调的，而 <span class="math inline">\(α\)</span> 对单调性没有约束。 HMA 降低了学习单调对齐的难度，从而提高了训练效率。 与 SMA 类似，HMA 可用于任何序列到序列网络。</p>
+<h2 id="efficienttts-模型架构">EfficientTTS 模型架构</h2>
+<p>EfficientTTS 的整体架构设计如图 2 所示。在训练阶段，我们通过 IMV 生成器从文本序列和 melspectrogram 的隐藏表示中学习 IMV。 文本序列和梅尔谱图的隐藏表示分别从文本编码器和梅尔编码器中学习。 然后将 IMV 转换为二维对齐矩阵，该矩阵进一步用于通过对齐重建层生成时间对齐表示。 时间对齐的表示通过解码器生成输出梅尔光谱图或波形。 我们同时训练一个对齐位置预测器，它学习在每个输入文本标记的输出时间步长中预测对齐位置。 在推理阶段，我们从预测的对齐位置重建对齐矩阵。 我们在以下小节和附录 D 中每个组件的伪代码中展示了详细的实现。</p>
+<div class="figure">
+<img src="/images/fig2.png" alt="fig2" />
+<p class="caption">fig2</p>
+</div>
+<h3 id="文本编码器和mel谱编码器">4.1 文本编码器和Mel谱编码器</h3>
+<p>我们使用文本编码器和梅尔编码器将文本符号和梅尔谱图分别转换为强大的隐藏表示。</p>
 <p>在文本编码器的实现中，我们使用学习嵌入(learned embedding)将文本序列转换为高维向量序列。 然后，高维向量通过一堆卷积，散布着权重归一化和 Leaky ReLU 激活。 我们还为每个卷积添加了一个残差连接以允许深度网络。</p>
 <p>在梅尔编码器的实现中，我们首先通过线性投影将梅尔谱图转换为高维向量。 与文本编码器相同，mel-encoder 由一堆卷积组成，其中散布着权重归一化、Leaky ReLU 激活和残差连接。 请注意，mel-encoder 仅用于训练阶段。</p>
-<h3 id="4-2-IMV-生成器"><a href="#4-2-IMV-生成器" class="headerlink" title="4.2 IMV 生成器"></a>4.2 IMV 生成器</h3><p>为了在训练阶段生成单调 IMV，我们首先通过等式中给出的缩放点积注意力学习输入和输出之间的对齐 $α$。 然后从$α$​计算IMV。</p>
-<script type="math/tex; mode=display">
-α_{i,j}= \frac {\text{exp}(−D^{−0.5}(q_j ·k_i))} {\sum^{T_1−1}_{m=0}exp(−D^{−0.5}(q_j·k_m))}</script><p>其中，$q$ 和 $k$ 是 mel-encoder 和 text-encoder 的输出，$D$ 是 $q$ 和 $k$ 的维度。</p>
+<h3 id="imv-生成器">4.2 IMV 生成器</h3>
+<p>为了在训练阶段生成单调 IMV，我们首先通过等式中给出的缩放点积注意力学习输入和输出之间的对齐 <span class="math inline">\(α\)</span>。 然后从<span class="math inline">\(α\)</span>​计算IMV。 <span class="math display">\[
+α_{i,j}= \frac {\text{exp}(−D^{−0.5}(q_j ·k_i))} {\sum^{T_1−1}_{m=0}exp(−D^{−0.5}(q_j·k_m))}
+\]</span> 其中，<span class="math inline">\(q\)</span> 和 <span class="math inline">\(k\)</span> 是 mel-encoder 和 text-encoder 的输出，<span class="math inline">\(D\)</span> 是 <span class="math inline">\(q\)</span> 和 <span class="math inline">\(k\)</span> 的维度。</p>
 <p>计算 IMV 的一种简单方法是遵循3.1中定义的等式 (2)。然而，由于缩放点积注意力对单调性没有限制，在我们的初步实验中，将 SMA 损失纳入训练。 但我们进一步发现 HMA 更有效。 我们遵循3.3中定义的方程 (7,8,9,10) 实施 HMA。 在实验中，我们比较了不同单调策略的效果。</p>
-<h3 id="4-3-对齐位置预测器"><a href="#4-3-对齐位置预测器" class="headerlink" title="4.3 对齐位置预测器"></a>4.3 对齐位置预测器</h3><p>在推理阶段，模型需要从文本序列 $h$​​ 的隐藏表示中预测 IMV $π$​​，这在实践中具有挑战性。 有两个限制：（1）$π$​​​是时间对齐的，分辨率高，但是$h$​​分辨率低； (2) 由于3.3中的等式（9）中引入的累积求和运算，$π_i$ 的每个预测都会影响 $π_j (j &gt; i)$​ 的后续预测，使得并行预测 $π$​变得困难。 幸运的是，可以通过预测每个输入标记的对齐位置 $e$ 来缓解这些限制。 我们定义3.1中的方程 (2) 作为变换 $m(·): π = m(q)$​。 由于 $π$ 和 $q$ 在时间步长上都是单调连续的，这意味着变换 $m(·)$​ 是单调连续的，因此 $m(·)$ 是可逆的：</p>
-<script type="math/tex; mode=display">
-q = m^{−1}(π),</script><p>每个输入标记的输出时间步长中对齐的位置 $e$ 可以计算为：</p>
-<script type="math/tex; mode=display">
-e=m^{−1}(p), p=\{0,1,...,T_1 −1\}.</script><p><img src="/images/fig3.png" alt="fig3">我们在图 3 中说明了 $m(·)$、$e$、$π$ 的关系。为了计算 $e$，我们首先利用与3.3中的方程（11) 类似的变换来计算概率密度矩阵 $γ$。  唯一的区别是概率密度是在不同维度上计算的。 对齐位置 $e$ 是由 $γ$ 加权的输出索引向量 $q$​ 的加权和。</p>
-<script type="math/tex; mode=display">
-γ_{i,j} = \frac {\text{exp}(−σ^{−2}(p_i −π_j)^2)} {􏰁\sum ^{T_2−1}_{n=0} \text{exp} (−σ^{−2}(p_i − π_n)^2)}</script><script type="math/tex; mode=display">
-e_i = \sum^{T_2-1}_{n=0}􏰂 γ_{i,n} ∗q_n</script><p>可以看出，$e$ 的计算是可微的，允许通过梯度方法进行训练，因此可以用于训练和推理。 此外，$e$​ 是可预测的，因为：(1) 分辨率 $e$​ 与 $h$ 相同； (2) 我们可以学习相对位置$∆e,(∆e_i =e_i−e_{i−1},1≤i≤T_1−1)$ 而不是直接学习$e$ 来克服第二个限制。</p>
-<p>对齐位置预测器由 2 个卷积组成，每个卷积之后是层归一化和 ReLU 激活。 我们将根据 $π$ 计算出的 $Δe$ 作为训练目标。 估计位置 $∆ \hat e$ 和目标位置 $∆e$​ 之间的损失函数计算如下：</p>
-<script type="math/tex; mode=display">
-L_{ap} =∥log(∆ \hat e+ε)−log(∆e+ε)∥_1,</script><p>其中，$ε$​ 是一个小数，以避免数值不稳定性。 对数尺度损失的目标是准确拟合小值，这对于训练的后期阶段往往更为重要。 对齐位置预测器与模型的其余部分共同学习。 因为我们通过利用对齐的位置来生成对齐，作为附带好处，EfficientTTS 继承了基于持续时间的非自回归 TTS 模型的语速控制的能力。</p>
-<h3 id="4-4-对齐重构"><a href="#4-4-对齐重构" class="headerlink" title="4.4 对齐重构"></a>4.4 对齐重构</h3><p>为了将输入隐藏表示 $h$ 映射到时间对齐表示，需要一个对齐矩阵，用于训练和推理。 我们也可以从 IMV 或对齐位置构建对齐。 对于大多数情况，3.3 的方程 (11) 是从 IMV 重建对齐矩阵的有效方法。 但是因为我们在推理过程中预测对齐位置而不是 IMV，为了保持一致，我们从对齐位置 $e$ 重建对齐矩阵，用于训练和推理。具体来说，我们采用从4.3中的方程 (15) 计算的对齐位置 $e$​​​​​ 用于训练，以及来自对齐位置预测器的预测用于推理。</p>
-<p>我们遵循 EATS 的类似思想，通过引入以对齐位置 $e$ 为中心的高斯核来重建对齐矩阵 $α’$​。</p>
-<script type="math/tex; mode=display">
-α^{'}_{i,j} = \frac {\text{exp}(−σ^{−2}(e_i −q_j)^2)} {􏰁\sum^{T_1−1}_{m=0} \text{exp}(−σ^{−2}(e_m −q_j)^2)}</script><p>其中 $q = \{0, 1, …, T_2 − 1\}$ 是输出序列的索引向量。 输出序列 $T_2$ 的长度在训练中已知，在推理中从 $e$​ 计算：</p>
-<script type="math/tex; mode=display">
-T_2 = e_{T_1−1} + ∆e_{T_1−1}</script><p>尽管重建的对齐矩阵可能不如由3.3中的等式(11)计算的矩阵准确（由于$e$的分辨率低），对输出的影响很小，因为网络能够补偿。 因此，由于训练和推理的一致性不断提高，我们享受到语音质量的提高。</p>
-<p>我们在图 4 中说明了 $π$ 和相同话术的重构 $α$​​​。可以看出，$α$ 在第一个训练步骤是对角线的，并且在第 $10k^{th}$ 个训练步骤快速收敛，这是非常快的。 我们通过使用遵循2.1中的等式(1)的 $α’$ 将文本编码器 $h$ 的输出映射到时间对齐的表示。然后将时间对齐的表示作为输入馈送到解码器。</p>
-<h3 id="4-5-解码器"><a href="#4-5-解码器" class="headerlink" title="4.5 解码器"></a>4.5 解码器</h3><p>由于解码器的输入和输出都是时间对齐的，因此很容易实现具有并行结构的解码器。 在下一节中，我们开发了三种基于具有不同解码器实现的 EfficientTTS 的模型。</p>
-<h2 id="EfficientTTS-Models"><a href="#EfficientTTS-Models" class="headerlink" title="EfficientTTS Models"></a>EfficientTTS Models</h2><h3 id="5-1-EFTS-CNN"><a href="#5-1-EFTS-CNN" class="headerlink" title="5.1 EFTS-CNN"></a>5.1 EFTS-CNN</h3><p>我们首先通过一堆卷积来参数化解码器。 每个卷积都穿插了权重归一化、Leaky ReLU 激活和残差连接。 我们在最后添加一个线性投影来生成melspectrogram。 均方误差 (MSE) 用作重建误差。 EFTS-CNN 的总体训练目标是 melspectrogram 的对齐位置损失和 MSE 损失的组合。</p>
-<h3 id="5-2-EFTS-Flow"><a href="#5-2-EFTS-Flow" class="headerlink" title="5.2 EFTS-Flow"></a>5.2 EFTS-Flow</h3><p>为了让 TTS 模型能够控制生成语音的变化，我们实现了一个基于流的解码器。 在训练阶段，我们通过直接最大化似然，以时间对齐表示为条件，学习从melspectrogram到高维高斯分布$\mathcal{N}(0, 1)$​的变换$f$​。 $f$​ 是可逆的，具有战略设计的结构。 具体来说，它由几个流程步骤组成，每个流程步骤由两个基本的可逆变换组成：一个可逆线性层和一个仿射耦合层。 为了提高生成语音的多样性，我们在推理过程中从高斯分布 $\mathcal{N} (0, 1)$ 中采样潜在变量 $z$，并使用温度因子 $t$ 用零向量 $o$ 解释 $z$，并逆变换 $f$ 以生成梅尔频谱图 .</p>
-<script type="math/tex; mode=display">
-z^{'} =t∗z+o∗(1−t),0≤t≤1</script><script type="math/tex; mode=display">
-x = f^{−1}(z^{'})</script><p>为简单起见，我们在实现基于流的解码器时遵循 Flow-TTS的解码器结构。 EFTS-Flow 的总体训练目标是对齐位置损失和最大似然估计 (MLE) 损失的组合。</p>
-<h3 id="5-3-EFTS-Wav"><a href="#5-3-EFTS-Wav" class="headerlink" title="5.3 EFTS-Wav"></a>5.3 EFTS-Wav</h3><p>为了简化 2 阶段训练管道并以完全端到端的方式训练 TTS 模型，我们通过将 EfficientTTS 与扩张卷积对抗解码器相结合来开发文本到 wav 模型。解码器结构类似于 MelGAN，除了： (1) 生成器的输入是高维隐藏表示，而不是 80 通道的梅尔频谱图； (2) 多分辨率 STFT 损耗包含在生成器的末端。我们采用与 MelGAN 鉴别器相同的结构进行对抗训练。与 ClariNet 和 EATS 类似，我们通过调节与 1s 音频剪辑相对应的切片输入来训练 MelGAN 部分，而其他部分则在全长话语上进行训练。我们在全长解码器输入上添加线性投影以同时生成melspectrogram，这允许EFTS-Wav学习每个训练步骤的全长对齐。 <strong>EFTS-Wav 生成器的总体训练目标是 melspectrogram 的重建损失、MelGAN 生成器损失、多分辨率 STFT 损失和对齐位置损失的线性组合。</strong></p>
-<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>在本节中，我们首先在语音保真度、训练和推理效率方面将提出的模型与其对应模型进行比较。 然后，我们分析了所提出的单调方法在 EFTS-CNN 和 Tacotron 2 上的有效性。我们还证明了所提出的模型可以在本节末尾生成非常多样化的语音。</p>
-<h3 id="6-1-实验设置"><a href="#6-1-实验设置" class="headerlink" title="6.1 实验设置"></a>6.1 实验设置</h3><p><strong>数据集。</strong> 我们在来自 DataBaker 的开源标准普通话数据集上进行了大部分实验，该数据集包含来自单个女性演讲者的 10,000 个中文片段，采样率为 22.05kHZ。 剪辑的长度从 1 秒到 10 秒不等，剪辑的总长度约为 12 小时。 我们遵循Tacotron将波形转换为 80 通道 melspectrogram，FFT 大小为 1024，跳长为 256，窗口大小为 1024。我们还使用 LJ-Speech 数据集进行了一些实验，这是一个由 13100条音频片段组成的单个女性演讲者的 24 小时波形音频集，采样率22.05kHZ。</p>
+<h3 id="对齐位置预测器">4.3 对齐位置预测器</h3>
+<p>在推理阶段，模型需要从文本序列 <span class="math inline">\(h\)</span>​​ 的隐藏表示中预测 IMV <span class="math inline">\(π\)</span>​​，这在实践中具有挑战性。 有两个限制：（1）<span class="math inline">\(π\)</span>​​​是时间对齐的，分辨率高，但是<span class="math inline">\(h\)</span>​​分辨率低； (2) 由于3.3中的等式（9）中引入的累积求和运算，<span class="math inline">\(π_i\)</span> 的每个预测都会影响 <span class="math inline">\(π_j (j &gt; i)\)</span>​ 的后续预测，使得并行预测 <span class="math inline">\(π\)</span>​变得困难。 幸运的是，可以通过预测每个输入标记的对齐位置 <span class="math inline">\(e\)</span> 来缓解这些限制。 我们定义3.1中的方程 (2) 作为变换 <span class="math inline">\(m(·): π = m(q)\)</span>​。 由于 <span class="math inline">\(π\)</span> 和 <span class="math inline">\(q\)</span> 在时间步长上都是单调连续的，这意味着变换 <span class="math inline">\(m(·)\)</span>​ 是单调连续的，因此 <span class="math inline">\(m(·)\)</span> 是可逆的： <span class="math display">\[
+q = m^{−1}(π),
+\]</span> 每个输入标记的输出时间步长中对齐的位置 <span class="math inline">\(e\)</span> 可以计算为： <span class="math display">\[
+e=m^{−1}(p), p=\{0,1,...,T_1 −1\}.
+\]</span></p>
+<p><img src="/images/fig3.png" alt="fig3" />我们在图 3 中说明了 <span class="math inline">\(m(·)\)</span>、<span class="math inline">\(e\)</span>、<span class="math inline">\(π\)</span> 的关系。为了计算 <span class="math inline">\(e\)</span>，我们首先利用与3.3中的方程（11) 类似的变换来计算概率密度矩阵 <span class="math inline">\(γ\)</span>。 唯一的区别是概率密度是在不同维度上计算的。 对齐位置 <span class="math inline">\(e\)</span> 是由 <span class="math inline">\(γ\)</span> 加权的输出索引向量 <span class="math inline">\(q\)</span>​ 的加权和。 <span class="math display">\[
+γ_{i,j} = \frac {\text{exp}(−σ^{−2}(p_i −π_j)^2)} {􏰁\sum ^{T_2−1}_{n=0} \text{exp} (−σ^{−2}(p_i − π_n)^2)}
+\]</span></p>
+<p><span class="math display">\[
+e_i = \sum^{T_2-1}_{n=0}􏰂 γ_{i,n} ∗q_n
+\]</span></p>
+<p>可以看出，<span class="math inline">\(e\)</span> 的计算是可微的，允许通过梯度方法进行训练，因此可以用于训练和推理。 此外，<span class="math inline">\(e\)</span>​ 是可预测的，因为：(1) 分辨率 <span class="math inline">\(e\)</span>​ 与 <span class="math inline">\(h\)</span> 相同； (2) 我们可以学习相对位置<span class="math inline">\(∆e,(∆e_i =e_i−e_{i−1},1≤i≤T_1−1)\)</span> 而不是直接学习<span class="math inline">\(e\)</span> 来克服第二个限制。</p>
+<p>对齐位置预测器由 2 个卷积组成，每个卷积之后是层归一化和 ReLU 激活。 我们将根据 <span class="math inline">\(π\)</span> 计算出的 <span class="math inline">\(Δe\)</span> 作为训练目标。 估计位置 <span class="math inline">\(∆ \hat e\)</span> 和目标位置 <span class="math inline">\(∆e\)</span>​ 之间的损失函数计算如下： <span class="math display">\[
+L_{ap} =∥log(∆ \hat e+ε)−log(∆e+ε)∥_1,
+\]</span> 其中，<span class="math inline">\(ε\)</span>​ 是一个小数，以避免数值不稳定性。 对数尺度损失的目标是准确拟合小值，这对于训练的后期阶段往往更为重要。 对齐位置预测器与模型的其余部分共同学习。 因为我们通过利用对齐的位置来生成对齐，作为附带好处，EfficientTTS 继承了基于持续时间的非自回归 TTS 模型的语速控制的能力。</p>
+<h3 id="对齐重构">4.4 对齐重构</h3>
+<p>为了将输入隐藏表示 <span class="math inline">\(h\)</span> 映射到时间对齐表示，需要一个对齐矩阵，用于训练和推理。 我们也可以从 IMV 或对齐位置构建对齐。 对于大多数情况，3.3 的方程 (11) 是从 IMV 重建对齐矩阵的有效方法。 但是因为我们在推理过程中预测对齐位置而不是 IMV，为了保持一致，我们从对齐位置 <span class="math inline">\(e\)</span> 重建对齐矩阵，用于训练和推理。具体来说，我们采用从4.3中的方程 (15) 计算的对齐位置 <span class="math inline">\(e\)</span>​​​​​ 用于训练，以及来自对齐位置预测器的预测用于推理。</p>
+<p>我们遵循 EATS 的类似思想，通过引入以对齐位置 <span class="math inline">\(e\)</span> 为中心的高斯核来重建对齐矩阵 <span class="math inline">\(α&#39;\)</span>​。 <span class="math display">\[
+α^{&#39;}_{i,j} = \frac {\text{exp}(−σ^{−2}(e_i −q_j)^2)} {􏰁\sum^{T_1−1}_{m=0} \text{exp}(−σ^{−2}(e_m −q_j)^2)}
+\]</span> 其中 <span class="math inline">\(q = \{0, 1, ..., T_2 − 1\}\)</span> 是输出序列的索引向量。 输出序列 <span class="math inline">\(T_2\)</span> 的长度在训练中已知，在推理中从 <span class="math inline">\(e\)</span>​ 计算： <span class="math display">\[
+T_2 = e_{T_1−1} + ∆e_{T_1−1}
+\]</span> 尽管重建的对齐矩阵可能不如由3.3中的等式(11)计算的矩阵准确（由于<span class="math inline">\(e\)</span>的分辨率低），对输出的影响很小，因为网络能够补偿。 因此，由于训练和推理的一致性不断提高，我们享受到语音质量的提高。</p>
+<p>我们在图 4 中说明了 <span class="math inline">\(π\)</span> 和相同话术的重构 <span class="math inline">\(α\)</span>​​​。可以看出，<span class="math inline">\(α\)</span> 在第一个训练步骤是对角线的，并且在第 <span class="math inline">\(10k^{th}\)</span> 个训练步骤快速收敛，这是非常快的。 我们通过使用遵循2.1中的等式(1)的 <span class="math inline">\(α&#39;\)</span> 将文本编码器 <span class="math inline">\(h\)</span> 的输出映射到时间对齐的表示。然后将时间对齐的表示作为输入馈送到解码器。</p>
+<h3 id="解码器">4.5 解码器</h3>
+<p>由于解码器的输入和输出都是时间对齐的，因此很容易实现具有并行结构的解码器。 在下一节中，我们开发了三种基于具有不同解码器实现的 EfficientTTS 的模型。</p>
+<h2 id="efficienttts-models">EfficientTTS Models</h2>
+<h3 id="efts-cnn">5.1 EFTS-CNN</h3>
+<p>我们首先通过一堆卷积来参数化解码器。 每个卷积都穿插了权重归一化、Leaky ReLU 激活和残差连接。 我们在最后添加一个线性投影来生成melspectrogram。 均方误差 (MSE) 用作重建误差。 EFTS-CNN 的总体训练目标是 melspectrogram 的对齐位置损失和 MSE 损失的组合。</p>
+<h3 id="efts-flow">5.2 EFTS-Flow</h3>
+<p>为了让 TTS 模型能够控制生成语音的变化，我们实现了一个基于流的解码器。 在训练阶段，我们通过直接最大化似然，以时间对齐表示为条件，学习从melspectrogram到高维高斯分布<span class="math inline">\(\mathcal{N}(0, 1)\)</span>​的变换<span class="math inline">\(f\)</span>​。 <span class="math inline">\(f\)</span>​ 是可逆的，具有战略设计的结构。 具体来说，它由几个流程步骤组成，每个流程步骤由两个基本的可逆变换组成：一个可逆线性层和一个仿射耦合层。 为了提高生成语音的多样性，我们在推理过程中从高斯分布 <span class="math inline">\(\mathcal{N} (0, 1)\)</span> 中采样潜在变量 <span class="math inline">\(z\)</span>，并使用温度因子 <span class="math inline">\(t\)</span> 用零向量 <span class="math inline">\(o\)</span> 解释 <span class="math inline">\(z\)</span>，并逆变换 <span class="math inline">\(f\)</span> 以生成梅尔频谱图 . <span class="math display">\[
+z^{&#39;} =t∗z+o∗(1−t),0≤t≤1
+\]</span></p>
+<p><span class="math display">\[
+x = f^{−1}(z^{&#39;})
+\]</span></p>
+<p>为简单起见，我们在实现基于流的解码器时遵循 Flow-TTS的解码器结构。 EFTS-Flow 的总体训练目标是对齐位置损失和最大似然估计 (MLE) 损失的组合。</p>
+<h3 id="efts-wav">5.3 EFTS-Wav</h3>
+<p>为了简化 2 阶段训练管道并以完全端到端的方式训练 TTS 模型，我们通过将 EfficientTTS 与扩张卷积对抗解码器相结合来开发文本到 wav 模型。解码器结构类似于 MelGAN，除了： (1) 生成器的输入是高维隐藏表示，而不是 80 通道的梅尔频谱图； (2) 多分辨率 STFT 损耗包含在生成器的末端。我们采用与 MelGAN 鉴别器相同的结构进行对抗训练。与 ClariNet 和 EATS 类似，我们通过调节与 1s 音频剪辑相对应的切片输入来训练 MelGAN 部分，而其他部分则在全长话语上进行训练。我们在全长解码器输入上添加线性投影以同时生成melspectrogram，这允许EFTS-Wav学习每个训练步骤的全长对齐。 <strong>EFTS-Wav 生成器的总体训练目标是 melspectrogram 的重建损失、MelGAN 生成器损失、多分辨率 STFT 损失和对齐位置损失的线性组合。</strong></p>
+<h2 id="experiments">Experiments</h2>
+<p>在本节中，我们首先在语音保真度、训练和推理效率方面将提出的模型与其对应模型进行比较。 然后，我们分析了所提出的单调方法在 EFTS-CNN 和 Tacotron 2 上的有效性。我们还证明了所提出的模型可以在本节末尾生成非常多样化的语音。</p>
+<h3 id="实验设置">6.1 实验设置</h3>
+<p><strong>数据集。</strong> 我们在来自 DataBaker 的开源标准普通话数据集上进行了大部分实验，该数据集包含来自单个女性演讲者的 10,000 个中文片段，采样率为 22.05kHZ。 剪辑的长度从 1 秒到 10 秒不等，剪辑的总长度约为 12 小时。 我们遵循Tacotron将波形转换为 80 通道 melspectrogram，FFT 大小为 1024，跳长为 256，窗口大小为 1024。我们还使用 LJ-Speech 数据集进行了一些实验，这是一个由 13100条音频片段组成的单个女性演讲者的 24 小时波形音频集，采样率22.05kHZ。</p>
 <p><strong>实施细则。</strong> 我们的 EfficientTTS 实现由文本编码器（ 5 个卷积）和梅尔编码器（3 个卷积）组成，所有卷积的内核大小和维度大小分别设置为 5 和 512。 我们在具有相同卷积配置的 EFTS-CNN 解码器中使用 6 层卷积堆栈。 EFTS-Flow 的解码器由 8 个流程步骤组成，我们在实现多尺度架构时每 3 个流程步骤就提前输出 20 个通道。 我们遵循 MelGAN 的配置来实现 EFTS-wav。 我们使用 HiFi-GAN 声码器从 EFTS-CNN 和 EFTS-Flow 生成的梅尔谱图生成波形。 我们使用具有 HiFi-GAN-V1 配置的 <a target="_blank" rel="noopener" href="https://github.com/jik876/hifi-gan">HiFi-GAN</a>的开放实现。</p>
 <p><strong>对照模型。</strong> 我们在以下实验中将提出的模型与自回归 Tacotron 2 和非自回归 Glow-TTS 进行比较。 我们直接使用带有默认配置的 <a target="_blank" rel="noopener" href="https://github.com/NVIDIA/tacotron2">Tacotron 2</a> 和 <a target="_blank" rel="noopener" href="https://github.com/jaywalnut310/glow-tts">Glow-TTS</a> 的开源实现。</p>
-<p><strong>训练。</strong> 我们在单个 Tesla V100 GPU 上训练所有模型。对于 EFTS-CNN 和 EFTS-Flow，我们使用 Adam 优化器，批量大小为 96，学习率为 $1 × 10^{−4}$。 对于 EFTS-Wav，我们使用批次大小为 48 的 Adam 优化器。我们对 EFTS-Wav 生成器使用 $1 × 10^{−4}$ 的学习率，对EFTS-Wav 鉴别器使用 $5 × 10^{−5}$​的学习率。 在 DataBaker 上训练 EFTS-CNN 需要 270k 步直到收敛，EFTS-Flow 需要 400k 训练步骤，EFTS-Wav 需要 560k 训练步骤。</p>
-<h3 id="6-2-与对照模型对比"><a href="#6-2-与对照模型对比" class="headerlink" title="6.2. 与对照模型对比"></a>6.2. 与对照模型对比</h3><p><img src="/images/efts-table2.png" alt="efts-table2"></p>
-<p><img src="/images/efts-table3.png" alt="efts-table3"></p>
+<p><strong>训练。</strong> 我们在单个 Tesla V100 GPU 上训练所有模型。对于 EFTS-CNN 和 EFTS-Flow，我们使用 Adam 优化器，批量大小为 96，学习率为 <span class="math inline">\(1 × 10^{−4}\)</span>。 对于 EFTS-Wav，我们使用批次大小为 48 的 Adam 优化器。我们对 EFTS-Wav 生成器使用 <span class="math inline">\(1 × 10^{−4}\)</span> 的学习率，对EFTS-Wav 鉴别器使用 <span class="math inline">\(5 × 10^{−5}\)</span>​的学习率。 在 DataBaker 上训练 EFTS-CNN 需要 270k 步直到收敛，EFTS-Flow 需要 400k 训练步骤，EFTS-Wav 需要 560k 训练步骤。</p>
+<h3 id="与对照模型对比">6.2. 与对照模型对比</h3>
+<div class="figure">
+<img src="/images/efts-table2.png" alt="efts-table2" />
+<p class="caption">efts-table2</p>
+</div>
+<div class="figure">
+<img src="/images/efts-table3.png" alt="efts-table3" />
+<p class="caption">efts-table3</p>
+</div>
 <p><strong>语音质量。</strong>我们对 DataBaker 数据集进行了 5 级平均意见得分 (MOS) 评估，以衡量合成音频的质量。每个音频至少由 15 名测试人员收听，他们都是母语人士。我们将 EfficientTTS 系列生成的音频样本的 MOS 与真实音频以及对应模型生成的音频样本进行比较。具有 95% 置信区间的 MOS 结果显示在上表2中。 我们观察到 EfficientTTS 系列优于对应模型。 Tacotron 2 由于教师强制训练和自回归推理之间的不一致导致语音质量下降，而 Glow-TTS 复制了文本序列的隐藏表示，这破坏了隐藏表示的连续性。 EfficientTTS 使用 IMV 重建对齐，这比令牌持续时间更具表现力，因此实现了更好的语音质量。此外，EfficientTTS 的对齐部分与模型的其余部分一起训练，进一步提高了语音质量。由于我们的训练设置可能与对应模型的原始设置不同，我们进一步将我们的模型 EFTS-CNN 与 LJ-Speech 数据集上的 Tacotron 2 和 Glow-TTS 的相关模型进行比较。如表3所示。 EFTS-CNN 在 LJ-Speech 上的表现也明显优于对应模型。</p>
-<p><img src="/images/efts-table1.png" alt="efts-table1"></p>
+<div class="figure">
+<img src="/images/efts-table1.png" alt="efts-table1" />
+<p class="caption">efts-table1</p>
+</div>
 <p><strong>训练和推理速度。</strong>由于非自回归和完全卷积，所提出的模型对于训练和推理都非常有效。 训练时间和推理延迟的定量结果显示在表1中。可以看出，<strong>EFTS-CNN 需要最少的训练时间</strong>。 尽管 EFTS-Flow 需要与 Tacotron 2 相当的训练时间，但它比 Glow-TTS 快得多。 至于推理延迟，EfficientTTS 模型比 Tacotron 2 和 Glow-TTS 更快。 特别是，EFTS-CNN 的推理延迟为 6ms，比 Tacotron 2 快 130 倍，并且比 Glow-TTS 快得多。 由于去除了 melspectrogram 生成，<strong>EFTS-Wav 明显快于 2-staged 模型，从文本序列合成测试音频仅需 16 毫秒，比 Tacotron 2 快 54 倍。</strong></p>
-<h3 id="6-3-单调对齐方法的评估"><a href="#6-3-单调对齐方法的评估" class="headerlink" title="6.3 单调对齐方法的评估"></a>6.3 单调对齐方法的评估</h3><p>为了评估所提出的单调方法的行为，我们在 EFTS-CNN 和 Tacotron 2 上进行了多次实验。我们首先比较了 EFTS-CNN 上的训练效率，然后对 Tacotron 2 和 EFTS-CNN 进行了稳健性测试。</p>
-<p><img src="/images/efts-fig5.png" alt="efts-fig5"></p>
-<p><img src="/images/efts-table4.png" alt="efts-table4"></p>
+<h3 id="单调对齐方法的评估">6.3 单调对齐方法的评估</h3>
+<p>为了评估所提出的单调方法的行为，我们在 EFTS-CNN 和 Tacotron 2 上进行了多次实验。我们首先比较了 EFTS-CNN 上的训练效率，然后对 Tacotron 2 和 EFTS-CNN 进行了稳健性测试。</p>
+<div class="figure">
+<img src="/images/efts-fig5.png" alt="efts-fig5" />
+<p class="caption">efts-fig5</p>
+</div>
+<div class="figure">
+<img src="/images/efts-table4.png" alt="efts-table4" />
+<p class="caption">efts-table4</p>
+</div>
 <p><strong>EFTS-CNN 上的实验。</strong>我们用不同的设置训练 EFTS-CNN，包括：（1）EFTS-HMA，EFTS-CNN 的默认实现，带有硬单调 IMV 生成器。 (2) EFTS-SMA，一个带有软单调 IMV 生成器的 EFTS-CNN 模型。 (3) EFTS-NM，一个没有单调性常数的EFTS-CNN模型。 EFTS-NM 的网络结构与 EFTS-SMA 相同，不同之处在于 EFTS-SMA 是在 SMA 损失的情况下训练的，而 EFTS-NM 是在没有 SMA 损失的情况下训练的。我们首先发现EFTS-NM根本不收敛，它的对齐矩阵不是对角的，而EFTS-SMA和EFTS-HMA都能够产生合理的对齐。我们在图 5 中绘制了 EFTS-SMA 和 EFTS-HMA 的melspectrogram 损失曲线。<strong>可以看出，EFTS-HMA 比 EFTS-SMA 实现了显着的加速</strong>。因此，我们可以得出结论，单调对齐对于所提出的模型非常重要。我们的方法，对于 SMA 和 HMA，成功地学习了单调对齐，而原始注意力机制失败了。由于严格的单调对齐，EFTS-HMA 显着提高了模型性能。更多训练细节显示在表4中。</p>
-<p><img src="/images/efts-table5.png" alt="efts-table5"></p>
+<div class="figure">
+<img src="/images/efts-table5.png" alt="efts-table5" />
+<p class="caption">efts-table5</p>
+</div>
 <p><strong>稳健性。</strong>许多 TTS 模型在合成时遇到错位，特别是对于自回归模型。我们在本小节中分析了 EfficientTTS 的注意力错误，错误包括：重复单词、跳过单词和错误发音。我们对 50 个句子的测试集进行了稳健性评估，其中包括对 TTS 系统特别具有挑战性的案例，例如特别长的句子、重复的字母等。我们将 EFTS-CNN 与 Tacotron 2 进行比较。我们还将 SMA 和 HMA 合并到Tacotron 2 进行更详细的比较（Tacotron2-SMA 和 Tacotron2-HMA 的详细实现以及更多实验结果显示在附录 C 中）。稳健性测试的实验结果见表 5，可以看出EFTS-CNN在Tacotron 2遇到很多错误的情况下，有效地消除了重复错误和跳过错误。然而，通过利用 SMA 或 HMA，Tacotron 2 的合成错误显着减少，这表明所提出的单调方法可以提高 TTS 模型的鲁棒性。</p>
-<h3 id="6-4-多样性"><a href="#6-4-多样性" class="headerlink" title="6.4 多样性"></a>6.4 多样性</h3><p>为了合成多样化的语音样本，大多数 TTS 模型利用外部条件，例如样式嵌入或说话者嵌入，或者在推理过程中仅依靠 drop-out。 然而，EfficientTTS 能够以多种方式合成各种语音样本，包括：（1）用不同的对齐方案合成语音。 对齐方案可以是由mel编码器和IMV生成器从现有音频中提取的IMV，也可以是持续时间序列或对齐位置序列； (2) 通过在预测的对齐位置上乘以一个标量来合成不同语速的语音，这类似于其他基于时长的非自回归模型； (3) 通过在推理过程中改变潜在变量 $z$ 的温度 $t$​，为 EFTS-Flow 合成具有不同语音变体的语音。 我们在附录 B 中绘制了从相同文本序列生成的各种melspectrograms。</p>
-<h2 id="结论和未来工作"><a href="#结论和未来工作" class="headerlink" title="结论和未来工作"></a>结论和未来工作</h2><p>通常假设模型效率与语音质量之间存在不可避免的权衡。自回归模型，例如 Tacotron 2 和 TransformerTTS，可实现类似人类的语音质量，但由于其自回归结构，通常合成速度较慢。非自回归模型可以快速合成，但无法有效训练。在这项工作中，我们提出了一种非自回归架构，可以实现高质量的语音生成以及高效的训练和合成。我们开发了一系列基于 EfficientTTS 的模型，涵盖文本到光谱图和文本到波形的生成。通过大量实验，我们观察到改进的定量结果，包括训练效率、合成速度、鲁棒性以及语音质量。我们表明，与现有的 TTS 模型相比，所提出的模型非常具有竞争力。</p>
+<h3 id="多样性">6.4 多样性</h3>
+<p>为了合成多样化的语音样本，大多数 TTS 模型利用外部条件，例如样式嵌入或说话者嵌入，或者在推理过程中仅依靠 drop-out。 然而，EfficientTTS 能够以多种方式合成各种语音样本，包括：（1）用不同的对齐方案合成语音。 对齐方案可以是由mel编码器和IMV生成器从现有音频中提取的IMV，也可以是持续时间序列或对齐位置序列； (2) 通过在预测的对齐位置上乘以一个标量来合成不同语速的语音，这类似于其他基于时长的非自回归模型； (3) 通过在推理过程中改变潜在变量 <span class="math inline">\(z\)</span> 的温度 <span class="math inline">\(t\)</span>​，为 EFTS-Flow 合成具有不同语音变体的语音。 我们在附录 B 中绘制了从相同文本序列生成的各种melspectrograms。</p>
+<h2 id="结论和未来工作">结论和未来工作</h2>
+<p>通常假设模型效率与语音质量之间存在不可避免的权衡。自回归模型，例如 Tacotron 2 和 TransformerTTS，可实现类似人类的语音质量，但由于其自回归结构，通常合成速度较慢。非自回归模型可以快速合成，但无法有效训练。在这项工作中，我们提出了一种非自回归架构，可以实现高质量的语音生成以及高效的训练和合成。我们开发了一系列基于 EfficientTTS 的模型，涵盖文本到光谱图和文本到波形的生成。通过大量实验，我们观察到改进的定量结果，包括训练效率、合成速度、鲁棒性以及语音质量。我们表明，与现有的 TTS 模型相比，所提出的模型非常具有竞争力。</p>
 <p>未来的工作有很多可能的方向。 EfficientTTS 不仅可以在给定的对齐方式下生成语音，还可以从给定的语音中提取对齐方式，使其成为语音转换和歌唱合成的绝佳选择。将所提出的单调方法应用于其他单调对齐很重要的序列到序列任务也是一个不错的选择，例如自动语音识别 (ASR)、神经机器翻译 (NMT) 和光学字符识别 (OCR) 。此外，我们也对 IMV 的进一步研究非常感兴趣，包括与对齐矩阵相比的优缺点。</p>
 
     </div>
@@ -404,7 +468,7 @@ x = f^{−1}(z^{'})</script><p>为简单起见，我们在实现基于流的解�
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#EfficientTTS%EF%BC%9A%E4%B8%80%E7%A7%8D%E9%AB%98%E6%95%88%E3%80%81%E9%AB%98%E8%B4%A8%E9%87%8F%E7%9A%84%E6%96%87%E6%9C%AC%E8%BD%AC%E8%AF%AD%E9%9F%B3%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">EfficientTTS：一种高效、高质量的文本转语音架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%84%9F%E6%83%B3"><span class="nav-number">1.1.</span> <span class="nav-text">感想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.2.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.3.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Related-Work"><span class="nav-number">1.4.</span> <span class="nav-text">Related Work</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Non-Autoregressive-TTS-models"><span class="nav-number">1.4.1.</span> <span class="nav-text">2.1 Non-Autoregressive TTS models</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Monotonic-alignment-modeling"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.2 Monotonic alignment modeling</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%87%E7%94%A8IMV%E8%BF%9B%E8%A1%8C%E5%8D%95%E8%B0%83%E5%AF%B9%E9%BD%90%E5%BB%BA%E6%A8%A1"><span class="nav-number">1.5.</span> <span class="nav-text">采用IMV进行单调对齐建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-IMV%E5%AE%9A%E4%B9%89"><span class="nav-number">1.5.1.</span> <span class="nav-text">3.1 IMV定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E9%87%87%E7%94%A8IMV%E8%BF%9B%E8%A1%8C%E5%8D%95%E8%B0%83%E5%AF%B9%E9%BD%90%E5%BB%BA%E6%A8%A1"><span class="nav-number">1.5.2.</span> <span class="nav-text">3.2 采用IMV进行单调对齐建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%B0%86IMV%E8%9E%8D%E5%90%88%E5%88%B0%E7%BD%91%E7%BB%9C%E4%B8%AD"><span class="nav-number">1.5.3.</span> <span class="nav-text">3.3 将IMV融合到网络中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EfficientTTS-%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84"><span class="nav-number">1.6.</span> <span class="nav-text">EfficientTTS 模型架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E6%96%87%E6%9C%AC%E7%BC%96%E7%A0%81%E5%99%A8%E5%92%8CMel%E8%B0%B1%E7%BC%96%E7%A0%81%E5%99%A8"><span class="nav-number">1.6.1.</span> <span class="nav-text">4.1 文本编码器和Mel谱编码器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-IMV-%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">1.6.2.</span> <span class="nav-text">4.2 IMV 生成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%AF%B9%E9%BD%90%E4%BD%8D%E7%BD%AE%E9%A2%84%E6%B5%8B%E5%99%A8"><span class="nav-number">1.6.3.</span> <span class="nav-text">4.3 对齐位置预测器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E5%AF%B9%E9%BD%90%E9%87%8D%E6%9E%84"><span class="nav-number">1.6.4.</span> <span class="nav-text">4.4 对齐重构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E8%A7%A3%E7%A0%81%E5%99%A8"><span class="nav-number">1.6.5.</span> <span class="nav-text">4.5 解码器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EfficientTTS-Models"><span class="nav-number">1.7.</span> <span class="nav-text">EfficientTTS Models</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-EFTS-CNN"><span class="nav-number">1.7.1.</span> <span class="nav-text">5.1 EFTS-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-EFTS-Flow"><span class="nav-number">1.7.2.</span> <span class="nav-text">5.2 EFTS-Flow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-EFTS-Wav"><span class="nav-number">1.7.3.</span> <span class="nav-text">5.3 EFTS-Wav</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experiments"><span class="nav-number">1.8.</span> <span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.8.1.</span> <span class="nav-text">6.1 实验设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E4%B8%8E%E5%AF%B9%E7%85%A7%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94"><span class="nav-number">1.8.2.</span> <span class="nav-text">6.2. 与对照模型对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-%E5%8D%95%E8%B0%83%E5%AF%B9%E9%BD%90%E6%96%B9%E6%B3%95%E7%9A%84%E8%AF%84%E4%BC%B0"><span class="nav-number">1.8.3.</span> <span class="nav-text">6.3 单调对齐方法的评估</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-4-%E5%A4%9A%E6%A0%B7%E6%80%A7"><span class="nav-number">1.8.4.</span> <span class="nav-text">6.4 多样性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA%E5%92%8C%E6%9C%AA%E6%9D%A5%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.9.</span> <span class="nav-text">结论和未来工作</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#efficienttts%E4%B8%80%E7%A7%8D%E9%AB%98%E6%95%88%E9%AB%98%E8%B4%A8%E9%87%8F%E7%9A%84%E6%96%87%E6%9C%AC%E8%BD%AC%E8%AF%AD%E9%9F%B3%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">EfficientTTS：一种高效、高质量的文本转语音架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%84%9F%E6%83%B3"><span class="nav-number">1.1.</span> <span class="nav-text">感想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.2.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.3.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#related-work"><span class="nav-number">1.4.</span> <span class="nav-text">Related Work</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#non-autoregressive-tts-models"><span class="nav-number">1.4.1.</span> <span class="nav-text">2.1 Non-Autoregressive TTS models</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#monotonic-alignment-modeling"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.2 Monotonic alignment modeling</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%87%E7%94%A8imv%E8%BF%9B%E8%A1%8C%E5%8D%95%E8%B0%83%E5%AF%B9%E9%BD%90%E5%BB%BA%E6%A8%A1"><span class="nav-number">1.5.</span> <span class="nav-text">采用IMV进行单调对齐建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#imv%E5%AE%9A%E4%B9%89"><span class="nav-number">1.5.1.</span> <span class="nav-text">3.1 IMV定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%87%E7%94%A8imv%E8%BF%9B%E8%A1%8C%E5%8D%95%E8%B0%83%E5%AF%B9%E9%BD%90%E5%BB%BA%E6%A8%A1-1"><span class="nav-number">1.5.2.</span> <span class="nav-text">3.2 采用IMV进行单调对齐建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86imv%E8%9E%8D%E5%90%88%E5%88%B0%E7%BD%91%E7%BB%9C%E4%B8%AD"><span class="nav-number">1.5.3.</span> <span class="nav-text">3.3 将IMV融合到网络中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#efficienttts-%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84"><span class="nav-number">1.6.</span> <span class="nav-text">EfficientTTS 模型架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E7%BC%96%E7%A0%81%E5%99%A8%E5%92%8Cmel%E8%B0%B1%E7%BC%96%E7%A0%81%E5%99%A8"><span class="nav-number">1.6.1.</span> <span class="nav-text">4.1 文本编码器和Mel谱编码器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#imv-%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">1.6.2.</span> <span class="nav-text">4.2 IMV 生成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E9%BD%90%E4%BD%8D%E7%BD%AE%E9%A2%84%E6%B5%8B%E5%99%A8"><span class="nav-number">1.6.3.</span> <span class="nav-text">4.3 对齐位置预测器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E9%BD%90%E9%87%8D%E6%9E%84"><span class="nav-number">1.6.4.</span> <span class="nav-text">4.4 对齐重构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E7%A0%81%E5%99%A8"><span class="nav-number">1.6.5.</span> <span class="nav-text">4.5 解码器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#efficienttts-models"><span class="nav-number">1.7.</span> <span class="nav-text">EfficientTTS Models</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#efts-cnn"><span class="nav-number">1.7.1.</span> <span class="nav-text">5.1 EFTS-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#efts-flow"><span class="nav-number">1.7.2.</span> <span class="nav-text">5.2 EFTS-Flow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#efts-wav"><span class="nav-number">1.7.3.</span> <span class="nav-text">5.3 EFTS-Wav</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments"><span class="nav-number">1.8.</span> <span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.8.1.</span> <span class="nav-text">6.1 实验设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E%E5%AF%B9%E7%85%A7%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94"><span class="nav-number">1.8.2.</span> <span class="nav-text">6.2. 与对照模型对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%B0%83%E5%AF%B9%E9%BD%90%E6%96%B9%E6%B3%95%E7%9A%84%E8%AF%84%E4%BC%B0"><span class="nav-number">1.8.3.</span> <span class="nav-text">6.3 单调对齐方法的评估</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%A0%B7%E6%80%A7"><span class="nav-number">1.8.4.</span> <span class="nav-text">6.4 多样性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA%E5%92%8C%E6%9C%AA%E6%9D%A5%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.9.</span> <span class="nav-text">结论和未来工作</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

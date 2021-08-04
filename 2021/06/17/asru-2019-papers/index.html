@@ -222,10 +222,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <div class="table-container">
-<table>
+        <table style="width:100%;">
+<colgroup>
+<col width="2%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="13%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th><strong>序号</strong></th>
 <th><strong>论文题目</strong></th>
 <th><strong>作者</strong></th>
@@ -236,166 +244,215 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>1</strong></td>
 <td>MIMO-SPEECH: END-TO-END MULTI-CHANNEL MULTI-SPEAKER SPEECH RECOGNITION</td>
 <td><em>Xuankai Chang</em>1,2<em>, Wangyou Zhang</em>2<em>, Yanmin Qian</em>2†<em>, Jonathan Le Roux</em>3<em>, Shinji Watanabe</em>1†</td>
 <td>1Center for Language and Speech Processing, Johns Hopkins University, USA 2<strong>SpeechLab</strong>, Department of Computer Science and Engineering, <strong>Shanghai Jiao Tong University</strong>, China 3Mitsubishi Electric Research Laboratories (MERL), USA</td>
 <td>MIMO-Speech, which extends the original seq2seq to deal with <strong>multi-channel input and multi-channel output</strong> so that it can <strong>fully model multi-channel multi-speaker speech separation and recognition</strong>. MIMO-Speech is a fully neural end-to- end framework, which is optimized only via an ASR criterion. It is comprised of: 1) a monaural masking network, 2) a multi-source neural beamformer, and 3) a multi-output speech recognition model.</td>
 <td><strong>Overlapped speech recognition</strong>, end-to-end, neural beamforming, <strong>speech separation</strong>, curriculum learning.</td>
-<td><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.06522.pdf">https://arxiv.org/pdf/1910.06522.pdf</a></td>
+<td>https://arxiv.org/pdf/1910.06522.pdf</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>2</strong></td>
 <td>IMPROVING MANDARIN END-TO-END SPEECH SYNTHESIS BY SELF-ATTENTION AND LEARNABLE GAUSSIAN BIAS</td>
-<td><em>Fengyu Yang</em>1<em>, Shan Yang</em>1<em>, Pengcheng Zhu</em>2<em>, Pengju Yan</em>2<em>,</em> <strong><em>Lei Xie\</em></strong>1∗</td>
+<td><em>Fengyu Yang</em>1<em>, Shan Yang</em>1<em>, Pengcheng Zhu</em>2<em>, Pengju Yan</em>2<em>,</em> *<strong>Lei Xie*</strong>1∗</td>
 <td>1Shaanxi Provincial Key Laboratory of Speech and Image Information Processing, School of Computer Science, <strong>Northwestern Polytechnical University</strong>, Xian, China 2Tongdun AI Lab</td>
 <td>We introduce a novel self-attention based encoder with learnable Gaussian bias in Tacotron. The proposed approach has the ability to generate stable and natural speech with minimum language-dependent front-end modules.</td>
 <td>Tacotron, end-to-end, speech synthesis, <strong>self-attention, Gaussian bias</strong></td>
-<td><a target="_blank" rel="noopener" href="http://lxie.nwpu-aslp.org/papers/2019ASRU_YFY.pdf">http://lxie.nwpu-aslp.org/papers/2019ASRU_YFY.pdf</a></td>
+<td>http://lxie.nwpu-aslp.org/papers/2019ASRU_YFY.pdf</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>3</strong></td>
 <td>LEARNING HIERARCHICAL REPRESENTATIONS FOR EXPRESSIVE SPEAKING STYLE IN END-TO-END SPEECH SYNTHESIS</td>
-<td><em>Xiaochun An</em>1†<em>, Yuxuan Wang</em>2<em>, Shan Yang</em>1,2<em>, Zejun Ma</em>2<em>,</em> <strong><em>Lei Xie\</em></strong>1⇤</td>
+<td><em>Xiaochun An</em>1†<em>, Yuxuan Wang</em>2<em>, Shan Yang</em>1,2<em>, Zejun Ma</em>2<em>,</em> *<strong>Lei Xie*</strong>1⇤</td>
 <td>1Shaanxi Provincial Key Laboratory of Speech and Image Information Processing, School of Computer Science, <strong>Northwestern Polytechnical University,</strong> Xi’an, China 2 ByteDance AI Lab</td>
 <td>we introduce a hierarchical GST archi- tecture with residuals to Tacotron, which learns multiple-level disentangled representations to model and control different style granularities in synthesized speech.</td>
 <td>Speaking style, disentangled representations, <strong>hierarchical GST,</strong> style transfer</td>
-<td><a target="_blank" rel="noopener" href="http://lxie.npu-aslp.org/papers/2019ASRU_AXC.pdf">http://lxie.npu-aslp.org/papers/2019ASRU_AXC.pdf</a></td>
+<td>http://lxie.npu-aslp.org/papers/2019ASRU_AXC.pdf</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>4</strong></td>
 <td>BOOTSTRAPPING NON-PARALLEL VOICE CONVERSION FROM SPEAKER-ADAPTIVE TEXT-TO-SPEECH</td>
-<td><em>Hieu-Thi Luong<strong>1,2</strong>, Junichi Yamagishi**1,2,3</em></td>
+<td>*Hieu-Thi Luong<strong>1,2</strong>, Junichi Yamagishi**1,2,3*</td>
 <td>1SOKENDAI (The Graduate University for Advanced Studies), Kanagawa, Japan 2National Institute of Informatics, Tokyo, Japan 3<strong>The University of Edinburgh</strong>, Edinburgh, UK</td>
 <td>Bootstrap a VC system from a pretrained speaker-adaptive TTS model and unify the techniques as well as the interpretations of these two tasks. Our subjective evaluations show that the proposed framework is able to not only achieve competitive performance in the standard intra-language scenario but also adapt and convert using speech utterances in an unseen language.</td>
 <td><strong>voice conversion,</strong> cross-lingual, speaker adaptation, transfer learning, text-to-speech</td>
-<td><a target="_blank" rel="noopener" href="https://export.arxiv.org/pdf/1909.06532">https://export.arxiv.org/pdf/1909.06532</a></td>
+<td>https://export.arxiv.org/pdf/1909.06532</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>5</strong></td>
 <td>WAVENET FACTORIZATION WITH SINGULAR VALUE DECOMPOSITION FOR VOICE</td>
-<td><em>Hongqiang Du<strong>1,2</strong>, Xiaohai Tian<strong>2</strong>,</em> <strong><em>Lei Xie***</em></strong>1*<strong>**</strong>, Haizhou Li*<strong>*</strong>2***</td>
+<td><em>Hongqiang Du<strong>1,2</strong>, Xiaohai Tian<strong>2</strong>,</em> <strong><em>Lei Xie*</em>1*</strong>****, Haizhou Li******2***</td>
 <td>1School of Computer Science, <strong>Northwestern Polytechnical University</strong>, xi’an, China 2Department of Electrical and Computer Engineering, National University of Singapore, Singapore <a href="mailto:hongqiang.du@u.nus.edu">hongqiang.du@u.nus.edu</a>, <a href="mailto:eletia@nus.edu.sg">eletia@nus.edu.sg</a>, <a href="mailto:lxie@nwpu.edu.cn">lxie@nwpu.edu.cn</a>, <a href="mailto:haizhou.li@nus.edu.sg">haizhou.li@nus.edu.sg</a></td>
 <td>We propose to use singular value decomposition (SVD) to reduce WaveNet parame- ters while maintaining its output voice quality. Specifically, we apply SVD on dilated convolution layers, and impose semi-orthogonal constraint to improve the performance.</td>
 <td>Voice Conversion (VC), <strong>WaveNet, Sin- gular Value Decomposition (SVD)</strong></td>
-<td><a target="_blank" rel="noopener" href="http://lxie.nwpu-aslp.org/papers/2019ASRU_DHQ.pdf">http://lxie.nwpu-aslp.org/papers/2019ASRU_DHQ.pdf</a></td>
+<td>http://lxie.nwpu-aslp.org/papers/2019ASRU_DHQ.pdf</td>
 </tr>
 </tbody>
 </table>
-</div>
-<h1 id="Paper-1-MIMO-SPEECH-END-TO-END-MULTI-CHANNEL-MULTI-SPEAKER-SPEECH-RECOGNITION"><a href="#Paper-1-MIMO-SPEECH-END-TO-END-MULTI-CHANNEL-MULTI-SPEAKER-SPEECH-RECOGNITION" class="headerlink" title="Paper 1: MIMO-SPEECH: END-TO-END MULTI-CHANNEL MULTI-SPEAKER SPEECH RECOGNITION"></a>Paper 1: MIMO-SPEECH: END-TO-END MULTI-CHANNEL MULTI-SPEAKER SPEECH RECOGNITION</h1><h2 id="MIMO-Speech：端到端多通道多说话人语音识别（ASRU-2019-Best-paper）https-arxiv-org-pdf-1910-06522-pdf"><a href="#MIMO-Speech：端到端多通道多说话人语音识别（ASRU-2019-Best-paper）https-arxiv-org-pdf-1910-06522-pdf" class="headerlink" title="MIMO-Speech：端到端多通道多说话人语音识别（ASRU 2019 Best paper）https://arxiv.org/pdf/1910.06522.pdf"></a>MIMO-Speech：端到端多通道多说话人语音识别（ASRU 2019 Best paper）<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.06522.pdf">https://arxiv.org/pdf/1910.06522.pdf</a></h2><h2 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h2><p>ASRU的best paper思路是挺清晰的，但是与其他会议发表的classic论文相比还是感觉有一些些差距，有一些模型的细节点来说，会感觉有些晦涩难懂，打分：🌟🌟🌟</p>
-<h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>MIMO-Speech，采用“多通道-输入”和“多通道-输出”，以建模 多通道 多说话人 情景下的语音分离和语音识别。</p>
+<h1 id="paper-1-mimo-speech-end-to-end-multi-channel-multi-speaker-speech-recognition">Paper 1: MIMO-SPEECH: END-TO-END MULTI-CHANNEL MULTI-SPEAKER SPEECH RECOGNITION</h1>
+<h2 id="mimo-speech端到端多通道多说话人语音识别asru-2019-best-paperhttpsarxiv.orgpdf1910.06522.pdf">MIMO-Speech：端到端多通道多说话人语音识别（ASRU 2019 Best paper）https://arxiv.org/pdf/1910.06522.pdf</h2>
+<h2 id="感想">感想</h2>
+<p>ASRU的best paper思路是挺清晰的，但是与其他会议发表的classic论文相比还是感觉有一些些差距，有一些模型的细节点来说，会感觉有些晦涩难懂，打分：🌟🌟🌟</p>
+<h3 id="abstract">Abstract</h3>
+<p>MIMO-Speech，采用“多通道-输入”和“多通道-输出”，以建模 多通道 多说话人 情景下的语音分离和语音识别。</p>
 <ul>
-<li><p>模型结构由三部分组成：</p>
+<li>模型结构由三部分组成：</li>
+</ul>
 <p>1）单声道masking网络；</p>
 <p>2）多源神经波束形成器；</p>
 <p>3）多输出-语音识别模型；</p>
-</li>
-<li><p>学习策略：a curriculum learning strategy</p>
-</li>
-<li><p>实验结果：60% WER reduction</p>
-</li>
-</ul>
-<h3 id="Introduction-1-page"><a href="#Introduction-1-page" class="headerlink" title="Introduction (1 page)"></a>Introduction (1 page)</h3><ul>
-<li><p>待解决问题：鸡尾酒聚会课题，分为 单通道 / 多通道 语音识别问题</p>
 <ul>
+<li><p>学习策略：a curriculum learning strategy</p></li>
+<li><p>实验结果：60% WER reduction</p></li>
+</ul>
+<h3 id="introduction-1-page">Introduction (1 page)</h3>
+<ul>
+<li><p>待解决问题：鸡尾酒聚会课题，分为 单通道 / 多通道 语音识别问题</p></li>
 <li><p>单通道多说话人语音分离：</p>
 <p>1） Deep clustering (DPCL), 将时域单元映射到嵌入向量，再采用聚类算法将每个单元聚类到说话人源。此方法之后被嵌入到端到端训练框架中。</p>
-<p>2）Permutation-invariant training (PIT)：用一个permutation-free目标函数来最小化重构损失。PIT之后被应用于多说话人ASR，在一个DNN-HMM混合ASR框架下。</p>
-</li>
+<p>2）Permutation-invariant training (PIT)：用一个permutation-free目标函数来最小化重构损失。PIT之后被应用于多说话人ASR，在一个DNN-HMM混合ASR框架下。</p></li>
 <li><p>多通道多说话人语音分离：</p>
 <p>1）PIT，语音分离</p>
 <p>2）unmixing transducer (a mask-based beamformer)，语音分离</p>
-<p>3）DPCL：将inter-channel differences作为空间特征，和单通道频谱特征，语音分离</p>
-</li>
+<p>3）DPCL：将inter-channel differences作为空间特征，和单通道频谱特征，语音分离</p></li>
+<li><p>本文贡献：多通道-多说话人-语音识别，输入multi-channel input (MI), 输出 multiple output (MO) text sequences, one for each speaker, 所以称为 MIMO-Speech。</p></li>
+<li><p>可行性：最近的单说话人-远场-语音识别展示了 “神经波束”技巧对于去噪的价值，并且一些研究证实了end-to-end的可行性。[27] 进一步证实了神经波束方法在多通道端到端系统能够增强信号。</p></li>
 </ul>
-</li>
-<li><p>本文贡献：多通道-多说话人-语音识别，输入multi-channel input (MI), 输出 multiple output (MO) text sequences, one for each speaker, 所以称为 MIMO-Speech。</p>
-</li>
-<li><p>可行性：最近的单说话人-远场-语音识别展示了 “神经波束”技巧对于去噪的价值，并且一些研究证实了end-to-end的可行性。[27] 进一步证实了神经波束方法在多通道端到端系统能够增强信号。</p>
-</li>
-</ul>
-<h3 id="MIMO-Speech-2-pages"><a href="#MIMO-Speech-2-pages" class="headerlink" title="MIMO-Speech (2 pages)"></a>MIMO-Speech (2 pages)</h3><p><img src="/images/MIMO-Speech.png" alt="MIMO-Speech"></p>
-<h4 id="Model-architecture"><a href="#Model-architecture" class="headerlink" title="Model architecture"></a>Model architecture</h4><ul>
+<h3 id="mimo-speech-2-pages">MIMO-Speech (2 pages)</h3>
+<div class="figure">
+<img src="/images/MIMO-Speech.png" alt="MIMO-Speech" />
+<p class="caption">MIMO-Speech</p>
+</div>
+<h4 id="model-architecture">Model architecture</h4>
+<ul>
 <li>Stage 1: a single-channel masking network，通过预测多说话人和各通道噪音masks来实现<strong>预分离</strong></li>
 <li>Stage 2: 多源 “神经波束” 来<strong>空间上分离多说话人的源头</strong></li>
 <li>Stage 3: 端到端ASR来实现<strong>多说话人语音识别</strong></li>
 </ul>
 <p>创新点：masking network + neural beamformer，单目标函数进行模型训练。</p>
-<p>Stage1 (Monaural masking network) 可以预分离开噪音和多说话人音源；Stage 2 生成多个beamforming filters $g^{i}(f)$ 用来分离和降噪输入的多声道信号；Stage3有多个说话人的encoder，和一个attention decoder组成，来生成多个说话人的文本序列输出。</p>
-<h4 id="Data-scheduling-and-curriculum-learning"><a href="#Data-scheduling-and-curriculum-learning" class="headerlink" title="Data scheduling and curriculum learning"></a>Data scheduling and curriculum learning</h4><ul>
-<li><p>问题痛点：端到端训练难以收敛</p>
-</li>
-<li><p>解决方案<strong>（Data scheduling）</strong>：随机从以下两个数据集中选择一个batch</p>
+<p>Stage1 (Monaural masking network) 可以预分离开噪音和多说话人音源；Stage 2 生成多个beamforming filters <span class="math inline">\(g^{i}(f)\)</span> 用来分离和降噪输入的多声道信号；Stage3有多个说话人的encoder，和一个attention decoder组成，来生成多个说话人的文本序列输出。</p>
+<h4 id="data-scheduling-and-curriculum-learning">Data scheduling and curriculum learning</h4>
+<ul>
+<li><p>问题痛点：端到端训练难以收敛</p></li>
+<li><p>解决方案<strong>（Data scheduling）</strong>：随机从以下两个数据集中选择一个batch</p></li>
+</ul>
 <p>1） 不仅采用多空间域的多说话人数据集</p>
 <p>2） 也采用单说话人的数据集</p>
-</li>
-<li><p>细节<strong>（Curriculum learning）</strong> 配Algorithm：</p>
+<ul>
+<li>细节<strong>（Curriculum learning）</strong> 配Algorithm：</li>
+</ul>
 <p>1） 当选择到单说话人的数据集的时候，数据不经过 masking network 和 neural beamformer 模型，以加强end-to-end ASR模型的训练。</p>
 <p>2） 计算出最大声和最小声说话人声音之间的信噪比SNR，然后按“升序”排列，从SNR=1的数据集开始训练</p>
 <p>3） 将单说话人的数据集从短到长进行排序，让seq2seq模型首先学习短语句。</p>
-</li>
-</ul>
-<h3 id="Experiments-3-pages"><a href="#Experiments-3-pages" class="headerlink" title="Experiments (3 pages)"></a>Experiments (3 pages)</h3><h4 id="3-1-Configurations"><a href="#3-1-Configurations" class="headerlink" title="3.1 Configurations"></a>3.1 Configurations</h4><h5 id="3-1-1-Neural-Beamformer"><a href="#3-1-1-Neural-Beamformer" class="headerlink" title="3.1.1 Neural Beamformer"></a>3.1.1 Neural Beamformer</h5><h5 id="3-1-2-Encoder-Decoder-Network"><a href="#3-1-2-Encoder-Decoder-Network" class="headerlink" title="3.1.2 Encoder-Decoder Network"></a>3.1.2 Encoder-Decoder Network</h5><h4 id="3-2-Performance-on-ASR"><a href="#3-2-Performance-on-ASR" class="headerlink" title="3.2 Performance on ASR"></a>3.2 Performance on ASR</h4><p>Motivation: 验证提出的模型好于baselines</p>
+<h3 id="experiments-3-pages">Experiments (3 pages)</h3>
+<h4 id="configurations">3.1 Configurations</h4>
+<h5 id="neural-beamformer">3.1.1 Neural Beamformer</h5>
+<h5 id="encoder-decoder-network">3.1.2 Encoder-Decoder Network</h5>
+<h4 id="performance-on-asr">3.2 Performance on ASR</h4>
+<p>Motivation: 验证提出的模型好于baselines</p>
 <p>Baselines / Ours</p>
-<h4 id="3-3-Performance-on-Speech-seperation"><a href="#3-3-Performance-on-Speech-seperation" class="headerlink" title="3.3 Performance on Speech seperation"></a>3.3 Performance on Speech seperation</h4><p>Motivation: 验证 neural beamformer 学习了一个波束行为，能够用于语音分离。</p>
-<h4 id="3-4-Evaluation-on-spatialized-reverberant-data-在空间混响数据上的实验"><a href="#3-4-Evaluation-on-spatialized-reverberant-data-在空间混响数据上的实验" class="headerlink" title="3.4 Evaluation on spatialized reverberant data (在空间混响数据上的实验)"></a>3.4 Evaluation on spatialized reverberant data (在空间混响数据上的实验)</h4><p>Motivation: 验证在实际情况下的模型性能。</p>
-<h1 id="Paper-2-IMPROVING-MANDARIN-END-TO-END-SPEECH-SYNTHESIS-BY-SELF-ATTENTION-AND-LEARNABLE-GAUSSIAN-BIAS"><a href="#Paper-2-IMPROVING-MANDARIN-END-TO-END-SPEECH-SYNTHESIS-BY-SELF-ATTENTION-AND-LEARNABLE-GAUSSIAN-BIAS" class="headerlink" title="Paper 2: IMPROVING MANDARIN END-TO-END SPEECH SYNTHESIS BY SELF-ATTENTION AND LEARNABLE GAUSSIAN BIAS"></a>Paper 2: IMPROVING MANDARIN END-TO-END SPEECH SYNTHESIS BY SELF-ATTENTION AND LEARNABLE GAUSSIAN BIAS</h1><h2 id="Paper-2-通过自注意力机制和学习高斯bias来提升中文普通话端到端语音合成系统-http-lxie-nwpu-aslp-org-papers-2019ASRU-YFY-pdf"><a href="#Paper-2-通过自注意力机制和学习高斯bias来提升中文普通话端到端语音合成系统-http-lxie-nwpu-aslp-org-papers-2019ASRU-YFY-pdf" class="headerlink" title="Paper 2: 通过自注意力机制和学习高斯bias来提升中文普通话端到端语音合成系统 http://lxie.nwpu-aslp.org/papers/2019ASRU_YFY.pdf"></a>Paper 2: 通过自注意力机制和学习高斯bias来提升中文普通话端到端语音合成系统 <a target="_blank" rel="noopener" href="http://lxie.nwpu-aslp.org/papers/2019ASRU_YFY.pdf">http://lxie.nwpu-aslp.org/papers/2019ASRU_YFY.pdf</a></h2><h2 id="感想-1"><a href="#感想-1" class="headerlink" title="感想"></a>感想</h2><p>有些论文读起来会觉得高深莫测，但是有有部分价值可以吸取，打分：🌟🌟</p>
-<h3 id="Abstract-1"><a href="#Abstract-1" class="headerlink" title="Abstract"></a>Abstract</h3><p>问题痛点：虽然对于英文来讲，现有的如Tacotron等模型已经能够实现端到端的语音合成过程，即从英文字母直接转换至语音。但是对于如中文这样的语言，仍旧需要繁复的前处理过程（如词边界、韵律边界等），使得这个文本处理前端的过程和传统方法一样复杂。</p>
+<h4 id="performance-on-speech-seperation">3.3 Performance on Speech seperation</h4>
+<p>Motivation: 验证 neural beamformer 学习了一个波束行为，能够用于语音分离。</p>
+<h4 id="evaluation-on-spatialized-reverberant-data-在空间混响数据上的实验">3.4 Evaluation on spatialized reverberant data (在空间混响数据上的实验)</h4>
+<p>Motivation: 验证在实际情况下的模型性能。</p>
+<h1 id="paper-2-improving-mandarin-end-to-end-speech-synthesis-by-self-attention-and-learnable-gaussian-bias">Paper 2: IMPROVING MANDARIN END-TO-END SPEECH SYNTHESIS BY SELF-ATTENTION AND LEARNABLE GAUSSIAN BIAS</h1>
+<h2 id="paper-2-通过自注意力机制和学习高斯bias来提升中文普通话端到端语音合成系统-httplxie.nwpu-aslp.orgpapers2019asru_yfy.pdf">Paper 2: 通过自注意力机制和学习高斯bias来提升中文普通话端到端语音合成系统 http://lxie.nwpu-aslp.org/papers/2019ASRU_YFY.pdf</h2>
+<h2 id="感想-1">感想</h2>
+<p>有些论文读起来会觉得高深莫测，但是有有部分价值可以吸取，打分：🌟🌟</p>
+<h3 id="abstract-1">Abstract</h3>
+<p>问题痛点：虽然对于英文来讲，现有的如Tacotron等模型已经能够实现端到端的语音合成过程，即从英文字母直接转换至语音。但是对于如中文这样的语言，仍旧需要繁复的前处理过程（如词边界、韵律边界等），使得这个文本处理前端的过程和传统方法一样复杂。</p>
 <p>解决方案：为了保持生成语音的自然度、以及摒弃特定语言的特殊性，普通话语音合成过程中，我们引入了一个创新性的自注意力机制作为编码器，并且引入可学习的高斯bias到Tacotron中</p>
 <p>实验结果：我们评估了不同的系统（在 有/无 韵律信息的情况下），结果显示提出的方法能够在最小的语言-依赖的前端模块的情况下，生成稳定和自然的语音。</p>
-<h3 id="Introduction-1页"><a href="#Introduction-1页" class="headerlink" title="Introduction (1页)"></a>Introduction (1页)</h3><ul>
-<li><p>待解决问题</p>
+<h3 id="introduction-1页">Introduction (1页)</h3>
+<ul>
+<li>待解决问题</li>
+</ul>
 <p>传统的端到端方法包含复杂的特征提取过程，如：Part-of-speech tagging, pronunciation prediction, prosody labelling. 即便如Tacotron的端到端语音合成系统被提出，但是单纯的输入音素也无法使得语音合成模型得到良好的效果，所以学者提出嵌入PW、PPH、IPH，来进行韵律边界的特征建模。但是这使得违背了端到端语音合成的初衷，使得这个系统再次变得更加复杂。</p>
-</li>
-<li><p>本文贡献</p>
+<ul>
+<li>本文贡献</li>
+</ul>
 <p>1）<strong>全局韵律建模：</strong>由于self-attention被证明对于简单的音素序列进行全局建模时有良好的效果，所以本文尝试采用自-注意力机制作为编码器来获取全局的韵律信息。</p>
 <p>2）<strong>局部韵律建模：</strong>至于局部的韵律信息，我们采用了一个可学习的高斯bias引入到自注意力机制中，因为Gaussian分布更加集中于当前位置的局部关系。</p>
-</li>
+<h3 id="proposed-sag-tacotron-1.5页">Proposed SAG-Tacotron (1.5页)</h3>
+<h4 id="motivation">3.1 Motivation</h4>
+<ul>
+<li><p>目的：为了采用最少的文本分析模块，所以引入自-注意力学习机制，来进行全局依赖建模。</p></li>
+<li><p>方案：1）将Encoder的CBHG模块，用自-注意力机制替换；2）可学习的高斯bias来提升局部建模。</p></li>
 </ul>
-<h3 id="Proposed-SAG-Tacotron-1-5页"><a href="#Proposed-SAG-Tacotron-1-5页" class="headerlink" title="Proposed SAG-Tacotron (1.5页)"></a>Proposed SAG-Tacotron (1.5页)</h3><h4 id="3-1-Motivation"><a href="#3-1-Motivation" class="headerlink" title="3.1 Motivation"></a>3.1 Motivation</h4><ul>
-<li><p>目的：为了采用最少的文本分析模块，所以引入自-注意力学习机制，来进行全局依赖建模。</p>
-</li>
-<li><p>方案：1）将Encoder的CBHG模块，用自-注意力机制替换；2）可学习的高斯bias来提升局部建模。</p>
-</li>
-</ul>
-<p><img src="/images/SAG-Tacotron.png" alt="SAG-Tacotron"></p>
-<h4 id="3-2-基于-自注意力机制-的-编码器"><a href="#3-2-基于-自注意力机制-的-编码器" class="headerlink" title="3.2 基于 自注意力机制 的 编码器"></a>3.2 基于 自注意力机制 的 编码器</h4><p>Encoder 的 Pre-net是一个3层-CNN + Batch Norm + ReLU，尽管自-注意力机制不包含序列信息，我们注入类似于Transformer的位置信息。</p>
-<script type="math/tex; mode=display">
-PE_{pos,2i}=sin(pos/10000^{2i/d})</script><script type="math/tex; mode=display">
-PE_{pos, 2i+1} = cos(pos/10000^{2i/d})</script><p>其中，$pos$是当前位置，$d$是特征维度，$i$是当前维度。PE也被输入到自-注意力模块。自注意力模块包含了一个自注意力层+全连接层+tanh激活函数。残差连接被应用于上述层。</p>
-<p>对于多头注意力机制的每一个$head_i$, 对于一个有$n$个元素的序列$x$，我们想要获得有相同长度n的隐状态向量$head_i$, 这里采用scale-product注意力机制。</p>
-<script type="math/tex; mode=display">
-Head_{i}=\sum_{j=1}^{n}ATT(Q,K)V</script><script type="math/tex; mode=display">
-ATT(Q, K)=softmax(energy)​</script><script type="math/tex; mode=display">
-energy = \frac {QK^{T}} {\sqrt{d}}</script><p>最终的多头注意力机制为：</p>
-<script type="math/tex; mode=display">
-MultiHead(Q,K,V)=Concat(head_{1}, ..., head_{h})W^{O}</script><p>其中的$W^{O}$是最后一层线性层的参数矩阵。</p>
-<h4 id="3-3-可学习的Gaussian-bias"><a href="#3-3-可学习的Gaussian-bias" class="headerlink" title="3.3 可学习的Gaussian bias"></a>3.3 可学习的Gaussian bias</h4><p>在序列-序列模型中，对于中文来讲，相近的位置是十分重要的。在这种情况下，我们想要为注意力机制提升编码器对于临近状态的局部贡献。</p>
-<p><img src="/images/Gaussian-bias.png" alt="Gaussian-bias"></p>
+<div class="figure">
+<img src="/images/SAG-Tacotron.png" alt="SAG-Tacotron" />
+<p class="caption">SAG-Tacotron</p>
+</div>
+<h4 id="基于-自注意力机制-的-编码器">3.2 基于 自注意力机制 的 编码器</h4>
+<p>Encoder 的 Pre-net是一个3层-CNN + Batch Norm + ReLU，尽管自-注意力机制不包含序列信息，我们注入类似于Transformer的位置信息。 <span class="math display">\[
+PE_{pos,2i}=sin(pos/10000^{2i/d})
+\]</span></p>
+<p><span class="math display">\[
+PE_{pos, 2i+1} = cos(pos/10000^{2i/d})
+\]</span></p>
+<p>其中，<span class="math inline">\(pos\)</span>是当前位置，<span class="math inline">\(d\)</span>是特征维度，<span class="math inline">\(i\)</span>是当前维度。PE也被输入到自-注意力模块。自注意力模块包含了一个自注意力层+全连接层+tanh激活函数。残差连接被应用于上述层。</p>
+<p>对于多头注意力机制的每一个<span class="math inline">\(head_i\)</span>, 对于一个有<span class="math inline">\(n\)</span>个元素的序列<span class="math inline">\(x\)</span>，我们想要获得有相同长度n的隐状态向量<span class="math inline">\(head_i\)</span>, 这里采用scale-product注意力机制。 <span class="math display">\[
+Head_{i}=\sum_{j=1}^{n}ATT(Q,K)V
+\]</span></p>
+<p><span class="math display">\[
+ATT(Q, K)=softmax(energy)​
+\]</span></p>
+<p><span class="math display">\[
+energy = \frac {QK^{T}} {\sqrt{d}}
+\]</span></p>
+<p>最终的多头注意力机制为： <span class="math display">\[
+MultiHead(Q,K,V)=Concat(head_{1}, ..., head_{h})W^{O}
+\]</span> 其中的<span class="math inline">\(W^{O}\)</span>是最后一层线性层的参数矩阵。</p>
+<h4 id="可学习的gaussian-bias">3.3 可学习的Gaussian bias</h4>
+<p>在序列-序列模型中，对于中文来讲，相近的位置是十分重要的。在这种情况下，我们想要为注意力机制提升编码器对于临近状态的局部贡献。</p>
+<div class="figure">
+<img src="/images/Gaussian-bias.png" alt="Gaussian-bias" />
+<p class="caption">Gaussian-bias</p>
+</div>
 <p>如上图所示，首先，假设一个以e5为中心的高斯bias，窗长为3（实际上，窗长是一个可学习的参数）。然后将注意力机制的分布通过高斯bias来进行正则化，以生成最终的分布。如图3所示，最终的分布是会在e5附近有更多的权重的。</p>
-<p>具体来讲，Gaussian bias $G$被mask到energy上，即</p>
-<script type="math/tex; mode=display">
-ATT(Q, K)=softmax(energy + G)</script><p>其中$G \in R^{N\times N}$，$G \in (-1;0]$ 度量了当前的query $x_i$与position $j$ 之间的关系：</p>
-<script type="math/tex; mode=display">
-G_{ij}=-\frac {(j - P_{i})^2}{2\sigma_i^2}</script><p>其中的$P_i$是$x_i$的中心位置，当给定输入序列 $x=(x_1, x_2, …, x_n)$，$\sigma_i$是标准差。如何选择合适的$P_i$和$\sigma_i$是关键。</p>
-<script type="math/tex; mode=display">
-P_i = N\cdot sigmoid(v_p^{T}tanh(W_{p}x_i))</script><script type="math/tex; mode=display">
-D_i = N\cdot sigmoid(v_d^{T}tanh(W_{d}x_i))</script><p>其中$\sigma_i = \frac {D_i}{2}$, $W_p$ 和$W_d$是模型参数矩阵。</p>
-<h3 id="Experiments-2-5页"><a href="#Experiments-2-5页" class="headerlink" title="Experiments (2.5页)"></a>Experiments (2.5页)</h3><h4 id="4-1-Basic-setups"><a href="#4-1-Basic-setups" class="headerlink" title="4.1 Basic setups"></a>4.1 Basic setups</h4><h4 id="4-2-System-comparison"><a href="#4-2-System-comparison" class="headerlink" title="4.2 System comparison"></a>4.2 System comparison</h4><ul>
+<p>具体来讲，Gaussian bias <span class="math inline">\(G\)</span>被mask到energy上，即 <span class="math display">\[
+ATT(Q, K)=softmax(energy + G)
+\]</span></p>
+<p>其中<span class="math inline">\(G \in R^{N\times N}\)</span>，<span class="math inline">\(G \in (-1;0]\)</span> 度量了当前的query <span class="math inline">\(x_i\)</span>与position <span class="math inline">\(j\)</span> 之间的关系： <span class="math display">\[
+G_{ij}=-\frac {(j - P_{i})^2}{2\sigma_i^2}
+\]</span></p>
+<p>其中的<span class="math inline">\(P_i\)</span>是<span class="math inline">\(x_i\)</span>的中心位置，当给定输入序列 <span class="math inline">\(x=(x_1, x_2, ..., x_n)\)</span>，<span class="math inline">\(\sigma_i\)</span>是标准差。如何选择合适的<span class="math inline">\(P_i\)</span>和<span class="math inline">\(\sigma_i\)</span>是关键。 <span class="math display">\[
+P_i = N\cdot sigmoid(v_p^{T}tanh(W_{p}x_i))
+\]</span></p>
+<p><span class="math display">\[
+D_i = N\cdot sigmoid(v_d^{T}tanh(W_{d}x_i))
+\]</span></p>
+<p>其中<span class="math inline">\(\sigma_i = \frac {D_i}{2}\)</span>, <span class="math inline">\(W_p\)</span> 和<span class="math inline">\(W_d\)</span>是模型参数矩阵。</p>
+<h3 id="experiments-2.5页">Experiments (2.5页)</h3>
+<h4 id="basic-setups">4.1 Basic setups</h4>
+<h4 id="system-comparison">4.2 System comparison</h4>
+<ul>
 <li>Baseline: Tacotron1</li>
 <li>Baseline-prosody: Tacotron1 with complex inputs</li>
 <li>SAE-Tacotron: Self-attention as encoder without Gaussian bias with simply inputs</li>
 <li>SAG-Tacotron: Self-attention as encoder with Gaussian bias with simple inputs</li>
 <li>Transformer with simple inputs</li>
 </ul>
-<p><img src="/images/simple_inputs.png" alt="simple_inputs"></p>
-<p><img src="/images/complex_inputs.png" alt="complex_inputs"></p>
-<h4 id="4-3-Model-details"><a href="#4-3-Model-details" class="headerlink" title="4.3 Model details"></a>4.3 Model details</h4><h4 id="4-4-Results"><a href="#4-4-Results" class="headerlink" title="4.4 Results"></a>4.4 Results</h4><h5 id="4-4-1-Robustness-test"><a href="#4-4-1-Robustness-test" class="headerlink" title="4.4.1 Robustness test"></a>4.4.1 Robustness test</h5><p>Motivation: 评估attention对齐（Repeats / Skips）的鲁棒性</p>
-<h5 id="4-4-2-Prosody-analysis"><a href="#4-4-2-Prosody-analysis" class="headerlink" title="4.4.2 Prosody analysis"></a>4.4.2 Prosody analysis</h5><p>Motivation: 评估重读音节的pitch以及trajectory pattern of F0</p>
-<h5 id="4-4-3-Objective-test"><a href="#4-4-3-Objective-test" class="headerlink" title="4.4.3 Objective test"></a>4.4.3 Objective test</h5><p>Motivation: 采用MCD评估学习到的频谱的质量，MCD越低越好。</p>
-<h5 id="4-4-4-Subjective-test"><a href="#4-4-4-Subjective-test" class="headerlink" title="4.4.4 Subjective test"></a>4.4.4 Subjective test</h5><p>Motivation: 评估模型主管听测效果</p>
+<div class="figure">
+<img src="/images/simple_inputs.png" alt="simple_inputs" />
+<p class="caption">simple_inputs</p>
+</div>
+<div class="figure">
+<img src="/images/complex_inputs.png" alt="complex_inputs" />
+<p class="caption">complex_inputs</p>
+</div>
+<h4 id="model-details">4.3 Model details</h4>
+<h4 id="results">4.4 Results</h4>
+<h5 id="robustness-test">4.4.1 Robustness test</h5>
+<p>Motivation: 评估attention对齐（Repeats / Skips）的鲁棒性</p>
+<h5 id="prosody-analysis">4.4.2 Prosody analysis</h5>
+<p>Motivation: 评估重读音节的pitch以及trajectory pattern of F0</p>
+<h5 id="objective-test">4.4.3 Objective test</h5>
+<p>Motivation: 采用MCD评估学习到的频谱的质量，MCD越低越好。</p>
+<h5 id="subjective-test">4.4.4 Subjective test</h5>
+<p>Motivation: 评估模型主管听测效果</p>
 <p>评估方式：20个人，30句随机抽取的语音</p>
 
     </div>
@@ -477,7 +534,7 @@ D_i = N\cdot sigmoid(v_d^{T}tanh(W_{d}x_i))</script><p>其中$\sigma_i = \frac {
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Paper-1-MIMO-SPEECH-END-TO-END-MULTI-CHANNEL-MULTI-SPEAKER-SPEECH-RECOGNITION"><span class="nav-number">1.</span> <span class="nav-text">Paper 1: MIMO-SPEECH: END-TO-END MULTI-CHANNEL MULTI-SPEAKER SPEECH RECOGNITION</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MIMO-Speech%EF%BC%9A%E7%AB%AF%E5%88%B0%E7%AB%AF%E5%A4%9A%E9%80%9A%E9%81%93%E5%A4%9A%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%EF%BC%88ASRU-2019-Best-paper%EF%BC%89https-arxiv-org-pdf-1910-06522-pdf"><span class="nav-number">1.1.</span> <span class="nav-text">MIMO-Speech：端到端多通道多说话人语音识别（ASRU 2019 Best paper）https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;1910.06522.pdf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%84%9F%E6%83%B3"><span class="nav-number">1.2.</span> <span class="nav-text">感想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-number">1.2.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction-1-page"><span class="nav-number">1.2.2.</span> <span class="nav-text">Introduction (1 page)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MIMO-Speech-2-pages"><span class="nav-number">1.2.3.</span> <span class="nav-text">MIMO-Speech (2 pages)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Model-architecture"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">Model architecture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Data-scheduling-and-curriculum-learning"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">Data scheduling and curriculum learning</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiments-3-pages"><span class="nav-number">1.2.4.</span> <span class="nav-text">Experiments (3 pages)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-Configurations"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">3.1 Configurations</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-1-Neural-Beamformer"><span class="nav-number">1.2.4.1.1.</span> <span class="nav-text">3.1.1 Neural Beamformer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-2-Encoder-Decoder-Network"><span class="nav-number">1.2.4.1.2.</span> <span class="nav-text">3.1.2 Encoder-Decoder Network</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-Performance-on-ASR"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">3.2 Performance on ASR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-Performance-on-Speech-seperation"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">3.3 Performance on Speech seperation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-Evaluation-on-spatialized-reverberant-data-%E5%9C%A8%E7%A9%BA%E9%97%B4%E6%B7%B7%E5%93%8D%E6%95%B0%E6%8D%AE%E4%B8%8A%E7%9A%84%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.2.4.4.</span> <span class="nav-text">3.4 Evaluation on spatialized reverberant data (在空间混响数据上的实验)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Paper-2-IMPROVING-MANDARIN-END-TO-END-SPEECH-SYNTHESIS-BY-SELF-ATTENTION-AND-LEARNABLE-GAUSSIAN-BIAS"><span class="nav-number">2.</span> <span class="nav-text">Paper 2: IMPROVING MANDARIN END-TO-END SPEECH SYNTHESIS BY SELF-ATTENTION AND LEARNABLE GAUSSIAN BIAS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Paper-2-%E9%80%9A%E8%BF%87%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E5%92%8C%E5%AD%A6%E4%B9%A0%E9%AB%98%E6%96%AFbias%E6%9D%A5%E6%8F%90%E5%8D%87%E4%B8%AD%E6%96%87%E6%99%AE%E9%80%9A%E8%AF%9D%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90%E7%B3%BB%E7%BB%9F-http-lxie-nwpu-aslp-org-papers-2019ASRU-YFY-pdf"><span class="nav-number">2.1.</span> <span class="nav-text">Paper 2: 通过自注意力机制和学习高斯bias来提升中文普通话端到端语音合成系统 http:&#x2F;&#x2F;lxie.nwpu-aslp.org&#x2F;papers&#x2F;2019ASRU_YFY.pdf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%84%9F%E6%83%B3-1"><span class="nav-number">2.2.</span> <span class="nav-text">感想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction-1%E9%A1%B5"><span class="nav-number">2.2.2.</span> <span class="nav-text">Introduction (1页)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Proposed-SAG-Tacotron-1-5%E9%A1%B5"><span class="nav-number">2.2.3.</span> <span class="nav-text">Proposed SAG-Tacotron (1.5页)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-Motivation"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">3.1 Motivation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E5%9F%BA%E4%BA%8E-%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6-%E7%9A%84-%E7%BC%96%E7%A0%81%E5%99%A8"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">3.2 基于 自注意力机制 的 编码器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E5%8F%AF%E5%AD%A6%E4%B9%A0%E7%9A%84Gaussian-bias"><span class="nav-number">2.2.3.3.</span> <span class="nav-text">3.3 可学习的Gaussian bias</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiments-2-5%E9%A1%B5"><span class="nav-number">2.2.4.</span> <span class="nav-text">Experiments (2.5页)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-Basic-setups"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">4.1 Basic setups</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-System-comparison"><span class="nav-number">2.2.4.2.</span> <span class="nav-text">4.2 System comparison</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-Model-details"><span class="nav-number">2.2.4.3.</span> <span class="nav-text">4.3 Model details</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-Results"><span class="nav-number">2.2.4.4.</span> <span class="nav-text">4.4 Results</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-1-Robustness-test"><span class="nav-number">2.2.4.4.1.</span> <span class="nav-text">4.4.1 Robustness test</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-2-Prosody-analysis"><span class="nav-number">2.2.4.4.2.</span> <span class="nav-text">4.4.2 Prosody analysis</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-3-Objective-test"><span class="nav-number">2.2.4.4.3.</span> <span class="nav-text">4.4.3 Objective test</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-4-Subjective-test"><span class="nav-number">2.2.4.4.4.</span> <span class="nav-text">4.4.4 Subjective test</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#paper-1-mimo-speech-end-to-end-multi-channel-multi-speaker-speech-recognition"><span class="nav-number">1.</span> <span class="nav-text">Paper 1: MIMO-SPEECH: END-TO-END MULTI-CHANNEL MULTI-SPEAKER SPEECH RECOGNITION</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mimo-speech%E7%AB%AF%E5%88%B0%E7%AB%AF%E5%A4%9A%E9%80%9A%E9%81%93%E5%A4%9A%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%ABasru-2019-best-paperhttpsarxiv.orgpdf1910.06522.pdf"><span class="nav-number">1.1.</span> <span class="nav-text">MIMO-Speech：端到端多通道多说话人语音识别（ASRU 2019 Best paper）https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;1910.06522.pdf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%84%9F%E6%83%B3"><span class="nav-number">1.2.</span> <span class="nav-text">感想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#abstract"><span class="nav-number">1.2.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#introduction-1-page"><span class="nav-number">1.2.2.</span> <span class="nav-text">Introduction (1 page)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mimo-speech-2-pages"><span class="nav-number">1.2.3.</span> <span class="nav-text">MIMO-Speech (2 pages)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#model-architecture"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">Model architecture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#data-scheduling-and-curriculum-learning"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">Data scheduling and curriculum learning</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#experiments-3-pages"><span class="nav-number">1.2.4.</span> <span class="nav-text">Experiments (3 pages)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#configurations"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">3.1 Configurations</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#neural-beamformer"><span class="nav-number">1.2.4.1.1.</span> <span class="nav-text">3.1.1 Neural Beamformer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#encoder-decoder-network"><span class="nav-number">1.2.4.1.2.</span> <span class="nav-text">3.1.2 Encoder-Decoder Network</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#performance-on-asr"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">3.2 Performance on ASR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#performance-on-speech-seperation"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">3.3 Performance on Speech seperation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evaluation-on-spatialized-reverberant-data-%E5%9C%A8%E7%A9%BA%E9%97%B4%E6%B7%B7%E5%93%8D%E6%95%B0%E6%8D%AE%E4%B8%8A%E7%9A%84%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.2.4.4.</span> <span class="nav-text">3.4 Evaluation on spatialized reverberant data (在空间混响数据上的实验)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#paper-2-improving-mandarin-end-to-end-speech-synthesis-by-self-attention-and-learnable-gaussian-bias"><span class="nav-number">2.</span> <span class="nav-text">Paper 2: IMPROVING MANDARIN END-TO-END SPEECH SYNTHESIS BY SELF-ATTENTION AND LEARNABLE GAUSSIAN BIAS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#paper-2-%E9%80%9A%E8%BF%87%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E5%92%8C%E5%AD%A6%E4%B9%A0%E9%AB%98%E6%96%AFbias%E6%9D%A5%E6%8F%90%E5%8D%87%E4%B8%AD%E6%96%87%E6%99%AE%E9%80%9A%E8%AF%9D%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90%E7%B3%BB%E7%BB%9F-httplxie.nwpu-aslp.orgpapers2019asru_yfy.pdf"><span class="nav-number">2.1.</span> <span class="nav-text">Paper 2: 通过自注意力机制和学习高斯bias来提升中文普通话端到端语音合成系统 http:&#x2F;&#x2F;lxie.nwpu-aslp.org&#x2F;papers&#x2F;2019ASRU_YFY.pdf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%84%9F%E6%83%B3-1"><span class="nav-number">2.2.</span> <span class="nav-text">感想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#abstract-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#introduction-1%E9%A1%B5"><span class="nav-number">2.2.2.</span> <span class="nav-text">Introduction (1页)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proposed-sag-tacotron-1.5%E9%A1%B5"><span class="nav-number">2.2.3.</span> <span class="nav-text">Proposed SAG-Tacotron (1.5页)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#motivation"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">3.1 Motivation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6-%E7%9A%84-%E7%BC%96%E7%A0%81%E5%99%A8"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">3.2 基于 自注意力机制 的 编码器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E5%AD%A6%E4%B9%A0%E7%9A%84gaussian-bias"><span class="nav-number">2.2.3.3.</span> <span class="nav-text">3.3 可学习的Gaussian bias</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#experiments-2.5%E9%A1%B5"><span class="nav-number">2.2.4.</span> <span class="nav-text">Experiments (2.5页)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#basic-setups"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">4.1 Basic setups</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#system-comparison"><span class="nav-number">2.2.4.2.</span> <span class="nav-text">4.2 System comparison</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#model-details"><span class="nav-number">2.2.4.3.</span> <span class="nav-text">4.3 Model details</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#results"><span class="nav-number">2.2.4.4.</span> <span class="nav-text">4.4 Results</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#robustness-test"><span class="nav-number">2.2.4.4.1.</span> <span class="nav-text">4.4.1 Robustness test</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#prosody-analysis"><span class="nav-number">2.2.4.4.2.</span> <span class="nav-text">4.4.2 Prosody analysis</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#objective-test"><span class="nav-number">2.2.4.4.3.</span> <span class="nav-text">4.4.3 Objective test</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#subjective-test"><span class="nav-number">2.2.4.4.4.</span> <span class="nav-text">4.4.4 Subjective test</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
