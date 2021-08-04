@@ -474,12 +474,18 @@ D_i = N\cdot sigmoid(v_d^{T}tanh(W_{d}x_i))
 <p>本文的组织如下：在第 2 节中，我们重新审视了作为基准参考的 Transformer TTS 框架。 在第 3 节中，我们研究了提议的 GraphSpeech。 在第 4 节中，我们报告了评估结果。 我们在第 5 节总结了这篇论文。</p>
 <h2 id="transformer-tts">Transformer TTS</h2>
 <p>Transformer TTS 是一种基于自注意力网络 (SAN) 的神经 TTS 模型，具有编码器-解码器架构，可以并行训练和学习长距离依赖。 基于 SAN 的编码器具有多头自注意力机制，可以直接在任意两个令牌之间建立长时间的依赖关系。 给定输入文本的标记序列 <span class="math inline">\(x_{1:n}\)</span>​​，对于每个注意力头，标记 <span class="math inline">\(x_i\)</span>​​ 和标记 <span class="math inline">\(x_j\)</span>​​ 之间的注意力分数只是它们的查询向量和关键向量的点积，如下所示： <span class="math display">\[
+\begin{equation}\label{eq1}
 s_{ij} =f(x_i,x_j)=x_iW_q^TW_kx_j
+\end{equation}
 \]</span> 最终的注意力输出 <em>attn</em> 通过 softmax 函数进行缩放和归一化，如下所示： <span class="math display">\[
+\begin{equation}\label{eq2}
 attn = 􏰂\sum^n_{i=1} a_iW_vx_i
+\end{equation}
 \]</span></p>
 <p><span class="math display">\[
+\begin{equation}\label{eq3}
 a_i = \frac{\text{exp}(s_{ij}/{\sqrt d}) } { \sum^n_{􏰁j=1} \text{exp}(s_{ij}/ \sqrt d)}
+\end{equation}
 \]</span></p>
 <p>其中<span class="math inline">\(\sqrt d\)</span>是缩放因子，<span class="math inline">\(d\)</span> 是层状态的维度，<span class="math inline">\(W_q\)</span>、<span class="math inline">\(W_k\)</span> 和 <span class="math inline">\(W_v\)</span> 是可训练的矩阵。 最后，将所有注意力头的输出拼接并投影以获得最终的注意力值。</p>
 <p>虽然 SAN-encoder 在任何两个标记之间建立远程依赖来建模全局上下文，但它没有对句子中单词的复杂句法依赖进行建模，这通常由树结构或 图形。 我们认为需要一种表示深层句法关系的机制来对输入文本和输出话语之间的关联进行建模。 接下来，我们在第 3 节中研究了一种新颖的 GraphSpeech 模型。</p>
