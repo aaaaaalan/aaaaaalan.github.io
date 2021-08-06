@@ -1859,4 +1859,112 @@ E_{z∼Q(·|Y,X)} [log P(Y|z, X)] − \mathcal{D} [Q(z|Y, X)∥P(z|X)]
         <category>工作</category>
       </categories>
   </entry>
+  <entry>
+    <title>Wave-tacotron spectrogra-free end-to-end text-to-speech synthesis</title>
+    <url>/2021/08/06/wave-tacotron/</url>
+    <content><![CDATA[<h1 id="Wave-tacotron-无需频谱图的端到端文本转语音合成"><a href="#Wave-tacotron-无需频谱图的端到端文本转语音合成" class="headerlink" title="Wave-tacotron: 无需频谱图的端到端文本转语音合成"></a>Wave-tacotron: 无需频谱图的端到端文本转语音合成</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们描述了一个序列到序列的神经网络，它直接从文本输入生成语音波形。该架构通过将归一化流 (normalizing flow) 合并到自回归解码器循环中来扩展 Tacotron 模型。输出波形被建模为一系列不重叠的固定长度块，每个块包含数百个采样点。每个模块内波形采样点的相互依赖性使用归一化流 (normalizing flow) 建模，从而实现并行训练和合成。通过在前面的块上条件依赖于每个流，自回归处理长期依赖关系。<strong>该模型可以直接以最大似然进行优化，无需使用中间的、手工设计的特征或额外的损失项。</strong>当代最先进的文本到语音 (TTS) 系统使用一系列单独学习的模型：一个（例如 Tacotron）从文本生成中间特征（例如频谱图），然后是声码器（例如WaveRNN）从中间特征生成波形样本。相比之下，所提出的系统不使用固定的中间表示，而是端到端地学习所有参数。实验表明，所提出的模型生成的语音质量接近最先进的神经 TTS 系统，生成速度显着提高。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>现代文本到语音 (TTS) 合成系统使用在大量数据上训练的深度神经网络，能够生成自然语音。 TTS 是一个多模态生成问题，因为文本输入可以通过多种方式实现，就总体结构而言，例如，具有不同的韵律或发音，以及低级信号细节，例如，具有不同的，可能在感知上相似的相位。最近的系统将任务分为两个步骤，每个步骤都针对一个粒度。首先，合成模型从文本中预测中间音频特征，通常是频谱图、声码器特征或语言特征，控制生成语音的长期结构。接着是神经声码器，它将特征转换为时域波形样本，填充低级信号细节。这些模型最常单独训练，但可以联合微调。神经声码器示例包括自回归模型，例如 WaveNet 和 WaveRNN 、使用归一化流normalizing flow的完全并行模型 、支持高效训练和采样的基于耦合的流或并行建模长期结构但自回归建模精细细节的混合流。其他方法避开了概率模型，使用 GAN 或精心构建的频谱损失。</p>
+<p>这种两步走的方法使端到端 TTS 变得易于处理； 然而，它会使训练和部署复杂化，因为获得最高质量通常需要微调或由于后者的弱点而在合成模型的输出上训练声码器。</p>
+<p>由于难以有效地对波形中的强时间依赖性（例如，相位必须随时间保持一致）进行有效建模，因此难以从文本中端到端生成波形样本。 sample-level的自回归声码器通过条件于所有先前生成的样本来生成每个波形样本，来处理这种依赖性。 由于它们的高度顺序性，它们在现代并行硬件上的采样效率很低。</p>
+<p>在本文中，我们将基于流的声码器集成到类似于 Tacotron 的语音波形块级block-level自回归模型中，以字符或音素序列为输入条件。 序列到序列解码器处理输入文本，并为生成波形块的归一化流生成条件特征。</p>
+<p>输出波形被建模为一系列固定长度的块，每个块包含数百个样本。 每个模块内样本之间的依赖关系使用normalizing flow建模，从而实现并行训练和合成。 通过条件于先前块，对长期依赖性进行自回归建模。 由此产生的模型解决了比文本到频谱图生成更困难的任务，因为它必须综合波形中的精细时间结构（确保连续输出块的边缘正确排列）以及产生连贯的长 术语结构（例如，韵律和语义）。 尽管如此，我们发现该模型能够对齐文本并生成高保真语音，而不会产生framing artifacts。</p>
+<p>最近的工作将归一化流与序列到序列的 TTS 模型相结合，以启用非自回归解码器，或改进中间梅尔谱图 的建模。Fastspeech2 和 EATs 还提出了直接生成波形的端到端 TTS 模型，但依靠频谱损失和梅尔频谱图进行对齐。 相比之下，我们完全避免了频谱图的生成，而是使用normalizing flow直接对时域波形建模，采用完全端到端的方法，简单地maximizing likelihood。</p>
+<h2 id="Wave-Tacotron-Model"><a href="#Wave-Tacotron-Model" class="headerlink" title="Wave-Tacotron Model"></a>Wave-Tacotron Model</h2><p><img src="/images/wave-tacotron-fig1.png" alt="wave-tacotron-fig1"></p>
+<p>Wave-Tacotron 扩展了 Tacotron 基于注意力的序列到序列模型，生成非重叠波形样本块而不是频谱图帧。 有关概览，请参见图 1。 编码器是一个 CBHG，它对一系列 I 标记（字符或音素）嵌入 $x_{1:I}$ 进行编码。 使用注意力将文本编码传递给块自回归解码器，为每个输出步骤 $t$ 生成条件特征 $c_t$。 normalizing flow 使用这些特征来采样该步的输出波形， $y_t$ ：</p>
+<script type="math/tex; mode=display">
+\begin{equation} \label{eqa1}
+e_{1:I} = encode(x_{1:I})
+\end{equation}</script><script type="math/tex; mode=display">
+\begin{equation} \label{eqa2}
+c_t = decode(e_{1:I}, y_{1:t−1})
+\end{equation}</script><script type="math/tex; mode=display">
+\begin{equation} \label{eqa3}
+y_t = g(z_t;c_t), \text{ where } z_t ∼ \mathcal{N}(0,I)
+\end{equation}</script><p>流 $g$​ 将从高斯采样的随机向量 $z_t$​ 转换为波形块。 $c_t$​ 上的线性分类器计算 $t$​​ 是最终输出步骤（在之后称为停止标记）的概率 $\hat s_t$​​：</p>
+<script type="math/tex; mode=display">
+\begin{equation} \label{eqa4}
+\hat s_t = σ(W_sc_t + b_s)
+\end{equation}</script><p>其中 $σ$​ 是 sigmoid 非线性。 默认情况下，每个输出 $y_t ∈ R^K$​ 包含 40 ms 的语音：$K = 960$，采样率为 $24 kHz$。 $K$​ 的设置通过normalizing flow控制可并行性与通过自回归的样本质量之间的权衡。</p>
+<p>网络结构遵循Tacotron，对解码器稍作修改。 我们使用位置敏感注意力，它比非基于内容的 GMM 注意力更稳定。 我们在 pre-net 中用 tanh 替换 ReLU 激活。 由于我们从解码器循环中的normalizing flow中采样，因此我们不需要在采样时应用 pre-net dropout。 我们也不使用 post-net。 在每个解码器步骤生成的波形块被简单地连接起来形成最终信号。 <strong>最后，我们在解码器 pre-net 和注意力层上添加了一个跳过连接skip connection，让flow直接访问当前块之前的样本。 这对于避免块边界处的不连续性至关重要。</strong></p>
+<p>与 Tacotron 类似，$y_t$ 的大小 $K$ 由缩减因子超参数 $R$ 控制，其中 $K = 320 · R$，默认情况下 $R = 3$​。 与Tacotron 一样，解码器的自回归输入仅包含来自上一步  $y_{t-1}$ 的输出的最终 $K/R$​​ 个采样点。</p>
+<h3 id="2-1-flow"><a href="#2-1-flow" class="headerlink" title="2.1 flow"></a>2.1 flow</h3><p>归一化流 $g(z_t ; c_t )$​ 是可逆变换的组合，它将从球面高斯抽取的噪声样本映射到波形段。 它的表现力来自于组合许多简单的函数。 在训练过程中，逆函数 $g^{−1}$​ 将目标波形映射到球面高斯下，一个密度易于计算的点。</p>
+<p><img src="/images/wave-tacotron-fig2.png" alt="wave-tacotron-fig2"></p>
+<p>由于训练和生成分别需要有效的密度计算和采样，$g$​ 是使用仿射耦合层构建的。 我们的标准化流是 Glow 的一维变体，类似于FloWaveNet。 在训练期间，$g^{−1}$​ 的输入，$y_t ∈ R^K$​，首先被压缩到 $J$​ 帧的序列中，每个帧的维度 $L = 10$。流被分为 $M$​​ 个阶段，每个阶段在不同的时间分辨率下运行，遵循多尺度中描述的配置。 这是通过交错挤压interleaving squeeze 操作来实现的，该操作重塑每个阶段之间的序列，将时间步数减半并将维度加倍，如图 2 所示。在最后阶段之后，解压unsqueeze操作将输出 $z_t$​ 展平为 $R^K$ 中的向量 . 在生成过程中，为了通过 $g$ 将 $z_t$ 转换为 $y_t$​，每个操作都被颠倒并且它们的顺序颠倒。</p>
+<p>每个阶段进一步由 $N$ 个flow steps组成，如图 1 顶部所示。我们不像Glow那样对我们的 ActNorm 层使用数据相关的初始化。 仿射耦合层使用内核大小为 3、1、3 和 256 个通道的 3 层 1D convnet 输出变换参数。 通过使用挤压层squeeze layers，不同阶段的耦合层使用相同的内核宽度，但相对于 $y_t$ 具有不同的有效感受野。 默认配置使用 $M = 5$ 和 $N = 12$​，总共 60 步。</p>
+<p>条件信号 $c_t$ 由每个解码器步骤的单个向量组成，它必须跨数百个样本对 $y_t$ 的结构进行编码。 由于flow内部将 $z_t$ 和 $y_t$ 视为 $J$ 帧的序列，我们发现对 $c_t$ 进行上采样以匹配此帧很有帮助。 具体来说，我们复制 $c_t$$L$​​ 次并将正弦位置嵌入(sinusoidal position embeddings)连接到每个时间步，类似于Transformer，尽管频率之间具有线性间距。 上采样的条件特征附加到每个耦合层的输入。</p>
+<p>为了避免与将实值分布拟合到离散波形样本相关的问题，我们通过将样本量化为 $[0, 2^{16} − 1]$​ 级别来调整 RNADE 中的方法，并通过在 $[0, 1]$​ 中添加均匀噪声进行 去量化 ，并重新缩放回 $[−1, 1]$​​​​。 我们还发现预加重波形很有帮助，使用 FIR 高通滤波器将信号频谱白化with a zero at 0.9。 生成的信号在模型的输出端被 去加重。 这种预加重可以被认为是一个没有任何可学习参数的流程，作为一种归纳偏置inductive bias，将更高的权重放在高频上。 虽然不是关键，但我们发现这改善了主观听力测试结果。</p>
+<p>作为generative flows的常见做法，我们发现在采样时降低先验分布的temperature是有帮助的。 这相当于简单地缩放方程 3 中 $z_t$ 的先验协方差，通过一个因子 $T^2 &lt;1$。我们发现$T =0.7$​是一个好的设置条件。</p>
+<p>在训练期间，flow的逆，$g^{−1}$​，将目标波形 $y_t$​ 映射到相应的 $z_t$​。 条件特征 $c_t$​ 是使用序列到序列网络的教师强制计算的。 步骤 $t$​​​ 中流flow的负对数似然目标是 NICE：</p>
+<script type="math/tex; mode=display">
+\begin{equation} \label{eqa5}
+\begin{aligned}
+L_{flow}(y_t) &= − \text{ log } p(y_t|x_{1:I} , y_{1:t−1}) = − \text{ log } p(y_t|c_t) \\
+&= − \text{ log } \mathcal{N} (z_t; 0, I) − \text{ log } |det(∂z_t/∂y_t)| 
+\end{aligned}
+\end{equation}</script><p>其中$z_t = g^{−1} (y_t ; c_t)$​. 停止标记分类器使用二元交叉熵损失：</p>
+<script type="math/tex; mode=display">
+\begin{equation} \label{eqa7}
+\begin{aligned}
+L_{eos}(s_t) &= − \text{ log } p(s_t|x_{1:I} , y_{1:t−1}) = − \text{ log } p(s_t|c_t) \\
+&= −s_t \text{ log } \hat s_t − (1 − s_t) \text{ log }(1 − \hat s_t)
+\end{aligned}
+\end{equation}</script><p>其中$s_t$是ground truth stop token标签，表示$t$是否是话语的最后一步。 在实践中，我们用几个标记为 $s_t = 1$ 的块对信号进行零填充，以便为分类器提供更好的平衡训练信号。 我们使用公式5和6在所有解码器步骤 $t$​ 的的平均值作为整体损失。</p>
+<h3 id="2-2-Flow-vocoder"><a href="#2-2-Flow-vocoder" class="headerlink" title="2.2 Flow vocoder"></a>2.2 Flow vocoder</h3><p>作为基线，我们在完全前馈声码器上下文中使用类似的流网络进行实验，该网络从 mel 谱图生成波形。 我们遵循图 2 中的架构，流帧长度 L = 15，M = 6 个阶段，N = 每阶段 10 个步骤。 输入 mel 频谱图特征使用 5 层扩张卷积网络调节堆栈进行编码，每层使用 512 个通道。 特征被上采样以匹配 1600 Hz 的流帧速率，并与正弦嵌入连接以指示每个特征帧内的位置，如上。 这个模型是高度并行化的，因为它不使用自回归。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>模型训练时间：500k steps on 32 Google TPUv3 cores, batch size: 128 for LJSpeech</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>我们提出了一种端到端（标准化）文本到语音波形合成模型，将normalizing flow合并到自回归 Tacotron 解码器循环中。 Wave-Tacotron 使用单一模型直接生成高质量的语音波形，以文本为条件，无需单独的声码器。 训练不需要手工设计的频谱图或其他中级特征的复杂损失，而只是最大化训练数据的可能性。 混合模型结构将基于注意力的 TTS 模型的简单性与归一化流的并行生成能力相结合，直接生成波形样本。</p>
+<p>尽管网络结构将输出块大小 K 作为超参数，但解码器基本上仍然是自回归的，需要顺序生成输出块。与并行 TTS的最新进展相比，这使该方法处于劣势，除非输出步长可以变得非常大。探索使所提出的模型适应完全并行 TTS 生成的可行性仍然是未来工作的一个有趣方向。 TTS 任务的两步分解中固有的关注点分离，即将高保真波形生成与文本对齐和长期韵律建模的任务分离，可能导致实践中更有效的模型。两个模型的单独训练还允许在不同的数据上训练它们的可能性，例如，在更大的未转录语音语料库上训练声码器。最后，在类似的文本到波形设置中探索更有效的流替代方案会很有趣，例如，扩散概率模型或 GAN，它们可以更容易地在一个寻求模式的方式可能比对完整数据分布建模更有效。</p>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>FASTSPEECH 2 FAST AND HIGH-QUALITY END-TO-END TEXT TO SPEECH</title>
+    <url>/2021/08/06/fastspeech2/</url>
+    <content><![CDATA[<h1 id="Fastspeech2-快速、高质量的端到端语音合成"><a href="#Fastspeech2-快速、高质量的端到端语音合成" class="headerlink" title="Fastspeech2 快速、高质量的端到端语音合成"></a>Fastspeech2 快速、高质量的端到端语音合成</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>非自回归文本到语音 (TTS) 模型，例如 FastSpeech 可以比以前具有可比质量的自回归模型更快地合成语音。 FastSpeech 模型的训练依赖于自回归教师模型进行持续时间预测（提供更多信息作为输入）和知识蒸馏（简化输出中的数据分布），可以缓解一对多映射问题（即多个语音变体对应于同一文本）在 TTS 中。然而，FastSpeech 有几个缺点：1）师生蒸馏管道复杂且耗时，2）从教师模型中提取的持续时间不够准确，从教师模型中提取的目标梅尔谱图由于数据简化而导致信息丢失，这两者都限制了语音质量。在本文中，我们提出了 FastSpeech 2，它解决了 FastSpeech 中的问题，并通过以下方式更好地解决了 TTS 中的一对多映射问题：1）直接用真实目标训练模型，而不是从教师学习的简单输出，以及 2) 引入更多的语音变化信息（例如，音调、能量和更准确的持续时间）作为条件输入。具体来说，我们从语音波形中提取时长、音调和能量，并直接将它们作为训练的条件输入，并在推理中使用预测值。我们进一步设计了 FastSpeech 2s，这是第一次尝试直接从文本并行生成语音波形，享受完全端到端推理的好处。实验结果表明：1）FastSpeech 2 的训练速度比 FastSpeech 提高了 3 倍，FastSpeech 2s 的推理速度更快； 2）FastSpeech 2和2s在语音质量上优于FastSpeech，FastSpeech 2甚至可以超越自回归模型。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>近年来，基于神经网络的文本转语音 (TTS) 取得了快速进展，并在机器学习和语音界引起了广泛关注。以前的神经 TTS 模型首先从文本中自回归生成梅尔谱图，然后使用单独训练的声码器从生成的梅尔谱合成语音。它们通常存在推理速度缓慢和鲁棒性（单词跳过和重复）问题。近年来，非自回归 TTS 模型旨在解决这些问题，以极快的速度生成梅尔谱图并避免鲁棒性问题，同时实现与以前的自回归模型相当的语音质量。</p>
+<p>在这些非自回归 TTS 方法中，FastSpeech 是最成功的模型之一。 FastSpeech 设计了两种方法来缓解一对多映射问题：1）通过使用从自回归教师模型生成的梅尔谱图作为训练目标（即知识蒸馏）来减少目标端的数据方差。 2）引入持续时间信息（从教师模型的注意力图中提取）以扩展文本序列以匹配mel-spectrogram序列的长度。虽然 FastSpeech 中的这些设计简化了 TTS 中一对多映射问题的学习，但它们也带来了几个缺点：1）两阶段的师生培训管道使培训过程变得复杂。 2）从教师模型生成的目标梅尔频谱图与真实情况相比有一些信息损失，因为从生成的梅尔频谱图合成的音频质量通常比Ground-truth的音频质量差. 3）从教师模型的注意力图中提取的时长不够准确。</p>
+<p>在这项工作中，我们提出 FastSpeech 2 来解决 FastSpeech 中的问题，并更好地处理非自回归 TTS 中的一对多映射问题。为了简化训练管道并避免师生蒸馏中由于数据简化而导致的信息丢失，我们直接使用真实目标而不是教师的简化输出来训练 FastSpeech 2 模型。减少输入（文本序列）和目标输出（梅尔谱图）之间的信息差距（输入不包含预测目标的所有信息）并缓解非自回归 TTS 的一对多映射问题模型训练，我们在FastSpeech中引入了一些语音的变化信息，包括音调、能量和更准确的时长：在训练中，我们从目标语音波形中提取时长、音调和能量，直接作为条件输入；在推理中，我们使用由与 FastSpeech 2 模型联合训练的预测器预测的值。考虑到音高对于语音韵律很重要，并且由于随时间的大波动而难以预测，我们使用连续小波变换将音高轮廓转换为音高谱图并预测频域中的基音，可以提高预测基音的准确性。为了进一步简化语音合成管道，我们引入了 FastSpeech 2s，它不使用梅尔谱图作为中间输出，直接从推理中的文本生成语音波形，推理时延迟低。在 LJSpeech (Ito, 2017) 数据集上的实验表明 1) FastSpeech 2 比 FastSpeech 拥有更简单的训练管道（训练时间减少 3 倍），同时继承了其快速、稳健和可控（甚至在音高和能量上更可控）的优势语音合成，FastSpeech 2s 推理速度更快； 2）FastSpeech 2和2s在语音质量上优于FastSpeech，FastSpeech 2甚至可以超越自回归模型。</p>
+<p>这项工作的主要贡献总结如下：<br>• FastSpeech2 通过简化训练流程实现了 3 倍的训练速度提升 FastSpeech。<br>• FastSpeech 2 缓解了 TTS 中的一对多映射问题并实现了更好的语音质量。<br>• FastSpeech 2s 通过直接从文本生成语音波形，进一步简化了语音合成的推理管道，同时保持了高语音质量。</p>
+<h2 id="Fastspeech2-和-Fastspeech-2s"><a href="#Fastspeech2-和-Fastspeech-2s" class="headerlink" title="Fastspeech2 和 Fastspeech 2s"></a>Fastspeech2 和 Fastspeech 2s</h2><p>在本节中，我们首先描述 FastSpeech 2 中的设计动机，然后介绍 FastSpeech 2 的架构，旨在改进 FastSpeech 以更好地处理一对多映射问题，具有更简单的训练管道和更高的语音质量 . 最后，我们将 FastSpeech 2 扩展到 FastSpeech 2s，以实现完全端到端的文本到波形合成 。</p>
+<h3 id="2-1-Motivation"><a href="#2-1-Motivation" class="headerlink" title="2.1 Motivation"></a>2.1 Motivation</h3><p>TTS 是一个典型的一对多映射问题，因为多个由于语音的变化，例如音高、持续时间、音量和韵律，可能会有多个语音序列可以对应于文本序列。在非自回归 TTS 中，唯一的输入信息是文本，而文本不足以完全预测语音的多样性。在这种情况下，模型容易过拟合训练集中目标语音的变化，导致泛化能力差。如第 1 节所述，虽然 FastSpeech 设计了两种方法来缓解一对多映射问题，但它们也带来了几个问题，包括：1）复杂的训练管道； 2) 表1中分析的目标mel谱图的信息丢失；和 3) 如表 5a 所示，Ground-truth持续时间不够准确。在下面的小节中，我们将介绍旨在解决这些问题的 FastSpeech 2 的详细设计。</p>
+<h3 id="2-2-Model-overview"><a href="#2-2-Model-overview" class="headerlink" title="2.2 Model overview"></a>2.2 Model overview</h3><p><img src="/images/fastspeech2-fig1.png" alt="fastspeech2-fig1"></p>
+<p>FastSpeech 2 的整体模型架构如图 1a 所示。编码器将音素嵌入序列 phoneme embedding 转换为音素隐藏序列phoneme hidden sequence，然后方差适配器Variance adaptor 将持续时间Duration、音调Pitch和能量Energy等不同的方差信息添加到隐藏序列中，最后mel-spectrogram解码器将adapted hidden sequence 并行化转换为mel-spectrogram序列。我们使用前馈 Transformer 块作为编码器的基本结构，它是一个自注意力层和 FastSpeech中的一维卷积的堆栈，作为encoder和mel-spectrogram decoder的基本结构。与依赖于师生蒸馏管道和来自教师模型的音素持续时间的 FastSpeech 不同，FastSpeech 2 进行了多项改进。首先，我们去除了师生蒸馏管道，直接使用ground-truth mel-spectrograms作为模型训练的目标，这样可以避免蒸馏mel-spectrograms中的信息丢失并提升语音质量的上限。其次，我们的方差适配器不仅包含持续时间预测器，还包含音调和能量预测器，其中 1) 持续时间预测器使用通过强制对齐forced alignment获得的音素持续时间作为训练目标，从第 3.2.2 节中通过实验验证的，比自回归教师模型的注意力图提取的结果更准确； 2）额外的音调和能量预测器可以提供更多的方差信息，这对于缓解 TTS 中的一对多映射问题很重要。第三，为了进一步简化训练管道并将其推向完全端到端的系统，我们提出了 FastSpeech 2s，它直接从文本生成波形，没有级联的梅尔频谱图生成（声学模型）和波形生成（声码器）。在以下小节中，我们描述了我们方法中方差适配器和直接波形生成的详细设计。</p>
+<h3 id="2-3-Variance-adaptor"><a href="#2-3-Variance-adaptor" class="headerlink" title="2.3 Variance adaptor"></a>2.3 Variance adaptor</h3><p>方差适配器旨在将方差信息（例如，持续时间、音调、能量等）添加到音素隐藏序列中，这可以为 TTS 中的一对多映射问题提供足够的信息来预测变体语音。我们简单介绍一下方差信息： 1）音素持续时间，表示语音发声的时间长短； 2）音高，这是传达情感的一个关键特征，对语音韵律有很大影响； 3）能量，它表示梅尔频谱图的帧级幅度，直接影响语音的音量和韵律。可以在方差适配器中添加更多方差信息，例如情感、风格和说话者，我们将其留待以后的工作。相应地，方差适配器由 1) 持续时间预测器（即，FastSpeech 中使用的长度调节器）、2) 音调预测器和 3) 能量预测器组成，如图 1b 所示。在训练中，我们将从录音中提取的持续时间、音调和能量的真实值作为隐藏序列的输入来预测目标语音。同时，我们使用真实的时长、音调和能量作为目标来训练时长、音调和能量预测器，这些预测器用于推理以合成目标语音。如图 1c 所示，持续时间、音调和能量预测器共享相似的模型结构（但模型参数不同），它由具有 ReLU 激活的 2 层 1D 卷积网络组成，每个网络后跟层归一化和 dropout 层，和一个额外的线性层将隐藏状态投影到输出序列中。在下面的段落中，我们分别描述了三个预测器的细节。</p>
+<p><strong>Duration Predictor</strong> 时长预测器以音素隐藏序列为输入，预测每个音素的时长，表示这个音素对应多少个mel帧，并转化为对数域，便于预测。 持续时间预测器使用均方误差 (MSE) 损失进行优化，将提取的持续时间作为训练目标。 我们没有在 FastSpeech 中使用预训练的自回归 TTS 模型提取音素持续时间，而是使用蒙特利尔强制对齐 (MFA)  工具来提取音素持续时间，以提高对齐精度，从而减少模型输入和输出之间的信息差距。</p>
+<p><strong>Pitch Predictor</strong> 以前基于神经网络的具有音高预测的 TTS 系统通常直接预测音高轮廓。然而，由于真实音高变化很大，预测音高值的分布与真实分布非常不同，如第 3.2.2 节所述。为了更好地预测音高轮廓的变化，我们使用连续小波变换 (CWT) 将连续的音高序列分解为音高谱图，并将音高谱图作为训练使用 MSE 损失优化的音高预测器的目标。在推理中，基音预测器预测基音谱图，然后使用逆连续小波变换 (iCWT) 将其进一步转换回基音轮廓。我们在附录 D 中描述了基音提取、CWT、iCWT 和基音预测器架构的细节。为了将基音轮廓作为训练和推理的输入，我们量化了每一帧的基音 F0（训练/推理的真实值/预测值）到对数尺度的 256 个可能值，并进一步将其转换为音调嵌入向量 p 并将其添加到扩展的隐藏序列中。</p>
+<p><strong>Energy Predictor</strong> </p>
+<p>我们将每个短时傅立叶变换 (STFT) 帧的幅度amplitude的 L2 范数计算为能量。 然后我们将每帧的能量统一量化为 256 个可能的值，将其编码为能量嵌入 e 并将其添加到扩展的隐藏序列中，类似于基音。 我们使用能量预测器来预测能量的原始值而不是量化值，并使用 MSE 损失来优化能量预测器。</p>
+<h3 id="2-4-Fastspeech-2s"><a href="#2-4-Fastspeech-2s" class="headerlink" title="2.4 Fastspeech 2s"></a>2.4 Fastspeech 2s</h3><p>为了实现完全端到端的文本到波形生成，在本小节中，我们将 FastSpeech 2 扩展到 FastSpeech 2s，它直接从文本生成波形，没有级联梅尔频谱图生成（声学模型）和波形生成（声码器） . 如图 1a 所示，FastSpeech 2s 在中间隐藏层上生成波形调节，通过丢弃梅尔频谱图解码器使其推理更加紧凑，并实现与级联系统相当的性能。 我们首先讨论非自回归文本到波形生成的挑战，然后描述 FastSpeech 2s 的细节，包括模型结构以及训练和推理过程。</p>
+<p><strong>文本到波形生成中的挑战</strong> <strong>当将 TTS 管道推向完全端到端框架时，有几个挑战：1）由于波形包含比梅尔谱图更多的方差信息（例如相位）， 输入和输出的信息差大于文本到频谱图生成中的输入和输出。 2）由于极长的波形样本和有限的GPU内存，很难在对应于全文序列的音频剪辑上进行训练。 因此，我们只能在对应于部分文本序列的短音频片段上进行训练，这使得模型难以捕捉不同部分文本序列中音素之间的关系，从而损害文本特征提取。</strong></p>
+<p><strong>我们的方法</strong> 为了应对上述挑战，我们在波形解码器中进行了多项设计：1) <strong>考虑到相位信息难以使用方差预测器进行预测，我们在波形解码器中引入对抗训练以强制它自己隐式恢复相位信息。</strong> 2) 我们利用 FastSpeech 2 的 mel-spectrogram 解码器，对全文序列进行训练，以帮助进行文本特征提取。如图 1d 所示，波形解码器基于 WaveNet的结构，包括非因果卷积和门控激活。<strong>波形解码器将对应于短音频剪辑的切片隐藏序列作为输入</strong>，并使用转置的 1D 卷积对其进行上采样以匹配音频剪辑的长度。对抗训练中的鉴别器采用与 Parallel WaveGAN 中相同的结构，它由十层非因果扩张的一维卷积和泄漏 ReLU 激活函数组成。波形解码器通过多分辨率 STFT 损失和 Parallel WaveGAN 之后的 LSGAN 鉴别器损失进行了优化。<strong>在推理中，我们放弃了梅尔谱解码器，只使用波形解码器来合成语音音频。</strong></p>
+<h3 id="2-5-Discussions"><a href="#2-5-Discussions" class="headerlink" title="2.5 Discussions"></a>2.5 Discussions</h3><p>在本小节中，我们将讨论 FastSpeech 2 和 2s 与之前和当下工作的区别。</p>
+<p>与 Deep Voice、Deep Voice 2 和其他自回归生成波形并预测方差信息，如持续时间和音调的方法相比，Fastspeech 2 和 2s 采用基于自注意力的前馈网络并行生成梅尔谱图或波形。虽然一些现有的非自回归声学模型主要侧重于提高持续时间的准确性，但 FastSpeech 2 和 2s 提供了更多的变化信息（持续时间、音高和能量）作为输入，以减少输入和输出之间的信息差距。一项当下的工作Fastpitch在音素级别采用音调预测，而 FastSpeech 2 和 2s 在帧级别预测更细粒度的音调轮廓。此外，为了改善合成语音中的韵律，FastSpeech 2 和 2s 进一步引入了连续小波变换来模拟音调的变化。</p>
+<p>虽然 ClariNet 等一些文本到波形模型联合训练自回归声学模型和非自回归声码器，但 FastSpeech 2s 包含完全非自回归架构以进行快速推理。 一项名为 EATS (Donahue et al., 2020) 的并发工作也采用非自回归架构和对抗训练将文本直接转换为波形，主要侧重于使用可微单调插值预测每个音素端到端的持续时间方案。 与 EATS 相比，FastSpeech 2s 额外提供了更多的变化信息，以缓解 TTS 中的一对多映射问题。</p>
+<p>以前的非自回归声码器不是完整的文本到语音系统，因为它们转换时间对齐的语言特征转换为波形，并且需要一个单独的语言模型将输入文本转换为语言特征，或者需要一个声学模型将输入文本转换为声学特征（例如，melspectrograms）。 FastSpeech 2s 是第一次尝试从完全并行的音素序列中直接生成波形，而不是语言特征或梅尔谱图。</p>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><h3 id="3-1-实验设置"><a href="#3-1-实验设置" class="headerlink" title="3.1 实验设置"></a>3.1 实验设置</h3><p><strong>数据集</strong> 我们在 LJSpeech 数据集上评估 FastSpeech 2 和 2s。 LJSpeech 包含 13,100 个英文音频剪辑（约 24 小时）和相应的文本转录。 我们将数据集分为三组：用于训练的 12,228 个样本、用于验证的 349 个样本（文档标题为 LJ003）和用于测试的 523 个样本（文档标题为 LJ001 和 LJ002）。 对于主观评价，我们在测试集中随机选择 100 个样本。 为了缓解发音错误的问题，我们使用开源字素将文本序列转换为音素序列到音素工具。 我们按照 Shen 等人的方法将原始波形转换为梅尔谱图，并将帧大小和跳跃大小设置为 1024 和 256，相对于采样率 22050。</p>
+<p><strong>模型配置 </strong>我们的 FastSpeech 2 由编码器和梅尔频谱图解码器中的 4 个前馈变换器 (FFT) 块组成。 解码器中的输出线性层将隐藏状态转换为 80 维梅尔谱图，我们的模型使用平均绝对误差 (MAE) 进行优化。 我们在附录 A 中添加了我们实验中使用的 FastSpeech 2 和 2s 的更详细配置。 附录 B 中添加了训练和推理的详细信息。</p>
+<h3 id="3-2-实验结果"><a href="#3-2-实验结果" class="headerlink" title="3.2 实验结果"></a>3.2 实验结果</h3><p>在本节中，我们首先评估 FastSpeech 2 和 2s 的音频质量、训练和推理加速。 然后我们对我们的方法进行分析和消融研究。</p>
+<h4 id="3-2-1-模型表现"><a href="#3-2-1-模型表现" class="headerlink" title="3.2.1 模型表现"></a>3.2.1 模型表现</h4><p><img src="/images/fastspeech2-tab1.png" alt="fastspeech2-tab1"></p>
+<p><strong>音频质量</strong> 为了评估感知质量，我们对测试集进行平均意见得分 (MOS) 评估。要求 20 名以英语为母语的人对合成语音样本进行质量判断。文本内容在不同系统之间保持一致，所有测试人员只检查音频质量，没有其他干扰因素。我们将 FastSpeech 2 和 FastSpeech 2s 生成的音频样本的 MOS 与其他系统进行了比较，包括 1) GT，真实记录； 2) GT (Mel + PWG)，我们首先将真实音频转换为梅尔频谱图，然后使用 Parallel WaveGAN (PWG) 将梅尔频谱图转换回音频； 3) Tacotron 2 (Mel + PWG)； 4) Transformer TTS (Mel + PWG)； 5) FastSpeech (Mel + PWG)。 3)、4) 和 5) 中的所有系统都使用 Parallel WaveGAN 作为声码器以进行公平比较。结果如表1所示，可以看出FastSpeech 2可以超越，FastSpeech 2s可以匹配自回归模型Transformer TTS和Tacotron 2的语音质量。重要的是，FastSpeech 2优于FastSpeech，这证明了提供如音高、能量和更准确的持续时间等方差信息，和直接以真实语音作为训练目标，不使用师生蒸馏管道的有效性。</p>
+<p><img src="/images/fastspeech2-tab2.png" alt="fastspeech2-tab2"></p>
+<p><strong>训练和推理加速</strong> FastSpeech 2 通过去除师生蒸馏过程简化了 FastSpeech 的训练流程，从而减少了训练时间。我们在表2中列出了Transformer TTS（自回归教师模型）、FastSpeech（包括Transformer TTS教师模型和FastSpeech学生模型的训练）和FastSpeech 2的总训练时间。可以看出FastSpeech 2减少了总训练时间与 FastSpeech 相比提高了 3.12 倍。注意这里的训练时间只包括声学模型训练，没有考虑声码器训练。因此，我们这里不比较 FastSpeech 2s 的训练时间。然后，我们评估 FastSpeech 2 和 2s 与自回归 Transformer TTS 模型相比的推理延迟，该模型具有与 FastSpeech 2 和 2s 相似的模型参数数量。我们在表 2 中展示了波形生成的推理加速。可以看出，与 Transformer TTS 模型相比，FastSpeech 2 和 2s 在波形合成中分别将音频生成加速了 47.8 倍和 51.8 倍。我们还可以看到，由于完全端到端的生成，FastSpeech 2s 比 FastSpeech 2 快。</p>
+<h4 id="3-2-2-偏差信息分析"><a href="#3-2-2-偏差信息分析" class="headerlink" title="3.2.2 偏差信息分析"></a>3.2.2 偏差信息分析</h4><p><strong>合成语音中更准确的方差信息</strong>  在该段中，我们衡量在 FastSpeech 2 和 2s 中提供更多方差信息（例如，音调和能量）作为输入是否确实可以合成具有更准确音调和能量的语音。</p>
+<p><img src="/images/fastspeech2-tab3.png" alt="fastspeech2-tab3"></p>
+<p>对于音高，我们计算矩（标准偏差 (σ)、偏度 (γ) 和峰态 (K)）和平均动态时间扭曲 (DTW) 真实语音和合成语音的音高分布的距离。 结果如表3所示。可以看出，与FastSpeech相比，FastSpeech 2/2s生成音频的矩（σ、γ和K）更接近于真实音频，并且平均DTW距离与其他方法相比更近，这可以展示出 FastSpeech 2/2s 可以生成比 FastSpeech 更自然的音高轮廓（可以产生更好的韵律）的语音。 我们还在附录 D 中对生成的音高轮廓进行了案例研究。</p>
+<p><img src="/images/fastspeech2-tab4.png" alt="fastspeech2-tab4"></p>
+<p>对于能量，我们计算从生成的波形中提取的逐帧能量与真实语音之间的平均绝对误差 (MAE)。 为了保证合成语音和ground-truth语音的帧数一致，我们在FastSpeech和FastSpeech 2中都使用了MFA提取的ground-truth时长，结果如表4所示。我们可以看到FastSpeech 2/2s 的能量MAE小于 FastSpeech 的能量MAE，表明它们合成的语音音频与真实音频具有更相似的能量。</p>
+<p><img src="/images/fastspeech2-tab5.png" alt="fastspeech2-tab5"></p>
+<p><strong>模型训练更准确的持续时间</strong>  我们然后分析提供的持续时间信息的准确性以训练持续时间预测器，以及基于 FastSpeech 的更准确的持续时间对于获得更好的语音质量的有效性。我们手动将教师模型生成的 50 个音频与音素级别的相应文本对齐，并获得真实音素级别的持续时间。我们分别使用来自 FastSpeech 的教师模型和本文中使用的 MFA 的持续时间来计算绝对音素边界差异的平均值the average of absolute phoneme boundary differences。结果如表5a所示。我们可以看到，MFA 可以生成比 FastSpeech 的教师模型更准确的持续时间。接下来，我们将 FastSpeech 中使用的持续时间（来自教师模型）替换为 MFA 提取的持续时间，并进行 CMOS测试以比较使用不同持续时间训练的两个 FastSpeech 模型之间的语音质量。结果列于表 5b 中，可以看出更准确的持续时间信息提高了 FastSpeech 的语音质量，这验证了我们从 MFA 改进的持续时间的有效性。</p>
+<h4 id="3-2-3-消融实验"><a href="#3-2-3-消融实验" class="headerlink" title="3.2.3 消融实验"></a>3.2.3 消融实验</h4><p><img src="/images/fastspeech2-tab6.png" alt="fastspeech2-tab6"></p>
+<p><strong>音高和能量输入</strong>  我们进行消融研究以证明 FastSpeech 2 和 2s 的几个方差信息的有效性，包括音高和能量。 我们对这些消融研究进行 CMOS 评估。 结果如表6所示。 我们发现在FastSpeech 2和2s中去除能量（两个子表中的第3行）导致语音质量方面的性能下降（分别为-0.040和-0.160 CMOS），表明能量在 FastSpeech 2 中对于提高语音质量方面是有效的，对 FastSpeech 2s 更有效。 我们还发现在 FastSpeech 2 和 2s 中去除pitch（两个子表中的第 4 行）分别导致 -0.245 和 -1.130 CMOS，这证明了pitch的有效性。 当我们同时去除音高和能量（两个子表中的最后一行）时，语音质量进一步下降，表明音高和能量都有助于提高 FastSpeech 2 和 2s 的性能。</p>
+<p><strong>在频域中预测音高</strong> 为了研究使用连续小波变换 (CWT) 在频域中预测音高的有效性，如第 2.3 节所述，我们直接使用 FastSpeech 2 和 2s 中的能量等均方误差拟合音高轮廓。 我们进行 CMOS 评估，FastSpeech 2 和 2s 的 CMOS 下降分别为 0.185 和 0.201。 我们还计算了表 3 中第 6 行（表示为 FastSpeech 2 - CWT）所示的音调矩和平均 DTW 距离。 结果表明，CWT 可以帮助更好地模拟音高，改善合成语音的韵律，从而获得更好的 CMOS 分数。</p>
+<p><strong>FastSpeech 2s 中的梅尔谱解码器</strong> 为了验证 FastSpeech 2s 中的梅尔谱解码器对文本特征提取的有效性，如第 2.4 节所述，我们移除梅尔谱解码器并进行 CMOS 评估。 它会导致 0.285 CMOS 压降，这表明梅尔频谱图解码器对于高质量波形生成至关重要。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>在这项工作中，我们提出了 FastSpeech 2，一种快速且高质量的端到端 TTS 系统，以解决 FastSpeech 中的问题并缓解一对多映射问题：1）我们直接用Ground-truth mel谱训练模型， 与 FastSpeech 相比，可以简化训练流程并避免信息丢失； 2）我们提高了持续时间精度并引入了更多的方差信息，包括基音和能量以缓解一对多映射问题，并通过引入连续小波变换来改进基音预测。此外，基于FastSpeech 2，我们进一步开发了FastSpeech 2s，一种非自回归的文本到波形生成模型，它享有完全端到端推理的好处，并实现更快的推理速度。我们的实验结果表明，FastSpeech 2 和 2s 的性能优于 FastSpeech，并且 FastSpeech 2 在语音质量方面甚至可以超越自回归模型，训练流程更加简单，同时继承了 FastSpeech 快速、稳健和可控的语音合成优势。</p>
+<p>无需任何外部库的高质量、快速和完全端到端的训练绝对是神经 TTS 的最终目标，也是一个非常具有挑战性的问题。为了保证 FastSpeech 2 的高质量，我们使用了外部高性能对齐工具和音调提取工具，这些工具看起来有点复杂，但对于高质量和快速的语音合成非常有帮助。我们相信未来会有更简单的解决方案来实现这一目标，我们肯定会在没有外部对齐模型和工具的情况下致力于完全端到端的 TTS。我们还将考虑更多的方差信息，以进一步提高语音质量并通过更轻量级的模型加速推理。</p>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
 </search>

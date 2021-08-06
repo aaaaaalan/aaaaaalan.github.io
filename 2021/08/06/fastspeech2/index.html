@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本篇论文为end-to-end text-to-speech 的创新尝试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FASTSPEECH 2 FAST AND HIGH-QUALITY END-TO-END TEXT TO SPEECH">
+<meta property="og:url" content="http://example.com/2021/08/06/fastspeech2/index.html">
+<meta property="og:site_name" content="海阔天空蓝">
+<meta property="og:description" content="本篇论文为end-to-end text-to-speech 的创新尝试">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/fastspeech2-fig1.png">
+<meta property="og:image" content="http://example.com/images/fastspeech2-tab1.png">
+<meta property="og:image" content="http://example.com/images/fastspeech2-tab2.png">
+<meta property="og:image" content="http://example.com/images/fastspeech2-tab3.png">
+<meta property="og:image" content="http://example.com/images/fastspeech2-tab4.png">
+<meta property="og:image" content="http://example.com/images/fastspeech2-tab5.png">
+<meta property="og:image" content="http://example.com/images/fastspeech2-tab6.png">
+<meta property="article:published_time" content="2021-08-06T03:15:52.000Z">
+<meta property="article:modified_time" content="2021-08-06T07:51:03.426Z">
+<meta property="article:author" content="Alan Sun">
+<meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/fastspeech2-fig1.png">
+
+<link rel="canonical" href="http://example.com/2021/08/06/fastspeech2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>FASTSPEECH 2 FAST AND HIGH-QUALITY END-TO-END TEXT TO SPEECH | 海阔天空蓝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">海阔天空蓝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个玩过n种运动的语音合成算法攻城狮</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/06/fastspeech2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alan Sun">
+      <meta itemprop="description" content="记录工作与生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空蓝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FASTSPEECH 2 FAST AND HIGH-QUALITY END-TO-END TEXT TO SPEECH
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-06 11:15:52 / 修改时间：15:51:03" itemprop="dateCreated datePublished" datetime="2021-08-06T11:15:52+08:00">2021-08-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">本篇论文为end-to-end text-to-speech 的创新尝试</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Fastspeech2-快速、高质量的端到端语音合成"><a href="#Fastspeech2-快速、高质量的端到端语音合成" class="headerlink" title="Fastspeech2 快速、高质量的端到端语音合成"></a>Fastspeech2 快速、高质量的端到端语音合成</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>非自回归文本到语音 (TTS) 模型，例如 FastSpeech 可以比以前具有可比质量的自回归模型更快地合成语音。 FastSpeech 模型的训练依赖于自回归教师模型进行持续时间预测（提供更多信息作为输入）和知识蒸馏（简化输出中的数据分布），可以缓解一对多映射问题（即多个语音变体对应于同一文本）在 TTS 中。然而，FastSpeech 有几个缺点：1）师生蒸馏管道复杂且耗时，2）从教师模型中提取的持续时间不够准确，从教师模型中提取的目标梅尔谱图由于数据简化而导致信息丢失，这两者都限制了语音质量。在本文中，我们提出了 FastSpeech 2，它解决了 FastSpeech 中的问题，并通过以下方式更好地解决了 TTS 中的一对多映射问题：1）直接用真实目标训练模型，而不是从教师学习的简单输出，以及 2) 引入更多的语音变化信息（例如，音调、能量和更准确的持续时间）作为条件输入。具体来说，我们从语音波形中提取时长、音调和能量，并直接将它们作为训练的条件输入，并在推理中使用预测值。我们进一步设计了 FastSpeech 2s，这是第一次尝试直接从文本并行生成语音波形，享受完全端到端推理的好处。实验结果表明：1）FastSpeech 2 的训练速度比 FastSpeech 提高了 3 倍，FastSpeech 2s 的推理速度更快； 2）FastSpeech 2和2s在语音质量上优于FastSpeech，FastSpeech 2甚至可以超越自回归模型。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>近年来，基于神经网络的文本转语音 (TTS) 取得了快速进展，并在机器学习和语音界引起了广泛关注。以前的神经 TTS 模型首先从文本中自回归生成梅尔谱图，然后使用单独训练的声码器从生成的梅尔谱合成语音。它们通常存在推理速度缓慢和鲁棒性（单词跳过和重复）问题。近年来，非自回归 TTS 模型旨在解决这些问题，以极快的速度生成梅尔谱图并避免鲁棒性问题，同时实现与以前的自回归模型相当的语音质量。</p>
+<p>在这些非自回归 TTS 方法中，FastSpeech 是最成功的模型之一。 FastSpeech 设计了两种方法来缓解一对多映射问题：1）通过使用从自回归教师模型生成的梅尔谱图作为训练目标（即知识蒸馏）来减少目标端的数据方差。 2）引入持续时间信息（从教师模型的注意力图中提取）以扩展文本序列以匹配mel-spectrogram序列的长度。虽然 FastSpeech 中的这些设计简化了 TTS 中一对多映射问题的学习，但它们也带来了几个缺点：1）两阶段的师生培训管道使培训过程变得复杂。 2）从教师模型生成的目标梅尔频谱图与真实情况相比有一些信息损失，因为从生成的梅尔频谱图合成的音频质量通常比Ground-truth的音频质量差. 3）从教师模型的注意力图中提取的时长不够准确。</p>
+<p>在这项工作中，我们提出 FastSpeech 2 来解决 FastSpeech 中的问题，并更好地处理非自回归 TTS 中的一对多映射问题。为了简化训练管道并避免师生蒸馏中由于数据简化而导致的信息丢失，我们直接使用真实目标而不是教师的简化输出来训练 FastSpeech 2 模型。减少输入（文本序列）和目标输出（梅尔谱图）之间的信息差距（输入不包含预测目标的所有信息）并缓解非自回归 TTS 的一对多映射问题模型训练，我们在FastSpeech中引入了一些语音的变化信息，包括音调、能量和更准确的时长：在训练中，我们从目标语音波形中提取时长、音调和能量，直接作为条件输入；在推理中，我们使用由与 FastSpeech 2 模型联合训练的预测器预测的值。考虑到音高对于语音韵律很重要，并且由于随时间的大波动而难以预测，我们使用连续小波变换将音高轮廓转换为音高谱图并预测频域中的基音，可以提高预测基音的准确性。为了进一步简化语音合成管道，我们引入了 FastSpeech 2s，它不使用梅尔谱图作为中间输出，直接从推理中的文本生成语音波形，推理时延迟低。在 LJSpeech (Ito, 2017) 数据集上的实验表明 1) FastSpeech 2 比 FastSpeech 拥有更简单的训练管道（训练时间减少 3 倍），同时继承了其快速、稳健和可控（甚至在音高和能量上更可控）的优势语音合成，FastSpeech 2s 推理速度更快； 2）FastSpeech 2和2s在语音质量上优于FastSpeech，FastSpeech 2甚至可以超越自回归模型。</p>
+<p>这项工作的主要贡献总结如下：<br>• FastSpeech2 通过简化训练流程实现了 3 倍的训练速度提升 FastSpeech。<br>• FastSpeech 2 缓解了 TTS 中的一对多映射问题并实现了更好的语音质量。<br>• FastSpeech 2s 通过直接从文本生成语音波形，进一步简化了语音合成的推理管道，同时保持了高语音质量。</p>
+<h2 id="Fastspeech2-和-Fastspeech-2s"><a href="#Fastspeech2-和-Fastspeech-2s" class="headerlink" title="Fastspeech2 和 Fastspeech 2s"></a>Fastspeech2 和 Fastspeech 2s</h2><p>在本节中，我们首先描述 FastSpeech 2 中的设计动机，然后介绍 FastSpeech 2 的架构，旨在改进 FastSpeech 以更好地处理一对多映射问题，具有更简单的训练管道和更高的语音质量 . 最后，我们将 FastSpeech 2 扩展到 FastSpeech 2s，以实现完全端到端的文本到波形合成 。</p>
+<h3 id="2-1-Motivation"><a href="#2-1-Motivation" class="headerlink" title="2.1 Motivation"></a>2.1 Motivation</h3><p>TTS 是一个典型的一对多映射问题，因为多个由于语音的变化，例如音高、持续时间、音量和韵律，可能会有多个语音序列可以对应于文本序列。在非自回归 TTS 中，唯一的输入信息是文本，而文本不足以完全预测语音的多样性。在这种情况下，模型容易过拟合训练集中目标语音的变化，导致泛化能力差。如第 1 节所述，虽然 FastSpeech 设计了两种方法来缓解一对多映射问题，但它们也带来了几个问题，包括：1）复杂的训练管道； 2) 表1中分析的目标mel谱图的信息丢失；和 3) 如表 5a 所示，Ground-truth持续时间不够准确。在下面的小节中，我们将介绍旨在解决这些问题的 FastSpeech 2 的详细设计。</p>
+<h3 id="2-2-Model-overview"><a href="#2-2-Model-overview" class="headerlink" title="2.2 Model overview"></a>2.2 Model overview</h3><p><img src="/images/fastspeech2-fig1.png" alt="fastspeech2-fig1"></p>
+<p>FastSpeech 2 的整体模型架构如图 1a 所示。编码器将音素嵌入序列 phoneme embedding 转换为音素隐藏序列phoneme hidden sequence，然后方差适配器Variance adaptor 将持续时间Duration、音调Pitch和能量Energy等不同的方差信息添加到隐藏序列中，最后mel-spectrogram解码器将adapted hidden sequence 并行化转换为mel-spectrogram序列。我们使用前馈 Transformer 块作为编码器的基本结构，它是一个自注意力层和 FastSpeech中的一维卷积的堆栈，作为encoder和mel-spectrogram decoder的基本结构。与依赖于师生蒸馏管道和来自教师模型的音素持续时间的 FastSpeech 不同，FastSpeech 2 进行了多项改进。首先，我们去除了师生蒸馏管道，直接使用ground-truth mel-spectrograms作为模型训练的目标，这样可以避免蒸馏mel-spectrograms中的信息丢失并提升语音质量的上限。其次，我们的方差适配器不仅包含持续时间预测器，还包含音调和能量预测器，其中 1) 持续时间预测器使用通过强制对齐forced alignment获得的音素持续时间作为训练目标，从第 3.2.2 节中通过实验验证的，比自回归教师模型的注意力图提取的结果更准确； 2）额外的音调和能量预测器可以提供更多的方差信息，这对于缓解 TTS 中的一对多映射问题很重要。第三，为了进一步简化训练管道并将其推向完全端到端的系统，我们提出了 FastSpeech 2s，它直接从文本生成波形，没有级联的梅尔频谱图生成（声学模型）和波形生成（声码器）。在以下小节中，我们描述了我们方法中方差适配器和直接波形生成的详细设计。</p>
+<h3 id="2-3-Variance-adaptor"><a href="#2-3-Variance-adaptor" class="headerlink" title="2.3 Variance adaptor"></a>2.3 Variance adaptor</h3><p>方差适配器旨在将方差信息（例如，持续时间、音调、能量等）添加到音素隐藏序列中，这可以为 TTS 中的一对多映射问题提供足够的信息来预测变体语音。我们简单介绍一下方差信息： 1）音素持续时间，表示语音发声的时间长短； 2）音高，这是传达情感的一个关键特征，对语音韵律有很大影响； 3）能量，它表示梅尔频谱图的帧级幅度，直接影响语音的音量和韵律。可以在方差适配器中添加更多方差信息，例如情感、风格和说话者，我们将其留待以后的工作。相应地，方差适配器由 1) 持续时间预测器（即，FastSpeech 中使用的长度调节器）、2) 音调预测器和 3) 能量预测器组成，如图 1b 所示。在训练中，我们将从录音中提取的持续时间、音调和能量的真实值作为隐藏序列的输入来预测目标语音。同时，我们使用真实的时长、音调和能量作为目标来训练时长、音调和能量预测器，这些预测器用于推理以合成目标语音。如图 1c 所示，持续时间、音调和能量预测器共享相似的模型结构（但模型参数不同），它由具有 ReLU 激活的 2 层 1D 卷积网络组成，每个网络后跟层归一化和 dropout 层，和一个额外的线性层将隐藏状态投影到输出序列中。在下面的段落中，我们分别描述了三个预测器的细节。</p>
+<p><strong>Duration Predictor</strong> 时长预测器以音素隐藏序列为输入，预测每个音素的时长，表示这个音素对应多少个mel帧，并转化为对数域，便于预测。 持续时间预测器使用均方误差 (MSE) 损失进行优化，将提取的持续时间作为训练目标。 我们没有在 FastSpeech 中使用预训练的自回归 TTS 模型提取音素持续时间，而是使用蒙特利尔强制对齐 (MFA)  工具来提取音素持续时间，以提高对齐精度，从而减少模型输入和输出之间的信息差距。</p>
+<p><strong>Pitch Predictor</strong> 以前基于神经网络的具有音高预测的 TTS 系统通常直接预测音高轮廓。然而，由于真实音高变化很大，预测音高值的分布与真实分布非常不同，如第 3.2.2 节所述。为了更好地预测音高轮廓的变化，我们使用连续小波变换 (CWT) 将连续的音高序列分解为音高谱图，并将音高谱图作为训练使用 MSE 损失优化的音高预测器的目标。在推理中，基音预测器预测基音谱图，然后使用逆连续小波变换 (iCWT) 将其进一步转换回基音轮廓。我们在附录 D 中描述了基音提取、CWT、iCWT 和基音预测器架构的细节。为了将基音轮廓作为训练和推理的输入，我们量化了每一帧的基音 F0（训练/推理的真实值/预测值）到对数尺度的 256 个可能值，并进一步将其转换为音调嵌入向量 p 并将其添加到扩展的隐藏序列中。</p>
+<p><strong>Energy Predictor</strong> </p>
+<p>我们将每个短时傅立叶变换 (STFT) 帧的幅度amplitude的 L2 范数计算为能量。 然后我们将每帧的能量统一量化为 256 个可能的值，将其编码为能量嵌入 e 并将其添加到扩展的隐藏序列中，类似于基音。 我们使用能量预测器来预测能量的原始值而不是量化值，并使用 MSE 损失来优化能量预测器。</p>
+<h3 id="2-4-Fastspeech-2s"><a href="#2-4-Fastspeech-2s" class="headerlink" title="2.4 Fastspeech 2s"></a>2.4 Fastspeech 2s</h3><p>为了实现完全端到端的文本到波形生成，在本小节中，我们将 FastSpeech 2 扩展到 FastSpeech 2s，它直接从文本生成波形，没有级联梅尔频谱图生成（声学模型）和波形生成（声码器） . 如图 1a 所示，FastSpeech 2s 在中间隐藏层上生成波形调节，通过丢弃梅尔频谱图解码器使其推理更加紧凑，并实现与级联系统相当的性能。 我们首先讨论非自回归文本到波形生成的挑战，然后描述 FastSpeech 2s 的细节，包括模型结构以及训练和推理过程。</p>
+<p><strong>文本到波形生成中的挑战</strong> <strong>当将 TTS 管道推向完全端到端框架时，有几个挑战：1）由于波形包含比梅尔谱图更多的方差信息（例如相位）， 输入和输出的信息差大于文本到频谱图生成中的输入和输出。 2）由于极长的波形样本和有限的GPU内存，很难在对应于全文序列的音频剪辑上进行训练。 因此，我们只能在对应于部分文本序列的短音频片段上进行训练，这使得模型难以捕捉不同部分文本序列中音素之间的关系，从而损害文本特征提取。</strong></p>
+<p><strong>我们的方法</strong> 为了应对上述挑战，我们在波形解码器中进行了多项设计：1) <strong>考虑到相位信息难以使用方差预测器进行预测，我们在波形解码器中引入对抗训练以强制它自己隐式恢复相位信息。</strong> 2) 我们利用 FastSpeech 2 的 mel-spectrogram 解码器，对全文序列进行训练，以帮助进行文本特征提取。如图 1d 所示，波形解码器基于 WaveNet的结构，包括非因果卷积和门控激活。<strong>波形解码器将对应于短音频剪辑的切片隐藏序列作为输入</strong>，并使用转置的 1D 卷积对其进行上采样以匹配音频剪辑的长度。对抗训练中的鉴别器采用与 Parallel WaveGAN 中相同的结构，它由十层非因果扩张的一维卷积和泄漏 ReLU 激活函数组成。波形解码器通过多分辨率 STFT 损失和 Parallel WaveGAN 之后的 LSGAN 鉴别器损失进行了优化。<strong>在推理中，我们放弃了梅尔谱解码器，只使用波形解码器来合成语音音频。</strong></p>
+<h3 id="2-5-Discussions"><a href="#2-5-Discussions" class="headerlink" title="2.5 Discussions"></a>2.5 Discussions</h3><p>在本小节中，我们将讨论 FastSpeech 2 和 2s 与之前和当下工作的区别。</p>
+<p>与 Deep Voice、Deep Voice 2 和其他自回归生成波形并预测方差信息，如持续时间和音调的方法相比，Fastspeech 2 和 2s 采用基于自注意力的前馈网络并行生成梅尔谱图或波形。虽然一些现有的非自回归声学模型主要侧重于提高持续时间的准确性，但 FastSpeech 2 和 2s 提供了更多的变化信息（持续时间、音高和能量）作为输入，以减少输入和输出之间的信息差距。一项当下的工作Fastpitch在音素级别采用音调预测，而 FastSpeech 2 和 2s 在帧级别预测更细粒度的音调轮廓。此外，为了改善合成语音中的韵律，FastSpeech 2 和 2s 进一步引入了连续小波变换来模拟音调的变化。</p>
+<p>虽然 ClariNet 等一些文本到波形模型联合训练自回归声学模型和非自回归声码器，但 FastSpeech 2s 包含完全非自回归架构以进行快速推理。 一项名为 EATS (Donahue et al., 2020) 的并发工作也采用非自回归架构和对抗训练将文本直接转换为波形，主要侧重于使用可微单调插值预测每个音素端到端的持续时间方案。 与 EATS 相比，FastSpeech 2s 额外提供了更多的变化信息，以缓解 TTS 中的一对多映射问题。</p>
+<p>以前的非自回归声码器不是完整的文本到语音系统，因为它们转换时间对齐的语言特征转换为波形，并且需要一个单独的语言模型将输入文本转换为语言特征，或者需要一个声学模型将输入文本转换为声学特征（例如，melspectrograms）。 FastSpeech 2s 是第一次尝试从完全并行的音素序列中直接生成波形，而不是语言特征或梅尔谱图。</p>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><h3 id="3-1-实验设置"><a href="#3-1-实验设置" class="headerlink" title="3.1 实验设置"></a>3.1 实验设置</h3><p><strong>数据集</strong> 我们在 LJSpeech 数据集上评估 FastSpeech 2 和 2s。 LJSpeech 包含 13,100 个英文音频剪辑（约 24 小时）和相应的文本转录。 我们将数据集分为三组：用于训练的 12,228 个样本、用于验证的 349 个样本（文档标题为 LJ003）和用于测试的 523 个样本（文档标题为 LJ001 和 LJ002）。 对于主观评价，我们在测试集中随机选择 100 个样本。 为了缓解发音错误的问题，我们使用开源字素将文本序列转换为音素序列到音素工具。 我们按照 Shen 等人的方法将原始波形转换为梅尔谱图，并将帧大小和跳跃大小设置为 1024 和 256，相对于采样率 22050。</p>
+<p><strong>模型配置 </strong>我们的 FastSpeech 2 由编码器和梅尔频谱图解码器中的 4 个前馈变换器 (FFT) 块组成。 解码器中的输出线性层将隐藏状态转换为 80 维梅尔谱图，我们的模型使用平均绝对误差 (MAE) 进行优化。 我们在附录 A 中添加了我们实验中使用的 FastSpeech 2 和 2s 的更详细配置。 附录 B 中添加了训练和推理的详细信息。</p>
+<h3 id="3-2-实验结果"><a href="#3-2-实验结果" class="headerlink" title="3.2 实验结果"></a>3.2 实验结果</h3><p>在本节中，我们首先评估 FastSpeech 2 和 2s 的音频质量、训练和推理加速。 然后我们对我们的方法进行分析和消融研究。</p>
+<h4 id="3-2-1-模型表现"><a href="#3-2-1-模型表现" class="headerlink" title="3.2.1 模型表现"></a>3.2.1 模型表现</h4><p><img src="/images/fastspeech2-tab1.png" alt="fastspeech2-tab1"></p>
+<p><strong>音频质量</strong> 为了评估感知质量，我们对测试集进行平均意见得分 (MOS) 评估。要求 20 名以英语为母语的人对合成语音样本进行质量判断。文本内容在不同系统之间保持一致，所有测试人员只检查音频质量，没有其他干扰因素。我们将 FastSpeech 2 和 FastSpeech 2s 生成的音频样本的 MOS 与其他系统进行了比较，包括 1) GT，真实记录； 2) GT (Mel + PWG)，我们首先将真实音频转换为梅尔频谱图，然后使用 Parallel WaveGAN (PWG) 将梅尔频谱图转换回音频； 3) Tacotron 2 (Mel + PWG)； 4) Transformer TTS (Mel + PWG)； 5) FastSpeech (Mel + PWG)。 3)、4) 和 5) 中的所有系统都使用 Parallel WaveGAN 作为声码器以进行公平比较。结果如表1所示，可以看出FastSpeech 2可以超越，FastSpeech 2s可以匹配自回归模型Transformer TTS和Tacotron 2的语音质量。重要的是，FastSpeech 2优于FastSpeech，这证明了提供如音高、能量和更准确的持续时间等方差信息，和直接以真实语音作为训练目标，不使用师生蒸馏管道的有效性。</p>
+<p><img src="/images/fastspeech2-tab2.png" alt="fastspeech2-tab2"></p>
+<p><strong>训练和推理加速</strong> FastSpeech 2 通过去除师生蒸馏过程简化了 FastSpeech 的训练流程，从而减少了训练时间。我们在表2中列出了Transformer TTS（自回归教师模型）、FastSpeech（包括Transformer TTS教师模型和FastSpeech学生模型的训练）和FastSpeech 2的总训练时间。可以看出FastSpeech 2减少了总训练时间与 FastSpeech 相比提高了 3.12 倍。注意这里的训练时间只包括声学模型训练，没有考虑声码器训练。因此，我们这里不比较 FastSpeech 2s 的训练时间。然后，我们评估 FastSpeech 2 和 2s 与自回归 Transformer TTS 模型相比的推理延迟，该模型具有与 FastSpeech 2 和 2s 相似的模型参数数量。我们在表 2 中展示了波形生成的推理加速。可以看出，与 Transformer TTS 模型相比，FastSpeech 2 和 2s 在波形合成中分别将音频生成加速了 47.8 倍和 51.8 倍。我们还可以看到，由于完全端到端的生成，FastSpeech 2s 比 FastSpeech 2 快。</p>
+<h4 id="3-2-2-偏差信息分析"><a href="#3-2-2-偏差信息分析" class="headerlink" title="3.2.2 偏差信息分析"></a>3.2.2 偏差信息分析</h4><p><strong>合成语音中更准确的方差信息</strong>  在该段中，我们衡量在 FastSpeech 2 和 2s 中提供更多方差信息（例如，音调和能量）作为输入是否确实可以合成具有更准确音调和能量的语音。</p>
+<p><img src="/images/fastspeech2-tab3.png" alt="fastspeech2-tab3"></p>
+<p>对于音高，我们计算矩（标准偏差 (σ)、偏度 (γ) 和峰态 (K)）和平均动态时间扭曲 (DTW) 真实语音和合成语音的音高分布的距离。 结果如表3所示。可以看出，与FastSpeech相比，FastSpeech 2/2s生成音频的矩（σ、γ和K）更接近于真实音频，并且平均DTW距离与其他方法相比更近，这可以展示出 FastSpeech 2/2s 可以生成比 FastSpeech 更自然的音高轮廓（可以产生更好的韵律）的语音。 我们还在附录 D 中对生成的音高轮廓进行了案例研究。</p>
+<p><img src="/images/fastspeech2-tab4.png" alt="fastspeech2-tab4"></p>
+<p>对于能量，我们计算从生成的波形中提取的逐帧能量与真实语音之间的平均绝对误差 (MAE)。 为了保证合成语音和ground-truth语音的帧数一致，我们在FastSpeech和FastSpeech 2中都使用了MFA提取的ground-truth时长，结果如表4所示。我们可以看到FastSpeech 2/2s 的能量MAE小于 FastSpeech 的能量MAE，表明它们合成的语音音频与真实音频具有更相似的能量。</p>
+<p><img src="/images/fastspeech2-tab5.png" alt="fastspeech2-tab5"></p>
+<p><strong>模型训练更准确的持续时间</strong>  我们然后分析提供的持续时间信息的准确性以训练持续时间预测器，以及基于 FastSpeech 的更准确的持续时间对于获得更好的语音质量的有效性。我们手动将教师模型生成的 50 个音频与音素级别的相应文本对齐，并获得真实音素级别的持续时间。我们分别使用来自 FastSpeech 的教师模型和本文中使用的 MFA 的持续时间来计算绝对音素边界差异的平均值the average of absolute phoneme boundary differences。结果如表5a所示。我们可以看到，MFA 可以生成比 FastSpeech 的教师模型更准确的持续时间。接下来，我们将 FastSpeech 中使用的持续时间（来自教师模型）替换为 MFA 提取的持续时间，并进行 CMOS测试以比较使用不同持续时间训练的两个 FastSpeech 模型之间的语音质量。结果列于表 5b 中，可以看出更准确的持续时间信息提高了 FastSpeech 的语音质量，这验证了我们从 MFA 改进的持续时间的有效性。</p>
+<h4 id="3-2-3-消融实验"><a href="#3-2-3-消融实验" class="headerlink" title="3.2.3 消融实验"></a>3.2.3 消融实验</h4><p><img src="/images/fastspeech2-tab6.png" alt="fastspeech2-tab6"></p>
+<p><strong>音高和能量输入</strong>  我们进行消融研究以证明 FastSpeech 2 和 2s 的几个方差信息的有效性，包括音高和能量。 我们对这些消融研究进行 CMOS 评估。 结果如表6所示。 我们发现在FastSpeech 2和2s中去除能量（两个子表中的第3行）导致语音质量方面的性能下降（分别为-0.040和-0.160 CMOS），表明能量在 FastSpeech 2 中对于提高语音质量方面是有效的，对 FastSpeech 2s 更有效。 我们还发现在 FastSpeech 2 和 2s 中去除pitch（两个子表中的第 4 行）分别导致 -0.245 和 -1.130 CMOS，这证明了pitch的有效性。 当我们同时去除音高和能量（两个子表中的最后一行）时，语音质量进一步下降，表明音高和能量都有助于提高 FastSpeech 2 和 2s 的性能。</p>
+<p><strong>在频域中预测音高</strong> 为了研究使用连续小波变换 (CWT) 在频域中预测音高的有效性，如第 2.3 节所述，我们直接使用 FastSpeech 2 和 2s 中的能量等均方误差拟合音高轮廓。 我们进行 CMOS 评估，FastSpeech 2 和 2s 的 CMOS 下降分别为 0.185 和 0.201。 我们还计算了表 3 中第 6 行（表示为 FastSpeech 2 - CWT）所示的音调矩和平均 DTW 距离。 结果表明，CWT 可以帮助更好地模拟音高，改善合成语音的韵律，从而获得更好的 CMOS 分数。</p>
+<p><strong>FastSpeech 2s 中的梅尔谱解码器</strong> 为了验证 FastSpeech 2s 中的梅尔谱解码器对文本特征提取的有效性，如第 2.4 节所述，我们移除梅尔谱解码器并进行 CMOS 评估。 它会导致 0.285 CMOS 压降，这表明梅尔频谱图解码器对于高质量波形生成至关重要。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>在这项工作中，我们提出了 FastSpeech 2，一种快速且高质量的端到端 TTS 系统，以解决 FastSpeech 中的问题并缓解一对多映射问题：1）我们直接用Ground-truth mel谱训练模型， 与 FastSpeech 相比，可以简化训练流程并避免信息丢失； 2）我们提高了持续时间精度并引入了更多的方差信息，包括基音和能量以缓解一对多映射问题，并通过引入连续小波变换来改进基音预测。此外，基于FastSpeech 2，我们进一步开发了FastSpeech 2s，一种非自回归的文本到波形生成模型，它享有完全端到端推理的好处，并实现更快的推理速度。我们的实验结果表明，FastSpeech 2 和 2s 的性能优于 FastSpeech，并且 FastSpeech 2 在语音质量方面甚至可以超越自回归模型，训练流程更加简单，同时继承了 FastSpeech 快速、稳健和可控的语音合成优势。</p>
+<p>无需任何外部库的高质量、快速和完全端到端的训练绝对是神经 TTS 的最终目标，也是一个非常具有挑战性的问题。为了保证 FastSpeech 2 的高质量，我们使用了外部高性能对齐工具和音调提取工具，这些工具看起来有点复杂，但对于高质量和快速的语音合成非常有帮助。我们相信未来会有更简单的解决方案来实现这一目标，我们肯定会在没有外部对齐模型和工具的情况下致力于完全端到端的 TTS。我们还将考虑更多的方差信息，以进一步提高语音质量并通过更轻量级的模型加速推理。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/03/graphspeech/" rel="prev" title="Graphspeech syntax aware graph attention network for neural speech synthesis">
+      <i class="fa fa-chevron-left"></i> Graphspeech syntax aware graph attention network for neural speech synthesis
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/06/wave-tacotron/" rel="next" title="Wave-tacotron spectrogra-free end-to-end text-to-speech synthesis">
+      Wave-tacotron spectrogra-free end-to-end text-to-speech synthesis <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Fastspeech2-%E5%BF%AB%E9%80%9F%E3%80%81%E9%AB%98%E8%B4%A8%E9%87%8F%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90"><span class="nav-number">1.</span> <span class="nav-text">Fastspeech2 快速、高质量的端到端语音合成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fastspeech2-%E5%92%8C-Fastspeech-2s"><span class="nav-number">1.3.</span> <span class="nav-text">Fastspeech2 和 Fastspeech 2s</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Motivation"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 Motivation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Model-overview"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.2 Model overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Variance-adaptor"><span class="nav-number">1.3.3.</span> <span class="nav-text">2.3 Variance adaptor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Fastspeech-2s"><span class="nav-number">1.3.4.</span> <span class="nav-text">2.4 Fastspeech 2s</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-Discussions"><span class="nav-number">1.3.5.</span> <span class="nav-text">2.5 Discussions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">1.4.</span> <span class="nav-text">实验结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 实验设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2 实验结果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-%E6%A8%A1%E5%9E%8B%E8%A1%A8%E7%8E%B0"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">3.2.1 模型表现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-%E5%81%8F%E5%B7%AE%E4%BF%A1%E6%81%AF%E5%88%86%E6%9E%90"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">3.2.2 偏差信息分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">3.2.3 消融实验</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.5.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Alan Sun</p>
+  <div class="site-description" itemprop="description">记录工作与生活</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人来过
+</span>
+</div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Sun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
