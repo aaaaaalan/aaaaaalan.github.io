@@ -1970,8 +1970,11 @@ L_{eos}(s_t) &= − \text{ log } p(s_t|x_{1:I} , y_{1:t−1}) = − \text{ log }
   <entry>
     <title>END-TO-END ADVERSARIAL TEXT-TO-SPEECH</title>
     <url>/2021/08/09/EATs/</url>
-    <content><![CDATA[<h1 id="端到端对抗式文本转语音模型"><a href="#端到端对抗式文本转语音模型" class="headerlink" title="端到端对抗式文本转语音模型"></a>端到端对抗式文本转语音模型</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>现代文本到语音合成管道通常涉及多个处理阶段，每个阶段都是独立于其他阶段设计或学习的。在这项工作中，我们承担了学习以端到端的方式从标准化文本或音素合成语音的挑战性任务，从而产生<strong>直接对字符或音素输入序列进行操作并产生原始语音音频输出</strong>的模型。<strong>我们提出的生成器是前馈的</strong>，因此使用<strong>基于令牌长度预测的可微对齐方案</strong>对训练和推理都很有效。它通过对抗性反馈和预测损失的组合来学习产生高保真音频，从而限制生成的音频在其总持续时间和梅尔频谱图方面与基本事实大致匹配。为了允许模型捕捉生成音频的时间变化，我们在基于频谱图的预测损失中采用软动态时间扭曲。由此产生的模型在 5 分制上的平均意见得分超过 4，这与依赖多阶段训练和额外监督的最先进模型相当。 </p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>文本到语音 (TTS) 系统处理自然语言文本输入以生成合成的类人语音输出。典型的 TTS 管道由多个独立训练或设计的阶段组成——例如文本规范化、对齐语言特征化、梅尔频谱图合成和原始音频波形合成。尽管这些管道已被证明能够进行逼真的高保真语音合成并在当今广泛使用，但这些模块化方法有许多缺点。它们通常需要在每个阶段进行监督，在某些情况下需要昂贵的“ground truth”标注来指导每个阶段的输出，以及阶段的顺序训练。此外，他们无法从机器学习的许多预测和合成任务领域中广泛观察到的数据驱动的“端到端”学习的全部潜在回报。</p>
+    <content><![CDATA[<h1 id="端到端对抗式文本转语音模型">端到端对抗式文本转语音模型</h1>
+<h2 id="摘要">摘要</h2>
+<p>现代文本到语音合成管道通常涉及多个处理阶段，每个阶段都是独立于其他阶段设计或学习的。在这项工作中，我们承担了学习以端到端的方式从标准化文本或音素合成语音的挑战性任务，从而产生<strong>直接对字符或音素输入序列进行操作并产生原始语音音频输出</strong>的模型。<strong>我们提出的生成器是前馈的</strong>，因此使用<strong>基于令牌长度预测的可微对齐方案</strong>对训练和推理都很有效。它通过对抗性反馈和预测损失的组合来学习产生高保真音频，从而限制生成的音频在其总持续时间和梅尔频谱图方面与基本事实大致匹配。为了允许模型捕捉生成音频的时间变化，我们在基于频谱图的预测损失中采用软动态时间扭曲。由此产生的模型在 5 分制上的平均意见得分超过 4，这与依赖多阶段训练和额外监督的最先进模型相当。</p>
+<h2 id="introduction">Introduction</h2>
+<p>文本到语音 (TTS) 系统处理自然语言文本输入以生成合成的类人语音输出。典型的 TTS 管道由多个独立训练或设计的阶段组成——例如文本规范化、对齐语言特征化、梅尔频谱图合成和原始音频波形合成。尽管这些管道已被证明能够进行逼真的高保真语音合成并在当今广泛使用，但这些模块化方法有许多缺点。它们通常需要在每个阶段进行监督，在某些情况下需要昂贵的“ground truth”标注来指导每个阶段的输出，以及阶段的顺序训练。此外，他们无法从机器学习的许多预测和合成任务领域中广泛观察到的数据驱动的“端到端”学习的全部潜在回报。</p>
 <p>在这项工作中，我们旨在简化 TTS 管道，并以端到端的方式承担从文本或音素合成语音的挑战性任务。我们提出了 EATS – End-to-end Adversarial Text-to-Speech – TTS 的生成模型，用于对抗性训练的 TTS，它对纯文本或原始（时间未对齐）音素输入序列进行操作，并产生原始语音波形作为输出。这些模型通过在整个网络中维护学习的中间特征表示，消除了大多数最先进的 TTS 引擎中存在的典型中间瓶颈。</p>
 <p>我们的语音合成模型由两个高层级子模块组成，详见第 2 节。<strong>对齐器处理原始输入序列并在其自己学习的抽象特征空间中生成相对低频 (200 Hz) 对齐的特征。</strong>对齐器输出的特征可以被认为取代了典型 TTS 管道的早期阶段——例如，时间对齐的质谱图或语言特征。然后将这些特征输入到解码器，解码器通过一维卷积对来自对齐器的特征进行上采样，以产生 24 kHz 的音频波形。</p>
 <p>通过精心设计对齐器并结合对抗性反馈和特定领域的损失函数来指导训练，我们证明了 TTS 系统可以几乎端到端地学习，从而产生接近状态的高保真自然语音： 最先进的 TTS 系统。 我们的主要贡献包括：</p>
@@ -1980,59 +1983,73 @@ L_{eos}(s_t) &= − \text{ log } p(s_t|x_{1:I} , y_{1:t−1}) = − \text{ log }
 <li>使用灵活的基于动态时间扭曲DTW的预测损失来强制与输入条件对齐，同时允许模型捕获人类语音中时间的可变性。</li>
 <li>整体系统的平均意见得分为 4.083，接近使用更丰富的监督信号训练的模型的最新技术水平。</li>
 </ul>
-<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p>我们的目标是学习一个神经网络（生成器），它将字符或音素的输入序列映射到 24 kHz 的原始音频。除了输入和输出信号的长度差异很大之外，这项任务也具有挑战性，因为输入和输出没有对齐，即事先不知道每个输入标记将对应哪个输出标记。为了应对这些挑战，我们将生成器分为两个部分：（i）对齐器，它将未对齐的输入序列映射到与输出对齐的表示，但采样率较低，为 200 Hz； (ii) 解码器，它将对准器的输出上采样到完整的音频频率。整个生成器架构是可微的，并且经过端到端的训练。重要的是，它也是一个前馈卷积网络，这使得它非常适合快速批量推理很重要的应用程序：我们的 EATS 实现在单个 NVIDIA V100 GPU 上以 200 倍的实时速度生成语音。如图 1 所示。</p>
+<h2 id="method">Method</h2>
+<div class="figure">
+<img src="/images/eats-fig1.png" alt="eats-fig1" />
+<p class="caption">eats-fig1</p>
+</div>
+<p>我们的目标是学习一个神经网络（生成器），它将字符或音素的输入序列映射到 24 kHz 的原始音频。除了输入和输出信号的长度差异很大之外，这项任务也具有挑战性，因为输入和输出没有对齐，即事先不知道每个输入标记将对应哪个输出标记。为了应对这些挑战，我们将生成器分为两个部分：（i）对齐器，它将未对齐的输入序列映射到与输出对齐的表示，但采样率较低，为 200 Hz； (ii) 解码器，它将对准器的输出上采样到完整的音频频率。整个生成器架构是可微的，并且经过端到端的训练。重要的是，它也是一个前馈卷积网络，这使得它非常适合快速批量推理很重要的应用程序：我们的 EATS 实现在单个 NVIDIA V100 GPU 上以 200 倍的实时速度生成语音。如图 1 所示。</p>
 <p>生成器的灵感来自 GAN-TTS，这是一种基于对齐语言特征运行的文本到语音生成对抗网络。我们在我们的模型中使用 GAN-TTS 生成器作为解码器，但它的输入来自对齐器块，而不是对预先计算的语言特征进行上采样。我们通过在潜在向量 z 旁边输入说话人嵌入 s 使其成为说话人条件，从而能够在具有来自多个说话人的录音的更大数据集上进行训练。我们还采用了来自 GAN-TTS 的多个随机窗口鉴别器 (RWD)，这些鉴别器已被证明对对抗性原始波形建模有效，<strong>并且我们通过应用简单的 μ-law 变换对真实音频输入进行了预处理。因此，生成器被训练在 μ-law 域中产生音频，我们在采样时对其输出应用逆变换。</strong></p>
-<p>我们用来训练生成器的损失函数如下：</p>
-<script type="math/tex; mode=display">
+<p>我们用来训练生成器的损失函数如下： <span class="math display">\[
 \begin{equation} \label{eqa1}
 L_G =L_{G,adv} +λ_{pred} ·L^{′′}_{pred} +λ_{length}·L_{length} ,
-\end{equation}</script><p>其中 $L_{G,adv}$ 是对抗性损失，在鉴别器的输出中呈线性，与用作鉴别器目标的铰链损失配对，如 GAN-TTS。 使用对抗性 (Goodfellow et al., 2014) 损失是我们方法的一个优势，因为这种设置允许有效的前馈训练和推理，并且这种损失在实践中往往是mode-seeking，这是一种有用的行为，即在一个强条件设置下，其中在文本到语音的情况下，现实主义realism是一个重要的设计目标。 在本节的其余部分，我们详细描述了对齐器网络和辅助预测 ($L^{‘’}_{pred}$ ) 和长度 ($L_{length}$​) 损失，并回顾了从 GAN-TTS 中采用的组件。</p>
-<h3 id="2-1-Aligner"><a href="#2-1-Aligner" class="headerlink" title="2.1 Aligner"></a>2.1 Aligner</h3><p>给定一个长度为 $N$ 的标记序列 $x = (x_1,…,x_N)$，我们首先计算标记表示 $h = f (x, z, s)$，其中 $f$ 是一个膨胀卷积的堆栈中穿插着批量归一化和 ReLU 激活。潜变量 $z$ 和说话人嵌入 $s$ 调节批量归一化层的尺度和移位参数。<strong>然后我们分别预测每个输入标记的长度：$l_n = g(h_n, z, s)$，其中 $g$ 是一个 MLP。我们在输出端使用 ReLU 非线性来确保预测长度是非负的。</strong>然后，我们可以找到作为令牌长度累积和的预测令牌结束位置：$e_n = 􏰄\sum^{n}_{m=1} l_m$，令牌中心位置为 $c_n = e_n − \frac{1}{2} l_n$。基于这些预测位置，我们可以将标记表示插入到 200 Hz 的音频对齐表示中，$a = (a_1 , . . , a_S )$，其中 $S = ⌈e_N ⌉$ 是输出的总数时间步骤。为了计算 $a_t$​，我们使用 softmax 在 $t$ 和 $c_n$ 之间的平方距离上获得标记表示 $h_n$ 的插值权重，由温度参数 $σ^2$​ 缩放，我们将其设置为 10.0（即高斯核）：</p>
-<script type="math/tex; mode=display">
+\end{equation}
+\]</span> 其中 <span class="math inline">\(L_{G,adv}\)</span> 是对抗性损失，在鉴别器的输出中呈线性，与用作鉴别器目标的铰链损失配对，如 GAN-TTS。 使用对抗性 (Goodfellow et al., 2014) 损失是我们方法的一个优势，因为这种设置允许有效的前馈训练和推理，并且这种损失在实践中往往是mode-seeking，这是一种有用的行为，即在一个强条件设置下，其中在文本到语音的情况下，现实主义realism是一个重要的设计目标。 在本节的其余部分，我们详细描述了对齐器网络和辅助预测 (<span class="math inline">\(L^{&#39;&#39;}_{pred}\)</span> ) 和长度 (<span class="math inline">\(L_{length}\)</span>​) 损失，并回顾了从 GAN-TTS 中采用的组件。</p>
+<h3 id="aligner">2.1 Aligner</h3>
+<p>给定一个长度为 <span class="math inline">\(N\)</span> 的标记序列 <span class="math inline">\(x = (x_1,...,x_N)\)</span>，我们首先计算标记表示 <span class="math inline">\(h = f (x, z, s)\)</span>，其中 <span class="math inline">\(f\)</span> 是一个膨胀卷积的堆栈中穿插着批量归一化和 ReLU 激活。潜变量 <span class="math inline">\(z\)</span> 和说话人嵌入 <span class="math inline">\(s\)</span> 调节批量归一化层的尺度和移位参数。<strong>然后我们分别预测每个输入标记的长度：<span class="math inline">\(l_n = g(h_n, z, s)\)</span>，其中 <span class="math inline">\(g\)</span> 是一个 MLP。我们在输出端使用 ReLU 非线性来确保预测长度是非负的。</strong>然后，我们可以找到作为令牌长度累积和的预测令牌结束位置：<span class="math inline">\(e_n = 􏰄\sum^{n}_{m=1} l_m\)</span>，令牌中心位置为 <span class="math inline">\(c_n = e_n − \frac{1}{2} l_n\)</span>。基于这些预测位置，我们可以将标记表示插入到 200 Hz 的音频对齐表示中，<span class="math inline">\(a = (a_1 , . . , a_S )\)</span>，其中 <span class="math inline">\(S = ⌈e_N ⌉\)</span> 是输出的总数时间步骤。为了计算 <span class="math inline">\(a_t\)</span>​，我们使用 softmax 在 <span class="math inline">\(t\)</span> 和 <span class="math inline">\(c_n\)</span> 之间的平方距离上获得标记表示 <span class="math inline">\(h_n\)</span> 的插值权重，由温度参数 <span class="math inline">\(σ^2\)</span>​ 缩放，我们将其设置为 10.0（即高斯核）： <span class="math display">\[
 \begin{equation} \label{eqa2}
 w_t^n = \frac {\text{exp} 􏰀−σ^{−2}(t − c_n)^2􏰁} {\sum^N_{m=1} \text{exp} (􏰀−σ^{−2}(t−c_m)^2􏰁}
-\end{equation}</script><p>使用这些权重，我们可以计算 $a_t = 􏰄\sum^N_{n=1} w_t^nh_n$​，这相当于非均匀插值。 通过使用累积求和来预测令牌长度和获得位置，而不是直接预测位置，我们隐式地强制对齐的单调性。 请注意，对韵律具有非单调影响的标记（例如标点符号）仍然可以影响整个话语，这要归功于扩张卷积 $f$ 的堆栈，其感受野足够大，可以在整个标记序列中传播信息。 卷积还确保跨不同序列长度的泛化。 附录 B 包括对准器的伪代码。</p>
-<h3 id="2-2-Windowed-Generator-training"><a href="#2-2-Windowed-Generator-training" class="headerlink" title="2.2 Windowed Generator training"></a>2.2 Windowed Generator training</h3><p>训练样本的长度差异很大，从大约 1 到 20 秒不等。 我们不能在训练期间将所有序列填充到最大长度，因为这会浪费并且非常昂贵：24 kHz 下的 20 秒音频对应于 480,000 个时间步长，这会导致高内存要求。 <strong>相反，我们从每个样本中随机提取一个 2 秒的窗口，我们将其称为训练窗口，通过对随机偏移 $η$ 进行均匀采样。</strong> 对齐器为此窗口生成 200 Hz 音频对齐表示，然后将其馈送到解码器（见图 1）。 请注意，我们只需要计算落在采样窗口内的时间步长 $t$ 对应的$a_t$​，但我们必须计算整个输入序列的预测标记长度 $l_n$​。 在评估期间，我们简单地为完整话语生成音频对齐的表示并在其上运行解码器，这是可能的，因为它是完全卷积的。</p>
-<h3 id="2-3-Adversial-discriminators"><a href="#2-3-Adversial-discriminators" class="headerlink" title="2.3 Adversial discriminators"></a>2.3 Adversial discriminators</h3><p><strong>随机窗口鉴别器</strong> 我们使用从 GAN-TTS 中采用的一组随机窗口鉴别器（RWD）。 每个 RWD 对不同长度的音频片段进行操作，从训练窗口随机采样。 我们使用窗口大小为 240、480、960、1920 和 3600 的五个 RWD。这使每个 RWD 能够以不同的分辨率运行。 请注意，24 kHz 的 3600 个样本对应于 150 ms 的音频，因此所有 RWD 都在短时间尺度上运行。 我们模型中的所有 RWD 对文本都是无条件的：它们无法访问文本序列或对齐器输出。 （GAN-TTS 使用 10 个 RWD，其中 5 个以我们忽略的语言特征为条件。）然而，它们通过投影嵌入以说话者为条件。</p>
+\end{equation}
+\]</span> 使用这些权重，我们可以计算 <span class="math inline">\(a_t = 􏰄\sum^N_{n=1} w_t^nh_n\)</span>​，这相当于非均匀插值。 通过使用累积求和来预测令牌长度和获得位置，而不是直接预测位置，我们隐式地强制对齐的单调性。 请注意，对韵律具有非单调影响的标记（例如标点符号）仍然可以影响整个话语，这要归功于扩张卷积 <span class="math inline">\(f\)</span> 的堆栈，其感受野足够大，可以在整个标记序列中传播信息。 卷积还确保跨不同序列长度的泛化。 附录 B 包括对准器的伪代码。</p>
+<h3 id="windowed-generator-training">2.2 Windowed Generator training</h3>
+<p>训练样本的长度差异很大，从大约 1 到 20 秒不等。 我们不能在训练期间将所有序列填充到最大长度，因为这会浪费并且非常昂贵：24 kHz 下的 20 秒音频对应于 480,000 个时间步长，这会导致高内存要求。 <strong>相反，我们从每个样本中随机提取一个 2 秒的窗口，我们将其称为训练窗口，通过对随机偏移 <span class="math inline">\(η\)</span> 进行均匀采样。</strong> 对齐器为此窗口生成 200 Hz 音频对齐表示，然后将其馈送到解码器（见图 1）。 请注意，我们只需要计算落在采样窗口内的时间步长 <span class="math inline">\(t\)</span> 对应的<span class="math inline">\(a_t\)</span>​，但我们必须计算整个输入序列的预测标记长度 <span class="math inline">\(l_n\)</span>​。 在评估期间，我们简单地为完整话语生成音频对齐的表示并在其上运行解码器，这是可能的，因为它是完全卷积的。</p>
+<h3 id="adversial-discriminators">2.3 Adversial discriminators</h3>
+<p><strong>随机窗口鉴别器</strong> 我们使用从 GAN-TTS 中采用的一组随机窗口鉴别器（RWD）。 每个 RWD 对不同长度的音频片段进行操作，从训练窗口随机采样。 我们使用窗口大小为 240、480、960、1920 和 3600 的五个 RWD。这使每个 RWD 能够以不同的分辨率运行。 请注意，24 kHz 的 3600 个样本对应于 150 ms 的音频，因此所有 RWD 都在短时间尺度上运行。 我们模型中的所有 RWD 对文本都是无条件的：它们无法访问文本序列或对齐器输出。 （GAN-TTS 使用 10 个 RWD，其中 5 个以我们忽略的语言特征为条件。）然而，它们通过投影嵌入以说话者为条件。</p>
 <p><strong>频谱图鉴别器。</strong> 我们使用一个额外的鉴别器，它在频谱图域的完整训练窗口上运行。 我们从音频信号中提取对数缩放的梅尔频谱图，并使用 BigGAN 深度架构，基本上将频谱图视为图像。 频谱图鉴别器还通过投影嵌入使用说话者身份。 频谱图鉴别器架构的详细信息包含在附录 C 中。</p>
-<h3 id="2-4-频谱预测损失"><a href="#2-4-频谱预测损失" class="headerlink" title="2.4 频谱预测损失"></a>2.4 频谱预测损失</h3><p>在初步实验中，我们发现对抗性反馈不足以学习对齐。在训练开始时，对齐器不会产生准确的对齐，因此输入令牌中的信息在时间上不正确分布。<strong>这鼓励解码器忽略对齐器输出。无条件鉴别器没有提供有用的学习信号来纠正这个问题。</strong>如果我们想改用条件鉴别器，我们将面临一个不同的问题：我们没有对齐的Ground-truth。条件判别器还需要一个 aligner 模块，该模块在训练开始时无法正常运行，从而有效地将它们变成了无条件判别器。尽管理论上应该可以对抗性地训练鉴别器的对齐器模块，但我们发现这在实践中不起作用，并且训练会卡住。</p>
-<p>相反，我们建议通过在频谱图域中使用显式预测损失来指导学习：<strong>我们最小化生成器输出的对数缩放梅尔频谱图与相应的Ground-truth训练窗口之间的 L1 损失。</strong>这有助于训练起飞，并使条件鉴别器变得不必要，从而简化了模型。设 $S_{gen}$ 是生成音频的频谱图，$S_{gt}$ 是相应Ground-truth的频谱图，$S[t,f]$ 是时间步 $t$ 和 mel-frequency bin $f$ 的对数缩放幅度。那么预测损失为：</p>
-<script type="math/tex; mode=display">
+<h3 id="频谱预测损失">2.4 频谱预测损失</h3>
+<p>在初步实验中，我们发现对抗性反馈不足以学习对齐。在训练开始时，对齐器不会产生准确的对齐，因此输入令牌中的信息在时间上不正确分布。<strong>这鼓励解码器忽略对齐器输出。无条件鉴别器没有提供有用的学习信号来纠正这个问题。</strong>如果我们想改用条件鉴别器，我们将面临一个不同的问题：我们没有对齐的Ground-truth。条件判别器还需要一个 aligner 模块，该模块在训练开始时无法正常运行，从而有效地将它们变成了无条件判别器。尽管理论上应该可以对抗性地训练鉴别器的对齐器模块，但我们发现这在实践中不起作用，并且训练会卡住。</p>
+<p>相反，我们建议通过在频谱图域中使用显式预测损失来指导学习：<strong>我们最小化生成器输出的对数缩放梅尔频谱图与相应的Ground-truth训练窗口之间的 L1 损失。</strong>这有助于训练起飞，并使条件鉴别器变得不必要，从而简化了模型。设 <span class="math inline">\(S_{gen}\)</span> 是生成音频的频谱图，<span class="math inline">\(S_{gt}\)</span> 是相应Ground-truth的频谱图，<span class="math inline">\(S[t,f]\)</span> 是时间步 <span class="math inline">\(t\)</span> 和 mel-frequency bin <span class="math inline">\(f\)</span> 的对数缩放幅度。那么预测损失为： <span class="math display">\[
 \begin{equation} \label{eqa3}
 L_{pred} = \frac{1}{F} \sum^T_{t=1} \sum^{􏰄F}_{f=1} |S_{gen}[t,f]−S_{gt}[t,f]|.
-\end{equation}</script><p>$T$ 和 $F$​​ 分别是时间步长和梅尔频率箱的总数。 <strong>在频谱图域而不是时域中计算预测损失的优点是增加了生成的信号和Ground-truth信号之间的相位差的不变性</strong>，这在感知上并不显着。 鉴于频谱图提取操作有多个超参数且其实现未标准化，因此我们在附录 D 中提供了用于此的代码。我们对Ground-truth应用了少量抖动（在 24 kHz 时高达 ±60 个样本） 计算 $S_{gt}$ 之前的波形，这有助于减少生成的音频中的伪影。</p>
+\end{equation}
+\]</span> <span class="math inline">\(T\)</span> 和 <span class="math inline">\(F\)</span>​​ 分别是时间步长和梅尔频率箱的总数。 <strong>在频谱图域而不是时域中计算预测损失的优点是增加了生成的信号和Ground-truth信号之间的相位差的不变性</strong>，这在感知上并不显着。 鉴于频谱图提取操作有多个超参数且其实现未标准化，因此我们在附录 D 中提供了用于此的代码。我们对Ground-truth应用了少量抖动（在 24 kHz 时高达 ±60 个样本） 计算 <span class="math inline">\(S_{gt}\)</span> 之前的波形，这有助于减少生成的音频中的伪影。</p>
 <p>无法仅从对抗性反馈中学习对齐是值得扩展的：基于似然的自回归模型在学习对齐方面没有问题，因为它们能够在训练期间受益于教师强迫：模型被训练为执行给定前面的ground-truth，对每个序列步骤的下一步预测，并且预计一次仅推断对齐一个步骤。然而，这与前馈对抗模型不兼容，因此预测损失对于我们模型的引导对齐学习是必要的。</p>
-<p>请注意，尽管我们在 $L_{pred}$ 中使用 mel 谱图进行训练（并计算谱图鉴别器的输入，第 2.3 节），但生成器本身不会生成谱图作为生成过程的一部分。相反，它的输出是原始波形，我们将这些波形转换为频谱图仅用于训练（通过波形反向传播梯度到梅尔频谱图转</p>
-<h3 id="2-5-Dynamic-time-warping"><a href="#2-5-Dynamic-time-warping" class="headerlink" title="2.5 Dynamic time warping"></a>2.5 Dynamic time warping</h3><p>频谱图预测损失错误地假设令牌长度是确定性的。 通过结合动态时间扭曲 (DTW)，我们可以放宽对生成的和Ground-truth频谱图精确对齐的要求。 我们通过在生成的和目标频谱图 $S_{gen}$​ 和 $S_{gt}$ 之间迭代找到最小成本对齐路径 $p$ 来计算预测损失。 我们从两个频谱图中的第一个时间步开始：$p_{gen,1} = p_{gt,1} = 1$。在每次迭代 $k$​ 中，我们采取三种可能的行动之一：</p>
-<ol>
-<li><p>在$S_{gen}$​​，$S_{gt}$​​中都进入下一个时间步： $p_{gen,k+1} = p_{gen,k} + 1, p_{gt,k+1} = p_{gt,k} + 1$；</p>
-</li>
-<li><p>仅在 $S_{gt}$​ 中进入下一个时间步： $p_{gen,k+1} = p_{gen,k}, p_{gt,k+1} = p_{gt,k} + 1$；</p>
-</li>
-<li>仅在 $S_{gen}$ 中转到下一个时间步：$p_{gen,k+1} = p_{gen,k} + 1, p_{gt,k+1} = p_{gt,k}$。</li>
+<p>请注意，尽管我们在 <span class="math inline">\(L_{pred}\)</span> 中使用 mel 谱图进行训练（并计算谱图鉴别器的输入，第 2.3 节），但生成器本身不会生成谱图作为生成过程的一部分。相反，它的输出是原始波形，我们将这些波形转换为频谱图仅用于训练（通过波形反向传播梯度到梅尔频谱图转</p>
+<h3 id="dynamic-time-warping">2.5 Dynamic time warping</h3>
+<div class="figure">
+<img src="/images/eats-fig2.png" alt="eats-fig2" />
+<p class="caption">eats-fig2</p>
+</div>
+<p>频谱图预测损失错误地假设令牌长度是确定性的。 通过结合动态时间扭曲 (DTW)，我们可以放宽对生成的和Ground-truth频谱图精确对齐的要求。 我们通过在生成的和目标频谱图 <span class="math inline">\(S_{gen}\)</span>​ 和 <span class="math inline">\(S_{gt}\)</span> 之间迭代找到最小成本对齐路径 <span class="math inline">\(p\)</span> 来计算预测损失。 我们从两个频谱图中的第一个时间步开始：<span class="math inline">\(p_{gen,1} = p_{gt,1} = 1\)</span>。在每次迭代 <span class="math inline">\(k\)</span>​ 中，我们采取三种可能的行动之一：</p>
+<ol style="list-style-type: decimal">
+<li><p>在<span class="math inline">\(S_{gen}\)</span>​​，<span class="math inline">\(S_{gt}\)</span>​​中都进入下一个时间步： <span class="math inline">\(p_{gen,k+1} = p_{gen,k} + 1, p_{gt,k+1} = p_{gt,k} + 1\)</span>；</p></li>
+<li>仅在 <span class="math inline">\(S_{gt}\)</span>​ 中进入下一个时间步： <span class="math inline">\(p_{gen,k+1} = p_{gen,k}, p_{gt,k+1} = p_{gt,k} + 1\)</span>；</li>
+<li><p>仅在 <span class="math inline">\(S_{gen}\)</span> 中转到下一个时间步：<span class="math inline">\(p_{gen,k+1} = p_{gen,k} + 1, p_{gt,k+1} = p_{gt,k}\)</span>。</p></li>
 </ol>
-<p>结果路径是 $p = ⟨(p_{gen,1}, p_{gt,1}), . . . , (p_{gen,K_p} , p_{gt,K_p} )⟩$​​​​​​，其中 $K_p$​​​​ 是长度。 每个动作都根据 $S_{gen}[p_{gen,k}]$​​​ 和 $S_{gt}[p_{gt,k}]$​​​ 之间的 $L_1$​ 距离分配一个成本。如果我们选择不是固定步骤推进两个频谱图（即我们正在扭曲 通过采取行动 2 或 3 来绘制频谱图；我们使用 $w = 1.0$​​），那么会产生一个扭曲惩罚$w$。 因此，扭曲惩罚鼓励不会偏离身份对齐太远的对齐路径。 令 $δ_k$ 是一个指标，对于发生扭曲的迭代为 1，否则为 0。 那么总路径成本$c_p$为：</p>
-<script type="math/tex; mode=display">
+<p>结果路径是 <span class="math inline">\(p = ⟨(p_{gen,1}, p_{gt,1}), . . . , (p_{gen,K_p} , p_{gt,K_p} )⟩\)</span>​​​​​​，其中 <span class="math inline">\(K_p\)</span>​​​​ 是长度。 每个动作都根据 <span class="math inline">\(S_{gen}[p_{gen,k}]\)</span>​​​ 和 <span class="math inline">\(S_{gt}[p_{gt,k}]\)</span>​​​ 之间的 <span class="math inline">\(L_1\)</span>​ 距离分配一个成本。如果我们选择不是固定步骤推进两个频谱图（即我们正在扭曲 通过采取行动 2 或 3 来绘制频谱图；我们使用 <span class="math inline">\(w = 1.0\)</span>​​），那么会产生一个扭曲惩罚<span class="math inline">\(w\)</span>。 因此，扭曲惩罚鼓励不会偏离身份对齐太远的对齐路径。 令 <span class="math inline">\(δ_k\)</span> 是一个指标，对于发生扭曲的迭代为 1，否则为 0。 那么总路径成本<span class="math inline">\(c_p\)</span>为： <span class="math display">\[
 \begin{equation}\label{eqa4}
 c_p = \sum^{􏰄K_p}_{k=1} 􏰂w·δ_k + \frac{1}{􏰄F} \sum^{F}_{f=1} |S_{gen}[p_{gen,k},f]−S_{gt}[p_{gt,k},f]|􏰃
-\end{equation}</script><p>$K_p$ 取决于扭曲程度（$T ≤ K_p ≤ 2T − 1$）。 DTW 预测损失则为：</p>
-<script type="math/tex; mode=display">
+\end{equation}
+\]</span> <span class="math inline">\(K_p\)</span> 取决于扭曲程度（<span class="math inline">\(T ≤ K_p ≤ 2T − 1\)</span>）。 DTW 预测损失则为： <span class="math display">\[
 \begin{equation}\label{eqa5}
 L^′_{pred} = min_{p∈P} c_p,
-\end{equation}</script><p>其中 $P$​​ 是所有有效路径的集合。 $p ∈ P$​​ 仅当 $p_{gen,1} = p_{gt,1} = 1$​​ 和 $p_{gen,K_p} = p_{gt,K_p} = T$​​ 时，即谱图的第一个和最后一个时间步是对齐的。 为了找到最小值，我们使用动态规划。 图 2 显示了两个序列之间的最佳比对路径图。</p>
-<p>DTW 是可微的，但所有路径的最小值使得优化变得困难，因为梯度仅通过最小路径传播。 我们改为使用 DTW 的软版本，它用软最小值替换最小值：</p>
-<script type="math/tex; mode=display">
-\begin{equation} \label{eqa6}
+\end{equation}
+\]</span> 其中 <span class="math inline">\(P\)</span>​​ 是所有有效路径的集合。 <span class="math inline">\(p ∈ P\)</span>​​ 仅当 <span class="math inline">\(p_{gen,1} = p_{gt,1} = 1\)</span>​​ 和 <span class="math inline">\(p_{gen,K_p} = p_{gt,K_p} = T\)</span>​​ 时，即谱图的第一个和最后一个时间步是对齐的。 为了找到最小值，我们使用动态规划。 图 2 显示了两个序列之间的最佳比对路径图。</p>
+DTW 是可微的，但所有路径的最小值使得优化变得困难，因为梯度仅通过最小路径传播。 我们改为使用 DTW 的软版本，它用软最小值替换最小值： $$
+<span class="math display">\[\begin{equation} \label{eqa6}
 L^{′′}_{pred} = −τ · log 􏰄\sum_{ p∈P } \text{exp} (􏰀− \frac{c_p}{τ} ) , 
 
-\end{equation}</script><p>其中 $τ = 0.01$ 是温度参数，损耗比例因子 $λ_{pred} = 1.0$。 请注意，通过让 $τ → 0$ 来恢复最小操作。由此产生的损失是所有路径上的加权聚合成本，使梯度传播能够通过所有可行路径。 这就产生了一个权衡：较高的 $τ$ 使优化更容易，但由此产生的损失不太准确地反映了最小路径成本。 附录 E 中提供了软 DTW 程序的伪代码。</p>
+\end{equation}\]</span>
+<p>$$ 其中 <span class="math inline">\(τ = 0.01\)</span> 是温度参数，损耗比例因子 <span class="math inline">\(λ_{pred} = 1.0\)</span>。 请注意，通过让 <span class="math inline">\(τ → 0\)</span> 来恢复最小操作。由此产生的损失是所有路径上的加权聚合成本，使梯度传播能够通过所有可行路径。 这就产生了一个权衡：较高的 <span class="math inline">\(τ\)</span> 使优化更容易，但由此产生的损失不太准确地反映了最小路径成本。 附录 E 中提供了软 DTW 程序的伪代码。</p>
 <p>通过放松预测损失中的对齐，生成器可以生成不完全对齐的波形，而不会因此受到严重惩罚。 这与对抗性损失产生了协同作用：而不是因为预测损失的刚性而相互对抗，损失现在合作来奖励具有随机对齐的真实音频生成。 请注意，<strong>预测损失是在训练窗口上计算的，而不是在全长话语上计算的</strong>，因此我们仍然假设窗口的起点和终点完全对齐。 虽然这可能是不正确的，但在实践中似乎并不是什么大问题。</p>
-<h3 id="2-6-对齐器长度损失"><a href="#2-6-对齐器长度损失" class="headerlink" title="2.6 对齐器长度损失"></a>2.6 对齐器长度损失</h3><p>为了确保模型产生真实的标记长度预测，我们添加了一个损失，鼓励预测的话语长度接近真实长度。 该长度是通过对所有令牌长度预测求和得出的。 设 $L$ 为 200 Hz 时训练话语的时间步数，$l_n$ 为第 $n$ 个标记的预测长度，$N$​ 为标记数，则长度损失为：</p>
-<script type="math/tex; mode=display">
+<h3 id="对齐器长度损失">2.6 对齐器长度损失</h3>
+<p>为了确保模型产生真实的标记长度预测，我们添加了一个损失，鼓励预测的话语长度接近真实长度。 该长度是通过对所有令牌长度预测求和得出的。 设 <span class="math inline">\(L\)</span> 为 200 Hz 时训练话语的时间步数，<span class="math inline">\(l_n\)</span> 为第 <span class="math inline">\(n\)</span> 个标记的预测长度，<span class="math inline">\(N\)</span>​ 为标记数，则长度损失为： <span class="math display">\[
 \begin{equation} \label{eqa7}
 L_{length} = \frac{1}{2} ( L − \sum^N_{n=1} l_n )^2
-\end{equation}</script><p>我们使用比例因子$λ_{length} = 0.1$​。 请注意，我们不能单独将预测长度 $l_n$​ 与真实长度匹配，因为后者不可用。</p>
-<h3 id="2-7-文本预处理"><a href="#2-7-文本预处理" class="headerlink" title="2.7 文本预处理"></a>2.7 文本预处理</h3><p>尽管我们的模型在字符输入上运行良好，但我们发现使用音素输入显着提高了样本质量。考虑到拼写映射到音素的异类方式，尤其是在英语中，这并不奇怪。许多字符序列也有特殊的发音，例如数字、日期、度量单位和网站域，并且模型需要非常大的训练数据集来学习正确发音。可以预先应用文本规范化来拼出这些序列，因为它们通常是发音的，然后可能会转换为音素。我们使用开源工具 phonemizer，它执行部分标准化和音素化。最后，无论是对文本还是音素输入序列进行训练，我们都会使用特殊的静音标记（用于训练和推理）对序列进行前后填充，以允许对齐器在每个话语的开头和结尾处考虑静音。</p>
+\end{equation}
+\]</span> 我们使用比例因子<span class="math inline">\(λ_{length} = 0.1\)</span>​。 请注意，我们不能单独将预测长度 <span class="math inline">\(l_n\)</span>​ 与真实长度匹配，因为后者不可用。</p>
+<h3 id="文本预处理">2.7 文本预处理</h3>
+<p>尽管我们的模型在字符输入上运行良好，但我们发现使用音素输入显着提高了样本质量。考虑到拼写映射到音素的异类方式，尤其是在英语中，这并不奇怪。许多字符序列也有特殊的发音，例如数字、日期、度量单位和网站域，并且模型需要非常大的训练数据集来学习正确发音。可以预先应用文本规范化来拼出这些序列，因为它们通常是发音的，然后可能会转换为音素。我们使用开源工具 phonemizer，它执行部分标准化和音素化。最后，无论是对文本还是音素输入序列进行训练，我们都会使用特殊的静音标记（用于训练和推理）对序列进行前后填充，以允许对齐器在每个话语的开头和结尾处考虑静音。</p>
 ]]></content>
       <categories>
         <category>工作</category>
