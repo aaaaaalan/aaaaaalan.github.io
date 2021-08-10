@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文为韩国团队发表的Reinforcement learning 应用于 End-to-end TTS aligner 的代表性论文。这还是迄今为止看到的第一篇reinforcement learning in TTS。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Reinforce-aligner Reinforcement Alignment Search for Robust End-to-End Text-to-Speech">
+<meta property="og:url" content="http://example.com/2021/08/10/reinforce-aligner/index.html">
+<meta property="og:site_name" content="海阔天空蓝">
+<meta property="og:description" content="本文为韩国团队发表的Reinforcement learning 应用于 End-to-end TTS aligner 的代表性论文。这还是迄今为止看到的第一篇reinforcement learning in TTS。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/ra-fig1.png">
+<meta property="og:image" content="http://example.com/images/ra-fig2.png">
+<meta property="og:image" content="http://example.com/images/ra-al1.png">
+<meta property="og:image" content="http://example.com/images/ra-al2.png">
+<meta property="og:image" content="http://example.com/images/ra-al3.png">
+<meta property="og:image" content="http://example.com/images/ra-al4.png">
+<meta property="og:image" content="http://example.com/images/ra-al5.png">
+<meta property="og:image" content="http://example.com/images/ra-al6.png">
+<meta property="article:published_time" content="2021-08-10T12:52:07.000Z">
+<meta property="article:modified_time" content="2021-08-10T13:21:49.763Z">
+<meta property="article:author" content="Alan Sun">
+<meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/ra-fig1.png">
+
+<link rel="canonical" href="http://example.com/2021/08/10/reinforce-aligner/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Reinforce-aligner Reinforcement Alignment Search for Robust End-to-End Text-to-Speech | 海阔天空蓝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">海阔天空蓝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个玩过n种运动的语音合成算法攻城狮</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/10/reinforce-aligner/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alan Sun">
+      <meta itemprop="description" content="记录工作与生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空蓝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Reinforce-aligner Reinforcement Alignment Search for Robust End-to-End Text-to-Speech
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-10 20:52:07 / 修改时间：21:21:49" itemprop="dateCreated datePublished" datetime="2021-08-10T20:52:07+08:00">2021-08-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">本文为韩国团队发表的Reinforcement learning 应用于 End-to-end TTS aligner 的代表性论文。这还是迄今为止看到的第一篇reinforcement learning in TTS。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Reinforce-aligner-增强对齐搜索以实现稳健的端到端文本到语音"><a href="#Reinforce-aligner-增强对齐搜索以实现稳健的端到端文本到语音" class="headerlink" title="Reinforce-aligner: 增强对齐搜索以实现稳健的端到端文本到语音"></a>Reinforce-aligner: 增强对齐搜索以实现稳健的端到端文本到语音</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>文本到语音 (TTS) 合成是从文本或音素输入生成合成语音的过程。传统的 TTS 模型包含多个处理步骤，需要外部对齐器，提供音素到帧序列的注意力对齐。随着每增加一个步骤的复杂性增加和效率降低，对具有高效内部对准器的端到端 TTS 的现代合成管道的需求不断扩大。<strong>在这项工作中，我们提出了一种端到端的文本到波形网络，该网络具有一种新颖的基于强化学习的持续时间搜索方法。</strong>我们提出的生成器是前馈的，对齐器通过从为最大化累积奖励而采取的行动中接收主动反馈来训练代理做出最佳持续时间预测。我们展示了由受过训练的代理生成的音素到帧序列的准确对齐增强了合成音频的保真度和自然度。实验结果还表明，与具有内部和外部对准器的其他最先进的 TTS 模型相比，我们提出的模型具有优越性。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>自回归模型启动了文本转语音 (TTS) 的快速进展。这些模型取代了传统方法，并且通常在具有注意力机制的编码器-解码器框架中进行序列到序列。编码器的目的是从音素序列中提取隐藏的表征特征向量，解码器从产生的向量中生成梅尔谱图。尽管有这些优点，但自回归模型中的端到端注意力也有局限性，例如推理速度慢、跳词和阅读。作为解决这个问题的一种方法，非自回归模型被提议用于从文本或音素并行生成梅尔谱图。尽管新架构减轻了自回归模型的一些缺点，但非自回归模型的持续时间对齐器仍然需要外部对齐器的指导。使用外部矫正器的最关键问题是增加了训练过程的复杂性。在训练之前，自回归模型需要正确对齐的文本和语音注意力图。这会延迟训练过程，并且非自回归模型变得依赖于外部对齐器生成的对齐质量。因此，最近的合成管道的设计目标是强大的端到端内部对准器。</p>
+<p>最近与我们的工作相关的 TTS 工作是 EATS 和 HiFi-GAN 。 EATS 是一种端到端的文本到波形网络，具有内部对齐器，该对齐器将音素与高斯核的梅尔谱序列对齐近似。尽管该模型提出了强大的文本到波形合成，但没有额外训练对齐以确保改进的持续时间对齐。 Hifi-GAN 通过多尺度和多周期鉴别器生成高质量的音频波形，但该模型仅限于仅考虑梅尔谱图作为输入。我们提出的文本到波形网络代表了两全其美的优点和对缺点的改进。</p>
+<p>在本文中，我们提出了一种具有强化对齐器的端到端文本到波形网络，这是一种基于强化学习的对齐搜索方法，用于鲁棒语音合成。我们的代理通过一系列步骤与环境交互，以选择给定当前状态的最佳动作。然后，环境对动作应用更新并返回动作的奖励，以便代理在下一步考虑。重复这个训练过程直到收敛，并使网络能够在内部学习自己的对齐方式。我们的实验结果显示了强化对齐器对生成的音频波形的持续时间对齐和质量的积极影响。我们的在线演示网页上提供了合成音频样本。 </p>
+<h2 id="Model-Architecture"><a href="#Model-Architecture" class="headerlink" title="Model Architecture"></a>Model Architecture</h2><p>我们提出的全卷积生成器利用文本或音素作为输入并生成原始音频波形作为输出。编码器包含一个改进的多感受野融合模块（MRF）。 MRF 的原始实现使用梅尔频谱图作为输入，并通过转置卷积将梅尔频谱图上采样为原始波形。我们的实现利用音素嵌入作为输入和输出隐藏表示，而无需上采样。基于 MRF 的音素编码器包含多个具有多个内核大小和扩张率的残差块，这是我们网络的重要组成部分，因为各种感受野能够从音素嵌入中提取不同的上下文特征。然后，编码器输出通过强化对齐器进行输出以产生输出帧。输出帧由 $γ$​ 随机分割。最后，解码器将 $γ$ 上采样 256 以产生原始音频波形。</p>
+<p><img src="/images/ra-fig1.png" alt="ra-fig1"></p>
+<p>我们的模型在训练期间包含针对不同目标的两个判别器。第一个鉴别器是中提出的多尺度鉴别器。该鉴别器通过音阶的变化有效地学习音频的不同频率分量。三个子鉴别器中的每一个都包含不同尺度的卷积：原始音频，按因子 2 下采样，按因子 4 下采样。第二个鉴别器是 Multi-Period Discriminator，它通过卷积捕获音频的不同特征在周期性变化中。每个不同的周期值考虑输入音频的不同周期段。</p>
+<h2 id="Reinforce-Aligner"><a href="#Reinforce-Aligner" class="headerlink" title="Reinforce-Aligner"></a>Reinforce-Aligner</h2><h3 id="3-1-Reinforcement-learning-setup"><a href="#3-1-Reinforcement-learning-setup" class="headerlink" title="3.1 Reinforcement learning setup"></a>3.1 Reinforcement learning setup</h3><p><img src="/images/ra-fig2.png" alt="ra-fig2"></p>
+<p>强化对齐器的一般架构如图 1 所示。持续时间预测器是在训练过程的每个步骤中与环境交互的代理。 环境是整个文本到波形网络。 如图 2(a) 的生成器训练过程所示，每个持续时间预测都被上采样为波形，并通过各个 melspectrogram 的 mel-spectrogram 损失计算奖励。 奖励反馈返回给代理以进行最终动作选择。</p>
+<h3 id="3-2-Agent"><a href="#3-2-Agent" class="headerlink" title="3.2 Agent"></a>3.2 Agent</h3><p>持续时间预测器为每个音素持续时间预测返回一个标量值。 Predictor 由两个 1D 卷积层组成，每个层都有层归一化、ReLU 激活和跟随的 dropout。最后一个线性层将卷积输出重塑为单个标量值。代理有两种可用的操作：</p>
+<ul>
+<li>保持：保持音素持续时间预测而不对预测输出进行任何更改。</li>
+<li>移位：移位音素持续时间预测，移位值应用于交替符号。</li>
+</ul>
+<p>应用于每个音素持续时间的移位由交替符号组成，这对于保持持续时间预测输出的总和很重要。此外，我们设计了两种类型的转换：分段转换和音素转换。分段移位对应于应用于整个音素序列段的移位。音素移位是应用于音素序列的每个音素持续时间的移位。我们在消融研究中检查了班次类型和值对对齐结果和语音质量的影响。</p>
+<h3 id="3-3-Environment"><a href="#3-3-Environment" class="headerlink" title="3.3 Environment"></a>3.3 Environment</h3><p>在这个基于强化学习的设置中，环境是经过训练的文本到波形网络，它从音素输入输出音频波。 强化对齐器中的环境有两个主要目标：</p>
+<ol>
+<li>在代理采取行动之前向代理提供输入音素序列信息，</li>
+<li>在考虑两种可能的行动中的每一个之后向代理提供反馈。</li>
+</ol>
+<h4 id="3-3-1-State"><a href="#3-3-1-State" class="headerlink" title="3.3.1 State"></a>3.3.1 State</h4><p>环境在每个训练步骤中为代理生成音素嵌入输出。 从音素序列输入，基于多感受野融合的音素编码器通过多个残差块生成音素嵌入输出。 这些编码器输出是代理决定动作的当前状态输入。</p>
+<h4 id="3-3-2-Rewards"><a href="#3-3-2-Rewards" class="headerlink" title="3.3.2 Rewards"></a>3.3.2 Rewards</h4><p>根据shift的类型，我们有两种不同的奖励。 两种奖励都考虑了梅尔谱图损失，即真实数据和生成波形的梅尔谱图之间的 L1 损失。 如图 2(a) 所示，每个质谱图都是由预测 (KEEP) 和移位 (SHIFT) 持续时间合成的波形产生的。 分段奖励比较用于训练的整个波段的损失值。 较低的损失值意味着生成的波形与真实情况的相似度较高。 音素方面的奖励考虑了音素方面的梅尔谱损失值。 具体来说，梅尔谱图损失值通过下采样插入到音素持续时间序列的形状中。 将预测时长的音素时长序列表示为 $D_k = [d_1,d_2,d_3,…,d_j]$ 并将移位shifted时长表示为 $D_s =[d_1 +α,d_2 −α,d_3 +α…,d_j ±α]$​，其中$α$​ 表示移位shift值。 然后，我们的奖励被公式化为：</p>
+<p><img src="/images/ra-al1.png" alt="ra-al1"></p>
+<p>这里，$L_k$ 表示预测和真实梅尔谱图之间的 L1 损失，$L_s$​ 是移位shifted和真实梅尔谱图之间的 L1 损失。 $r_k$​ 和 $r_s$​ 分别是保持奖励和转移奖励值。 每个$j$​是音素时长序列中总共$N$​个索引的音素时长索引值。 对于分段奖励，保持奖励值和转移奖励值均具有相等的值 $∀j$​。 对于音素方面的奖励，每个 $j$​ 都有唯一的保持和转移奖励值。</p>
+<h3 id="3-4-Gaussian-upsampling"><a href="#3-4-Gaussian-upsampling" class="headerlink" title="3.4 Gaussian upsampling"></a>3.4 Gaussian upsampling</h3><p>预测的持续时间被缩放到帧序列输出的长度。 如 [21] 中所介绍的，每个缩放预测用于查找缩放令牌长度及其中心位置的累积总和。 我们首先计算权重：</p>
+<p><img src="/images/ra-al2.png" alt="ra-al2"></p>
+<p>给定固定温度参数 $σ^2$、缩放标记中心位置 $c$ 和时间步长 $t$​。 我们通过在编码器输出和权重之间产生加权和来完成上采样。 输出特征用作解码器输入，转置卷积将特征上采样为原始波形。</p>
+<h3 id="3-5-Reinforced-Duration-Loss"><a href="#3-5-Reinforced-Duration-Loss" class="headerlink" title="3.5 Reinforced Duration Loss"></a>3.5 Reinforced Duration Loss</h3><p>我们通过包含奖励和持续时间预测动作的损失为代理提供适当的反馈。 对于每个音素序列索引 $j$，在原始持续时间预测和所选动作的持续时间之间比较持续时间值。 损失定义为：</p>
+<p><img src="/images/ra-al3.png" alt="ra-al3"></p>
+<p>给定 $N$ 个total tokens，每个 $D_k$、$r_k$ 对和 $D_s$、$r_s$​ 对分别代表保持、转移动作的持续时间和奖励值。 $D_{pred}$ 等于 $D_k$​，因为保持动作不会改变预测的持续时间值。 因此，该损失为 shift 动作返回正损失，而为 keep 动作返回零损失。</p>
+<h2 id="Auxiliary-loss"><a href="#Auxiliary-loss" class="headerlink" title="Auxiliary loss"></a>Auxiliary loss</h2><p>我们利用 GAN 损失 和reinforcement 持续时间损失。 此外，辅助损失用于支持我们的文本到波形网络的训练。</p>
+<h3 id="4-1-Total-duration-loss"><a href="#4-1-Total-duration-loss" class="headerlink" title="4.1 Total duration loss"></a>4.1 Total duration loss</h3><p>对齐器的主要目的是产生音素到帧序列的准确对齐。 但是，对齐器在训练期间没有“正确”的持续时间对齐可供参考，因此不确定持续时间输出是否准确。 因此，总持续时间损失被用作模型的指导。 我们参考了中的对准器长度损失。 令 $m_{length}$ 是真实谱图的长度，$l_j$ 是第 $j$​​ 个标记的预测长度。 总持续时间损失为：</p>
+<p><img src="/images/ra-al4.png" alt="ra-al4"></p>
+<h3 id="4-2-Mel-spectrogram-loss"><a href="#4-2-Mel-spectrogram-loss" class="headerlink" title="4.2 Mel-spectrogram loss"></a>4.2 Mel-spectrogram loss</h3><p>之前的研究提到梅尔谱损失能够优化发生器并提高生成波形的质量。 此外，强化对齐器的奖励设计取决于梅尔谱图损失值，以在我们的模型中为代理产生质量反馈。 损失公式为：</p>
+<p><img src="/images/ra-al5.png" alt="ra-al5"></p>
+<p>其中 $mel_{gt}、mel_{pred}$ 是 $T$​ 时间步长的真值和合成波形的梅尔谱图。</p>
+<h3 id="4-3-Soft-DTW"><a href="#4-3-Soft-DTW" class="headerlink" title="4.3 Soft DTW"></a>4.3 Soft DTW</h3><p>我们通过在Ground-truth和具有动态时间扭曲 (DTW)  的合成频谱图之间迭代地找到对齐路径，使梅尔频谱图有容错空间。 这种方法的主要目标是减轻两个频谱图必须完全对齐的要求。</p>
+<p>总共的loss定义如下：</p>
+<p><img src="/images/ra-al6.png" alt="ra-al6"></p>
+<p>其中 $L$ 是梅尔谱图长度，$ω$​ 是动作 2 和 3 发生的扭曲惩罚。$δ$​ 是一个二进制指示符，当扭曲惩罚大于零时为 1。 对于我们的损失，我们使用 [29] 中的软最小值来产生 Soft-DTW。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>我们提出了一种端到端的文本到波形网络，该网络具有一种新颖的基于强化学习的持续时间对齐搜索方法。 该模型的优势在于代理能够通过基于奖励反馈的动作主动搜索最佳持续时间对齐。 我们进行了一系列实验来为我们的强化对齐器选择最佳奖励。 我们提出的模型能够以更准确的持续时间对齐和增强的合成音频自然度优于其他最先进的方法。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/10/Wavegrad2/" rel="prev" title="Wavegrad2">
+      <i class="fa fa-chevron-left"></i> Wavegrad2
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reinforce-aligner-%E5%A2%9E%E5%BC%BA%E5%AF%B9%E9%BD%90%E6%90%9C%E7%B4%A2%E4%BB%A5%E5%AE%9E%E7%8E%B0%E7%A8%B3%E5%81%A5%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%96%87%E6%9C%AC%E5%88%B0%E8%AF%AD%E9%9F%B3"><span class="nav-number">1.</span> <span class="nav-text">Reinforce-aligner: 增强对齐搜索以实现稳健的端到端文本到语音</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model-Architecture"><span class="nav-number">1.3.</span> <span class="nav-text">Model Architecture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reinforce-Aligner"><span class="nav-number">1.4.</span> <span class="nav-text">Reinforce-Aligner</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Reinforcement-learning-setup"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 Reinforcement learning setup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Agent"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2 Agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Environment"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.3 Environment</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-State"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">3.3.1 State</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-Rewards"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">3.3.2 Rewards</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Gaussian-upsampling"><span class="nav-number">1.4.4.</span> <span class="nav-text">3.4 Gaussian upsampling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-Reinforced-Duration-Loss"><span class="nav-number">1.4.5.</span> <span class="nav-text">3.5 Reinforced Duration Loss</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Auxiliary-loss"><span class="nav-number">1.5.</span> <span class="nav-text">Auxiliary loss</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Total-duration-loss"><span class="nav-number">1.5.1.</span> <span class="nav-text">4.1 Total duration loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Mel-spectrogram-loss"><span class="nav-number">1.5.2.</span> <span class="nav-text">4.2 Mel-spectrogram loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Soft-DTW"><span class="nav-number">1.5.3.</span> <span class="nav-text">4.3 Soft DTW</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.6.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Alan Sun</p>
+  <div class="site-description" itemprop="description">记录工作与生活</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人来过
+</span>
+</div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Sun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
