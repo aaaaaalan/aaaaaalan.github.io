@@ -427,6 +427,84 @@ D_i = N\cdot sigmoid(v_d^{T}tanh(W_{d}x_i))
 <p><a href="https://arxiv.org/pdf/2012.03500.pdf">EfficientTTS: An Efficient and High-Quality Text-to-Speech Architecture</a> -- EFTS-Wav ~ ICML 2021 ~ <strong>PingAn (Chenfeng Miao)</strong> ~ <a href="https://github.com/liusongxiang/efficient_tts">repo</a></p>
 <p><a href="https://arxiv.org/pdf/2006.04558.pdf">FASTSPEECH 2: FAST AND HIGH-QUALITY END-TO- END TEXT TO SPEECH</a> -- Fastspeech2 ~ ICLR 2021 ~ <strong>Zhejiang U &amp; Microsoft</strong> ~ <a href="https://github.com/ming024/FastSpeech2">repo</a></p>
 <p><a href="https://arxiv.org/pdf/2106.02830.pdf">Reinforce-Aligner: Reinforcement Alignment Search for Robust End-to-End Text-to-Speech</a> -- Reinforce-Aligner ~ Interspeech 2021 ~ Korea University</p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="16%" />
+<col width="17%" />
+<col width="27%" />
+<col width="12%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Model</strong></th>
+<th><strong>Institution</strong></th>
+<th><strong>Published conference</strong></th>
+<th><strong>Method</strong></th>
+<th><strong>Principal</strong></th>
+<th><strong>Field</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>EATS</strong></td>
+<td>DeepMind</td>
+<td>ICLR 2021</td>
+<td>Aligner + GAN-TTS decoder</td>
+<td>Adversial network</td>
+<td>GAN</td>
+</tr>
+<tr class="even">
+<td><strong>VITS</strong></td>
+<td>Kakao</td>
+<td>ICML 2021</td>
+<td>Glow-TTS + Hifi-GAN</td>
+<td>GAN + Flow + VAE</td>
+<td>GAN, Flow</td>
+</tr>
+<tr class="odd">
+<td><strong>Wave-Tacotron</strong></td>
+<td>Google</td>
+<td>ICASSP 2021</td>
+<td>Tacotron + Flow</td>
+<td>Seq2seq + Flow</td>
+<td>Seq2seq, Flow</td>
+</tr>
+<tr class="even">
+<td><strong>WaveGrad2</strong></td>
+<td>Google (Heiga Zen)</td>
+<td>Interspeech 2021</td>
+<td>Tacotron encoder + WaveGrad decoder</td>
+<td>Diffusion</td>
+<td>New</td>
+</tr>
+<tr class="odd">
+<td><strong>EFTS-Wav</strong></td>
+<td>PingAn (Chenfeng Miao)</td>
+<td>ICML 2021</td>
+<td>IMV aligner + Melgan</td>
+<td>IMV</td>
+<td>Non-AR</td>
+</tr>
+<tr class="even">
+<td><strong>Fastspeech 2</strong></td>
+<td>Zhejiang U &amp; Microsoft</td>
+<td>ICLR 2021</td>
+<td>Duration predictor + Waveform decoder</td>
+<td>CNN wav decoder</td>
+<td>Non-AR</td>
+</tr>
+<tr class="odd">
+<td><strong>Reinforce-Aligner</strong></td>
+<td>Korea U</td>
+<td>Interspeech 2021</td>
+<td>RL aligner + MRF</td>
+<td>RL</td>
+<td>RL</td>
+</tr>
+</tbody>
+</table>
 <h2 id="vc">VC</h2>
 <p><a href="https://arxiv.org/pdf/1904.04169.pdf">Parrotron: An End-to-End Speech-to-Speech Conversion Model and its Applications to Hearing-Impaired Speech and Speech Separation</a> -- Parrotron ~ Interspeech 2019 ~ <strong>Google</strong> ~ <a href="https://github.com/fd873630/Parrotron">repo</a></p>
 <p><a href="https://export.arxiv.org/pdf/2104.07283">Towards end-to-end F0 voice conversion based on Dual-GAN with convolutional wavelet kernels</a> -- F0-VC ~ WIP ~ <strong>Sorbonne</strong></p>
