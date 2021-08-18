@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文为西班牙电信Telefónica Research于NeurIPS 2019发表的 Vocoder领域 的代表性论文，基于MelGAN修改，且在效率和性能上都得到了极大的提升。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Blow a single-scale hyperconditioned flow for non-parallel raw-audio voice conversion">
+<meta property="og:url" content="http://example.com/2021/08/18/blow/index.html">
+<meta property="og:site_name" content="海阔天空蓝">
+<meta property="og:description" content="本文为西班牙电信Telefónica Research于NeurIPS 2019发表的 Vocoder领域 的代表性论文，基于MelGAN修改，且在效率和性能上都得到了极大的提升。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/blow-al1.png">
+<meta property="og:image" content="http://example.com/images/blow-al2.png">
+<meta property="og:image" content="http://example.com/images/blow-al3.png">
+<meta property="og:image" content="http://example.com/images/blow-fig1.png">
+<meta property="og:image" content="http://example.com/images/blow-al4.png">
+<meta property="og:image" content="http://example.com/images/blow-al5.png">
+<meta property="og:image" content="http://example.com/images/blow-al6.png">
+<meta property="og:image" content="http://example.com/images/blow-al7.png">
+<meta property="article:published_time" content="2021-08-18T02:23:33.000Z">
+<meta property="article:modified_time" content="2021-08-18T04:04:48.456Z">
+<meta property="article:author" content="Alan Sun">
+<meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/blow-al1.png">
+
+<link rel="canonical" href="http://example.com/2021/08/18/blow/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Blow a single-scale hyperconditioned flow for non-parallel raw-audio voice conversion | 海阔天空蓝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">海阔天空蓝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个玩过n种运动的语音合成算法攻城狮</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/18/blow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alan Sun">
+      <meta itemprop="description" content="记录工作与生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空蓝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Blow a single-scale hyperconditioned flow for non-parallel raw-audio voice conversion
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-18 10:23:33 / 修改时间：12:04:48" itemprop="dateCreated datePublished" datetime="2021-08-18T10:23:33+08:00">2021-08-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">本文为西班牙电信Telefónica Research于NeurIPS 2019发表的 Vocoder领域 的代表性论文，基于MelGAN修改，且在效率和性能上都得到了极大的提升。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="blow-用于非并行原始音频语音转换的单尺度超条件流">Blow 用于非并行原始音频语音转换的单尺度超条件流</h1>
+<h2 id="摘要">摘要</h2>
+<p>原始音频生成的端到端模型是一个挑战，特别是如果它们必须处理非并行数据，这在许多情况下都是理想的设置。 语音转换是其中一种情况，模型必须在录音中模拟说话者。 在本文中，我们提出了 Blow，一种使用超网络条件 (hypernetwork conditioning) 在原始音频之间执行多对多语音转换的单尺度归一化流。 Blow 是使用单个说话者标识符逐帧使用非并行数据进行端到端训练的。 我们表明 Blow 与现有的基于流的架构和其他竞争基线相比具有优势，在客观和主观评估中获得相同或更好的性能。 我们通过消融研究进一步评估其主要组成部分的影响，并量化许多属性，例如必要的训练数据量或对源或目标说话者的偏好。</p>
+<h2 id="introduction">Introduction</h2>
+<p>原始音频波形的端到端生成仍然是当前神经系统的挑战。处理原始音频比处理中间表示要求更高，因为它需要更高的模型容量和通常更大的感受野。事实上，即使在 16 kHz 的采样率下，生成高级波形结构也一直被认为是棘手的，并且只是在自回归模型、生成对抗网络以及最近的，标准化流（normalizing flow）。尽管如此，没有长期上下文信息的生成仍然会导致次优结果，因为现有架构难以捕获此类信息，即使它们采用理论上足够大的感受野。</p>
+<p>语音转换是一项任务，即在保留口语内容的同时，将源说话者身份替换为有针对性的不同身份。它有多种应用，主要应用在医疗、娱乐和教育领域。语音转换系统通常是一对一或多对一的，从某种意义上说，它们只能从单个或最多少数几个源说话人转换为唯一的目标说话人。虽然这对于某些情况可能已经足够了，但它限制了它们的适用性，同时也阻止了它们从多个目标中学习。此外，语音转换系统通常以严格监督的方式使用并行数据进行训练。为此，需要输入/输出录音对，相应的源/目标说话人以相对准确的时间对齐方式发音相同的基本内容。收集此类数据是不可扩展的，并且在最好的情况下会出现问题。因此，研究人员正在转向使用非平行数据。然而，非并行语音转换仍然是一个悬而未决的问题，其结果与使用并行数据的结果相差甚远。</p>
+<p>在这项工作中，我们探索使用标准化流（normalizing flow）进行非并行、多对多、原始音频语音转换。我们提出了 Blow，这是一种规范化流（normalizing flow）架构，可以学习在最少的监督下端到端地转换录音。它仅使用单独的音频帧，以及在此类帧中表示说话者身份的标识符或标签。 Blow 继承了 Glow 的一些结构，但引入了一些改进，除了产生更好的可能性之外，还证明对有效的语音转换至关重要。改进包括使用单尺度结构、每个块中少量的流、前向-后向转换机制、基于超网络的条件模块、共享说话人嵌入以及许多原始音频的数据增强策略。我们客观和主观地量化 Blow 的有效性，获得与许多基线相当甚至更好的性能。我们还进行了一项消融研究，以量化每个新组件的相对重要性，并评估其他方面，例如对源/目标说话者的偏好或目标分数与训练音频量之间的关系。</p>
+<p>## 相关工作</p>
+<p>据我们所知，没有使用标准化流进行语音转换的已发表作品，一般只有三个使用标准化流进行音频转换。Waveglow和FloWavenet 同时提出使用归一化流作为从梅尔谱图到原始音频的解码器。 他们的模型基于 Glow，但在仿射耦合网络中具有 WaveNet 结构。 AdaFlow采用标准化流进行音频异常检测和跨域图像转换。 他们建议使用与类别相关的统计数据来自适应地标准化流激活，就像 AdaBN 对常规网络所做的那样。</p>
+<h3 id="归一化流">2.1 归一化流</h3>
+<p>基于 Barlow 的冗余减少原理，一些学者已经使用了可逆体积保留神经架构。最近，Dinh 等人提出通过图像生成的最大似然执行阶乘学习，仍然使用体积保留变换。 Rezende 和 Mohamed 以及 Dinh 等人介绍了非体积保持变换的使用，前者采用标准化流的术语以及仿射和径向变换的使用。 Kingma 和 Dhariwal 提出了一种利用 1×1 可逆卷积的有效图像生成和处理架构。尽管与生成对抗网络、自回归模型或变分自编码器相比很少受到关注，但基于流的模型具有许多使它们特别有吸引力的优点，包括精确推理和似然评估、高效合成、有用的潜在空间，以及一些节省梯度内存的潜力。</p>
+<h3 id="非并行语音转换">2.2 非并行语音转换</h3>
+<p>非并行语音转换在使用经典机器学习技术的方法方面有着悠久的传统。然而，今天，神经网络在该领域占据主导地位。一些方法利用自动语音识别或文本表示来从声学中分离内容。这很容易去除源说话者的特征，但进一步挑战了生成器，它需要额外的上下文来正确定义目标语音。许多方法采用声码器来获得中间表示并作为生成模块。这些通常使用变分自编码器、生成对抗网络或两者在中间表示之间进行转换。最后，有一些作品在原始音频上采用了全神经架构。在这种情况下，架构的某些部分可能是经过预训练的，也可能不是端到端学习的。除了语音转换，还有一些处理非并行音乐或音频转换的作品：Engel 等提出了一种用于音符合成和乐器音色转换的 WaveNet 自动编码器；莫尔等人在一般音乐翻译中加入了领域混淆损失，而 Nachmani 和 Wolf 在歌声转换中加入了身份不可知损失；哈克等人使用序列到序列模型进行音频风格转换。</p>
+<h2 id="flow-based-生成模型">Flow-based 生成模型</h2>
+<p>基于流的生成模型学习从输入样本 <span class="math inline">\(x ∈ X\)</span>​ 到潜在表示 <span class="math inline">\(z ∈ Z\)</span>​ 的双射映射，使得 <span class="math inline">\(z = f(x)\)</span>​ 和 <span class="math inline">\(x = f−1(z)\)</span>​。 这个映射 <span class="math inline">\(f\)</span>​，通常称为归一化流，是一个由神经网络参数化的函数，由 <span class="math inline">\(k\)</span> 个可逆变换 <span class="math inline">\(f = f_1 ◦ · · · ◦ f_k\)</span> 组成。 因此，具有相同维度的 <span class="math inline">\(x\)</span> 和 <span class="math inline">\(z\)</span>​ 之间的关系可以表示为</p>
+<div class="figure">
+<img src="/images/blow-al1.png" alt="blow-al1" />
+<p class="caption">blow-al1</p>
+</div>
+<p>对于生成方法，我们希望对概率密度 <span class="math inline">\(p(X)\)</span> 进行建模，以便能够生成真实的样本。 这通常是难以直接处理的，但我们现在可以使用 <span class="math inline">\(f\)</span> 来模拟精确的对数似然</p>
+<div class="figure">
+<img src="/images/blow-al2.png" alt="blow-al2" />
+<p class="caption">blow-al2</p>
+</div>
+<p>对于单个样本 <span class="math inline">\(x\)</span>，并使用变量的变化、反函数定理、组合性和对数属性，我们可以写出</p>
+<div class="figure">
+<img src="/images/blow-al3.png" alt="blow-al3" />
+<p class="caption">blow-al3</p>
+</div>
+<p>其中<span class="math inline">\(∂f_i(h_{i-1})/∂h_{i-1}\)</span>​​ 是<span class="math inline">\(h_{i-1}\)</span>​ 处<span class="math inline">\(f_i\)</span>​ 的雅可比矩阵，对数行列式测量由<span class="math inline">\(f_i\)</span> 引起的对数密度的变化。 在实践中，人们选择带有三角雅可比矩阵的变换 <span class="math inline">\(f_i\)</span>​ 来实现行列式的快速计算并确保可逆性，尽管这些可能不像更复杂的那样具有表现力。 类似地，为 <span class="math inline">\(p(z)\)</span>​ 选择各向同性单位高斯以允许快速采样和直接操作。</p>
+<p>已经为图像生成提出了 <span class="math inline">\(f\)</span> 和 <span class="math inline">\(f_i\)</span>​ 的许多结构和参数化，最流行的是 RealNVP 和 Glow 。最近，其他工作提出了在多个上下文中进行更好的密度估计和图像生成的改进。 RealNVP 使用具有批量归一化、屏蔽卷积和仿射耦合层的块结构。它结合了 2×2 挤压操作和交替的棋盘和通道掩码。 Glow 更进一步，除了用激活归一化 (ActNorm) 代替批量归一化之外，还通过可逆的 1×1 卷积引入了通道混合。其架构由 3 到 6 个块组成，由 2×2 挤压操作和 32 到 64 步流程组成，包括 ActNorm、1×1 可逆卷积和仿射耦合的序列。对于仿射耦合，使用了三个带有整流线性单元 (ReLU) 的卷积层。 Glow 和 RealNVP 都具有多尺度结构，可以分解出不同分辨率下 z 的分量，目的是定义不同粒度的中间表示级别。这也是其他图像生成流程和两个现有的音频生成流程所遵循的策略。</p>
+<h2 id="blow">Blow</h2>
+<p>Blow 从 Glow 继承了一些结构，但结合了我们展示的一些修改，这些修改是有效语音转换的关键。主要是使用（1）单尺度结构，（2）每个块中的flow较少，（3）前向后向转换机制，（4）超调节模块，（5）共享说话人嵌入，以及 (6) 一些原始音频的数据增强策略。我们现在提供一般结构的概述（图 1）。</p>
+<div class="figure">
+<img src="/images/blow-fig1.png" alt="blow-fig1" />
+<p class="caption">blow-fig1</p>
+</div>
+<p>我们使用具有替代模式和一系列流的步骤的一维 2x 挤压操作（图 1，左）。流的步骤由作为通道混合器的线性可逆层（类似于二维情况下的 1×1 可逆卷积）、ActNorm 和具有仿射耦合的耦合网络组成（图 1，中心）。耦合网络由具有 ReLU 激活的一维卷积和超卷积形成（图 1，右）。耦合网络的最后一个卷积和超卷积的核宽度为3，而中间卷积的核宽度为1（我们使用512×512通道）。相同的说话人嵌入馈送所有耦合网络，并且独立地适用于每个超卷积。按照惯例，我们将输出 z 与单位各向同性高斯进行比较，并优化由 z 的维数归一化的对数似然 L（方程 1）。</p>
+<h3 id="单尺度结构">4.1 单尺度结构</h3>
+<p>除了上述处理中间级别表示的能力外，多尺度结构被认为可以促进梯度流，因此有助于训练非常深的模型，如归一化流。在这里，在初步分析中，我们观察到说话者身份特征几乎只出现在较粗略的表示水平上。此外，我们发现，通过去除多尺度结构并跨块携带相同的输入维度，不仅梯度流动没有问题，而且还获得了更好的对数似然（见下文）。</p>
+<p>我们认为，梯度仍然流动而不分解块激活的事实是因为损失函数中的对数行列式项仍然在每个流程步骤中分解（附录 A）。因此，一些梯度仍然穿梭回到相应的层和下面。我们以某种方式获得了具有单尺度结构的更好对数似然的事实，因为块激活现在在后续块中进行进一步处理。然而，据我们所知，在当前图像生成流程的基于可能性的评估中似乎忽略了这一方面。</p>
+<h3 id="many-blocks">4.2 Many blocks</h3>
+<p>基于流的图像生成模型处理 32×32 和 256×256 像素之间的图像。对于原始音频，16 kHz 下 256 个样本的一维输入对应于 16 ms，这不足以捕获任何有趣的语音结构。<strong>音素持续时间可以在 50 到 180 毫秒之间</strong>，我们需要更多的长度来模拟一些音素转换。因此，我们需要增加模型的输入和感受野。为此，基于流的音频生成模型选择了更积极的压缩因子，以及膨胀高达 28 的 WaveNet 式耦合网络。相比之下，在 Blow 中，我们选择使用许多具有相对每个流程步骤很少。特别是，我们使用 8 个块，每个块有 12 个流（8×12 结构）。由于每个块都有 2 次挤压操作，这意味着总共挤压 28 个样本。</p>
+<p>考虑内核宽度为 3 的两个卷积，一个 8×12 结构产生大约 12500 个样本的感受野，在 16 kHz 下，对应于 781 ms。但是，为了允许更大的批量大小，我们使用 4096 个样本的输入帧大小（16 kHz 时为 256 毫秒）。如果我们在单词中间切入，这至少足以容纳一个音素和一个音素转换，并且与 WaveNet 等其他成功模型的感受野相当。 Blow 在没有上下文的情况下逐帧运行；我们承认这可能不足以对依赖说话人的长距离韵律进行建模，但我们相信这足以对核心说话人身份特征进行建模。</p>
+<h3 id="前向后向转换">4.3 前向后向转换</h3>
+<p>在基于 Glow 的模型中执行图像处理 或类条件 的默认策略是在 <span class="math inline">\(z\)</span> 空间中工作。这具有许多有趣的特性，包括执行渐进式更改或插值的可能性，以及基于小数据的小样本学习或操作的潜力。然而，我们观察到，对于语音转换，遵循此策略的结果在很大程度上并不令人满意（附录 B）。</p>
+<p>我们不使用 <span class="math inline">\(z\)</span> 来执行身份操作，而是将其视为与身份无关的表示。我们的想法是，指定 <span class="math inline">\(x\)</span> 的某些实际输入特征的任何提供条件都应该有助于将 <span class="math inline">\(x\)</span> 转换为 <span class="math inline">\(z\)</span>，特别是如果我们考虑最大似然目标。也就是说，了解输入的条件/特征应该有助于发现被所述条件/特征隐藏的进一步相似性，从而有助于学习。按照这个思路，如果在从 <span class="math inline">\(x\)</span> 到 <span class="math inline">\(z\)</span> 的流中的多个层次的条件化逐渐使我们进入一个无条件的 <span class="math inline">\(z\)</span> 空间（附录 C.3），那么，当用不同的条件从 <span class="math inline">\(z\)</span> 转换回 <span class="math inline">\(x\)</span>​ 时，那还应该逐步将这个新条件的特征印在输出 <span class="math inline">\(x\)</span>​ 上。 Blow 使用源说话者标识符 <span class="math inline">\(y_S\)</span> 将 <span class="math inline">\(x(S)\)</span> 转换为 <span class="math inline">\(z\)</span>​，使用目标说话者标识符 <span class="math inline">\(y_T\)</span>​ 将 <span class="math inline">\(z\)</span> 转换为转换后的音频帧 <span class="math inline">\(x(T)\)</span>。</p>
+<h3 id="hyperconditioning">4.4 Hyperconditioning</h3>
+<p>在基于流的模型中引入条件的一个简单的地方是耦合网络，因为不需要计算雅可比矩阵，也没有可逆性约束。 此外，在仿射通道耦合的情况下，耦合网络负责执行大部分转换，因此我们希望它具有强大的表示能力，可能会通过进一步的调节信息来增强。 调节耦合网络的常用方法是向其输入层添加或连接一些表示。 然而，根据我们观察到的连接往往被忽略并且加法不够强大，我们决定直接使用卷积核的权重进行调节。 也就是说，条件表示决定了卷积算子采用的权重，就像超网络所做的那样。 我们在耦合网络的第一层进行（图 1，右）。</p>
+<p>使用一维卷积，并给定一个输入激活矩阵 <span class="math inline">\(H\)</span>，对于第 <span class="math inline">\(i\)</span>​ 个卷积过滤器，我们有：</p>
+<div class="figure">
+<img src="/images/blow-al4.png" alt="blow-al4" />
+<p class="caption">blow-al4</p>
+</div>
+<p>其中 <span class="math inline">\(∗\)</span>​​​ 是一维卷积算子，<span class="math inline">\(W_y^{(i)}\)</span>​​ 和 <span class="math inline">\(b_y^{(i)}\)</span>​​​ 分别表示条件 <span class="math inline">\(y\)</span>​​​ 施加的第 <span class="math inline">\(i\)</span> 个内核权重和偏差。 一组 <span class="math inline">\(n\)</span>​ 个条件相关的核和偏置 <span class="math inline">\(K_y\)</span> 可以通过以下方式获得</p>
+<div class="figure">
+<img src="/images/blow-al5.png" alt="blow-al5" />
+<p class="caption">blow-al5</p>
+</div>
+<p>其中 <span class="math inline">\(g\)</span> 是一个适配器网络，它将条件表示 <span class="math inline">\(e_y\)</span>​ 作为输入，而这又取决于条件标识符 <span class="math inline">\(y\)</span>（在我们的例子中是说话者身份）。 向量 <span class="math inline">\(e_y\)</span> 是一种嵌入，可以在说话者的某些预先计算的特征表示中固定或初始化，或者如果我们需要独立模型，则可以从头开始学习。 在本文中，我们选择独立版本。</p>
+<h3 id="structure-wise-shared-embeddings">4.5 Structure-wise shared embeddings</h3>
+<p>我们发现每个耦合网络学习一个 <span class="math inline">\(e_y\)</span> 通常会导致次优结果。 我们假设，给定大量的流程步骤（或耦合网络），独立条件表示不需要关注条件的本质（说话者身份），因此可以自由学习数字的任何组合 无论它们与条件的关系如何，都可以最小化负对数似然。 因此，为了减少模型的自由度，我们决定约束这种表示。 受到 StyleGAN 架构的松散启发，我们设置了一个单一的可学习嵌入 <span class="math inline">\(e_y\)</span>，它在流程的所有步骤中由每个耦合网络共享（图 1，左）。 这减少了参数的数量和模型的自由度，结果证明会产生更好的结果。 遵循类似的推理，我们还使用了最小可能的适配器网络 <span class="math inline">\(g\)</span>（图 1，右）：具有偏差的单个线性层，仅执行维度调整。</p>
+<h3 id="数据增强">4.6 数据增强</h3>
+<p>为了训练 Blow，我们丢弃无声帧（附录 B），然后用 4 种数据增强策略增强剩余的帧。 首先，我们应用时间抖动。 我们将每个帧 <span class="math inline">\(x\)</span>​ 的起始 <span class="math inline">\(j\)</span>​ 移动为<span class="math inline">\(j^′ =j+⌊U(−ξ,ξ)⌉\)</span>​​，其中 <span class="math inline">\(U\)</span>​ 是统一随机数生成器和 <span class="math inline">\(ξ\)</span>​ 为帧大小。 其次，我们使用随机预加重/去加重滤波器。 由于说话者的身份不会随着简单的过滤策略而改变，我们应用了一个系数 <span class="math inline">\(α = U (-0.25, 0.25)\)</span> 的强调滤波器。 第三，我们执行随机幅度缩放。 说话人身份也将通过缩放保留，另外我们希望模型能够处理 -1 和 1 之间的任何幅度。我们使用 <span class="math inline">\(x^′ = U (0, 1) · x/ max(|x|)\)</span> . 最后，我们随机翻转帧中的值。 听觉感知与平均压力水平有关，因此我们可以翻转 <span class="math inline">\(x\)</span>​ 的符号以获得具有相同感知质量的不同输入：<span class="math inline">\(x&#39; = sgn(U (-1, 1)) · x\)</span>​。</p>
+<h3 id="实现细节">4.7 实现细节</h3>
+<p>我们现在概述了与基于流的生成模型的常见实现不同的细节，并进一步让感兴趣的读者参考所提供的代码以全面了解它们。我们还想指出，我们没有对 Blow 执行任何超参数调整。</p>
+<p><strong>通用</strong>——我们使用 <span class="math inline">\(10^{−4}\)</span> 的学习率和 114 的批量大小来训练 Blow。如果 10 个时期已经过去，验证集没有改进，我们将学习率退火 5 倍，并在第三个阶段停止训练发生这种情况的时候。我们使用 8×12 结构，具有 2× 交替模式挤压操作。对于耦合网络，我们将通道分成两半，并使用具有 512 个滤波器和内核宽度 3、1 和 3 的一维卷积。嵌入的维度为 128。我们在 16 kHz 下以 4096 帧大小进行训练，没有重叠，并用一个数据增强批次（批次包含来自所有说话者的帧的随机混合）初始化 ActNorm 权重。我们使用 Hann 窗口和 50% 的重叠进行合成，将 -1 和 1 之间的整个话语标准化。我们使用 PyTorch 实现 Blow。</p>
+<p><strong>耦合</strong>——正如官方 Glow 代码中所做的那样（但在论文中没有提到），我们发现约束来自耦合网络的缩放因子可以提高训练的稳定性。对于具有通道级联的仿射耦合</p>
+<div class="figure">
+<img src="/images/blow-al6.png" alt="blow-al6" />
+<p class="caption">blow-al6</p>
+</div>
+<p>其中 2c 是通道总数，我们使用</p>
+<div class="figure">
+<img src="/images/blow-al7.png" alt="blow-al7" />
+<p class="caption">blow-al7</p>
+</div>
+<p>其中 <span class="math inline">\(σ\)</span> 对应于 sigmoid 函数，<span class="math inline">\(ε\)</span> 是一个小常数，以防止无限对数 -行列式（并在反向传递中除以 0）。</p>
+<p><strong>超调节</strong>——如果我们严格遵循方程2 和 3，超调节操作可以涉及大量 GPU 内存占用（每个批次元素有 n 个不同的内核）和耗时计算（每个内核和批处理元素的双循环）。 在实践中，这可能会使像 Blow 这样的基于流的非常深的架构无法执行操作。 然而，通过限制核 <span class="math inline">\(W(i)\)</span>​ 的维数，使得每个通道都与它自己的一组 <span class="math inline">\(y\)</span> 卷积内核，我们可以实现较小的 GPU 占用空间和每个适应网络的易于处理的参数数量。 这对应于深度可分离卷积，并且可以通过分组卷积来实现，在大多数深度学习库中都可用。</p>
+<h2 id="结论">结论</h2>
+<p>在这项工作中，我们提出了基于流的生成模型用于原始音频合成的潜力，特别是对于非并行语音转换的挑战性任务。 我们提出了 Blow，一种单尺度超条件流，具有共享嵌入的多块结构，并以向前向后的方式执行转换。 由于 Blow 在这些方面与现有的基于流的生成模型不同，因此它能够胜过那些模型，并与现有的非并行语音转换系统竞争甚至改进。 我们还量化了所提议改进的影响，并评估了训练数据量和源/目标说话者的选择对最终结果的影响。 作为未来的工作，我们希望改进模型，看看我们是否可以处理其他任务，例如语音增强或乐器转换，可能是通过进一步增强超调节机制，或者简单地通过调整其结构或超参数。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/17/Hifi-gan/" rel="prev" title="Hifi-gan">
+      <i class="fa fa-chevron-left"></i> Hifi-gan
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#blow-%E7%94%A8%E4%BA%8E%E9%9D%9E%E5%B9%B6%E8%A1%8C%E5%8E%9F%E5%A7%8B%E9%9F%B3%E9%A2%91%E8%AF%AD%E9%9F%B3%E8%BD%AC%E6%8D%A2%E7%9A%84%E5%8D%95%E5%B0%BA%E5%BA%A6%E8%B6%85%E6%9D%A1%E4%BB%B6%E6%B5%81"><span class="nav-number">1.</span> <span class="nav-text">Blow 用于非并行原始音频语音转换的单尺度超条件流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96%E6%B5%81"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 归一化流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E5%B9%B6%E8%A1%8C%E8%AF%AD%E9%9F%B3%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 非并行语音转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flow-based-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">Flow-based 生成模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#blow"><span class="nav-number">1.4.</span> <span class="nav-text">Blow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E5%B0%BA%E5%BA%A6%E7%BB%93%E6%9E%84"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 单尺度结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#many-blocks"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 Many blocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E5%90%91%E5%90%8E%E5%90%91%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 前向后向转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hyperconditioning"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 Hyperconditioning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#structure-wise-shared-embeddings"><span class="nav-number">1.4.5.</span> <span class="nav-text">4.5 Structure-wise shared embeddings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA"><span class="nav-number">1.4.6.</span> <span class="nav-text">4.6 数据增强</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"><span class="nav-number">1.4.7.</span> <span class="nav-text">4.7 实现细节</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.5.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Alan Sun</p>
+  <div class="site-description" itemprop="description">记录工作与生活</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人来过
+</span>
+</div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Sun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
