@@ -512,6 +512,7 @@ D_i = N\cdot sigmoid(v_d^{T}tanh(W_{d}x_i))
 <p><a href="https://arxiv.org/pdf/2010.14150.pdf">FRAGMENTVC: ANY-TO-ANY VOICE CONVERSION BY END-TO-END EXTRACTING AND FUSING FINE-GRAINED VOICE FRAGMENTS WITH ATTENTION</a> -- FRAGMENTVC ~ ICASSP 2021 ~ Audio2Mel ~ <strong>NTU (<em>Hung-yi Lee</em>)</strong> ~ <a href="https://github.com/yistLin/FragmentVC">repo</a></p>
 <p><a href="https://arxiv.org/pdf/2002.03808.pdf">Vocoder-free End-to-End Voice Conversion with Transformer Network</a> -- Transformer-VC ~ WIP ~ Raw_spectrum - to - raw_spectrum ~ <strong>KNU</strong></p>
 <p><a href="https://arxiv.org/pdf/2104.02901v2.pdf">S2VC: A Framework for Any-to-Any Voice Conversion with Self-Supervised Pretrained Representations</a> S2VC ~ Interspeech 2021 ~ self-supervised ~ <strong>NTU (<em>Hung-yi Lee</em>)</strong> ~ <a href="https://github.com/howard1337/S2VC">repo</a></p>
+<p><a href="https://arxiv.org/pdf/1906.00794.pdf">Blow: a single-scale hyperconditioned flow for non-parallel raw-audio voice conversion</a> ~ flow-based end2end VC ~ NeurIPS2019 ~ Telefónica Research ~ <a href="https://github.com/joansj/blow">repo</a></p>
 <h2 id="metric">METRIC</h2>
 <p><a href="https://arxiv.org/pdf/2107.09392.pdf">SVSNet: An End-to-end Speaker Voice Similarity Assessment Model</a> -- SVSNet ~ Similarity</p>
 <p><a href="https://arxiv.org/pdf/2104.03017v2.pdf">Utilizing Self-supervised Representations for MOS Prediction</a> -- MOS ~ NTU (<em>Hung-yi Lee</em>) ~ <a href="https://github.com/s3prl/s3prl">repo</a></p>
