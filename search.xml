@@ -2526,7 +2526,7 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
 </div>
 <p>三、x-vector</p>
 <p>x-vector 是d-vector的升级版，它不像 d-vector 那样简单的取平均，而是把每一小段的声音信号输出的特征，算一个 mean 和 variance，然后concat起来，再放进一个DNN里去来判断是哪个说话人说的。其他的部分和d-vector一致。 ———————————————— 版权声明：本文为CSDN博主「weixin_39087379」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。 原文链接：https://blog.csdn.net/weixin_39087379/article/details/112795796</p>
-<p>———————————————— 版权声明：本文为CSDN博主「weixin_39087379」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。 原文链接：https://blog.csdn.net/weixin_39087379/article/details/112795796</p>
+<p><strong>因子分析：</strong> 信息冗余是高维数据分析常见的问题，使用因子分析方法，可以将一些信息重叠和复杂的关系变量简化为较少的足够描述原有观测信息的几个因子，是一种数据降维的统计方法。本文介绍JFA和I-vector都为因子分析方法。</p>
 ]]></content>
       <categories>
         <category>工作</category>
