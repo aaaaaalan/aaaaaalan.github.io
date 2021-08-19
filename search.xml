@@ -2508,4 +2508,28 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
         <category>工作</category>
       </categories>
   </entry>
+  <entry>
+    <title>i-vector/d-vector/x-vector</title>
+    <url>/2021/08/19/i-vector-d-vector-x-vector/</url>
+    <content><![CDATA[<h1 id="声纹识别中的vectors">声纹识别中的vectors</h1>
+<p>一、i-vector</p>
+<p>i-vector 模型是输出一个400维的向量 二、d-vector</p>
+<div class="figure">
+<img src="/images/sv-fig1.png" alt="sv-fig1" />
+<p class="caption">sv-fig1</p>
+</div>
+<p>DNN 会输入一个固定长度的语音，对它做 Speaker Recognition。然后我们把这个模型的最后一层隐层抽取出来，它就是这段语音的 d-vector。不用 output layer 中的最后一层输出，因为它的维度是和训练时语者数目有关的。而是它前面的那一层隐层输出。</p>
+<p>在实际预测的时候，输入语音是不等长的，会把语音截成多段，然后取这几段特征的d-vector的平均值作为最后的speaker embedding。</p>
+<div class="figure">
+<img src="/images/sv-fig2.png" alt="sv-fig2" />
+<p class="caption">sv-fig2</p>
+</div>
+<p>三、x-vector</p>
+<p>x-vector 是d-vector的升级版，它不像 d-vector 那样简单的取平均，而是把每一小段的声音信号输出的特征，算一个 mean 和 variance，然后concat起来，再放进一个DNN里去来判断是哪个说话人说的。其他的部分和d-vector一致。 ———————————————— 版权声明：本文为CSDN博主「weixin_39087379」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。 原文链接：https://blog.csdn.net/weixin_39087379/article/details/112795796</p>
+<p>———————————————— 版权声明：本文为CSDN博主「weixin_39087379」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。 原文链接：https://blog.csdn.net/weixin_39087379/article/details/112795796</p>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
 </search>
