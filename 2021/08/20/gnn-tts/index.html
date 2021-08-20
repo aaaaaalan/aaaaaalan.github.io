@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本论文为继GraphTTS, GraphSpeeech, GraphPB等之后的第5篇将GNN应用于TTS，以解决TTS语言语义建模韵律情感的问题。出自于清华深研院吴致勇教授团队，投稿至Interspeech 2021，但不清楚是否录用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gnn-tts">
+<meta property="og:url" content="http://example.com/2021/08/20/gnn-tts/index.html">
+<meta property="og:site_name" content="海阔天空蓝">
+<meta property="og:description" content="本论文为继GraphTTS, GraphSpeeech, GraphPB等之后的第5篇将GNN应用于TTS，以解决TTS语言语义建模韵律情感的问题。出自于清华深研院吴致勇教授团队，投稿至Interspeech 2021，但不清楚是否录用。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/gnn-tts-fig1.png">
+<meta property="og:image" content="http://example.com/images/gnn-tts-fig2.png">
+<meta property="og:image" content="http://example.com/images/gnn-tts-al1.png">
+<meta property="og:image" content="http://example.com/images/gnn-tts-al2.png">
+<meta property="og:image" content="http://example.com/images/gnn-tts-al3.png">
+<meta property="og:image" content="http://example.com/images/gnn-tts-al4.png">
+<meta property="og:image" content="http://example.com/images/gnn-tts-al5.png">
+<meta property="og:image" content="http://example.com/images/gnn-tts-al6.png">
+<meta property="article:published_time" content="2021-08-20T06:28:01.000Z">
+<meta property="article:modified_time" content="2021-08-20T08:43:22.526Z">
+<meta property="article:author" content="Alan Sun">
+<meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/gnn-tts-fig1.png">
+
+<link rel="canonical" href="http://example.com/2021/08/20/gnn-tts/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>gnn-tts | 海阔天空蓝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">海阔天空蓝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个玩过n种运动的语音合成算法攻城狮</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/20/gnn-tts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alan Sun">
+      <meta itemprop="description" content="记录工作与生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空蓝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          gnn-tts
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-20 14:28:01 / 修改时间：16:43:22" itemprop="dateCreated datePublished" datetime="2021-08-20T14:28:01+08:00">2021-08-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">本论文为继GraphTTS, GraphSpeeech, GraphPB等之后的第5篇将GNN应用于TTS，以解决TTS语言语义建模韵律情感的问题。出自于清华深研院吴致勇教授团队，投稿至Interspeech 2021，但不清楚是否录用。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="基于依赖解析的语义表示学习与图神经网络增强文本到语音的表达能力"><a href="#基于依赖解析的语义表示学习与图神经网络增强文本到语音的表达能力" class="headerlink" title="基于依赖解析的语义表示学习与图神经网络增强文本到语音的表达能力"></a>基于依赖解析的语义表示学习与图神经网络增强文本到语音的表达能力</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>句子的语义信息对于提高文本转语音 (TTS) 系统的表达能力至关重要，但仅凭借当今的编码器结构无法从有限的训练 TTS 数据集中很好地学习。随着大规模预训练文本表示的发展，<strong>来自转换器 (BERT) 的双向编码器表示已被证明可以体现文本上下文语义信息</strong>，并作为附加输入应用于 TTS。然而，BERT 不能从句子中的依赖关系点明确关联语义标记。在本文中，为了增强表达能力，我们提出了一种基于图神经网络的语义表示学习方法，考虑了句子的依赖关系。输入文本的依赖图由考虑正向和反向的依赖树结构的边组成。然后通过关系门控图网络 (RGGN) 在词级提取语义表示，<strong>该网络以来自 BERT 的特征作为节点输入</strong>。上采样语义表示和字符级嵌入被连接起来作为 Tacotron-2 的编码器输入。实验结果表明，我们提出的方法在 LJSpeech 和 Blizzard Challenge 2013 数据集中都优于使用 vanilla BERT 特征的基线，并且从相反方向学习的语义表示对于增强表达能力更有效。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>文本转语音 (TTS) 作为人机交互框架的一个组成部分，旨在从给定的文本中生成具有丰富表现力的自然语音。韵律是决定合成语音表达能力的关键因素。传统的统计参数 TTS 系统由<strong>文本分析模块、持续时间模型、声学模型和声码器</strong>组成，其中文本分析模块通常利用专家开发的人工语言特征，如词性(POS) 标签或自然语言解析相关结构，例如解析树，以从输入文本中捕获韵律线索。最近，端到端 TTS (E2E-TTS) 系统通过编码器-解码器结构简化了合成管道，并且在合成语音的自然性和可理解性方面取得了显着的成功。</p>
+<p>由于这些 E2E-TTS 技术，例如 Tacotron-2 和 Deep Voice 3，使用编码器仅从文本（字符或音素）生成语言特征，并利用基于注意力的解码器直接生成原始频谱图，因此它们不需要复杂的文本分析或持续时间建模。 E2E-TTS 系统的输入通常通过使用标记器和语法解析器的上下文无关句法信息来丰富。但是，关于语义的部分信息仍可用于这些 E2E-TTS 系统，因为仅凭借当今的编码器结构，无法从训练 TTS 数据集中很好地学习此类信息。</p>
+<p>由于预训练文本表示的发展，来自转换器 (BERT) 的双向编码器表示已被证明不仅体现了无文本的句法信息，还体现了文本上下文语义信息。现有的 E2E-TTS 扩展使用 BERT 来提高韵律性能。预训练的 BERT 首先作为附加输入引入 Tacotron-2，并显示平均意见得分的收益。类似的方法进一步验证了 BERT 在中文多说话者 TTS 任务中改善韵律的能力。沿着不同的路线，CHiVE-BERT 在基于 RNN 的语音合成模型中结合了 BERT 模型。这些方法通过利用来自 BERT 的短语和单词的语义信息改进了合成语音的韵律。</p>
+<p>显式地结合依赖关系等句子结构有助于有效提高合成语音的自然度和表现力。然而，作为基于transformer的模型，由于训练任务的限制，BERT并没有明确地对依赖结构进行建模。结果，话语的呈现受到不利影响，尤其是对于长句。</p>
+<p>为了在句子中明确地合并不同词汇标记之间的依赖关系，GraphSpeech 将输入词汇标记的关系从依赖解析引入到图注意力机制，这被证明对表示语义关联很有用。 然而，Graph-Speech 使用基于循环神经网络 (RNN) 的关系编码器来建模依赖关系，考虑到复杂的句子结构，这不足以捕获信息。 图神经网络 (GNN) 被进一步引入 TTS，因为它能够通过图节点之间的消息传递来学习表示，如 GraphTTS 和 GraphPB ，但所有的他们使用仅从文本中设计的简单结构，而没有考虑更深层次的语义。</p>
+<p>为了更好地利用依存分析的句子级语义信息，我们提出了一种基于图神经网络的语义表示学习方法，考虑了句子的依存关系。输入文本的依赖图由考虑正向和反向的依赖树结构的边组成。然后通过关系门控图网络（RGGN）在单词级别提取语义表示，其中输入来自 BERT 的单词特征作为节点输入。上采样语义表示和字符级嵌入被连接起来作为 Tacotron-2 的编码器输入，然后是多频段 MelGAN 声码器 以生成合成语音。</p>
+<p>实验结果表明，我们提出的方法在 LJSpeech 和 Blizzard Challenge 2013 数据集的自然度和表现力方面都优于使用 vanilla BERT 特征的基线，并且从相反方向学习的语义表示对于增强表现力更有效。还通过案例研究探索和证明了从依赖图中学习的语义表示的有效性。</p>
+<h2 id="2-Methodology"><a href="#2-Methodology" class="headerlink" title="2. Methodology"></a>2. Methodology</h2><p>为了提高合成语音的表达能力，我们提出了一种基于图神经网络的语义表示学习方法，考虑了句子的依赖关系。 所提出方法的主要框架如图 1 所示。 在构建输入文本的依赖图后，使用两个单独的关系门控图网络 (RGGN) 来学习语义表示，这些表示作为附加输入传递给 Tacotron-2。</p>
+<p><img src="/images/gnn-tts-fig1.png" alt="gnn-tts-fig1"></p>
+<h3 id="2-1-依赖图构建"><a href="#2-1-依赖图构建" class="headerlink" title="2.1 依赖图构建"></a>2.1 依赖图构建</h3><p><img src="/images/gnn-tts-fig2.png" alt="gnn-tts-fig2"></p>
+<p>在依存树中，使用双词化依存关系来描述词之间的关系进行语义分析，如图2所示。 我们使用图来表示语义标记的依赖关系，定义为 $G = (V, E)$。 节点 $v ∈ V$ 表示句子中带有语义信息的标记，通常是一个词。 边是一对 $e = (v_i,v_j) ∈ E$，它表示从节点 $v_i$ 到节点 $v_j$ 的有向边，具有特定的依赖关系。 并且不同类型的边代表不同类型的依赖关系。 一个句子可以表示为一个单词序列 $W = [w_1 , w_2 , …, w_n ]$，其中 $n$ 是句子的单词数。 我们从 $W$ 中提取语义表示和依赖树的结构，可以表述为：</p>
+<p><img src="/images/gnn-tts-al1.png" alt="gnn-tts-al1"></p>
+<p>其中$v_i$是第$i$个词的BERT特征，组成节点集$V_{bert}$，$E_{dep}$是依赖解析的关系边集，可以看作是$W$的依赖结构。</p>
+<p>如图2所示，节点“jumped”指向原始依赖树中的节点“quickly”。 但考虑到“quickly”修饰“jumped”，子节点的语义信息应该同时影响父节点。 因此，我们使用两个信息流方向来构建依赖图。 前向定义为信息从父节点流向子节点，与依赖树一致。 反向定义为信息从子节点流向父节点，反向流向依赖树。 正反方向对应的结构可以表示为：</p>
+<p><img src="/images/gnn-tts-al2.png" alt="gnn-tts-al2"></p>
+<p>其中 $E_{fwd}$ 是前向依赖结构，$Direction_{rev}$ 是方向反转操作，$E_{rev}$ 是 $W$ 的反向依赖结构。 因此前向依赖图和反向依赖图可以表示为：</p>
+<p><img src="/images/gnn-tts-al3.png" alt="gnn-tts-al3"></p>
+<p>单词的语义信息会通过 $G_{fwd}$ 和 $G_{rev}$ 的拓扑结构直接或间接流向依赖节点。 这样，一个句子的依赖图就由依赖树构造出来，进一步传递给关系门控图网络进行语义表示学习。</p>
+<h3 id="2-2-关系图网络"><a href="#2-2-关系图网络" class="headerlink" title="2.2 关系图网络"></a>2.2 关系图网络</h3><p>关系门控图网络（RGGN）旨在从第 2.1 节中的依赖图学习语义表示。 门控图神经网络（GGNN）因其信息流的长期传播而被采用。 此外，受关系图卷积网络的启发，将对应于不同类型边的不同权重矩阵引入到GGNN。</p>
+<p>RGGN 通过信息传播将依赖图映射到语义表示。 首先，隐藏状态 $h^0_i$ 由节点 $i$ 的词级 BERT 特征 $v_i ∈ V_{bert}$ 发起。 然后传播步骤通过多次迭代计算每个节点的节点表示，表示为：</p>
+<p><img src="/images/gnn-tts-al4.png" alt="gnn-tts-al4"></p>
+<p>其中 $N(i)$ 是节点 $i$ 的邻居集，$W_{eij}$ 表示传播中从节点 $i$ 到 $j$ 的边的权重参数，$h^t_i$ 和 $h^{t+1}_i$ 表示节点 $i$ 在第 $t$ 和 $t+1$次迭代中的隐藏状态，$a_i^t$ 是节点 $i$ t的邻居的隐藏状态 $h^t_j$ 的加权和，$GRU(·)$ 表示门控聚合器，它更新隐藏状态 $h^t_i$ 合并来自邻居和节点的信息。 节点 $i$ 的前一个迭代步骤。 在 RGGN 中，由于门控循环单元，节点可以在传播过程中保留长期信息。</p>
+<p>多次迭代后图中节点的隐藏状态被视为图嵌入，通过显式连接收集相关节点的信息。 根据预先标记的节点顺序，我们将图嵌入用于与原始句子一致的词级语义表示序列。 因此，考虑到句子的依赖关系，我们可以获得每个单词的语义表示。</p>
+<h3 id="2-3-带有语义表示的-TTS"><a href="#2-3-带有语义表示的-TTS" class="headerlink" title="2.3 带有语义表示的 TTS"></a>2.3 带有语义表示的 TTS</h3><p>如图 1 所示，我们设计了两个 RGGNs $RGGN_{fwd}$ 和 $RGGN_{rev}$ 分别处理前向和反向依赖图，并且它们的参数不共享。 词级语义表示可以通过以下方式获得：</p>
+<p><img src="/images/gnn-tts-al5.png" alt="gnn-tts-al5"></p>
+<p>其中$r^i_{fwd}$是从前向依赖图中学习到的$W$中第$i$个单词的语义表示，$r^i_{rev}$是从反向依赖图中学习到的，$R_{fwd}$和$R_{rev}$是两个依赖图的语义表示序列。 此外，我们结合 $R_{fwd}$和 $R_{rev}$ 来考虑正向和反向的依赖信息：</p>
+<p><img src="/images/gnn-tts-al6.png" alt="gnn-tts-al6"></p>
+<p>其中 $⊕$ 是 $r^i_{fwd}$ 和 $r^i_{rev}$ 的元素相加操作，以获得第 $i$ 个单词的语义表示 $r^i_{bi}$，$R_{bi}$ 是 $r^i_{bi}$ 的序列。</p>
+<p>然后将单词级语义表示上采样到字符级并与字符嵌入连接。 也就是说，我们复制单词级别的语义表示以匹配单词的字符长度。 然后将串联传递给 Tacotron 2 的编码器，然后是基于注意力的解码器以生成梅尔谱图。 波形最终使用以梅尔频谱图为条件的多频段 MelGAN 声码器合成。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>在这项研究中，我们提出了一种基于图神经网络的语义表示学习方法，考虑句子的依赖关系以增强表达能力。 构建依赖图时，正向和反向都考虑在内。 实验结果表明，我们提出的方法在两个数据集中都优于基线，并且从相反方向学习的语义表示对于增强表达能力更有效。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/19/i-vector-d-vector-x-vector/" rel="prev" title="i-vector/d-vector/x-vector">
+      <i class="fa fa-chevron-left"></i> i-vector/d-vector/x-vector
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/20/gnn-tts2/" rel="next" title="SYNTACTIC REPRESENTATION LEARNING FOR NEURAL NETWORK BASED TTS WITH SYNTACTIC PARSE TREE TRAVERSAL">
+      SYNTACTIC REPRESENTATION LEARNING FOR NEURAL NETWORK BASED TTS WITH SYNTACTIC PARSE TREE TRAVERSAL <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E4%BE%9D%E8%B5%96%E8%A7%A3%E6%9E%90%E7%9A%84%E8%AF%AD%E4%B9%89%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%A2%9E%E5%BC%BA%E6%96%87%E6%9C%AC%E5%88%B0%E8%AF%AD%E9%9F%B3%E7%9A%84%E8%A1%A8%E8%BE%BE%E8%83%BD%E5%8A%9B"><span class="nav-number">1.</span> <span class="nav-text">基于依赖解析的语义表示学习与图神经网络增强文本到语音的表达能力</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Methodology"><span class="nav-number">1.3.</span> <span class="nav-text">2. Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%BE%9D%E8%B5%96%E5%9B%BE%E6%9E%84%E5%BB%BA"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 依赖图构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%85%B3%E7%B3%BB%E5%9B%BE%E7%BD%91%E7%BB%9C"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.2 关系图网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%B8%A6%E6%9C%89%E8%AF%AD%E4%B9%89%E8%A1%A8%E7%A4%BA%E7%9A%84-TTS"><span class="nav-number">1.3.3.</span> <span class="nav-text">2.3 带有语义表示的 TTS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.4.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Alan Sun</p>
+  <div class="site-description" itemprop="description">记录工作与生活</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人来过
+</span>
+</div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Sun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
