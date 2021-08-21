@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文为TTS行业内首个发表的采用syntactic parsed tree 方案来解决TTS韵律问题的论文，出自于西工大谢磊团队，发表于Interspeech 2019。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Exploiting Syntactic Features in a Parsed Tree to Improve End-to-End TTS">
+<meta property="og:url" content="http://example.com/2021/08/21/syntactic-tree-tts/index.html">
+<meta property="og:site_name" content="海阔天空蓝">
+<meta property="og:description" content="本文为TTS行业内首个发表的采用syntactic parsed tree 方案来解决TTS韵律问题的论文，出自于西工大谢磊团队，发表于Interspeech 2019。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/syntactic-tree-tts-fig1.png">
+<meta property="og:image" content="http://example.com/images/syntactic-tree-tts-fig2.png">
+<meta property="og:image" content="http://example.com/images/syntactic-tree-tts-fig3.png">
+<meta property="og:image" content="http://example.com/images/syntactic-tree-tts-fig4.png">
+<meta property="article:published_time" content="2021-08-21T02:53:46.000Z">
+<meta property="article:modified_time" content="2021-08-21T03:59:30.212Z">
+<meta property="article:author" content="Alan Sun">
+<meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/syntactic-tree-tts-fig1.png">
+
+<link rel="canonical" href="http://example.com/2021/08/21/syntactic-tree-tts/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Exploiting Syntactic Features in a Parsed Tree to Improve End-to-End TTS | 海阔天空蓝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">海阔天空蓝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个玩过n种运动的语音合成算法攻城狮</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/21/syntactic-tree-tts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alan Sun">
+      <meta itemprop="description" content="记录工作与生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空蓝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Exploiting Syntactic Features in a Parsed Tree to Improve End-to-End TTS
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-21 10:53:46 / 修改时间：11:59:30" itemprop="dateCreated datePublished" datetime="2021-08-21T10:53:46+08:00">2021-08-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">本文为TTS行业内首个发表的采用syntactic parsed tree 方案来解决TTS韵律问题的论文，出自于西工大谢磊团队，发表于Interspeech 2019。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="利用解析树中的句法特征来改进端到端-tts">利用解析树中的句法特征来改进端到端 TTS</h1>
+<h2 id="摘要">摘要</h2>
+<p>端到端 TTS 可以直接从给定的字素或音素序列预测语音，其性能优于传统 TTS。 然而，它的预测能力仍然受到训练数据的声学/语音覆盖范围的限制，通常受训练集大小的限制。 为了进一步提高发音、韵律和感知自然度的 TTS 质量，我们建议利用嵌入在句法分析树中的信息，其中句子的短语/单词信息组织在多级树结构中。 具体来说，研究了两个关键特征：短语结构和相邻词之间的关系。 在三个测试集上测量的主观听力实验结果表明，所提出的方法可有效提高基线系统合成语音的发音清晰度、韵律和自然度。</p>
+<h2 id="introduction">Introduction</h2>
+<p>文本到语音 (TTS) 系统的评估侧重于测量可懂度、自然度、韵律和说话人相似度等几个因素。传统的基于语音参数的 TTS 系统已经实现了高可懂度，例如，基于 GMM-HMM 的和基于 NN 的统计语音合成。最近，基于 WaveNet 或 WaveRNN 的神经声码器的语音质量也有了很大的提高，它可以通过从生成的声学特征中预测语音样本来产生高质量的语音。然而，它在发音、韵律和自然度方面的预测能力仍然受到其声学/语音覆盖范围和可用于训练的数据量的限制。</p>
+<p>在传统的英语 TTS 中，通常使用 ToBI 标签来转录韵律变化，包括：重音、强调、停顿等。训练数据的语音韵律可以在 ToBI 中手动或自动进行注释，以训练一个 ToBI 韵律模型来预测给定文本中的 ToBI 标签。注释基于文本和音频，但在预测中只有文本可用。需要考虑长期上下文来预测韵律的高质量 ToBI 韵律模型可能难以使用有限的文本-语音配对数据进行训练。此外，需要预测持续时间、中断、发声和 F0 轮廓的模型可以使训练更具挑战性。韵律模型的预测误差可以累积，然后降低对 TTS 频谱参数的预测，并导致合成语音中出现意外故障。此外，ToBI 标签序列不能完全表征韵律信息。</p>
+<p>最近，提出了端到端的 TTS 训练，例如，char2wav、Tacotron和 Tacotron2以统一的方式直接从字素或音素预测语音参数，无需手动注释语音数据来训练模型。它可以通过最小化迭代训练循环中的预测误差，通过语言空间到声学空间之间的灵活映射来学习各种声学模式。端到端模型中的所有模块都是联合训练的，因此可以避免因训练模块分离而导致的累积误差。实验结果表明，端到端模型的性能优于传统的统计 TTS。但是，仍然会出现问题，例如错误的重音模式、不合理的中断、错误的发音，特别是对于训练数据覆盖的域之外的长而复杂的测试句子。由此产生的较差的泛化会严重降低相应的 TTS 性能。</p>
+<p>端到端模型是一种高度依赖于序列信息的序列到序列模型。但是训练句子的大小不足以覆盖目标（文本）域，包括不同的长度和上下文。为了提高模型的泛化能力，我们需要尽可能提高我们的数据在文本域上的覆盖率，最好的方法是提高数据的泛化能力。仅由字素或音素组成的序列泛化性低，因为每个序列都指特定的案例，不能代表一些具有共同特征的案例。这就导致了很多情况在训练集中没有很好覆盖的问题。所以我们可以使用更高级、更抽象的特征来描述序列，以提高输入数据的覆盖率和泛化能力。语义信息和句法信息正是我们所需要的。</p>
+<p>在本文中，我们将尝试利用句法信息，特别是从用于端到端 TTS 的句法解析树中得出的语言特征。 句法解析是一种广泛使用的句法分析工具。 它也称为“短语结构解析”，可以描述句子中单词之间的短语结构和短语级关系。 我们从 TTS 的角度对句法解析进行了系统的研究，并从不同的角度提出了一系列基于句法解析的特征，以帮助优化端到端的 TTS 模型。 我们使用三个不同的测试集从三个方面评估我们的模型，在普通测试集上的性能，在复杂句子上的性能和在病理测试集上的泛化。 实验结果表明，这些特征有助于提高韵律和泛化能力。</p>
+<h2 id="句法解析衍生的语言特征">句法解析衍生的语言特征</h2>
+<h3 id="句法解析">2.1 句法解析</h3>
+<p>句法解析将句子分解为其句法短语树结构。树中的组件有其对应的级别和语法角色，例如名词短语和动词短语。包含多个单词的短语也可以进一步解析为子短语，直到到达单词的末端叶子为止。句法解析可以递归地对一个例句进行，如图1所示。近年来，解析技术的研究取得了长足的进步，出现了许多新的解析算法，如概率上下文无关文法（PCFG）、分解解析器、Shift-Reduce解析器和直接到树。改进的解析性能带来了更少的歧义和更稳定的句法分析。用具有丰富语法结构的大型文本数据库训练的句法解析模型可以为 TTS 提供有用的句法特征。</p>
+<p>早些年，句法解析主要用于帮助构建更好的基于规则的韵律预测模块。例如，描述了一个基于规则的系统，通过句法解析来推断韵律短语。然后随着统计参数语音合成的发展，句法解析衍生的特征可以用作韵律预测的前端。在一些文献中，提出了从句法分析中提取的特征以改进韵律预测。在某文献中，作者的目的是建立一个模型，该模型可以从句法树映射到韵律树，以改进中断索引标记。新研究还尝试使用句法解析来改进基于 HMM 或 DNN 的声学模型。实验结果表明，句法解析可以改善 TTS 的韵律。</p>
+<p>在本节中，我们将尝试从短语结构和词关系两个方面对句法解析进行系统分析，并测试深层句法解析衍生的语言特征以提高 TTS 性能。</p>
+<h3 id="基于短语结构的特征">2.2 基于短语结构的特征</h3>
+<p>当我们以宏观的方式研究句法树结构时，树在多个层次上描述了一个短语结构。 短语结构控制着句子的句法框架。 句子的节奏和语调本质上嵌入在基于树的短语结构中。 我们采用从短语结构中导出的特征来表征句法信息：</p>
+<ul>
+<li><p>词性 (POS: Part-of-speech)</p></li>
+<li><p>短语标签，例如 S、NP、VP 和 PP。</p></li>
+<li><p>短语第一个词的短语边界标签</p></li>
+<li><p>词在短语中的相对位置。 <span class="math inline">\(𝑅_𝑤 = 𝑃_𝑤/𝑁_𝑝\)</span> <span class="math inline">\(𝑃_𝑤\)</span>：当前词在当前词组中的位置</p></li>
+</ul>
+<p><span class="math inline">\(𝑁_𝑝\)</span>：当前词组词数</p>
+<div class="figure">
+<img src="/images/syntactic-tree-tts-fig1.png" alt="syntactic-tree-tts-fig1" />
+<p class="caption">syntactic-tree-tts-fig1</p>
+</div>
+<p>例如，图1中的“like”是其父节点的边界，即<span class="math inline">\(VP\)</span>； 它的POS是<span class="math inline">\(VBP\)</span>； 它在 <span class="math inline">\(S\)</span> 中的相对位置是 <span class="math inline">\(𝑅_𝑤 = 5/9\)</span>（“.”也是一个词）； 它属于高级短语，<span class="math inline">\(S\)</span> 和 <span class="math inline">\(VP\)</span>。</p>
+<p>这些特征可以捕获句子的结构信息，然后用该信息影响每个单词。 当我们使用基于短语结构的特征时，我们需要固定层数和选择特定层的方式。 不同的大小和方法会对韵律产生不同的影响。 在3.2.1中，我们将讨论层的选择。</p>
+<h3 id="基于词关系的特征">2.3 基于词关系的特征</h3>
+<div class="figure">
+<img src="/images/syntactic-tree-tts-fig2.png" alt="syntactic-tree-tts-fig2" />
+<p class="caption">syntactic-tree-tts-fig2</p>
+</div>
+<p>短语结构中的高冗余使得仅使用有限的文本数据更难提取用于韵律预测的有用信息。 出于这个原因，我们建议改进功能。 我们都知道 ToBI 中的特征是基于单词或较低级别的音素，如重音、重音和中断。 因此，我们希望通过提取一些既可以描述单词的句法属性又可以描述两个相邻单词之间关系的特征来关注树中单词之间的关系，以帮助学习这些韵律特征。 我们定义特征并将它们用图 2 解释为：</p>
+<ul>
+<li><p>一个词的词性。 (橙色部分)</p></li>
+<li><p>与两个相邻词的结合点相关的短语。中断或停顿只发生在两个相邻词之间。我们在本文中对其进行了扩展，如果我们将 NONE 设置为每个单词的第一个短语，则会在两个相邻的短语之间发生中断。例如，“boys”和“like”交界处的短语是<span class="math inline">\(NP\)</span>和<span class="math inline">\(VP\)</span>，“like”和“eating”交界处的短语是<span class="math inline">\(NONE\)</span>和<span class="math inline">\(VP\)</span>。为了找到这两个短语，我们采用以下两个标准：</p></li>
+</ul>
+<ol style="list-style-type: decimal">
+<li><p>当前单词开头的最高级别短语 (HBCW)。</p></li>
+<li><p>以前一个词结尾的最高级别短语 (HEPW)。</p></li>
+</ol>
+<ul>
+<li><p>最低共同祖先（LCA），由两个相邻词组成的最低级节点。在图2中，<span class="math inline">\(S\)</span>是“boys”和“like”的<span class="math inline">\(LCA\)</span>，第二级<span class="math inline">\(VP\)</span>是“eating”和“apples”的<span class="math inline">\(LCA\)</span>。</p></li>
+<li><p>句法距离。它显示了树中两个相邻单词之间的距离。更长的距离可能导致更高的概率中断更长的停顿。我们定义了以下与句法距离相关的特征：</p></li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>高度 (<span class="math inline">\(𝐻\)</span>)：树中的水平。 <span class="math inline">\(𝐻_𝑙\)</span> , <span class="math inline">\(𝐻_𝑐\)</span> , <span class="math inline">\(𝐻_𝑝\)</span> 分别表示 <span class="math inline">\(LCA\)</span> 的级别，当前词的 POS 和前一个词的 POS。</li>
+<li>距离（<span class="math inline">\(𝐷\)</span>）：树中节点之间的最短路径长度（不包括单词）。 <span class="math inline">\(𝐷_{𝑐𝑙}\)</span>, <span class="math inline">\(𝐷_{𝑝𝑙}\)</span>, <span class="math inline">\(𝐷_{𝑐𝑝}\)</span> 是指 LCA 与当前 POS、LCA 与前一个 POS、当前 POS 和前一个 POS 之间的距离。</li>
+</ol>
+<p>“like”的<span class="math inline">\(𝐷_{𝑐𝑝}\)</span>是从NNS到VBP的最短路径的长度。 我们可以添加 <span class="math inline">\(𝐷_{𝑐𝑙}\)</span> 和 <span class="math inline">\(𝐷_{𝑝𝑙}\)</span> 来得到它的值。 (<span class="math inline">\(𝐷_{𝑐𝑙} = 𝐻_𝑙 -𝐻_𝑐;𝐷_{𝑝𝑙} = 𝐻_𝑙 -𝐻_𝑝;𝐷_{𝑐𝑝} = 𝐷_{𝑐𝑙} +D_{pl}\)</span>)</p>
+<p>模型结构图见如下图3</p>
+<div class="figure">
+<img src="/images/syntactic-tree-tts-fig3.png" alt="syntactic-tree-tts-fig3" />
+<p class="caption">syntactic-tree-tts-fig3</p>
+</div>
+<p>实验结果见如下图4，其中本文提出的模型对于4个had进行了较好程度的建模，建模出了不同的音高和韵律。</p>
+<div class="figure">
+<img src="/images/syntactic-tree-tts-fig4.png" alt="syntactic-tree-tts-fig4" />
+<p class="caption">syntactic-tree-tts-fig4</p>
+</div>
+<h2 id="结论">结论</h2>
+<p>在这项研究中，我们研究了嵌入在解析树中的句法解析派生特征，以提高端到端 TTS 合成性能。 两个特定的特征，短语结构和词关系，被有利地选择来测试它们对韵律预测、发音清晰度、自然性和端到端 TTS 合成的泛化的影响。 实验结果表明，句法特征确实可以提高合成语音在韵律、可理解性和概括性方面的质量。 基于词关系的特征 (WRF) 在检查的三个测试集上产生最佳性能。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/20/gnn-tts2/" rel="prev" title="SYNTACTIC REPRESENTATION LEARNING FOR NEURAL NETWORK BASED TTS WITH SYNTACTIC PARSE TREE TRAVERSAL">
+      <i class="fa fa-chevron-left"></i> SYNTACTIC REPRESENTATION LEARNING FOR NEURAL NETWORK BASED TTS WITH SYNTACTIC PARSE TREE TRAVERSAL
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E8%A7%A3%E6%9E%90%E6%A0%91%E4%B8%AD%E7%9A%84%E5%8F%A5%E6%B3%95%E7%89%B9%E5%BE%81%E6%9D%A5%E6%94%B9%E8%BF%9B%E7%AB%AF%E5%88%B0%E7%AB%AF-tts"><span class="nav-number">1.</span> <span class="nav-text">利用解析树中的句法特征来改进端到端 TTS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%A5%E6%B3%95%E8%A7%A3%E6%9E%90%E8%A1%8D%E7%94%9F%E7%9A%84%E8%AF%AD%E8%A8%80%E7%89%B9%E5%BE%81"><span class="nav-number">1.3.</span> <span class="nav-text">句法解析衍生的语言特征</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%A5%E6%B3%95%E8%A7%A3%E6%9E%90"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 句法解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%9F%AD%E8%AF%AD%E7%BB%93%E6%9E%84%E7%9A%84%E7%89%B9%E5%BE%81"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.2 基于短语结构的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%AF%8D%E5%85%B3%E7%B3%BB%E7%9A%84%E7%89%B9%E5%BE%81"><span class="nav-number">1.3.3.</span> <span class="nav-text">2.3 基于词关系的特征</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.4.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Alan Sun</p>
+  <div class="site-description" itemprop="description">记录工作与生活</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人来过
+</span>
+</div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Sun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
