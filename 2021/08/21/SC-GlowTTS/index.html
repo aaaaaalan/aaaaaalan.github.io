@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文为Interspeech 2021发表的 在Glow-TTS上进行的Zero-shot Multi-Speaker Text-to-speech 方向的改进论文。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SC-GlowTTS an Efficient Zero-Shot Multi-Speaker Text-To-Speech Model">
+<meta property="og:url" content="http://example.com/2021/08/21/SC-GlowTTS/index.html">
+<meta property="og:site_name" content="海阔天空蓝">
+<meta property="og:description" content="本文为Interspeech 2021发表的 在Glow-TTS上进行的Zero-shot Multi-Speaker Text-to-speech 方向的改进论文。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-21T04:00:10.000Z">
+<meta property="article:modified_time" content="2021-08-21T04:40:17.252Z">
+<meta property="article:author" content="Alan Sun">
+<meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/08/21/SC-GlowTTS/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>SC-GlowTTS an Efficient Zero-Shot Multi-Speaker Text-To-Speech Model | 海阔天空蓝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">海阔天空蓝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个玩过n种运动的语音合成算法攻城狮</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/21/SC-GlowTTS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alan Sun">
+      <meta itemprop="description" content="记录工作与生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空蓝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SC-GlowTTS an Efficient Zero-Shot Multi-Speaker Text-To-Speech Model
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-21 12:00:10 / 修改时间：12:40:17" itemprop="dateCreated datePublished" datetime="2021-08-21T12:00:10+08:00">2021-08-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">本文为Interspeech 2021发表的 在Glow-TTS上进行的Zero-shot Multi-Speaker Text-to-speech 方向的改进论文。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="sc-glowtts-一种高效的零样本多说话者文本到语音模型">SC-GlowTTS: 一种高效的零样本多说话者文本到语音模型</h1>
+<h2 id="摘要">摘要</h2>
+<p>在本文中，我们提出了 SC-GlowTTS：一种高效的零样本多说话者文本到语音模型，可提高训练期间未见过的说话者的相似性。 我们提出了一种<strong>说话人条件架构，该架构探索了一种在零样本场景中工作的基于流的解码器。</strong> 作为文本编码器，我们探索了基于空洞残差卷积的编码器、基于门控卷积的编码器和基于transformer的编码器。 此外，我们已经表明，为训练数据集上的 TTS 模型预测的频谱图调整基于 GAN 的声码器可以显着提高新说话者的相似性和语音质量。 我们的模型仅使用 11 个说话者进行收敛，在与新说话者的相似性以及高语音质量方面达到了最先进的结果。</p>
+<h2 id="introduction">Introduction</h2>
+<p>近年来，由于深度学习的巨大进步，文本到语音 (TTS) 系统受到了很多关注，这使得虚拟助手等语音应用程序得以普及。大多数 TTS 系统是根据单个说话者的声音量身定制的，但目前有兴趣为新说话者合成语音，这在训练期间没有看到，仅使用几秒钟的语音样本。这种方法被称为零样本多说话人 TTS (ZS-TTS)。</p>
+<p>ZS-TTS 最初是通过扩展 Deep-Voice 3 提出的。此外，一些学者使用广义端到端损失 (GE2E) 使用从经过训练的说话人编码器提取的外部嵌入探索了 Tacotron 2，从而产生了一个可以生成语音的模型，类似于目标说话人。同样，一些学者使用不同的说话人嵌入方法探索了 Tacotron 2。作者表明，与 X-vector嵌入相比，LDE 嵌入提高了相似性，并为新说话者合成了更自然的语音。 某作者还表明，训练性别相关模型可以提高未见过说话者的相似性。</p>
+<p>在这种情况下，一个主要问题是训练期间观察到的和未观察到的说话者之间的相似性差距。为了缩小这种差距，Attentron 提出了一种细粒度编码器，它具有从各种参考样本中提取详细样式的注意力机制和粗粒度编码器。由于使用了多个参考样本而不是一个，他们对看不见的说话者获得了更好的相似性。</p>
+<p>尽管最近有结果，但零样本多说话人TTS 仍然是一个悬而未决的问题，特别是关于可见和不可见说话人的质量差异。此外，当前的方法严重依赖 Tacotron 2，而使用基于流的方法有可能改善结果。在这种情况下，FlowTron允许操纵语音的多个方面，例如音调、语气、语速、节奏和口音。此外， 提出 GlowTTS 达到与 Tacotron 2 相似的质量，但速度提高了 15.7 倍，同时允许语音速度操纵。</p>
+<p>在本文中，我们提出了一种新方法，Speaker Conditional GlowTTS (SC-GlowTTS)，用于对未见过的说话者进行零样本学习。我们的模型依赖 GlowTTS 作为将输入字符转换为频谱图的部分。 SC-GlowTTS 使用基于 Angular Prototype loss 的外部说话人编码器来学习说话人嵌入向量，并调整 HiFi-GAN 声码器以将输出频谱图转换为波形。我们的贡献如下：</p>
+<ul>
+<li>一种新颖的零样本多说话人 TTS 方法，仅在训练集中 11 名说话人的情况下即可获得最先进的结果；</li>
+<li>在零样本多说话人 TTS 设置中实现高质量和比实时语音合成更快的架构；</li>
+<li>为训练数据集上的 TTS 模型预测的频谱图调整基于 GAN 的声码器，以显着提高新说话者的相似度和语音质量。</li>
+</ul>
+<p>我们每个实验的音频样本都可以在演示网站上找到。 此外，为了重现性，Coqui TTS 提供了实现，并且所有实验的checkpoints都可以在 Github 存储库中找到。</p>
+<h2 id="说话人相关的glowtts模型">说话人相关的GlowTTS模型</h2>
+<p>Speaker Conditional Glow-TTS (SC-GlowTTS) 建立在 GlowTTS 的基础上，但包括几个新颖的修改。除了 GlowTTS 的基于Transformer的编码器网络之外，我们还探索了残差扩张卷积网络 (Residual dilated convolutional network) 和门控卷积网络 (gated convolutional network)；据我们所知，在这种情况下首次使用。我们的卷积残差编码器基于speedyspeech，但是我们使用 Mish 而不是 ReLU 激活函数。另一方面，我们的门控卷积网络由 9 个卷积块组成，每个块包括一个 dropout 层、一个 1D 卷积和一个层归一化。我们在所有卷积层中使用内核大小 5、扩张率 1 和 192 个通道。<strong>基于流的解码器使用与 GlowTTS 模型相同的架构和配置</strong>。然而，为了将其转换为零样本 TTS 模型，我们在所有 12 个解码器块的仿射耦合层中包含了说话人嵌入。我们还使用 FastSpeech 的持续时间预测器网络来预测字符持续时间。为了捕捉不同说话者的不同语音特征，我们在持续时间预测器的输入中添加了说话者嵌入。最后，HiFi-GAN 用作声码器。</p>
+<p>SC-GlowTTS 模型在推理过程中如图 1 所示，其中 (<span class="math inline">\(+\)</span>) 表示串联。 在训练期间，该模型使用单调对齐搜索 (MAS)，其中解码器的目标是调节梅尔谱图和嵌入在 <span class="math inline">\(P_Z\)</span> 先验分布中的输入说话人。 MAS 的目的是将 <span class="math inline">\(P_Z\)</span> 先验分布与编码器的输出对齐。 在推理过程中，不使用 MAS，而是由文本编码器和持续时间预测器网络预测 <span class="math inline">\(P_Z\)</span> 先验分布和对齐。 最后，潜在变量 <span class="math inline">\(Z\)</span> 从先验分布 <span class="math inline">\(P_Z\)</span> 中采样。 使用反向解码器和说话人嵌入，并行合成梅尔谱图，通过基于流的解码器转换潜在变量 <span class="math inline">\(Z\)</span>。</p>
+<p>为简洁起见，我们将带有变压器、残差卷积和基于门控卷积的编码器的 SC-GlowTTS 模型分别命名为 SC-GlowTTS-Trans、SC-GlowTTS-Res 和 SC-GlowTTS-Gated 模型。</p>
+<h2 id="sc-glowtts-在少量说话人下的性能">SC-GlowTTS 在少量说话人下的性能</h2>
+<p>为了模拟只有少数说话者的场景，我们通过选择 VCTK 数据集训练集的子集来反映我们的测试集。 这个新的训练集由 11 说话人（每个人约400句）组成，7F/4M。 我们为每个口音选择了 1 个代表，除了“新西兰”口音只有一个说话者并且在我们的测试集中，所以我们添加了一个“美国”说话者，选择的说话者是 229、249、293、313 、301、374、304、316、251、297 和 323。从这个新的训练集中，我们选择了随机样本用作验证集。 作为测试集，我们使用 3.3 节中定义的相同的测试集。</p>
+<p><strong>我们使用 SC-GlowTTS-Trans 模型并使用 LJSpeech 数据集对其进行 290k 步训练。在单说话人数据集中进行这种预训练是为了在更大的词汇表中准备模型的编码器。</strong>我们对新训练集中的 SC-GlowTTS-Trans 模型进行了微调，<strong>其中只有 11 个说话者进行了 70k 步</strong>，并且使用验证集，我们选择了最佳检查点作为第 66k 步。此外，使用在 LibriTTS 数据集中训练 75k 步的 HiFi-GAN 模型，我们使用相同的技术调整其他 95k 步。这个新实验的结果是 SECS 为 0.7707，MOS 为 3.71 ± 0.07，Sim-MOS 为 3.93 ± 0.08。这些结果与 Tacotron 2 实现的 0.7791、MOS 3.74 和 Sim-MOS 3.951 ± 0.07 的 SECS 兼容，后者使用了更大的 98 个说话人组。因此，我们的 SC-GlowTTS-Trans 模型与一个小 9.8 倍的数据集收敛，性能与 Tacotron 2 相当。我们认为这是向前迈出的重要一步，尤其是对于低资源语言中的 ZS-TTS。</p>
+<h2 id="zero-shot-voice-conversion">Zero-shot Voice Conversion</h2>
+<p>与原始 GlowTTS 模型一样，我们不向模型编码器提供任何有关说话人身份的信息，因此编码器预测的分布被迫独立于说话人身份。 因此，与 GlowTTS 一样，SC-GlowTTS 可以仅使用模型的解码器来转换语音。 然而，在我们的工作中，我们使用外部扬声器嵌入来调节 SC-GlowTTS。 通过执行零样本语音转换，它使我们的模型能够模拟训练中未见过的说话者的语音。 演示页面上提供了零样本语音转换的示例。</p>
+<h2 id="结论和未来工作">结论和未来工作</h2>
+<p>在这项工作中，我们提出了一种新方法 SC-GlowTTS，实现了最先进的 ZS-TTS 结果。 我们为 SC-GlowTTS 模型探索了三种不同的编码器，并表明基于transformer的编码器为训练中未见过的说话者提供了最佳的相似性。 我们的 SC-GlowTTS 模型优于 Tacotron 2。此外，当与外部扬声器编码器结合使用时，SC-GlowTTS 模型可以在训练集中仅 11 个扬声器的情况下执行 ZS-TTS。 最后，我们发现对训练和验证集中的 TTS 模型预测的频谱图中 HiFi-GAN 声码器的调整可以显着提高未见过说话者的合成语音（MOS）的相似度和质量。 在训练中。 作为未来的工作，继的工作之后，我们打算将 SC-GlowTTS 扩展为一种少量的方法。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/21/syntactic-tree-tts/" rel="prev" title="Exploiting Syntactic Features in a Parsed Tree to Improve End-to-End TTS">
+      <i class="fa fa-chevron-left"></i> Exploiting Syntactic Features in a Parsed Tree to Improve End-to-End TTS
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sc-glowtts-%E4%B8%80%E7%A7%8D%E9%AB%98%E6%95%88%E7%9A%84%E9%9B%B6%E6%A0%B7%E6%9C%AC%E5%A4%9A%E8%AF%B4%E8%AF%9D%E8%80%85%E6%96%87%E6%9C%AC%E5%88%B0%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">SC-GlowTTS: 一种高效的零样本多说话者文本到语音模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B4%E8%AF%9D%E4%BA%BA%E7%9B%B8%E5%85%B3%E7%9A%84glowtts%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">说话人相关的GlowTTS模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sc-glowtts-%E5%9C%A8%E5%B0%91%E9%87%8F%E8%AF%B4%E8%AF%9D%E4%BA%BA%E4%B8%8B%E7%9A%84%E6%80%A7%E8%83%BD"><span class="nav-number">1.4.</span> <span class="nav-text">SC-GlowTTS 在少量说话人下的性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zero-shot-voice-conversion"><span class="nav-number">1.5.</span> <span class="nav-text">Zero-shot Voice Conversion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA%E5%92%8C%E6%9C%AA%E6%9D%A5%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.6.</span> <span class="nav-text">结论和未来工作</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Alan Sun</p>
+  <div class="site-description" itemprop="description">记录工作与生活</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人来过
+</span>
+</div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Sun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
