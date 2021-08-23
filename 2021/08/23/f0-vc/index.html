@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文为ICASSP 2021发表的VC的代表性论文。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Towards end-to-end F0 voice conversion based on Dual-GAN with convolutional wavelet kernels">
+<meta property="og:url" content="http://example.com/2021/08/23/f0-vc/index.html">
+<meta property="og:site_name" content="海阔天空蓝">
+<meta property="og:description" content="本文为ICASSP 2021发表的VC的代表性论文。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/f0-vc-al1.png">
+<meta property="og:image" content="http://example.com/images/f0-vc-al2.png">
+<meta property="og:image" content="http://example.com/images/f0-vc-al3.png">
+<meta property="og:image" content="http://example.com/images/f0-vc-al4.png">
+<meta property="og:image" content="http://example.com/images/f0-vc-al5.png">
+<meta property="og:image" content="http://example.com/images/f0-vc-al6.png">
+<meta property="og:image" content="http://example.com/images/f0-vc-al7.png">
+<meta property="og:image" content="http://example.com/images/f0-vc-al8.png">
+<meta property="article:published_time" content="2021-08-23T11:32:46.000Z">
+<meta property="article:modified_time" content="2021-08-23T12:22:33.022Z">
+<meta property="article:author" content="Alan Sun">
+<meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/f0-vc-al1.png">
+
+<link rel="canonical" href="http://example.com/2021/08/23/f0-vc/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Towards end-to-end F0 voice conversion based on Dual-GAN with convolutional wavelet kernels | 海阔天空蓝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">海阔天空蓝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个玩过n种运动的语音合成算法攻城狮</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/23/f0-vc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alan Sun">
+      <meta itemprop="description" content="记录工作与生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空蓝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Towards end-to-end F0 voice conversion based on Dual-GAN with convolutional wavelet kernels
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-23 19:32:46 / 修改时间：20:22:33" itemprop="dateCreated datePublished" datetime="2021-08-23T19:32:46+08:00">2021-08-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">本文为ICASSP 2021发表的VC的代表性论文。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="基于带卷积小波核的-dual-gan-实现端到端的-f0-语音转换">基于带卷积小波核的 Dual-GAN 实现端到端的 F0 语音转换</h1>
+<h2 id="摘要">摘要</h2>
+<p>本文提出了一种在表达性语音转换的背景下进行 F0 转换的端到端框架。 提出了一个单一的神经网络，其中第一个模块用于学习不同时间尺度上的 F0 表示，第二个对抗模块用于学习从一种情绪到另一种情绪的转换。 第一个模块由带有小波内核的卷积层组成，因此可以有效地编码 F0 变化的各种时间尺度。 单个分解/转换网络允许以端到端的方式直接从原始 F0 信号中学习对于转换而言最佳的 F0 分解。</p>
+<h2 id="introduction">Introduction</h2>
+<p>基频 (F0) 是人类语音交流和人机交互中必不可少的声学特征。 F0作为语音韵律的一个关键特征，在语音交际的各个方面都发挥着重要作用：它传达语言信息（F0有助于阐明话语的句法结构或用于语义强调），情感或社会态度等副语言信息，甚至通过他的说话风格成为说话者身份的一部分。因此，因此，生成式 F0 建模在文本到语音、语音身份转换 (VC) 和表达性语音转换领域非常有用，通过允许直接和参数控制F0 来操纵声音的表现力（例如说话风格或情绪）。从本质上讲，F0 变化发生在不同的时间尺度上，每个尺度都与特定功能相关，从微观变化到宏观轮廓，如强调、情绪和模式。为了涵盖 F0 建模的这些特性，已经提出了风格化方法和多级建模。</p>
+<p>值得注意的是，在 VC 中，诸如高斯混合模型 和基于 LSTM 的序列到序列模型等生成模型被用于学习从中性语音到表达性语音的 F0 转换。 最近，各种工作集中在使用连续小波变换 (CWT) 作为 F0 的中间表示，在其上使用生成对抗网络 (GAN) 模型，例如 Dual-GAN、Cycle-GAN、VAW -GAN 或 VA-GAN 被训练来学习转换。 这些模型中的大多数是在并行数据和情感对上学习的，这允许学习话语的两种不同情感版本之间的直接映射，同时保留固定和受控的语言内容。</p>
+<p>罗等人提出了一种称为 CWT 自适应尺度（CWT-AS）的有前途的方法。 CWT 在小波核上计算 F0 信号的分解，这允许在不同时间尺度上表示 F0，在表达性语音转换中具有各种应用。 使用 CWT 的 F0 建模最近被指定为可以在任意语言尺度（例如，音素、音节、单词和话语）上计算分解的可能性。 自适应尺度 (AS) 算法被描述为通过选择使 CWT 空间中情绪之间的平均距离最大化的尺度，为每对情绪选择最佳 CWT 表示。</p>
+<p>根据这些选定的尺度，计算 F0 轮廓的 CWT 分解。 最后，使用 Dual-GAN 从这些表示中学习每对情感之间的转换函数。 尽管这种方法看起来很有前景，但它有两个主要局限性：1）尺度选择仅基于情绪之间距离的最大化，而忽略了它们对 F0 信号的重建能力。 这可能会导致 F0 重建不佳，进而降低转换的质量和自然度； 2）F0信号的CWT-AS分解和dual-GAN是独立优化的，这构成了训练的瓶颈。 因此，就双 GAN 目标而言，CWT 分解可能不是最佳的。</p>
+<p>为了克服这些限制，我们提出了一种端到端架构来有效地学习情绪之间的 F0 转换。 所提出的神经架构将 F0 分解和双 GAN 结合到一个网络中，从而在双 GAN 目标意义上优化 CWT 分解，并结合所得分解的分离和重建损失。 对社会态度语音转换的应用表明，与 CWT-AS 方法相比，所提出的方法显着提高了转换的质量。</p>
+<h2 id="提案方法">提案方法</h2>
+<p>在本节中，我们将介绍我们基于 CWT-AS 的提案，并通过在转换学习过程之上集成 F0 风格化部分来展示它的不同之处，我们将其称为语音 f0 转换的端到端方法 Ⅱ-A。 我们的贡献的概念和技术细节在 II-B 和 II-C 中给出。</p>
+<h3 id="框架概述">框架概述</h3>
+<p>由于我们提出的 VC 系统需要并行数据，因此考虑了分别与表达性 <span class="math inline">\(a\)</span> 和 <span class="math inline">\(b\)</span> 相关的话语集 <span class="math inline">\(X_a\)</span> 和 <span class="math inline">\(X_b\)</span>。 然后对一对话语进行采样并提取 <span class="math inline">\(F_0\)</span> 序列，源 <span class="math inline">\(x_a\)</span> 和目标 <span class="math inline">\(x_b\)</span>。 除了表达性之外，一对中的每个话语都具有相同的内容（语言内容、说话者身份）。 源和目标 <span class="math inline">\(F_0\)</span> 被赋予我们称为 Wevelet 小波核卷积编码器 (WKCE)。 一个分类器，表示为 C，其目标是预测表达能力，由 WKCE 输出提供。 如图 1 所示，这两个模块必须被视为 Dual-GAN (DG) 的预网络 (<span class="math inline">\(pN\)</span>)，可以进行预训练，也可以与 Dual-GAN 一起训练形成端到端系统 用于 f0 转换。</p>
+<h3 id="小波核卷积自编码器">小波核卷积自编码器</h3>
+<p>作为一种多尺度建模方法，CWT 在尝试表示长期和短期依赖性时完全适合，韵律受其影响。 由于 CWT 只能应用于连续函数，因此需要在浊音 F0 段之间进行简单的线性插值以获得与短语相关的连续 F0 函数，然后可以在向量 <span class="math inline">\(x ∈ [0, 1]^T\)</span> 中对其进行采样。</p>
+<p>我们的 WKCE 基于为时间向量 <span class="math inline">\(t ∈ R^T\)</span> 定义的母小波 <span class="math inline">\(ψ_s ∈ R^T\)</span> 在 F0 信号 <span class="math inline">\(x\)</span> 和小波核之间执行卷积</p>
+<div class="figure">
+<img src="/images/f0-vc-al1.png" alt="f0-vc-al1" />
+<p class="caption">f0-vc-al1</p>
+</div>
+<p>考虑到小波内核依赖于控制组成内核的每个小波的宽度的 <span class="math inline">\(N\)</span> 个可学习参数 <span class="math inline">\(s\)</span>，时间级别 <span class="math inline">\(s\)</span> 对 F0 信号 <span class="math inline">\(x\)</span>的贡献 <span class="math inline">\(h^s_x\)</span> 是 <span class="math inline">\(x\)</span> 和 <span class="math inline">\(ψ_s\)</span> 之间的卷积。 因此，输入 <span class="math inline">\(x\)</span>，我们的 WKCE 模块将输出 <span class="math inline">\(W_e (x) = [h^{s_0}_x,...,h^{s_N}_x ] ∈ R^{N×T}\)</span>。 如果我们将 <span class="math inline">\(W_r\)</span> 表示为重建操作，则重建信号 <span class="math inline">\(\hat x\)</span> 由下式给出</p>
+<div class="figure">
+<img src="/images/f0-vc-al2.png" alt="f0-vc-al2" />
+<p class="caption">f0-vc-al2</p>
+</div>
+<p><span class="math inline">\(x ̄\)</span> 是 <span class="math inline">\(x\)</span> 的平均值，<span class="math inline">\(d_t = 1.2\)</span>，<span class="math inline">\(d_j = 0.125\)</span>，<span class="math inline">\(C_d = 3.541\)</span> 和 <span class="math inline">\(Y_0 = 0.867\)</span>（详情参见 [17]）</p>
+<p>如果我们表示 <span class="math inline">\(E\)</span>，数学期望并考虑分别从源分布和目标分布 <span class="math inline">\(P (x^a )\)</span> 和 <span class="math inline">\(P (x^b )\)</span> 采样的 <span class="math inline">\(x^a\)</span> 和 <span class="math inline">\(x^b\)</span>，则可以针对 L1 损失训练该模块以实现重建目标，公式如下</p>
+<div class="figure">
+<img src="/images/f0-vc-al3.png" alt="f0-vc-al3" />
+<p class="caption">f0-vc-al3</p>
+</div>
+<p>可以添加对 CWTs 潜在空间的分类约束，<span class="math inline">\(W_e\)</span> 和 <span class="math inline">\(C\)</span> 是针对 <span class="math inline">\(L_{cl}\)</span>、预测源表达性 <span class="math inline">\(\hat a = C(W_e(x^a))\)</span> 和真实值 <span class="math inline">\(a\)</span> 之间的交叉熵 (CE) 损失进行训练的 与 <span class="math inline">\(\hat b\)</span> 和 <span class="math inline">\(b\)</span> 之间的 CE 相加。</p>
+<div class="figure">
+<img src="/images/f0-vc-al4.png" alt="f0-vc-al4" />
+<p class="caption">f0-vc-al4</p>
+</div>
+<h3 id="模型">模型</h3>
+<p>在本文中，我们专注于称为 Dual-GAN 的特定 GAN 网络，它能够学习并行数据对之间的映射。该网络基于两个概念：1）对抗性学习，即训练生成模型在两个神经网络（称为生成器 G 和判别器 D）之间的最小-最大博弈中找到解决方案。2）双重监督学习即同时训练两个双重任务的模型，利用它们之间的概率相关性来规范训练过程。结合这些突破，可以利用 GAN 产生现实转换的能力以及由于双重监督学习带来的显着改进。</p>
+<p>这第二点意味着正向和逆向变换，分别是 <span class="math inline">\(G_{a→b} : (W_e(x^a), z^a) → x^b\)</span> 和 <span class="math inline">\(G_{b→a} : (W_e(x^b, z^b) → x^a\)</span>, 是联合学习的，其中 <span class="math inline">\(z^a\)</span> 和 <span class="math inline">\(z^b\)</span> 是在 <span class="math inline">\(G_a\)</span> 和 <span class="math inline">\(G_b\)</span> 的每一层以 dropout 形式提供的随机独立噪声。需要第一个损失 <span class="math inline">\(L_{a↔b}\)</span> 来训练 <span class="math inline">\(G_{a→b}\)</span>、<span class="math inline">\(G_{b→a}\)</span> 和 <span class="math inline">\(W_e\)</span>。</p>
+<div class="figure">
+<img src="/images/f0-vc-al5.png" alt="f0-vc-al5" />
+<p class="caption">f0-vc-al5</p>
+</div>
+<p>同时，<span class="math inline">\(D_a\)</span> 区分 <span class="math inline">\(G_{a→b}\)</span> 的转换输出 <span class="math inline">\(\hat X^b\)</span> 和域 <span class="math inline">\(X_b\)</span> 的真实样本，<span class="math inline">\(D_b\)</span> 类似地完成对抗机制。 训练 <span class="math inline">\(G_{a→b}\)</span>、<span class="math inline">\(G_{b→a}\)</span>、<span class="math inline">\(D_a\)</span>、<span class="math inline">\(D_b\)</span> 和 <span class="math inline">\(W_e\)</span> 需要对抗性损失 <span class="math inline">\(L_{ADV}\)</span></p>
+<div class="figure">
+<img src="/images/f0-vc-al6.png" alt="f0-vc-al6" />
+<p class="caption">f0-vc-al6</p>
+</div>
+<p>添加了第三个约束，称为 Dual loss，以加强 <span class="math inline">\(G_{a→b}\)</span> 和 <span class="math inline">\(G_{b→a}\)</span>之间的内在联系，可以理解为过程的正则化。</p>
+<div class="figure">
+<img src="/images/f0-vc-al7.png" alt="f0-vc-al7" />
+<p class="caption">f0-vc-al7</p>
+</div>
+<p>因此，可以为 pre-Net 预训练和适当的 Dual-GAN 训练制定两个最终损失，分别是 <span class="math inline">\(L_{pN}\)</span> 和 <span class="math inline">\(L_{DG}\)</span>，分别具有 <span class="math inline">\(α\)</span>、<span class="math inline">\(β\)</span>、<span class="math inline">\(λ\)</span> 和 <span class="math inline">\(γ\)</span> 加权重建、分类、转换和双重目标。</p>
+<div class="figure">
+<img src="/images/f0-vc-al8.png" alt="f0-vc-al8" />
+<p class="caption">f0-vc-al8</p>
+</div>
+<h2 id="结论">结论</h2>
+<p>在本文中，我们提出了一种在表达性语音转换的上下文中进行 F0 转换的端到端框架，将不同时间级别的 F0 分解及其在单个网络中的转换结合在一起。 客观和主观评估都表明我们的方法可以实现比基线更好的性能。 我们旨在推广多说话人 F0 转换，并通过构建表达性嵌入来避免配对学习。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/22/Parrotron/" rel="prev" title="Parrotron An End-to-End Speech-to-Speech Conversion Model and its Applications to Hearing-Impaired Speech and Speech Separation">
+      <i class="fa fa-chevron-left"></i> Parrotron An End-to-End Speech-to-Speech Conversion Model and its Applications to Hearing-Impaired Speech and Speech Separation
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/23/end2endVC-Transformer/" rel="next" title="end2endVC-Transformer">
+      end2endVC-Transformer <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%B8%A6%E5%8D%B7%E7%A7%AF%E5%B0%8F%E6%B3%A2%E6%A0%B8%E7%9A%84-dual-gan-%E5%AE%9E%E7%8E%B0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84-f0-%E8%AF%AD%E9%9F%B3%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.</span> <span class="nav-text">基于带卷积小波核的 Dual-GAN 实现端到端的 F0 语音转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E6%A1%88%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">提案方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E6%A6%82%E8%BF%B0"><span class="nav-number">1.3.1.</span> <span class="nav-text">框架概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E6%B3%A2%E6%A0%B8%E5%8D%B7%E7%A7%AF%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8"><span class="nav-number">1.3.2.</span> <span class="nav-text">小波核卷积自编码器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.3.3.</span> <span class="nav-text">模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.4.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Alan Sun</p>
+  <div class="site-description" itemprop="description">记录工作与生活</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人来过
+</span>
+</div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Sun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
