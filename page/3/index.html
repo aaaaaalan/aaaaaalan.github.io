@@ -159,6 +159,168 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/30/EFTS-wav/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alan Sun">
+      <meta itemprop="description" content="记录工作与生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空蓝">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/30/EFTS-wav/" class="post-title-link" itemprop="url">EfficientTTS An Efficient and High-Quality Text-to-Speech Architecture</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-30 10:47:41" itemprop="dateCreated datePublished" datetime="2021-07-30T10:47:41+08:00">2021-07-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-03 14:52:32" itemprop="dateModified" datetime="2021-08-03T14:52:32+08:00">2021-08-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本篇论文为一种高效的TTS方法，此种方法既可以实现高质量，也可以实现较快的推理效率。由平安技术研究院发表，代码在github社区有TTSer已经复现。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/07/30/EFTS-wav/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/20/end2end/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alan Sun">
+      <meta itemprop="description" content="记录工作与生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空蓝">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/20/end2end/" class="post-title-link" itemprop="url">End-to-end TTS & VC 文章总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-20 11:28:15" itemprop="dateCreated datePublished" datetime="2021-07-20T11:28:15+08:00">2021-07-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-19 11:55:45" itemprop="dateModified" datetime="2021-08-19T11:55:45+08:00">2021-08-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>TTS领域近些年的研究大多重点放在多阶段的模型建模和训练，如TTS分为前端文本处理、声学模型、声码器，而VC分为Audio2Mel，Mel2mel。我本人认为，端到端的模型才是TTS / VC领域的重点，而end2end任务的难点主要在于声码器的合并，即对于高分辨率的语音采样点的降采样特征抽取和建模。近些年，一些学者和研究成员在end2end TTS 与end2end VC上发表了相关文章。因此本文加以总结和收纳，以推进在TTS和VC领域End2end的可能性。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/07/20/end2end/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/15/vits/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -271,7 +433,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-22 19:35:08" itemprop="dateModified" datetime="2021-08-22T19:35:08+08:00">2021-08-22</time>
+                <time title="修改时间：2021-08-24 16:01:26" itemprop="dateModified" datetime="2021-08-24T16:01:26+08:00">2021-08-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -294,20 +456,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Awesome-bloggers"><a href="#Awesome-bloggers" class="headerlink" title="Awesome bloggers"></a>Awesome bloggers</h1><h2 id="TTS"><a href="#TTS" class="headerlink" title="TTS"></a>TTS</h2><p><a target="_blank" rel="noopener" href="https://rayeren.github.io">https://rayeren.github.io</a>   Yi Ren (任意)   FastSpeech</p>
-<p><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/people/xuta/">https://www.microsoft.com/en-us/research/people/xuta/</a> Xu Tan (谭旭) FastSpeech 二作</p>
-<p><a target="_blank" rel="noopener" href="https://liusongxiang.github.io">https://liusongxiang.github.io</a> Songxiang Liu (刘颂湘)，PhD from Helen Meng 2021</p>
-<p><a target="_blank" rel="noopener" href="https://entn.at">https://entn.at</a> Ewald Enzinger, </p>
-<p><a target="_blank" rel="noopener" href="https://jaywalnut310.github.io/#/about">https://jaywalnut310.github.io/#/about</a> Jaehyeon Kim (KAIST), VITS(一作)  / Glow-TTS（一作） / Hifi-GAN（二作） / FloWaveNet, KaKao</p>
-<h2 id="AI"><a href="#AI" class="headerlink" title="AI"></a>AI</h2><p><a target="_blank" rel="noopener" href="https://dczha.com">https://dczha.com</a>   Daochen Zha    DouZero</p>
-<p><a target="_blank" rel="noopener" href="https://www.alanshawn.com">https://www.alanshawn.com</a>   Alan Xiang （项子越） 中山大学勤奋博主  </p>
-<p><a target="_blank" rel="noopener" href="https://kexue.fm">https://kexue.fm</a> 苏剑林 93年</p>
-<p><a target="_blank" rel="noopener" href="http://blog.tsuai.cn">http://blog.tsuai.cn</a> 金天 神力算法开发者 </p>
-<h2 id="Good-resources"><a href="#Good-resources" class="headerlink" title="Good resources"></a>Good resources</h2><p><a target="_blank" rel="noopener" href="https://clemense.github.io">https://clemense.github.io</a>.  Clemens Eppner   Nvidia</p>
-<h2 id="Acadamy’s-great-scholar-leaders"><a href="#Acadamy’s-great-scholar-leaders" class="headerlink" title="Acadamy’s great scholar leaders"></a>Acadamy’s great scholar leaders</h2><p><a target="_blank" rel="noopener" href="https://dl.acm.org/profile/81350580267/publications?Role=author&amp;pageSize=20&amp;startPage=1">https://dl.acm.org/profile/81350580267/publications?Role=author&amp;pageSize=20&amp;startPage=1</a>    Tie-Yan Liu   Microsoft</p>
-<h1 id="Awesome-Company’s-Bloggers"><a href="#Awesome-Company’s-Bloggers" class="headerlink" title="Awesome Company’s Bloggers"></a>Awesome Company’s Bloggers</h1><h2 id="TTS-1"><a href="#TTS-1" class="headerlink" title="TTS"></a>TTS</h2><p><a target="_blank" rel="noopener" href="https://speechresearch.github.io">https://speechresearch.github.io</a></p>
-<p><a target="_blank" rel="noopener" href="http://www.kecl.ntt.co.jp/people/kameoka.hirokazu/Demos/">http://www.kecl.ntt.co.jp/people/kameoka.hirokazu/Demos/</a></p>
-<p><a target="_blank" rel="noopener" href="https://google.github.io/tacotron/index.html">https://google.github.io/tacotron/index.html</a> Google Tacotron team</p>
+          <h1 id="awesome-bloggers">Awesome bloggers</h1>
+<h2 id="tts">TTS</h2>
+<p>https://rayeren.github.io Yi Ren (任意) FastSpeech</p>
+<p>https://www.microsoft.com/en-us/research/people/xuta/ Xu Tan (谭旭) FastSpeech 二作</p>
+<p>https://liusongxiang.github.io Songxiang Liu (刘颂湘)，PhD from Helen Meng 2021</p>
+<p>https://entn.at Ewald Enzinger,</p>
+<p>https://jaywalnut310.github.io/#/about Jaehyeon Kim (KAIST), VITS(一作) / Glow-TTS（一作） / Hifi-GAN（二作） / FloWaveNet, KaKao</p>
+<p>https://robin1001.github.io/ BInbin Zhang， WeNET 开发者，Xielei团队学生</p>
+<h2 id="ai">AI</h2>
+<p>https://dczha.com Daochen Zha DouZero</p>
+<p>https://www.alanshawn.com Alan Xiang （项子越） 中山大学勤奋博主</p>
+<p>https://kexue.fm 苏剑林 93年</p>
+<p>http://blog.tsuai.cn 金天 神力算法开发者</p>
+<h2 id="good-resources">Good resources</h2>
+<p>https://clemense.github.io. Clemens Eppner Nvidia</p>
+<h2 id="acadamys-great-scholar-leaders">Acadamy's great scholar leaders</h2>
+<p>https://dl.acm.org/profile/81350580267/publications?Role=author&amp;pageSize=20&amp;startPage=1 Tie-Yan Liu Microsoft</p>
+<h1 id="awesome-companys-bloggers">Awesome Company's Bloggers</h1>
+<h2 id="tts-1">TTS</h2>
+<p>https://speechresearch.github.io</p>
+<p>http://www.kecl.ntt.co.jp/people/kameoka.hirokazu/Demos/</p>
+<p>https://google.github.io/tacotron/index.html Google Tacotron team</p>
+<p>https://thuhcsi.github.io 清华大学人机语音交互实验室，吴致勇教授团队</p>
+<p>http://lxie.npu-aslp.org/index.htm#Publications 西北工业大学谢磊团队</p>
 
       
     </div>
@@ -792,168 +964,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/21/mlms/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Alan Sun">
-      <meta itemprop="description" content="记录工作与生活">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="海阔天空蓝">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/21/mlms/" class="post-title-link" itemprop="url">Uniform Multilingual Multi-Speaker Acoustic Model for Statistical Parametric Speech Synthesis of Low-Resourced Languages</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-21 11:00:09" itemprop="dateCreated datePublished" datetime="2021-06-21T11:00:09+08:00">2021-06-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-24 14:01:13" itemprop="dateModified" datetime="2021-06-24T14:01:13+08:00">2021-06-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>用于低资源语言统计参数语音合成的统一多语言多说话者声学模型，采用MLMS模型以及IPA统一的具象文本信息表征空间解决集外目标语种的语音合成问题 ---- 谷歌UK （Interspeech 2017）</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/06/21/mlms/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/17/asru-2019-papers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Alan Sun">
-      <meta itemprop="description" content="记录工作与生活">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="海阔天空蓝">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/17/asru-2019-papers/" class="post-title-link" itemprop="url">ASRU 2019 语音合成相关论文</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-17 15:43:51" itemprop="dateCreated datePublished" datetime="2021-06-17T15:43:51+08:00">2021-06-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-24 13:58:30" itemprop="dateModified" datetime="2021-06-24T13:58:30+08:00">2021-06-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文下载了4篇语音合成，音色转换相关的论文和一篇best paper，MIMO speech, 将针对这五篇论文进行整理。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/06/17/asru-2019-papers/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1023,7 +1033,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
