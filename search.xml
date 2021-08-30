@@ -325,6 +325,7 @@ D_i = N\cdot sigmoid(v_d^{T}tanh(W_{d}x_i))
 <p>https://www.alanshawn.com Alan Xiang （项子越） 中山大学勤奋博主</p>
 <p>https://kexue.fm 苏剑林 93年</p>
 <p>http://blog.tsuai.cn 金天 神力算法开发者</p>
+<p>https://dreamhomes.top/posts/202004170915/ 梦家 机器学习算法工程师</p>
 <h2 id="good-resources">Good resources</h2>
 <p>https://clemense.github.io. Clemens Eppner Nvidia</p>
 <h2 id="acadamys-great-scholar-leaders">Acadamy's great scholar leaders</h2>
@@ -3004,6 +3005,20 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
 <p><img src="/images/multi-factor-vc-al4.png" alt="multi-factor-vc-al4"></p>
 <p>其中$α$、$β$、$γ$分别是对抗性损失、词预测损失和重建损失的损失权重。 为了提高我们提出的框架的鲁棒性，重建损失的损失权重被设计为指数衰减。</p>
 <h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>为了提高 VC 中多因素高度可控风格迁移的鲁棒性，我们提出了一种基于对抗性学习的解开语音表示学习框架。 我们提取了四种表征内容、音色、节奏和音调的语音表示，我们采用了一个受 BERT 启发的对抗网络来进一步解开语音表示。 我们使用单词预测网络来学习更多信息的内容表示。 实验结果表明，所提出的语音表示学习框架显着提高了 VC 在多个因素上的鲁棒性。 在未来的工作中将探索不同的掩蔽策略。</p>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>readling_list</title>
+    <url>/2021/08/26/readling-list/</url>
+    <content><![CDATA[<h1 id="reading-list">Reading list</h1>
+<p>2021-8-26</p>
+<ol style="list-style-type: decimal">
+<li>LVCNET: EFFICIENT CONDITION-DEPENDENT MODELING NETWORK FOR WAVEFORM GENERATION</li>
+<li>Graph Neural Networks for Natural Language Processing: A Survey</li>
+</ol>
 ]]></content>
       <categories>
         <category>工作</category>
