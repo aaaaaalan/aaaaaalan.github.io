@@ -3018,4 +3018,29 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
         <category>工作</category>
       </categories>
   </entry>
+  <entry>
+    <title>interspeech2021</title>
+    <url>/2021/08/31/interspeech2021/</url>
+    <content><![CDATA[<h1 id="Interspeech-2021"><a href="#Interspeech-2021" class="headerlink" title="Interspeech 2021"></a>Interspeech 2021</h1><h2 id="清华深研院-吴致勇教授团队"><a href="#清华深研院-吴致勇教授团队" class="headerlink" title="清华深研院 - 吴致勇教授团队"></a>清华深研院 - 吴致勇教授团队</h2><h3 id="语音合成"><a href="#语音合成" class="headerlink" title="语音合成"></a>语音合成</h3><p><a href="https://www.isca-speech.org/archive/interspeech_2021/li21r_interspeech.html">Towards Multi-Scale Style Control for Expressive Speech Synthesis </a></p>
+<p><a href="https://www.isca-speech.org/archive/interspeech_2021/lu21d_interspeech.html">VAENAR-TTS: Variational Auto-Encoder Based Non-AutoRegressive Text-to-Speech Synthesis </a></p>
+<h3 id="音色转换"><a href="#音色转换" class="headerlink" title="音色转换"></a>音色转换</h3><p><a href="https://www.isca-speech.org/archive/interspeech_2021/wang21h_interspeech.html">Adversarially Learning Disentangled Speech Representations for Robust Multi-Factor Voice Conversion </a></p>
+<h3 id="其他方向"><a href="#其他方向" class="headerlink" title="其他方向"></a>其他方向</h3><p><a href="https://www.isca-speech.org/archive/interspeech_2021/wu21i_interspeech.html">Voting for the Right Answer: Adversarial Defense for Speaker Verification </a></p>
+<h2 id="西北工业大学-谢磊教授团队"><a href="#西北工业大学-谢磊教授团队" class="headerlink" title="西北工业大学 - 谢磊教授团队"></a>西北工业大学 - 谢磊教授团队</h2><h3 id="语音合成-1"><a href="#语音合成-1" class="headerlink" title="语音合成"></a>语音合成</h3><p><a href="https://www.isca-speech.org/archive/interspeech_2021/cong21_interspeech.html">Glow-WaveGAN: Learning Speech Representations from GAN-Based Variational Auto-Encoder for High Fidelity Flow-Based Speech Synthesis </a></p>
+<p><a href="https://www.isca-speech.org/archive/interspeech_2021/cong21b_interspeech.html">Controllable Context-Aware Conversational Speech Synthesis </a></p>
+<p><a href="https://www.isca-speech.org/archive/interspeech_2021/an21b_interspeech.html">Improving Performance of Seen and Unseen Speech Style Transfer in End-to-End Neural TTS </a></p>
+<h3 id="音色转换-1"><a href="#音色转换-1" class="headerlink" title="音色转换"></a>音色转换</h3><p><a href="https://www.isca-speech.org/archive/interspeech_2021/wang21g_interspeech.html">Enriching Source Style Transfer in Recognition-Synthesis Based Non-Parallel Voice Conversion </a></p>
+<p><a href="https://www.isca-speech.org/archive/interspeech_2021/du21_interspeech.html">Improving Robustness of One-Shot Voice Conversion with Deep Discriminative Speaker Encoder </a></p>
+<h3 id="其他方向-1"><a href="#其他方向-1" class="headerlink" title="其他方向"></a>其他方向</h3><p><a href="https://www.isca-speech.org/archive/interspeech_2021/lv21_interspeech.html">DCCRN+: Channel-Wise Subband DCCRN with SNR Estimation for Speech Enhancement </a></p>
+<p><a href="https://www.isca-speech.org/archive/interspeech_2021/fu21b_interspeech.html">AISHELL-4: An Open Source Dataset for Speech Enhancement, Separation, Recognition and Speaker Diarization in Conference Scenario </a></p>
+<p><a href="https://www.isca-speech.org/archive/interspeech_2021/guo21_interspeech.html">Multi-Speaker ASR Combining Non-Autoregressive Conformer CTC and Conditional Speaker Chain </a></p>
+<p><a href="https://www.isca-speech.org/archive/interspeech_2021/yao21_interspeech.html">WeNet: Production Oriented Streaming and Non-Streaming End-to-End Speech Recognition Toolkit </a></p>
+<p><a href="https://www.isca-speech.org/archive/interspeech_2021/wang21ea_interspeech.html">Auto-KWS 2021 Challenge: Task, Datasets, and Baselines </a></p>
+<p><a href="https://www.isca-speech.org/archive/interspeech_2021/wang21ha_interspeech.html">Efficient Conformer with Prob-Sparse Attention Mechanism for End-to-End Speech Recognition </a></p>
+<p><a href="https://www.isca-speech.org/archive/interspeech_2021/zhang21ia_interspeech.html">F-T-LSTM Based Complex Network for Joint Acoustic Echo Cancellation and Speech Enhancement </a></p>
+<p><a href="https://www.isca-speech.org/archive/interspeech_2021/zhang21g_interspeech.html">Multi-Level Transfer Learning from Near-Field to Far-Field Speaker Verification </a></p>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
 </search>
