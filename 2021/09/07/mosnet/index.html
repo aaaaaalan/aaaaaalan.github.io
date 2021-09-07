@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文为自动化测试MOS的代表性论文。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MOSNet Deep Learning-based Objective Assessment for Voice Conversion">
+<meta property="og:url" content="http://example.com/2021/09/07/mosnet/index.html">
+<meta property="og:site_name" content="海阔天空蓝">
+<meta property="og:description" content="本文为自动化测试MOS的代表性论文。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-07T12:49:16.000Z">
+<meta property="article:modified_time" content="2021-09-07T13:06:36.223Z">
+<meta property="article:author" content="Alan Sun">
+<meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/09/07/mosnet/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>MOSNet Deep Learning-based Objective Assessment for Voice Conversion | 海阔天空蓝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">海阔天空蓝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个玩过n种运动的语音合成算法攻城狮</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/07/mosnet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alan Sun">
+      <meta itemprop="description" content="记录工作与生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空蓝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MOSNet Deep Learning-based Objective Assessment for Voice Conversion
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-07 20:49:16 / 修改时间：21:06:36" itemprop="dateCreated datePublished" datetime="2021-09-07T20:49:16+08:00">2021-09-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">本文为自动化测试MOS的代表性论文。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="mosnet基于深度学习的语音转换目标评估">MOSNet：基于深度学习的语音转换目标评估</h1>
+<h2 id="摘要">摘要</h2>
+<p>现有的语音转换（VC）客观评估指标并不总是与人类感知相关。因此，使用此类标准训练 VC 模型可能无法有效提高转换后语音的自然度和相似度。在本文中，我们提出了基于深度学习的评估模型来预测人类对转换语音的评分。我们采用卷积和循环神经网络模型来构建平均意见得分 (MOS) 预测器，称为 MOSNet。提出的模型在 Voice Conversion Challenge (VCC) 2018 的大规模听力测试结果上进行了测试。实验结果表明，所提出的 MOSNet 的预测分数与系统级别的人类 MOS 评分高度相关，同时在话语级别与人类 MOS 评分相当相关。同时，我们修改了 MOSNet 来预测相似度分数，初步结果表明预测分数也与人类评分相当相关。这些结果证实，所提出的模型可以用作计算评估器来测量 VC 系统的 MOS，以减少对昂贵的人工评估的需求。</p>
+<h2 id="introduction">Introduction</h2>
+<p>生成语音的质量量化一直是语音合成、语音增强和语音转换 (VC) 系统中长期存在的问题。这些系统的评估报告了客观和主观测量结果。在 VC 社区中，诸如梅尔倒谱距离 (MCD) 之类的客观度量被广泛用于自动测量转换语音的质量。然而，这些指标并不总是与人类感知相关，因为它们主要测量声学特征的失真。诸如平均意见分数 (MOS) 和相似度分数等主观衡量标准可以代表 VC 系统的内在自然性和相似性，但这些类型的评估既耗时又昂贵，因为它们需要大量参与者进行听力测试并提供感性评分。</p>
+<p>已经提出了许多评估算法和模型来克服上述问题。例如，在语音增强领域，ITU-T 发布的语音质量感知评估（PESQ）是衡量增强语音质量的侵入性评估，因为评估需要黄金参考。有几个非侵入式评估指标 用于评估增强语音和合成语音的质量。例如，傅等人提出的 Quality-Net 作为基于双向长短期记忆 (BLSTM) 的质量评估模型，以帧方式预测增强语音的话语级质量。预测分数与 PESQ 分数之间的高度相关性证实了其作为语音增强的非侵入性评估模型的有效性。吉村等人提出了一种基于全连接神经网络和卷积神经网络（CNN）的合成语音自然度预测器来预测话语级和系统级 MOS。该模型是在手工制作的特征上进行的，并使用大规模听力测试评级进行训练。值得注意的是，他们都报告了话语级别的人类评分存在很大差异，因为听力测试是主观的，听众可能会对同一话语提供不同的评分。因此，评估模型很难获得与人类话语级别评级的高度相关性。尽管如此，系统级预测还是相对可靠的。以前的工作已经展示了神经网络在模拟人类感知以增强合成语音方面的能力。但是，对于 VC 系统没有这样的评估模型。我们的目标是使用语音转换挑战赛 (VCC) 2018 的大规模听力测试结果为 VC 系统开发语音自然度和相似性评估模型。</p>
+<p>在本文中，我们提出了一种新的基于深度学习的端到端语音自然度评估模型，称为 MOSNet。为了开发这样的客观措施来建模并与人类主观评级保持一致，我们研究了卷积神经网络 (CNN)、双向长短期记忆 (BLSTM) 和 CNN-BLSTM，因为这些架构已经显示出它们的建模能力人类的感知。我们使用这样的架构来提取有价值的特征，然后使用全连接（FC）层来预测相应的自然性分数。凭借神经网络的能力和VCC 2018的大规模人类自然性评估，我们的自然性评估模型的MOS预测在系统层面实现了与人类MOS评级的高度相关性和话语层面的公平相关性。此外，我们修改了 MOSNet 来预测相似度分数，初步结果表明，预测的相似度分数与人类相似度评分相当相关。实验结果表明，我们提出的模型具有很高的能力来衡量 VC 系统的语音自然度和相似度。据我们所知，这是第一个基于深度学习的 VC 语音质量和相似性评估模型。</p>
+<p>本文的组织如下：第 2 节描述了来自 VCC 2018 的数据及其分布。第 3 节介绍了所提出的模型。第 4 节讨论了实验和结果。最后，结论和未来的工作是 在第 5 节中介绍。</p>
+<h2 id="vcc评估数据">VCC评估数据</h2>
+<h3 id="vcc-2018">2.1 VCC 2018</h3>
+<p>语音转换挑战赛 (VCC) 2018 是 VCC 的第二版，是一项大规模的语音转换挑战赛。 VCC 2018 语料库是通过从设备和生产语音 (DAPS) 数据集中选择一部分说话者来准备的，这些数据集由美国专业英语演讲者在干净无噪音的环境中记录。挑战的参与者需要使用他们的 VC 系统通过并行或非并行训练数据进行训练，将语音信号从源说话者转换为目标说话者。所有参与挑战的并行和非并行 VC 系统都通过众包听力测试在自然度和相似度方面进行了评估。</p>
+<p>VCC 2018 的评估如下：有 2,572 个评估集，每个由 44 个话语组成。总共 113,168 次人工评估完全涵盖了 28,292 个提交的音频样本。每个音频样本由 4 位听众评分。 113,168 项评估分为 82,304 项自然度评估和 30,864 项说话人相似性评估。 82,304 条自然度评估涵盖了 20,580 条提交的话语，MOS 范围为 1 到 5，最低得分为 1，最高得分为 5。语料库、听者和评估方法的详细说明可以在 中找到。我们将每个话语的四个 MOS 评分的平均分数作为其真实分数。</p>
+<h3 id="数据及其分布和可预测性">2.2. 数据及其分布和可预测性</h3>
+<p>每个话语的四个 MOS 评分的均值和标准差的直方图如图 1 所示，可以看出均值 MOS 的分布更接近于高斯分布，均值 MOS 值集中在 3.0 左右。然而，对于大约一半的提交话语，四个 MOS 评分的标准偏差大于 1，表明分数的变化程度更高。这是意料之中的，因为在进行听力测试时，同一话语的感知评级取决于听众的个人经历和偏好。因此，我们确定考虑数据的内在可预测性和听众之间的内在相关性很重要。在本研究中，我们使用 bootstrap 方法来验证 VCC 2018 中人类评估的固有可预测性。</p>
+<p>我们进行了 1,000 次复制来估计每个子集与整个数据集之间的 MOS 相关性。请注意，自然语音的 MOS 评估被排除在外。对于每次复制，我们从总共 267 个听众中随机抽取了 134 个听众，以测量他们的平均 MOS 作为 MOSsub。然后，根据线性相关系数 (LCC) 、Spearman 秩相关系数 (SRCC) 和均方误差 (MSE)，将 MOSsub 与 MOSall（使用整套 MOS 评级计算）进行比较。平均 LCC、SRCC 和 MSE 值如表 1 所示。因此，很明显 LCC 和 SRCC 在系统级别相当高，但在话语级别较低。 MSE 显示出类似的趋势。结果表明，虽然不同听者的主观感知评分在话语层面存在差异，但在系统层面具有良好的一致性。分析表明，虽然系统层面的MOS是可预测的，但是话语层面的MOS只能在一定程度上进行预测，虽然不如系统层面的预测。</p>
+<h2 id="mosnet">MOSNet</h2>
+<p>本文提出了一种基于深度学习的客观评估，以根据 MOS 对人类感知进行建模，称为 MOSNet。 使用原始幅度谱图作为输入特征，并使用三个基于神经网络的模型，即 CNN、BLSTM 和 CNN-BLSTM 从全连接 (FC) 层和池化机制的输入特征中提取有价值的特征以生成预测的 MOS . 在以下部分中，我们将详细介绍 MOSNet 的每个组件。</p>
+<h3 id="型号详情">3.1 型号详情</h3>
+<p>MOSNet 不同架构的详细配置如表 2 所示，包括 CNN、BLSTM 和 CNN-BLSTM。 BLSTM 架构与 Quality-Net 中使用的架构相同。凭借通过时间的前向和后向处理，BLSTM 能够将长期时间依赖性和顺序特征整合到代表性特征中。 CNN 已被广泛用于对时间序列数据进行建模并取得了令人满意的性能。 CNN 通过堆叠更多的卷积层来扩展其感受野。本研究中使用的 CNN 架构有 12 个卷积层，最后一个卷积层中每个神经元的感受野为 25 帧（时间尺度约为 400 毫秒）。我们相信，通过考虑 25 帧的片段，MOSNet 可以捕获更多的时间信息来预测质量分数。最近的研究已经证实了将 CNN 和 RNN (BLSTM) 结合用于增强、分类 和识别任务的有效性。因此，我们还研究了用于 MOSNet 中特征提取的 CNN + BLSTM 架构，在表 2 和后续讨论中将其称为 CNN-BLSTM。使用提取的特征，我们使用两个 FC 层将逐帧特征回归为帧级标量，以指示每帧的自然度得分。最后，对帧级分数应用全局平均操作以获得话语级自然度分数。</p>
+<h3 id="目标函数">3.2 目标函数</h3>
+<p>如上一节所述，我们将 MOS 预测制定为回归任务。 MOSNet 的输入是从语音中提取的频谱特征序列。 VCC 2018 的 MOS 评估被用作训练模型的真实情况。 傅等人指出通过在目标函数中使用帧级预测误差，话语级预测将与人类评分更加相关。 因此，我们将训练 MOSNet 的目标函数公式化为：</p>
+<p>其中 <span class="math inline">\(\hat Q_s\)</span> 和 <span class="math inline">\(Q_s\)</span> 分别表示第 <span class="math inline">\(s\)</span> 个话语的真实 MOS 和预测 MOS，<span class="math inline">\(α\)</span> 是权重因子，<span class="math inline">\(q_{s,t}\)</span> 表示时间 <span class="math inline">\(t\)</span> 的帧级预测，<span class="math inline">\(T_s\)</span> 是总帧数在第<span class="math inline">\(s\)</span>个话语中，<span class="math inline">\(S\)</span>表示训练话语的数量。值得注意的是，方程中的目标函数。 (1) 结合了话语级 MSE 和帧级 MSE。在 [7] 中，加权因子 (<span class="math inline">\(α\)</span>) 用于减轻语音增强任务中跨帧的严重 MSE 变化。我们的初步实验表明，与增强语音的质量相比，转换后的语音质量在帧间更加稳定。具体来说，从高 MOS VC 系统生成的转换语音通常会产生高帧级 MOS，反之亦然。因此，我们在本研究中将权重因子 <span class="math inline">\(α\)</span> 设置为 1。为了计算帧级 MSE，地面实况 MOS 用于语音中的所有帧。从实验中可以确定，帧级 MSE 有助于 MOSNet 以更好的预测精度收敛，这将在下一节中讨论。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/31/interspeech2021/" rel="prev" title="interspeech2021">
+      <i class="fa fa-chevron-left"></i> interspeech2021
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mosnet%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%AF%AD%E9%9F%B3%E8%BD%AC%E6%8D%A2%E7%9B%AE%E6%A0%87%E8%AF%84%E4%BC%B0"><span class="nav-number">1.</span> <span class="nav-text">MOSNet：基于深度学习的语音转换目标评估</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vcc%E8%AF%84%E4%BC%B0%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.</span> <span class="nav-text">VCC评估数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vcc-2018"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 VCC 2018</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%8A%E5%85%B6%E5%88%86%E5%B8%83%E5%92%8C%E5%8F%AF%E9%A2%84%E6%B5%8B%E6%80%A7"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.2. 数据及其分布和可预测性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mosnet"><span class="nav-number">1.4.</span> <span class="nav-text">MOSNet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%8B%E5%8F%B7%E8%AF%A6%E6%83%85"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 型号详情</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2 目标函数</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Alan Sun</p>
+  <div class="site-description" itemprop="description">记录工作与生活</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人来过
+</span>
+</div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Sun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
