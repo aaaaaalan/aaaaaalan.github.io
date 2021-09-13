@@ -315,7 +315,7 @@ D_i = N\cdot sigmoid(v_d^{T}tanh(W_{d}x_i))
     <content><![CDATA[<h1 id="awesome-bloggers">Awesome bloggers</h1>
 <h2 id="tts">TTS</h2>
 <p>https://rayeren.github.io Yi Ren (任意) FastSpeech</p>
-<p>https://www.microsoft.com/en-us/research/people/xuta/ Xu Tan (谭旭) FastSpeech 二作</p>
+<p>https://tan-xu.github.io 谭旭 微软亚洲研究院机器学习组的主管研究员 Fastspeech 二作</p>
 <p>https://liusongxiang.github.io Songxiang Liu (刘颂湘)，PhD from Helen Meng 2021</p>
 <p>https://entn.at Ewald Enzinger,</p>
 <p>https://jaywalnut310.github.io/#/about Jaehyeon Kim (KAIST), VITS(一作) / Glow-TTS（一作） / Hifi-GAN（二作） / FloWaveNet, KaKao</p>
