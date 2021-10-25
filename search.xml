@@ -3249,4 +3249,25 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
         <category>工作</category>
       </categories>
   </entry>
+  <entry>
+    <title>patches_are_all_you_need</title>
+    <url>/2021/10/20/patches-are-all-you-need/</url>
+    <content><![CDATA[<h1 id="Patches-are-all-you-need"><a href="#Patches-are-all-you-need" class="headerlink" title="Patches are all you need"></a>Patches are all you need</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>尽管多年来卷积网络一直是视觉任务的主要架构，但最近的实验表明，基于 Transformer 的模型，尤其是 Vision Transformer (ViT)，在某些情况下可能会超过其性能。然而，由于 Transformer 中自注意力层的二次运行时间，ViT 需要使用补丁嵌入，将图像的小区域组合成单个输入特征，以便应用于更大的图像尺寸。这就提出了一个问题：ViT 的性能是由于固有的更强大的 Transformer 架构，还是至少部分是由于使用补丁作为输入表示？在本文中，我们为后者提供了一些证据：具体而言，我们提出了 ConvMixer，这是一个极其简单的模型，在精神上与 ViT 和更基本的 MLP-Mixer 相似，因为它直接将补丁作为输入进行操作，分离空间和通道维度的混合，并在整个网络中保持相同的大小和分辨率。然而，相比之下，ConvMixer 仅使用标准卷积来实现混合步骤。尽管它很简单，但我们表明，除了优于 ResNet 等经典视觉模型之外，ConvMixer 在类似的参数计数和数据集大小方面也优于 ViT、MLP-Mixer 及其一些变体。我们的代码可在 <a href="https://github.com/tmp-iclr/convmixer">https://github.com/tmp-iclr/convmixer</a> 获得。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>多年来，卷积神经网络一直是应用于计算机视觉任务的深度学习系统的主要架构。但最近，基于 Transformer 模型的架构，例如所谓的 Vision Transformer 架构，在其中许多任务中都表现出了引人注目的性能，通常优于经典卷积架构，尤其是对于大型数据集。一个可以理解的假设是，Transformer 成为视觉领域的主导架构只是时间问题，就像它们在语言处理中一样。然而，为了将 Transformers 应用于图像，必须改变表示：因为如果在每个像素级别上天真地应用，Transformers 中使用的自注意力层的计算成本将与每个图像的像素数成二次方缩放，妥协是首先将图像拆分为多个“补丁”，线性嵌入它们，然后将转换器直接应用于这个补丁集合。</p>
+<p>在这项工作中，我们从根本上探讨了视觉转换器的强大性能是否更多地来自这种基于补丁的表示，而不是来自转换器架构本身。 我们开发了一个非常简单的卷积架构，我们将其称为“ConvMixer”，因为它与最近提出的 MLP-Mixer（Tolstikhin 等人，2021）相似。 这种架构在很多方面类似于 Vision Transformer（和 MLP-Mixer）：它直接对补丁进行操作，它在所有层中保持相同的分辨率和大小表示，它不会对连续层的表示进行下采样， 它将“通道混合”与信息的“空间混合”分开。 但与 Vision Transformer 和 MLP-Mixer 不同，我们的架构仅通过标准卷积来完成所有这些操作。</p>
+<p>我们在本文中展示的主要结果是，这种 ConvMixer 架构尽管极其简单（它可以在大约 6 行密集 PyTorch 代码中实现），但优于“标准”计算机视觉模型，例如具有类似参数计数的 ResNets 和一些 相应的 Vision Transformer 和 MLP-Mixer 变体，即使添加了一系列旨在使这些架构在较小的数据集上具有更高性能的功能。 这表明，至少在某种程度上，补丁表示本身可能是实现 Vision Transformers 等新架构“卓越”性能的最关键组成部分。 虽然这些结果自然只是一个快照，但我们相信这提供了一个强大的“基于卷积但基于补丁”的基线，以便与未来更高级的架构进行比较。</p>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>python-import</title>
+    <url>/2021/10/25/python-import/</url>
+    <content><![CDATA[<h1 id="python-import"><a href="#python-import" class="headerlink" title="python import"></a>python import</h1><p>被python的import坑了n次了，每次项目套子项目的时候import就会开始逐渐混乱，因此特此开这个日志来简要总结一下python的import，希望今后不再踩坑python的import</p>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
 </search>
