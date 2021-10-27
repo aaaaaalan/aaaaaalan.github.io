@@ -3270,4 +3270,13 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
         <category>工作</category>
       </categories>
   </entry>
+  <entry>
+    <title>multiple_gpu</title>
+    <url>/2021/10/26/multiple-gpu/</url>
+    <content><![CDATA[<h1 id="多gpu并行计算训练和推理">多GPU并行计算，训练和推理</h1>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
 </search>
