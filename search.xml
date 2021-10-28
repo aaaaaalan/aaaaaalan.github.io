@@ -3283,6 +3283,23 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
     <title>multiple_gpu</title>
     <url>/2021/10/26/multiple-gpu/</url>
     <content><![CDATA[<h1 id="多gpu并行计算训练和推理">多GPU并行计算，训练和推理</h1>
+<p>先来回顾一下Python的多进程multiprocessing和多线程Threading</p>
+<h2 id="多进程">多进程</h2>
+<p>https://zhuanlan.zhihu.com/p/85821779</p>
+<h2 id="多线程">多线程</h2>
+<p>适合IO密集型任务，不适合CPU密集型任务（如循环，计数）</p>
+<p>https://python.land/python-concurrency/the-python-gil</p>
+<h2 id="多线程-vs-多进程">多线程 VS 多进程</h2>
+<p>https://zhuanlan.zhihu.com/p/20953544</p>
+<p>接下来再看下torch实现多GPU并行计算的几种方法</p>
+<h2 id="ddp-distributeddataparallel-vs-dataparallel">DDP DistributedDataParallel VS DataParallel</h2>
+<ol style="list-style-type: decimal">
+<li>DDP 多进程，多线程； DP 单进程，多线程</li>
+<li>DDP 可以分布式计算，DP只能单台机器计算</li>
+<li>DDP 可以model paralle，DP不可</li>
+</ol>
+<p>https://blog.csdn.net/qq_37541097/article/details/109736159</p>
+<p>在Pytorch中使用多GPU的常用启动方式一种是<code>torch.distributed.launch</code>一种是<code>torch.multiprocessing</code>模块。</p>
 ]]></content>
       <categories>
         <category>工作</category>

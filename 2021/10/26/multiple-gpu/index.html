@@ -28,7 +28,7 @@
 <meta property="og:description" content="多GPU并行训练，计算和推理">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-10-26T07:56:23.000Z">
-<meta property="article:modified_time" content="2021-10-26T07:57:18.644Z">
+<meta property="article:modified_time" content="2021-10-27T10:09:03.499Z">
 <meta property="article:author" content="Alan Sun">
 <meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
 <meta name="twitter:card" content="summary">
@@ -184,10 +184,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-10-26 15:56:23 / 修改时间：15:57:18" itemprop="dateCreated datePublished" datetime="2021-10-26T15:56:23+08:00">2021-10-26</time>
+              <time title="创建时间：2021-10-26 15:56:23" itemprop="dateCreated datePublished" datetime="2021-10-26T15:56:23+08:00">2021-10-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-27 18:09:03" itemprop="dateModified" datetime="2021-10-27T18:09:03+08:00">2021-10-27</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -211,6 +217,23 @@
 
       
         <h1 id="多gpu并行计算训练和推理">多GPU并行计算，训练和推理</h1>
+<p>先来回顾一下Python的多进程multiprocessing和多线程Threading</p>
+<h2 id="多进程">多进程</h2>
+<p>https://zhuanlan.zhihu.com/p/85821779</p>
+<h2 id="多线程">多线程</h2>
+<p>适合IO密集型任务，不适合CPU密集型任务（如循环，计数）</p>
+<p>https://python.land/python-concurrency/the-python-gil</p>
+<h2 id="多线程-vs-多进程">多线程 VS 多进程</h2>
+<p>https://zhuanlan.zhihu.com/p/20953544</p>
+<p>接下来再看下torch实现多GPU并行计算的几种方法</p>
+<h2 id="ddp-distributeddataparallel-vs-dataparallel">DDP DistributedDataParallel VS DataParallel</h2>
+<ol style="list-style-type: decimal">
+<li>DDP 多进程，多线程； DP 单进程，多线程</li>
+<li>DDP 可以分布式计算，DP只能单台机器计算</li>
+<li>DDP 可以model paralle，DP不可</li>
+</ol>
+<p>https://blog.csdn.net/qq_37541097/article/details/109736159</p>
+<p>在Pytorch中使用多GPU的常用启动方式一种是<code>torch.distributed.launch</code>一种是<code>torch.multiprocessing</code>模块。</p>
 
     </div>
 
@@ -288,7 +311,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9Agpu%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E8%AE%AD%E7%BB%83%E5%92%8C%E6%8E%A8%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">多GPU并行计算，训练和推理</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9Agpu%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E8%AE%AD%E7%BB%83%E5%92%8C%E6%8E%A8%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">多GPU并行计算，训练和推理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">多进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">多线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B-vs-%E5%A4%9A%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">多线程 VS 多进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ddp-distributeddataparallel-vs-dataparallel"><span class="nav-number">1.4.</span> <span class="nav-text">DDP DistributedDataParallel VS DataParallel</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
