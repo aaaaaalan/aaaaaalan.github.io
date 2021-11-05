@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文总结了基于GNN进行TTS建模的论文列表。">
+  <meta name="description" content="本论文为ICLR 2022 under review的作品">
 <meta property="og:type" content="article">
-<meta property="og:title" content="gnn-tts-papers">
-<meta property="og:url" content="http://example.com/2021/08/24/gnn-tts-papers/index.html">
+<meta property="og:title" content="ClsVC">
+<meta property="og:url" content="http://example.com/2021/11/03/ClsVC/index.html">
 <meta property="og:site_name" content="海阔天空蓝">
-<meta property="og:description" content="本文总结了基于GNN进行TTS建模的论文列表。">
+<meta property="og:description" content="本论文为ICLR 2022 under review的作品">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-08-24T08:10:42.000Z">
-<meta property="article:modified_time" content="2021-08-24T08:21:03.630Z">
+<meta property="article:published_time" content="2021-11-03T08:11:17.000Z">
+<meta property="article:modified_time" content="2021-11-03T08:32:26.917Z">
 <meta property="article:author" content="Alan Sun">
 <meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/08/24/gnn-tts-papers/">
+<link rel="canonical" href="http://example.com/2021/11/03/ClsVC/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>gnn-tts-papers | 海阔天空蓝</title>
+  <title>ClsVC | 海阔天空蓝</title>
   
 
 
@@ -162,7 +162,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/24/gnn-tts-papers/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/03/ClsVC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -175,7 +175,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          gnn-tts-papers
+          ClsVC
         </h1>
 
         <div class="post-meta">
@@ -186,7 +186,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-08-24 16:10:42 / 修改时间：16:21:03" itemprop="dateCreated datePublished" datetime="2021-08-24T16:10:42+08:00">2021-08-24</time>
+              <time title="创建时间：2021-11-03 16:11:17 / 修改时间：16:32:26" itemprop="dateCreated datePublished" datetime="2021-11-03T16:11:17+08:00">2021-11-03</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -199,7 +199,7 @@
             </span>
 
           
-            <div class="post-description">本文总结了基于GNN进行TTS建模的论文列表。</div>
+            <div class="post-description">本论文为ICLR 2022 under review的作品</div>
 
         </div>
       </header>
@@ -210,15 +210,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="graph-neural-network-tts-paper-list">Graph neural network TTS paper list</h1>
-<ol style="list-style-type: decimal">
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.04764.pdf">Exploiting Syntactic Features in a Parsed Tree to Improve End-to-End TTS</a> | Interspeech 2019 | 西北工业大学谢磊团队</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.01924.pdf">GraphTTS</a> | ICASSP 2020 | 平安科技TTS团队</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2010.12423.pdf">GraphSpeech</a> | ICASSP 2021 | 新加坡国立大学 李海洲团队</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2012.02626.pdf">GraphPB</a> | SLT 2021 | 平安科技TTS团队</li>
-<li><a target="_blank" rel="noopener" href="https://www1.se.cuhk.edu.hk/~hccl/publications/pub/202106_ICASSP_ChangheSONG.pdf">SYNTACTIC REPRESENTATION LEARNING FOR NEURAL NETWORK BASED TTS WITH SYNTACTIC PARSE TREE TRAVERSAL</a> | ICASSP 2021 | 清华大学深研院 吴致勇团队</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2104.06835v1.pdf">Dependency Parsing based Semantic Representation Learning with Graph Neural Network for Enhancing Expressiveness of Text-to-Speech</a> | Interspeech 2021? | 清华大学深研院 吴致勇团队</li>
-</ol>
+        <h1 id="clsvc-learning-speech-representations-with-two-different-classification-tasks.">CLSVC: LEARNING SPEECH REPRESENTATIONS WITH TWO DIFFERENT CLASSIFICATION TASKS.</h1>
+<h2 id="abstract">Abstract</h2>
+<p>语音转换（VC）旨在将一个说话者的声音转换成另一个说话者所说的新语音。以前的工作侧重于通过应用两个不同的编码器分别从输入语音中学习内容信息和音色信息来学习潜在表示。然而，无论是应用瓶颈网络还是矢量量化技术，都很难从语音信号中完美地分离说话者和内容信息。在本文中，我们提出了一种新颖的语音转换框架“ClsVC”来解决这个问题。它仅使用一个编码器通过划分潜在空间来获得音色和内容信息。此外，提出了一些约束以确保潜在空间的不同部分分别只包含分离的内容和音色信息。我们已经展示了设置这些约束的必要性，我们也通过实验证明，即使我们改变了潜在空间的划分比例，内容和音色信息也将始终很好地分离。在 VCTK 数据集上的实验表明，就转换后语音的自然性和相似性而言，ClsVC 是最先进的框架。</p>
+<h2 id="introduction">Introduction</h2>
+<p>语音转换（VC）是一个令人兴奋的话题，致力于通过保留原始话语中的内容，同时用目标说话者的声音特征替换它，将源说话者的一种话语转换为目标人的另一种话语。 到目前为止，许多方法已经成功地应用于VC。 通常，这些方法可以粗略地分为两类，即并行 VC 和非并行 VC。 具体来说，并行 VC 意味着模型训练需要并行语料库，这对于非并行 VC 来说是不必要的。 最近，越来越多的研究人员将注意力集中在非并行 VC 的解决方案上，因为我们不容易收集这么多成对的源目标语音数据集。</p>
+<p>早期的 VC 系统，如高斯混合模型需要大量并行数据进行模型训练，生成的语音质量不够好。 随着深度学习的进步，近年来提出了多种新颖的 VC 方法。 其中，基于 GAN 的模型是最流行的方法之一，可以在没有明确近似的情况下学习目标语音的全局生成分布。 这些基于 GAN 的模型联合训练生成器和鉴别器。 来自鉴别器的对抗性损失用于鼓励生成器输出构建与真实语音无法区分的输出。 由于循环一致性训练，基于 GAN 的 VC 模型可以使用非并行语音数据集进行训练。</p>
+<p>此外，学习离散语音表示也引起了很多关注。 矢量量化（VQ），一种极其重要的信号压缩方法，可以将连续数据量化为离散数据。 先前的研究已经证实，连续语音数据产生的量化离散数据与音素信息密切相关。 最近，VQVC被提议学习仅用重建损失来解开内容和说话者信息。 然后，VQVC+ 很快被提出通过在基于自动编码器的 VC 系统中添加 U-Net 架构来提高 VQVC 的转换性能。 为了大大提高解开内容和说话人信息的性能，引入了许多其他现有研究与 VQ 相结合，例如 VQ-Wav2Vec、VQ-VAE 和 VQ-CPC。</p>
+<p>还有另一项研究重点是使用自动编码器学习潜在表示。 尤其是变分自动编码器（VAE）最为著名。 VAE 的网络结构包含一个编码器和一个解码器，核心思想非常明确：编码器从输入语音中学习特定的潜在空间，解码器从该潜在空间输出重构的语音。 在这个过程中，VAE 侧重于如何强制编码器学习特定的潜在空间。 到目前为止，许多基于 VAE 的模型已成功应用。 此外，AutoVC 是 Autoencoder 的另一个成功应用。 通过巧妙的实验设计，AutoVC 使用两种不同的编码器分别学习内容和说话人信息，使该模型仅靠自重构损失就可以实现分布匹配风格迁移。</p>
+<p>不幸的是，在 VC 领域，上面提到的所有模型都有其固有的缺点。 例如，基于 GAN 的模型通常可以达到很好的转换效果，并保证生成数据和输入数据的匹配，但是公认 GAN 的训练非常不稳定。 相反，VQVC的训练简单且足够快，但是这种方法产生的音频量很差。 这可能是因为离散的语音表示不可避免地会丢失一些内容信息。 另外，虽然基于VAE的模型也有很大的转换效果，但不能保证分布匹配。 AutoVC 是一项伟大的研究，训练非常简单并且达到了最先进的结果。 然而，为了实现风格转换，它必须引入一个预先训练好的扬声器编码器。</p>
+<p>基于这些现有的方法，我们自然想知道是否有一种新的解决方案可以像 AutoVC 和 GAN 一样实现分布匹配，像 VQVC 和 VAE 一样容易训练，可以像 VQ 一样仅通过一个编码器解开内容和说话者信息， 并且在语音转换或从语音中分离语言和音色信息方面也有更好的表现？</p>
+<p>在本文中，我们提出了一种新颖的语音转换框架来满足上述所有要求。 具体来说，我们的模型类似于 VAE，Autoencoder 是我们模型的主要框架，应用了两种不同类型的分类任务来强制我们的模型正确分离内容和说话者信息。 这里，两个分类任务分别是指一般分类任务和对抗性分类任务。 一般分类任务的目标是尽可能准确地识别与说话人相关的特征，即说话人信息。 而后者旨在消除潜在空间中的说话人信息以获得独立于说话人的特征，即内容信息。 实验结果在 VCTK 数据集上进行。 客观和主观评估表明，所提出的方法在自然度和说话人相似度方面优于 VQVC、AutoVC、VQ-VAE 和 StarGAN-VC。</p>
+<h2 id="background">Background</h2>
+<p>在数理统计中，如果我们已经知道 <span class="math inline">\(X\)</span> 和 <span class="math inline">\(Y\)</span> 的联合概率密度函数，我们就可以很容易地分别求出 <span class="math inline">\(X\)</span> 和 <span class="math inline">\(Y\)</span> 的边际概率密度函数。 形式上，如果 <span class="math inline">\((x, y) ∼ p(x, y)\)</span> 已知，我们可以通过以下公式得到 <span class="math inline">\(X\)</span> 和 <span class="math inline">\(Y\)</span> 的边缘分布：</p>
+<p>进一步地，在一些设置条件的约束下，虽然方程中联合概率密度函数的封闭形式为 <span class="math inline">\(p(x, y)\)</span>。 (1) 通常是未知的，当每个 <span class="math inline">\(z\)</span> 对应于唯一的 <span class="math inline">\((x, y)\)</span> 对时，神经网络从输入样本 <span class="math inline">\(z\)</span> 中学习 <span class="math inline">\(x\)</span> 和 <span class="math inline">\(y\)</span> 的边缘分布仍然是可行的。</p>
+<p><strong>互信息 (MI)</strong>，衡量两个不同变量之间依赖性的关键指标。 最近，许多 MI 估计器已成功应用于约束神经网络以解开输入数据的不同分量。 可以表述为</p>
+<p>其中<span class="math inline">\(P(X)\)</span>和<span class="math inline">\(P(Y)\)</span>分别是<span class="math inline">\(X\)</span>和<span class="math inline">\(Y\)</span>的边际分布，<span class="math inline">\(P(X,Y)\)</span>表示<span class="math inline">\(X\)</span>和<span class="math inline">\(Y\)</span>的联合分布。 由于很难获得所需的分布公式<span class="math inline">\(P(X,Y)\)</span>，因此许多研究集中于提出基于样本的MI下限（或上限）以获得可计算的近似值。</p>
+<p>最近，引入了一种新的 MI 估计器，用于从语音中学习内容和风格信息以进行语音转换。 具体来说，他们提出了一种新颖的基于 MI 的学习目标，以鼓励内容编码器输出内容嵌入并引导说话人编码器输出说话人嵌入。 受此启发，我们提出了一种新的、简单且更有效的学习潜在语音表示的框架。</p>
+<p><strong>梯度反转层 (GRL)</strong> 梯度反转层 (GRL) 最初是为了解决域适应问题提出的，旨在强制模型输出与域无关的域共享特征。 具体来说，GRL 通常位于编码器和域分类器之间。 在前向传播期间，GRL 充当身份变换。 在反向传播过程中，GRL 从后续层获取梯度，将其乘以 -1 并将其传递给前一层，以便编码器和域分类器具有完全相反的优化目标。</p>
+<h2 id="method">Method</h2>
+<p>首先，对于每个语音 x ，我们使用内容嵌入 Cx 来表示语言信息，并提出说话人嵌入 Sx 来表示音色和风格信息。 并且，U 表示扬声器组。 以下两个定理是我们框架的前提：</p>
 
     </div>
 
@@ -234,13 +245,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/08/24/multi-factor-vc/" rel="prev" title="ADVERSARIALLY LEARNING DISENTANGLED SPEECH REPRESENTATIONS FOR ROBUST MULTI-FACTOR VOICE CONVERSION">
-      <i class="fa fa-chevron-left"></i> ADVERSARIALLY LEARNING DISENTANGLED SPEECH REPRESENTATIONS FOR ROBUST MULTI-FACTOR VOICE CONVERSION
+    <a href="/2021/10/26/multiple-gpu/" rel="prev" title="multiple_gpu">
+      <i class="fa fa-chevron-left"></i> multiple_gpu
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/08/26/readling-list/" rel="next" title="readling_list">
-      readling_list <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -299,7 +307,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#graph-neural-network-tts-paper-list"><span class="nav-number">1.</span> <span class="nav-text">Graph neural network TTS paper list</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#clsvc-learning-speech-representations-with-two-different-classification-tasks."><span class="nav-number">1.</span> <span class="nav-text">CLSVC: LEARNING SPEECH REPRESENTATIONS WITH TWO DIFFERENT CLASSIFICATION TASKS.</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#abstract"><span class="nav-number">1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#background"><span class="nav-number">1.3.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#method"><span class="nav-number">1.4.</span> <span class="nav-text">Method</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
