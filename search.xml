@@ -3362,4 +3362,26 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
         <category>生活</category>
       </categories>
   </entry>
+  <entry>
+    <title>vscode</title>
+    <url>/2022/05/23/vscode/</url>
+    <content><![CDATA[<h1 id="vscode-踩坑指南">VSCode 踩坑指南</h1>
+<h2 id="vscode-连接内网环境下的远程服务器">VSCode 连接内网环境下的远程服务器</h2>
+<p>Version 1.54.3</p>
+<p>Step 1 下载安装包，安装VS Code，无坑</p>
+<p>Step 2 terminal 配置，settings里搜索shell:windows，然后选择想要的terminal，也可以在settings.json上编辑。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;terminal.integrated.profiles.windows&quot;: &#123;</span><br><span class="line">    &quot;PowerShell&quot;: &#123;</span><br><span class="line">        &quot;source&quot;: &quot;PowerShell&quot;,</span><br><span class="line">        &quot;icon&quot;: &quot;terminal-powershell&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;Command Prompt&quot;: &#123;</span><br><span class="line">        &quot;path&quot;: [</span><br><span class="line">            &quot;$&#123;env:windir&#125;\\Sysnative\\cmd.exe&quot;,</span><br><span class="line">            &quot;$&#123;env:windir&#125;\\System32\\cmd.exe&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;args&quot;: [],</span><br><span class="line">        &quot;icon&quot;: &quot;terminal-cmd&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;gitBash&quot;: &#123;</span><br><span class="line">        &quot;path&quot;:&quot;S:\\Git\\bin\\bash.exe&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">&quot;terminal.integrated.defaultProfile.windows&quot;: &quot;gitBash&quot;,</span><br></pre></td></tr></table></figure>
+<p>Step 3 配置远程服务器</p>
+<p>本地下载 Remote - SSH, Remote - SSH: Editing Configuration Files 两个插件</p>
+<p>远程下载和配置暂时掠过，即可完成ssh配置</p>
+<p>The SSH installation couldn't be found 但是git bash 有安装了ssh。所以需要在vs code 配置ssh隧道</p>
+<p>​ &quot;remote.SSH.path&quot;: &quot;ssh.exe的路径&quot;</p>
+<p>Step 4 配置远程Debug断点调试代码</p>
+<p>Mac/Linux: Add &quot;pythonPath&quot;: &quot;python3&quot;<code>into</code>.vscode/launch.json` to the same place 注意每一个debug的项目都要重复添加一次。</p>
+<p>总算是解决了VS Code 远程连接的各种坑，希望对大家有用。</p>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
 </search>
