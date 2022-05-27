@@ -3365,20 +3365,56 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
   <entry>
     <title>vscode</title>
     <url>/2022/05/23/vscode/</url>
-    <content><![CDATA[<h1 id="vscode-踩坑指南">VSCode 踩坑指南</h1>
-<h2 id="vscode-连接内网环境下的远程服务器">VSCode 连接内网环境下的远程服务器</h2>
-<p>Version 1.54.3</p>
-<p>Step 1 下载安装包，安装VS Code，无坑</p>
-<p>Step 2 terminal 配置，settings里搜索shell:windows，然后选择想要的terminal，也可以在settings.json上编辑。</p>
+    <content><![CDATA[<h1 id="VSCode-踩坑指南"><a href="#VSCode-踩坑指南" class="headerlink" title="VSCode 踩坑指南"></a>VSCode 踩坑指南</h1><h2 id="VSCode-连接内网环境下的远程服务器"><a href="#VSCode-连接内网环境下的远程服务器" class="headerlink" title="VSCode 连接内网环境下的远程服务器"></a>VSCode 连接内网环境下的远程服务器</h2><p>Version 1.54.3</p>
+<ul>
+<li><p>Step 1 下载安装包，安装VS Code，无坑</p>
+</li>
+<li><p>Step 2 terminal 配置，settings里搜索shell:windows，然后选择想要的terminal，也可以在settings.json上编辑。</p>
+</li>
+</ul>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;terminal.integrated.profiles.windows&quot;: &#123;</span><br><span class="line">    &quot;PowerShell&quot;: &#123;</span><br><span class="line">        &quot;source&quot;: &quot;PowerShell&quot;,</span><br><span class="line">        &quot;icon&quot;: &quot;terminal-powershell&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;Command Prompt&quot;: &#123;</span><br><span class="line">        &quot;path&quot;: [</span><br><span class="line">            &quot;$&#123;env:windir&#125;\\Sysnative\\cmd.exe&quot;,</span><br><span class="line">            &quot;$&#123;env:windir&#125;\\System32\\cmd.exe&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;args&quot;: [],</span><br><span class="line">        &quot;icon&quot;: &quot;terminal-cmd&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;gitBash&quot;: &#123;</span><br><span class="line">        &quot;path&quot;:&quot;S:\\Git\\bin\\bash.exe&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">&quot;terminal.integrated.defaultProfile.windows&quot;: &quot;gitBash&quot;,</span><br></pre></td></tr></table></figure>
-<p>Step 3 配置远程服务器</p>
+<ul>
+<li>Step 3 配置远程服务器</li>
+</ul>
 <p>本地下载 Remote - SSH, Remote - SSH: Editing Configuration Files 两个插件</p>
 <p>远程下载和配置暂时掠过，即可完成ssh配置</p>
-<p>The SSH installation couldn't be found 但是git bash 有安装了ssh。所以需要在vs code 配置ssh隧道</p>
-<p>​ &quot;remote.SSH.path&quot;: &quot;ssh.exe的路径&quot;</p>
-<p>Step 4 配置远程Debug断点调试代码</p>
-<p>Mac/Linux: Add &quot;pythonPath&quot;: &quot;python3&quot;<code>into</code>.vscode/launch.json` to the same place 注意每一个debug的项目都要重复添加一次。</p>
+<p>The SSH installation couldn’t be found 但是git bash 有安装了ssh。所以需要在vs code 配置ssh隧道</p>
+<p>​    “remote.SSH.path”: “ssh.exe的路径”</p>
+<ul>
+<li>Step 4 配置远程Debug断点调试代码</li>
+</ul>
+<p><strong>Mac/Linux: Add “pythonPath”: “python3”<code>into</code>.vscode/launch.json` to the same place 注意每一个debug的项目都要重复添加一次。</strong></p>
 <p>总算是解决了VS Code 远程连接的各种坑，希望对大家有用。</p>
+<h2 id="其他BUGS"><a href="#其他BUGS" class="headerlink" title="其他BUGS"></a>其他BUGS</h2><ul>
+<li>BUG 1: Setting up SSH Host xxxx: Downloading VS Code Server locally</li>
+</ul>
+<p>一直卡在”正在打开远程”的状态</p>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>few-shot-TTS</title>
+    <url>/2022/05/27/few-shot-TTS/</url>
+    <content><![CDATA[<h1 id="Zero-One-Few-shot-TTS的所有论文"><a href="#Zero-One-Few-shot-TTS的所有论文" class="headerlink" title="Zero/One/Few-shot TTS的所有论文"></a>Zero/One/Few-shot TTS的所有论文</h1><p>研究Few-shot TTS有一段时间了，想要系统化的了解一下这个行业的发展情况，因此在这里总结一下所有有关Zero/One/Few-shot TTS / Voice clone的相关论文。</p>
+<p>Motivation: 采集尽可能少量目标说话人的声音，克隆目标说话人的音色，制作tts引擎，重点需支持中文。</p>
+<p>Github List:</p>
+<ol>
+<li>实时中文语音克隆（同上）Mocking Bird <a href="https://github.com/babysor/MockingBird/blob/main/README-CN.md">Code</a></li>
+<li>一句话语音克隆推理 <a href="https://github.com/CMsmartvoice/One-Shot-Voice-Cloning/blob/master/README-CN.md">Code</a></li>
+<li><p>Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.) <a href="https://github.com/SforAiDl/Neural-Voice-Cloning-With-Few-Samples">Code1</a> | <a href="https://github.com/IEEE-NITK/Neural-Voice-Cloning">Code2</a> | <a href="https://arxiv.org/pdf/1802.06006.pdf">Paper</a></p>
+</li>
+<li><p>Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis (Jia Ye, Google, 2019 Jan.) <a href="https://github.com/CorentinJ/Real-Time-Voice-Cloning">Code</a> | <a href="https://arxiv.org/pdf/1806.04558.pdf">Paper</a></p>
+</li>
+<li><p>One model to speak them all (Mutian He, 港科技 &amp; 微软 2021 Jul.)  <a href="https://github.com/mutiann/few-shot-transformer-tts">Code</a> | <a href="https://arxiv.org/abs/2103.03541">Paper</a></p>
+</li>
+<li>Meta-StyleSpeech : Multi-Speaker Adaptive Text-to-Speech Generation (Dongchan Min, KAIST, 2021 Jun, ICML) <a href="https://github.com/keonlee9420/StyleSpeech">Code</a> | <a href="https://arxiv.org/abs/2106.03153">Paper</a></li>
+<li>SC-GlowTTS: an Efficient Zero-Shot Multi-Speaker Text-To-Speech Model (Edresson Casanova, University of Sa ̃o Paulo, 2021 Jun, Interspeech 2021)</li>
+<li>YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb ) <a href="https://github.com/Edresson/YourTTS">Code</a> | <a href="https://arxiv.org/abs/2112.02418">Paper</a></li>
+<li>Zero-shot VITS <a href="https://github.com/hcyspeech/TransferTTS">Code</a> | <a href="https://arxiv.org/pdf/2203.15447.pdf">Paper</a></li>
+<li>AdaSpeech <a href="https://arxiv.org/pdf/2103.00993.pdf">Code</a> | <a href="https://arxiv.org/pdf/2103.00993.pdf">Paper</a> || AdaSpeech2 <a href="https://github.com/rishikksh20/AdaSpeech2">Code</a> | <a href="https://github.com/rishikksh20/AdaSpeech2">Paper</a></li>
+</ol>
 ]]></content>
       <categories>
         <category>工作</category>

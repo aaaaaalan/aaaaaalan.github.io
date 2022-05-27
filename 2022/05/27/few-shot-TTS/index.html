@@ -20,18 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="记录工作与生活">
-<meta property="og:type" content="website">
-<meta property="og:title" content="海阔天空蓝">
-<meta property="og:url" content="http://example.com/archives/2020/09/index.html">
+  <meta name="description" content="总结zero&#x2F;one&#x2F;few-shot TTS的所有论文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="few-shot-TTS">
+<meta property="og:url" content="http://example.com/2022/05/27/few-shot-TTS/index.html">
 <meta property="og:site_name" content="海阔天空蓝">
-<meta property="og:description" content="记录工作与生活">
+<meta property="og:description" content="总结zero&#x2F;one&#x2F;few-shot TTS的所有论文">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-27T06:14:31.000Z">
+<meta property="article:modified_time" content="2022-05-27T07:18:28.959Z">
 <meta property="article:author" content="Alan Sun">
 <meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/archives/2020/09/">
+<link rel="canonical" href="http://example.com/2022/05/27/few-shot-TTS/">
 
 
 <script id="page-configurations">
@@ -39,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | 海阔天空蓝</title>
+  <title>few-shot-TTS | 海阔天空蓝</title>
   
 
 
@@ -153,51 +155,104 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">不错! 目前共计 52 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/27/few-shot-TTS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alan Sun">
+      <meta itemprop="description" content="记录工作与生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空蓝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          few-shot-TTS
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-27 14:14:31 / 修改时间：15:18:28" itemprop="dateCreated datePublished" datetime="2022-05-27T14:14:31+08:00">2022-05-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">总结zero/one/few-shot TTS的所有论文</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
+        <h1 id="Zero-One-Few-shot-TTS的所有论文"><a href="#Zero-One-Few-shot-TTS的所有论文" class="headerlink" title="Zero/One/Few-shot TTS的所有论文"></a>Zero/One/Few-shot TTS的所有论文</h1><p>研究Few-shot TTS有一段时间了，想要系统化的了解一下这个行业的发展情况，因此在这里总结一下所有有关Zero/One/Few-shot TTS / Voice clone的相关论文。</p>
+<p>Motivation: 采集尽可能少量目标说话人的声音，克隆目标说话人的音色，制作tts引擎，重点需支持中文。</p>
+<p>Github List:</p>
+<ol>
+<li>实时中文语音克隆（同上）Mocking Bird <a target="_blank" rel="noopener" href="https://github.com/babysor/MockingBird/blob/main/README-CN.md">Code</a></li>
+<li>一句话语音克隆推理 <a target="_blank" rel="noopener" href="https://github.com/CMsmartvoice/One-Shot-Voice-Cloning/blob/master/README-CN.md">Code</a></li>
+<li><p>Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.) <a target="_blank" rel="noopener" href="https://github.com/SforAiDl/Neural-Voice-Cloning-With-Few-Samples">Code1</a> | <a target="_blank" rel="noopener" href="https://github.com/IEEE-NITK/Neural-Voice-Cloning">Code2</a> | <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1802.06006.pdf">Paper</a></p>
+</li>
+<li><p>Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis (Jia Ye, Google, 2019 Jan.) <a target="_blank" rel="noopener" href="https://github.com/CorentinJ/Real-Time-Voice-Cloning">Code</a> | <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1806.04558.pdf">Paper</a></p>
+</li>
+<li><p>One model to speak them all (Mutian He, 港科技 &amp; 微软 2021 Jul.)  <a target="_blank" rel="noopener" href="https://github.com/mutiann/few-shot-transformer-tts">Code</a> | <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2103.03541">Paper</a></p>
+</li>
+<li>Meta-StyleSpeech : Multi-Speaker Adaptive Text-to-Speech Generation (Dongchan Min, KAIST, 2021 Jun, ICML) <a target="_blank" rel="noopener" href="https://github.com/keonlee9420/StyleSpeech">Code</a> | <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2106.03153">Paper</a></li>
+<li>SC-GlowTTS: an Efficient Zero-Shot Multi-Speaker Text-To-Speech Model (Edresson Casanova, University of Sa ̃o Paulo, 2021 Jun, Interspeech 2021)</li>
+<li>YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb ) <a target="_blank" rel="noopener" href="https://github.com/Edresson/YourTTS">Code</a> | <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2112.02418">Paper</a></li>
+<li>Zero-shot VITS <a target="_blank" rel="noopener" href="https://github.com/hcyspeech/TransferTTS">Code</a> | <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2203.15447.pdf">Paper</a></li>
+<li>AdaSpeech <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2103.00993.pdf">Code</a> | <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2103.00993.pdf">Paper</a> || AdaSpeech2 <a target="_blank" rel="noopener" href="https://github.com/rishikksh20/AdaSpeech2">Code</a> | <a target="_blank" rel="noopener" href="https://github.com/rishikksh20/AdaSpeech2">Paper</a></li>
+</ol>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-09-20T11:29:15+08:00"
-              content="2020-09-20">
-          09-20
-        </time>
-      </div>
+      <footer class="post-footer">
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/09/20/prosody-modelling/" itemprop="url">
-            <span itemprop="name">韵律建模思维导图</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/23/vscode/" rel="prev" title="vscode">
+      <i class="fa fa-chevron-left"></i> vscode
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -250,6 +305,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Zero-One-Few-shot-TTS%E7%9A%84%E6%89%80%E6%9C%89%E8%AE%BA%E6%96%87"><span class="nav-number">1.</span> <span class="nav-text">Zero&#x2F;One&#x2F;Few-shot TTS的所有论文</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -367,6 +423,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
