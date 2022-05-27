@@ -3388,23 +3388,42 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
   <entry>
     <title>few-shot-TTS</title>
     <url>/2022/05/27/few-shot-TTS/</url>
-    <content><![CDATA[<h1 id="Zero-One-Few-shot-TTS的所有论文"><a href="#Zero-One-Few-shot-TTS的所有论文" class="headerlink" title="Zero/One/Few-shot TTS的所有论文"></a>Zero/One/Few-shot TTS的所有论文</h1><p>研究Few-shot TTS有一段时间了，想要系统化的了解一下这个行业的发展情况，因此在这里总结一下所有有关Zero/One/Few-shot TTS / Voice clone的相关论文。</p>
+    <content><![CDATA[<h1 id="zeroonefew-shot-tts的所有论文">Zero/One/Few-shot TTS的所有论文</h1>
+<p>研究Few-shot TTS有一段时间了，想要系统化的了解一下这个行业的发展情况，因此在这里总结一下所有有关Zero/One/Few-shot TTS / Voice clone的相关论文。</p>
 <p>Motivation: 采集尽可能少量目标说话人的声音，克隆目标说话人的音色，制作tts引擎，重点需支持中文。</p>
 <p>Github List:</p>
-<ol>
+<ol style="list-style-type: decimal">
 <li>实时中文语音克隆（同上）Mocking Bird <a href="https://github.com/babysor/MockingBird/blob/main/README-CN.md">Code</a></li>
 <li>一句话语音克隆推理 <a href="https://github.com/CMsmartvoice/One-Shot-Voice-Cloning/blob/master/README-CN.md">Code</a></li>
-<li><p>Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.) <a href="https://github.com/SforAiDl/Neural-Voice-Cloning-With-Few-Samples">Code1</a> | <a href="https://github.com/IEEE-NITK/Neural-Voice-Cloning">Code2</a> | <a href="https://arxiv.org/pdf/1802.06006.pdf">Paper</a></p>
-</li>
-<li><p>Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis (Jia Ye, Google, 2019 Jan.) <a href="https://github.com/CorentinJ/Real-Time-Voice-Cloning">Code</a> | <a href="https://arxiv.org/pdf/1806.04558.pdf">Paper</a></p>
-</li>
-<li><p>One model to speak them all (Mutian He, 港科技 &amp; 微软 2021 Jul.)  <a href="https://github.com/mutiann/few-shot-transformer-tts">Code</a> | <a href="https://arxiv.org/abs/2103.03541">Paper</a></p>
-</li>
-<li>Meta-StyleSpeech : Multi-Speaker Adaptive Text-to-Speech Generation (Dongchan Min, KAIST, 2021 Jun, ICML) <a href="https://github.com/keonlee9420/StyleSpeech">Code</a> | <a href="https://arxiv.org/abs/2106.03153">Paper</a></li>
-<li>SC-GlowTTS: an Efficient Zero-Shot Multi-Speaker Text-To-Speech Model (Edresson Casanova, University of Sa ̃o Paulo, 2021 Jun, Interspeech 2021)</li>
-<li>YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb ) <a href="https://github.com/Edresson/YourTTS">Code</a> | <a href="https://arxiv.org/abs/2112.02418">Paper</a></li>
-<li>Zero-shot VITS <a href="https://github.com/hcyspeech/TransferTTS">Code</a> | <a href="https://arxiv.org/pdf/2203.15447.pdf">Paper</a></li>
-<li>AdaSpeech <a href="https://arxiv.org/pdf/2103.00993.pdf">Code</a> | <a href="https://arxiv.org/pdf/2103.00993.pdf">Paper</a> || AdaSpeech2 <a href="https://github.com/rishikksh20/AdaSpeech2">Code</a> | <a href="https://github.com/rishikksh20/AdaSpeech2">Paper</a></li>
+<li><p>Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.) <a href="https://github.com/SforAiDl/Neural-Voice-Cloning-With-Few-Samples">Code1</a> | <a href="https://github.com/IEEE-NITK/Neural-Voice-Cloning">Code2</a> | <a href="https://arxiv.org/pdf/1802.06006.pdf">Paper</a></p></li>
+<li><p>Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis (Jia Ye, Google, 2019 Jan.) <a href="https://github.com/CorentinJ/Real-Time-Voice-Cloning">Code</a> | <a href="https://arxiv.org/pdf/1806.04558.pdf">Paper</a></p></li>
+<li><p>One model to speak them all (Mutian He, 港科技 &amp; 微软 2021 Jul.) <a href="https://github.com/mutiann/few-shot-transformer-tts">Code</a> | <a href="https://arxiv.org/abs/2103.03541">Paper</a></p></li>
+<li><p>Meta-StyleSpeech : Multi-Speaker Adaptive Text-to-Speech Generation (Dongchan Min, KAIST, 2021 Jun, ICML) <a href="https://github.com/keonlee9420/StyleSpeech">Code</a> | <a href="https://arxiv.org/abs/2106.03153">Paper</a></p></li>
+<li><p>SC-GlowTTS: an Efficient Zero-Shot Multi-Speaker Text-To-Speech Model (Edresson Casanova, University of Sa ̃o Paulo, 2021 Jun, Interspeech 2021)</p></li>
+<li><p>YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb ) <a href="https://github.com/Edresson/YourTTS">Code</a> | <a href="https://arxiv.org/abs/2112.02418">Paper</a></p></li>
+<li><p>Zero-shot VITS <a href="https://github.com/hcyspeech/TransferTTS">Code</a> | <a href="https://arxiv.org/pdf/2203.15447.pdf">Paper</a></p></li>
+<li><p>AdaSpeech <a href="https://arxiv.org/pdf/2103.00993.pdf">Code</a> | <a href="https://arxiv.org/pdf/2103.00993.pdf">Paper</a> || AdaSpeech2 <a href="https://github.com/rishikksh20/AdaSpeech2">Code</a> | <a href="https://github.com/rishikksh20/AdaSpeech2">Paper</a></p></li>
+<li><p>Deepfakes for Video Conferencing Using General Adversarial Networks (GANs) and Multilingual Voice Cloning <a href="https://github.com/ghatoledipak/Deepfakes-for-Video-Conferencing-Using-General-Adversarial-Networks-GANs-and-Voice-Cloning">Code</a></p></li>
+<li><p>Unet-TTS: Improving Unseen Speaker and Style Transfer in One-shot Voice Cloning (Rui Li, CloudMinds Inc, ICASSP 2022) <a href="https://github.com/CMsmartvoice/One-Shot-Voice-Cloning">Code</a> | <a href="https://arxiv.org/pdf/2109.11115.pdf">Paper</a></p></li>
+</ol>
+<p>无 Code List:</p>
+<ol style="list-style-type: decimal">
+<li><p><a href="https://arxiv.org/pdf/1809.10460.pdf">Sample Efficient Adaptive Text-to-Speech</a> (Yutian Chen, DeepMind &amp; Google, 2019 Jan, ICLR 2019)</p></li>
+<li><p><a href="https://arxiv.org/abs/2005.08484">Attentron: Few-shot Text-to-Speech Exploiting Attention-based Variable Length Embedding</a> (Seungwoo Choi, Hyperconnect, 2020 Aug., Interspeech 2020)</p></li>
+<li><p><a href="">BOFFIN TTS: Few-Shot Speaker Adaptation by Bayesian Optimization</a>(https://arxiv.org/abs/2002.01953) (Henry B. Moss, Amazon, 2020 Feb., ICASSP 2020)</p></li>
+<li><p><a href="https://arxiv.org/pdf/2102.00151.pdf">Expressive Neural Voice Cloning</a> (Paarth Neekhara, 2021 Jan, 加州大学圣地亚哥分校, PMLR 2021)</p></li>
+<li><p><a href="https://arxiv.org/pdf/2103.04699.pdf">CUHK-EE VOICE CLONING SYSTEM FOR ICASSP 2021 M2VOC CHALLENGE</a> (Daxin Tan, 港中文, 2021 Jul)</p></li>
+<li><p><a href="https://arxiv.org/pdf/2111.04040.pdf">Meta-TTS: Meta-Learning for Few-Shot Speaker Adaptive Text-to-Speech</a> (Sung-Feng Huang, National Taiwan Uni, 2021 Nov, IEEE/ACM Transactions on Audio, Speech, and Language Processing)</p></li>
+<li><p><a href="https://arxiv.org/pdf/1907.04448.pdf">Learning to Speak Fluently in a Foreign Language: Multilingual Speech Synthesis and Cross-Language Voice Cloning</a> (Yu Zhang, Google, 2019 Jul.)</p></li>
+<li><p><a href="https://arxiv.org/pdf/2104.01818.pdf">The Multi-Speaker Multi-Style Voice Cloning Challenge 2021</a> (Qicong Xie, ASLP, 2021 Apr., ICASSP 2021)</p></li>
+<li><p><a href="https://sci-hub.se/10.1109/icassp39728.2021.9414727">Dian: Duration Informed Auto-Regressive Network for Voice Cloning</a> (Wei song, JD, 2021 May, ICASSP 2021)</p></li>
+<li><p><a href="https://arxiv.org/pdf/2204.03421.pdf">Self supervised learning for robust voice cloning</a> (Konstantinos Klapsas, Innoetics, 2022 Apr, submitted to Interspeech 2022)</p></li>
+<li><p><a href="https://arxiv.org/pdf/2203.09708.pdf">Improve few-shot voice cloning using multi-modal learning</a> (Haitong Zhang, NetEase Games, 2022 Mar, 2022 IEEE International Conference on Acoustics, Speech and Signal Processing)</p></li>
+<li><p><a href="https://arxiv.org/pdf/2110.03347.pdf">Cloning one's voice using very limited data in the wild</a> (Dongyang Dai, (SAMI), ByteDance, 2021 Oct)</p></li>
+</ol>
+<p>综述类:</p>
+<ol style="list-style-type: decimal">
+<li><a href="https://www.irjmets.com/uploadedfiles/paper/issue_2_february_2022/18991/final/fin_irjmets1644437365.pdf">Voice cloning</a>(Saiesh Prabhu Verlekar, Shree Rayeshwar Institute Of Engineering And Information Technology Goa 2022 Feb, IRJETS 2022)</li>
 </ol>
 ]]></content>
       <categories>
