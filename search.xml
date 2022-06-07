@@ -3392,7 +3392,7 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
 <p>Motivation: 采集尽可能少量目标说话人的声音，克隆目标说话人的音色，制作tts引擎，重点需支持中文。</p>
 <p>Github List:</p>
 <ol>
-<li>实时中文语音克隆（同上）Mocking Bird <a href="https://github.com/babysor/MockingBird/blob/main/README-CN.md">Code</a></li>
+<li>实时中文语音克隆 Mocking Bird <a href="https://github.com/babysor/MockingBird/blob/main/README-CN.md">Code</a></li>
 <li>一句话语音克隆推理 <a href="https://github.com/CMsmartvoice/One-Shot-Voice-Cloning/blob/master/README-CN.md">Code</a></li>
 <li><p>Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.) <a href="https://github.com/SforAiDl/Neural-Voice-Cloning-With-Few-Samples">Code1</a> | <a href="https://github.com/IEEE-NITK/Neural-Voice-Cloning">Code2</a> | <a href="https://arxiv.org/pdf/1802.06006.pdf">Paper</a></p>
 </li>
@@ -3404,7 +3404,7 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
 </li>
 <li><p>SC-GlowTTS: an Efficient Zero-Shot Multi-Speaker Text-To-Speech Model (Edresson Casanova, University of Sa ̃o Paulo, 2021 Jun, Interspeech 2021)</p>
 </li>
-<li><p>YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb ) <a href="https://github.com/Edresson/YourTTS">Code</a> | <a href="https://arxiv.org/abs/2112.02418">Paper</a></p>
+<li><p>[x] YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb ) <a href="https://github.com/Edresson/YourTTS">Code</a> | <a href="https://arxiv.org/abs/2112.02418">Paper</a></p>
 </li>
 <li><p>Zero-shot VITS <a href="https://github.com/hcyspeech/TransferTTS">Code</a> | <a href="https://arxiv.org/pdf/2203.15447.pdf">Paper</a></p>
 </li>
@@ -3447,6 +3447,43 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
 <p>综述类:</p>
 <ol>
 <li><a href="https://www.irjmets.com/uploadedfiles/paper/issue_2_february_2022/18991/final/fin_irjmets1644437365.pdf">Voice cloning</a>(Saiesh Prabhu Verlekar, Shree Rayeshwar Institute Of Engineering And Information Technology Goa 2022 Feb, IRJETS 2022)</li>
+</ol>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>few-shot-TTS-details</title>
+    <url>/2022/05/30/few-shot-TTS-details/</url>
+    <content><![CDATA[<h1 id="Few-shot-TTS-解决方案"><a href="#Few-shot-TTS-解决方案" class="headerlink" title="Few-shot TTS 解决方案"></a>Few-shot TTS 解决方案</h1><h2 id="With-open-source-code"><a href="#With-open-source-code" class="headerlink" title="With open-source code"></a>With open-source code</h2><h3 id="Code-1-Realtime-Voice-Clone-for-Chinese-Mocking-Bird"><a href="#Code-1-Realtime-Voice-Clone-for-Chinese-Mocking-Bird" class="headerlink" title="== Code 1: Realtime Voice Clone for Chinese (Mocking Bird)"></a>== Code 1: Realtime Voice Clone for Chinese (Mocking Bird)</h3><p>改自 仅支持英语的<a href="https://github.com/CorentinJ/Real-Time-Voice-Cloning">Real-Time-Voice-Cloning</a>  分叉出来的支持中文的Repo</p>
+<p>支持的功能点有：</p>
+<ol>
+<li>Voice cloning 语音克隆</li>
+<li>语音转换 （PPG-based）</li>
+<li>支持中文、英文</li>
+</ol>
+<h3 id="Code-2-Unet-TTS-Improving-Unseen-Speaker-and-Style-Transfer-in-One-shot-Voice-Cloning"><a href="#Code-2-Unet-TTS-Improving-Unseen-Speaker-and-Style-Transfer-in-One-shot-Voice-Cloning" class="headerlink" title="== Code 2: Unet-TTS: Improving Unseen Speaker and Style Transfer in One-shot Voice Cloning"></a>== Code 2: Unet-TTS: Improving Unseen Speaker and Style Transfer in One-shot Voice Cloning</h3><p>支持的功能点有：</p>
+<ol>
+<li>一句参考语音可进行克隆TTS</li>
+<li>支持中文、英文</li>
+</ol>
+<h3 id="Code-3-Neural-Voice-Cloning-with-a-Few-Samples-Sercan-Ö-Arik-Baidu-2018-Dec"><a href="#Code-3-Neural-Voice-Cloning-with-a-Few-Samples-Sercan-Ö-Arik-Baidu-2018-Dec" class="headerlink" title="== Code 3: Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.)"></a>== Code 3: Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.)</h3><p>支持的功能点有：</p>
+<ol>
+<li>一句参考语音可进行克隆TTS</li>
+</ol>
+<h3 id="Code-4-YourTTS-Towards-Zero-Shot-Multi-Speaker-TTS-and-Zero-Shot-Voice-Conversion-for-everyone-Edresson-Casanova-Universidade-de-Sa-̃o-Paulo-2022-Feb"><a href="#Code-4-YourTTS-Towards-Zero-Shot-Multi-Speaker-TTS-and-Zero-Shot-Voice-Conversion-for-everyone-Edresson-Casanova-Universidade-de-Sa-̃o-Paulo-2022-Feb" class="headerlink" title="== Code 4: YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb)"></a>== Code 4: YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb)</h3><p>支持的功能点有：</p>
+<ol>
+<li><p>单语种多说话人数据训练模型，实现单语种的zero-shot tts</p>
+</li>
+<li><p>bi/tri-lingual </p>
+</li>
+<li><p>tri-lingual for single language plus</p>
+</li>
+<li><p>Zero-shot cross-lingual VC</p>
+</li>
+<li><p>Speaker Adaption </p>
+</li>
 </ol>
 ]]></content>
       <categories>
