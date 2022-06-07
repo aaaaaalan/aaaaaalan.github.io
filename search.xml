@@ -3392,28 +3392,17 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
 <p>Motivation: 采集尽可能少量目标说话人的声音，克隆目标说话人的音色，制作tts引擎，重点需支持中文。</p>
 <p>Github List:</p>
 <ol>
-<li>实时中文语音克隆 Mocking Bird <a href="https://github.com/babysor/MockingBird/blob/main/README-CN.md">Code</a></li>
-<li>一句话语音克隆推理 <a href="https://github.com/CMsmartvoice/One-Shot-Voice-Cloning/blob/master/README-CN.md">Code</a></li>
-<li><p>Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.) <a href="https://github.com/SforAiDl/Neural-Voice-Cloning-With-Few-Samples">Code1</a> | <a href="https://github.com/IEEE-NITK/Neural-Voice-Cloning">Code2</a> | <a href="https://arxiv.org/pdf/1802.06006.pdf">Paper</a></p>
-</li>
-<li><p>Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis (Jia Ye, Google, 2019 Jan.) <a href="https://github.com/CorentinJ/Real-Time-Voice-Cloning">Code</a> | <a href="https://arxiv.org/pdf/1806.04558.pdf">Paper</a></p>
-</li>
-<li><p>One model to speak them all (Mutian He, 港科技 &amp; 微软 2021 Jul.)  <a href="https://github.com/mutiann/few-shot-transformer-tts">Code</a> | <a href="https://arxiv.org/abs/2103.03541">Paper</a></p>
-</li>
-<li><p>Meta-StyleSpeech : Multi-Speaker Adaptive Text-to-Speech Generation (Dongchan Min, KAIST, 2021 Jun, ICML) <a href="https://github.com/keonlee9420/StyleSpeech">Code</a> | <a href="https://arxiv.org/abs/2106.03153">Paper</a></p>
-</li>
-<li><p>SC-GlowTTS: an Efficient Zero-Shot Multi-Speaker Text-To-Speech Model (Edresson Casanova, University of Sa ̃o Paulo, 2021 Jun, Interspeech 2021)</p>
-</li>
-<li><p>[x] YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb ) <a href="https://github.com/Edresson/YourTTS">Code</a> | <a href="https://arxiv.org/abs/2112.02418">Paper</a></p>
-</li>
-<li><p>Zero-shot VITS <a href="https://github.com/hcyspeech/TransferTTS">Code</a> | <a href="https://arxiv.org/pdf/2203.15447.pdf">Paper</a></p>
-</li>
-<li><p>AdaSpeech <a href="https://arxiv.org/pdf/2103.00993.pdf">Code</a> | <a href="https://arxiv.org/pdf/2103.00993.pdf">Paper</a> || AdaSpeech2 <a href="https://github.com/rishikksh20/AdaSpeech2">Code</a> | <a href="https://github.com/rishikksh20/AdaSpeech2">Paper</a></p>
-</li>
-<li><p>Deepfakes for Video Conferencing Using General Adversarial Networks (GANs) and Multilingual Voice Cloning <a href="https://github.com/ghatoledipak/Deepfakes-for-Video-Conferencing-Using-General-Adversarial-Networks-GANs-and-Voice-Cloning">Code</a></p>
-</li>
-<li><p>Unet-TTS: Improving Unseen Speaker and Style Transfer in One-shot Voice Cloning (Rui Li, CloudMinds Inc, ICASSP 2022) <a href="https://github.com/CMsmartvoice/One-Shot-Voice-Cloning">Code</a> | <a href="https://arxiv.org/pdf/2109.11115.pdf">Paper</a></p>
-</li>
+<li>[x] 实时中文语音克隆 Mocking Bird <a href="https://github.com/babysor/MockingBird/blob/main/README-CN.md">Code</a></li>
+<li>[x] Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.) <a href="https://github.com/SforAiDl/Neural-Voice-Cloning-With-Few-Samples">Code1</a> | <a href="https://github.com/IEEE-NITK/Neural-Voice-Cloning">Code2</a> | <a href="https://arxiv.org/pdf/1802.06006.pdf">Paper</a></li>
+<li>[x] Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis (Jia Ye, Google, 2019 Jan.) <a href="https://github.com/CorentinJ/Real-Time-Voice-Cloning">Code</a> | <a href="https://arxiv.org/pdf/1806.04558.pdf">Paper</a></li>
+<li>[x] One model to speak them all (Mutian He, 港科技 &amp; 微软 2021 Jul.)  <a href="https://github.com/mutiann/few-shot-transformer-tts">Code</a> | <a href="https://arxiv.org/abs/2103.03541">Paper</a></li>
+<li>[x] Meta-StyleSpeech : Multi-Speaker Adaptive Text-to-Speech Generation (Dongchan Min, KAIST, 2021 Jun, ICML) <a href="https://github.com/keonlee9420/StyleSpeech">Code</a> | <a href="https://arxiv.org/abs/2106.03153">Paper</a></li>
+<li>SC-GlowTTS: an Efficient Zero-Shot Multi-Speaker Text-To-Speech Model (Edresson Casanova, University of Sa ̃o Paulo, 2021 Jun, Interspeech 2021)</li>
+<li>[x] YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb ) <a href="https://github.com/Edresson/YourTTS">Code</a> | <a href="https://arxiv.org/abs/2112.02418">Paper</a></li>
+<li>[x] Zero-shot VITS <a href="https://github.com/hcyspeech/TransferTTS">Code</a> | <a href="https://arxiv.org/pdf/2203.15447.pdf">Paper</a></li>
+<li>[x] AdaSpeech <a href="https://arxiv.org/pdf/2103.00993.pdf">Code</a> | <a href="https://arxiv.org/pdf/2103.00993.pdf">Paper</a> || AdaSpeech2 <a href="https://github.com/rishikksh20/AdaSpeech2">Code</a> | <a href="https://github.com/rishikksh20/AdaSpeech2">Paper</a></li>
+<li>Deepfakes for Video Conferencing Using General Adversarial Networks (GANs) and Multilingual Voice Cloning <a href="https://github.com/ghatoledipak/Deepfakes-for-Video-Conferencing-Using-General-Adversarial-Networks-GANs-and-Voice-Cloning">Code</a></li>
+<li>[x] Unet-TTS: Improving Unseen Speaker and Style Transfer in One-shot Voice Cloning (Rui Li, CloudMinds Inc, ICASSP 2022) <a href="https://github.com/CMsmartvoice/One-Shot-Voice-Cloning">Code</a> | <a href="https://arxiv.org/pdf/2109.11115.pdf">Paper</a></li>
 </ol>
 <p>无 Code List:</p>
 <ol>
@@ -3465,26 +3454,43 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
 </ol>
 <h3 id="Code-2-Unet-TTS-Improving-Unseen-Speaker-and-Style-Transfer-in-One-shot-Voice-Cloning"><a href="#Code-2-Unet-TTS-Improving-Unseen-Speaker-and-Style-Transfer-in-One-shot-Voice-Cloning" class="headerlink" title="== Code 2: Unet-TTS: Improving Unseen Speaker and Style Transfer in One-shot Voice Cloning"></a>== Code 2: Unet-TTS: Improving Unseen Speaker and Style Transfer in One-shot Voice Cloning</h3><p>支持的功能点有：</p>
 <ol>
-<li>一句参考语音可进行克隆TTS</li>
+<li>一句参考语音可进行克隆TTS; 一句话语音风格迁移系统，给定reference audio，能够克隆目标说话人的语音和韵律，可实现多情感合成，但是MOS较低</li>
 <li>支持中文、英文</li>
 </ol>
 <h3 id="Code-3-Neural-Voice-Cloning-with-a-Few-Samples-Sercan-Ö-Arik-Baidu-2018-Dec"><a href="#Code-3-Neural-Voice-Cloning-with-a-Few-Samples-Sercan-Ö-Arik-Baidu-2018-Dec" class="headerlink" title="== Code 3: Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.)"></a>== Code 3: Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.)</h3><p>支持的功能点有：</p>
 <ol>
 <li>一句参考语音可进行克隆TTS</li>
 </ol>
-<h3 id="Code-4-YourTTS-Towards-Zero-Shot-Multi-Speaker-TTS-and-Zero-Shot-Voice-Conversion-for-everyone-Edresson-Casanova-Universidade-de-Sa-̃o-Paulo-2022-Feb"><a href="#Code-4-YourTTS-Towards-Zero-Shot-Multi-Speaker-TTS-and-Zero-Shot-Voice-Conversion-for-everyone-Edresson-Casanova-Universidade-de-Sa-̃o-Paulo-2022-Feb" class="headerlink" title="== Code 4: YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb)"></a>== Code 4: YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb)</h3><p>支持的功能点有：</p>
+<h3 id="OK-Code-4-YourTTS-Towards-Zero-Shot-Multi-Speaker-TTS-and-Zero-Shot-Voice-Conversion-for-everyone-Edresson-Casanova-Universidade-de-Sa-̃o-Paulo-2022-Feb"><a href="#OK-Code-4-YourTTS-Towards-Zero-Shot-Multi-Speaker-TTS-and-Zero-Shot-Voice-Conversion-for-everyone-Edresson-Casanova-Universidade-de-Sa-̃o-Paulo-2022-Feb" class="headerlink" title="== [OK] Code 4: YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb)"></a>== [OK] Code 4: YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb)</h3><p>支持的功能点有：</p>
 <ol>
-<li><p>单语种多说话人数据训练模型，实现单语种的zero-shot tts</p>
-</li>
-<li><p>bi/tri-lingual </p>
-</li>
-<li><p>tri-lingual for single language plus</p>
-</li>
-<li><p>Zero-shot cross-lingual VC</p>
-</li>
-<li><p>Speaker Adaption </p>
-</li>
+<li>单语种多说话人数据训练模型，实现单语种的zero-shot tts</li>
+<li>bi/tri-lingual </li>
+<li>tri-lingual for single language plus</li>
+<li>Zero-shot cross-lingual VC</li>
+<li>Speaker Adaption </li>
 </ol>
+<h3 id="OK-Code-5-Meta-StyleSpeech-Multi-Style-Adaptive-Text-to-Speech-Generation"><a href="#OK-Code-5-Meta-StyleSpeech-Multi-Style-Adaptive-Text-to-Speech-Generation" class="headerlink" title="== [OK] Code 5: Meta-StyleSpeech: Multi-Style Adaptive Text to Speech Generation"></a>== [OK] Code 5: Meta-StyleSpeech: Multi-Style Adaptive Text to Speech Generation</h3><p>支持的功能点有：</p>
+<ol>
+<li>单语种zero-shot tts 且包含口音</li>
+</ol>
+<h3 id="Code-6-Transfer-Learning-Framework-for-Low-Resource-Text-to-Speech-using-a-Large-Scale-Unlabeled-Speech-Corpus"><a href="#Code-6-Transfer-Learning-Framework-for-Low-Resource-Text-to-Speech-using-a-Large-Scale-Unlabeled-Speech-Corpus" class="headerlink" title="== Code 6: Transfer Learning Framework for Low-Resource Text-to-Speech using a Large-Scale Unlabeled Speech Corpus"></a>== Code 6: Transfer Learning Framework for Low-Resource Text-to-Speech using a Large-Scale Unlabeled Speech Corpus</h3><p>支持的功能点有：</p>
+<ol>
+<li>只需要最少10min的labeled数据集，利用了大量的unlabed的数据集</li>
+</ol>
+<h3 id="Code-7-AdaSpeech"><a href="#Code-7-AdaSpeech" class="headerlink" title="== Code 7: AdaSpeech"></a>== Code 7: AdaSpeech</h3><p>AdaSpeech </p>
+<ol>
+<li>voice cloning given (10~20)+ sentences of any speaker, adaptively training 2k steps</li>
+<li>需要：1) LibriTTS (2456 speakers, 586 hours)</li>
+</ol>
+<p>AdaSpeech 2</p>
+<ol>
+<li>voice cloning given 50 unlabeled sentences of any speaker, adaptively training1w+2k steps</li>
+<li>需要：1) LibriTTS (2456 speakers, 586 hours)</li>
+</ol>
+<h3 id="Code-8-One-model-to-speak-them-all"><a href="#Code-8-One-model-to-speak-them-all" class="headerlink" title="== Code 8: One model to speak them all"></a>== Code 8: One model to speak them all</h3><ol>
+<li>Byte2Speech, 10 samples 实现voice cloning 和 low-resources languages tts</li>
+</ol>
+<h3 id="Code-9-Transfer-Learning-from-Speaker-Verification-to-Multispeaker-Text-To-Speech-Synthesis"><a href="#Code-9-Transfer-Learning-from-Speaker-Verification-to-Multispeaker-Text-To-Speech-Synthesis" class="headerlink" title="== Code 9:  Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis"></a>== Code 9:  Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis</h3><p>以前复现过中文，效果一般</p>
 ]]></content>
       <categories>
         <category>工作</category>
