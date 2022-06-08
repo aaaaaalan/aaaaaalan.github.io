@@ -3447,14 +3447,22 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
     <url>/2022/05/30/few-shot-TTS-details/</url>
     <content><![CDATA[<h1 id="few-shot-tts-解决方案">Few-shot TTS 解决方案</h1>
 <h3 id="目前的解决方案">== 目前的解决方案</h3>
-<p>目前自研的解决方案是：需要30条target speaker的语音（3分钟），训练10分钟，可以达到上限 MOS 4.5，鲁棒性99%，Similarity 4.5， 下限根据数据来看，RTF：200ms/10s = 0,02甚至可以再做压缩。</p>
+<p>目前自研的解决方案是：</p>
+<ul>
+<li>需要30条target speaker的语音（3分钟）</li>
+<li>训练10分钟</li>
+<li>MOS: 4.5， 下限根据数据来看</li>
+<li>鲁棒性99%， 下限根据数据来看</li>
+<li>Similarity: 4.5， 下限根据数据来看</li>
+<li>RTF：200ms/10s = 0,02，甚至可以再做压缩。</li>
+</ul>
 <p><strong>痛点：</strong></p>
 <ol style="list-style-type: decimal">
 <li>把10分钟训练时间砍掉，尽量做到实时的</li>
-<li>30条语音数据需要的质量较高，采集有难度，方向1）降低数据所需质量，2）降低数据所需数量</li>
+<li>30条语音数据需要的质量较高，采集有难度：方向1）降低数据所需质量，2）降低数据所需数量</li>
 </ol>
 <h2 id="with-open-source-code">With open-source code</h2>
-<h3 id="code-1-realtime-voice-clone-for-chinese-mocking-bird">== Code 1: Realtime Voice Clone for Chinese (Mocking Bird)</h3>
+<h3 id="waiting-code-1-realtime-voice-clone-for-chinese-mocking-bird">== [Waiting] Code 1: Realtime Voice Clone for Chinese (Mocking Bird)</h3>
 <p>改自 仅支持英语的<a href="https://github.com/CorentinJ/Real-Time-Voice-Cloning">Real-Time-Voice-Cloning</a> 分叉出来的支持中文的Repo</p>
 <p>支持的功能点有：</p>
 <ol style="list-style-type: decimal">
@@ -3462,13 +3470,13 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
 <li>语音转换 （PPG-based）</li>
 <li>支持中文、英文</li>
 </ol>
-<h3 id="code-2-unet-tts-improving-unseen-speaker-and-style-transfer-in-one-shot-voice-cloning">== Code 2: Unet-TTS: Improving Unseen Speaker and Style Transfer in One-shot Voice Cloning</h3>
+<h3 id="waiting-code-2-unet-tts-improving-unseen-speaker-and-style-transfer-in-one-shot-voice-cloning">== [Waiting] Code 2: Unet-TTS: Improving Unseen Speaker and Style Transfer in One-shot Voice Cloning</h3>
 <p>支持的功能点有：</p>
 <ol style="list-style-type: decimal">
 <li>一句参考语音可进行克隆TTS; 一句话语音风格迁移系统，给定reference audio，能够克隆目标说话人的语音和韵律，可实现多情感合成，但是MOS较低</li>
 <li>支持中文、英文</li>
 </ol>
-<h3 id="code-3-neural-voice-cloning-with-a-few-samples-sercan-o.-arık-baidu-2018-dec.">== Code 3: Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.)</h3>
+<h3 id="waiting-code-3-neural-voice-cloning-with-a-few-samples-sercan-o.-arık-baidu-2018-dec.">== [Waiting] Code 3: Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.)</h3>
 <p>支持的功能点有：</p>
 <ol style="list-style-type: decimal">
 <li>一句参考语音可进行克隆TTS</li>
@@ -3482,10 +3490,14 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
 <li>Zero-shot cross-lingual VC</li>
 <li>Speaker Adaption</li>
 </ol>
-<p><strong>Conclusion:</strong> coquiTTS的 <a href="https://github.com/coqui-ai/TTS/releases/download/v0.6.0_models/tts_models--multilingual--multi-dataset--your_tts.zip">tts_models--multilingual--multi-dataset--your_tts.zip</a> 测试了之后，可以实现one-shot TTS，</p>
-<p>MOS: 3.8 连贯性还ok，问题1: 噪声， 问题2: 韵律</p>
-<p>Similarity: 2.5 比较难以听出是target speaker的声音，如果两个对比的话可以区分出来一点点区别</p>
-<p>RTF: 2</p>
+<p><strong>Conclusion:</strong> 复现过，效果差。</p>
+<p>coquiTTS的 <a href="https://github.com/coqui-ai/TTS/releases/download/v0.6.0_models/tts_models--multilingual--multi-dataset--your_tts.zip">tts_models--multilingual--multi-dataset--your_tts.zip</a> 测试了之后，可以实现one-shot TTS，</p>
+<ul>
+<li><p>MOS: 3.8 连贯性还ok，问题1: 噪声， 问题2: 韵律 ||| 论文里的MOS 3.97左右</p></li>
+<li><p>Similarity: 2.5 比较难以听出是target speaker的声音，如果两个对比的话可以区分出来一点点区别 ||| 论文里的 Similarity 3.07</p></li>
+<li><p>RTF: 2</p></li>
+</ul>
+<p>论文里的speaker adaption MOS提升了0.07左右，Similarity持平，并且听Demo也比较差，相似度低，仍存在zero-shot 的噪声和韵律问题，所以不准备再尝试了。</p>
 <h3 id="ongoing-code-5-meta-stylespeech-multi-style-adaptive-text-to-speech-generation">== [Ongoing] Code 5: Meta-StyleSpeech: Multi-Style Adaptive Text to Speech Generation</h3>
 <p>支持的功能点有：</p>
 <ol style="list-style-type: decimal">
@@ -3508,13 +3520,13 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
 <li>voice cloning given 50 unlabeled sentences of any speaker, adaptively training1w+2k steps</li>
 <li>需要：1) LibriTTS (2456 speakers, 586 hours)</li>
 </ol>
-<p><strong>Conclusion:</strong> samples和training time都达不到目前的算法预期。</p>
+<p><strong>Conclusion:</strong> 不及现有算法。samples和training time都达不到目前的算法预期。</p>
 <h3 id="ongoing-code-8-one-model-to-speak-them-all">== [Ongoing] Code 8: One model to speak them all</h3>
 <ol style="list-style-type: decimal">
 <li>Byte2Speech, 10 samples 实现voice cloning 和 low-resources languages tts</li>
 </ol>
 <h3 id="x-code-9-transfer-learning-from-speaker-verification-to-multispeaker-text-to-speech-synthesis">== [x] Code 9: Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis</h3>
-<p><strong>Conclusion:</strong> 以前复现过中文，效果一般</p>
+<p><strong>Conclusion:</strong> 复现过，效果差。以前复现过中文，效果一般</p>
 ]]></content>
       <categories>
         <category>工作</category>
