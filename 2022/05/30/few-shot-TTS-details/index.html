@@ -28,7 +28,7 @@
 <meta property="og:description" content="针对上一篇few-shot TTS Reading list 的阅读细节">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-30T02:44:21.000Z">
-<meta property="article:modified_time" content="2022-06-16T03:50:44.217Z">
+<meta property="article:modified_time" content="2022-06-17T08:50:10.874Z">
 <meta property="article:author" content="Alan Sun">
 <meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
 <meta name="twitter:card" content="summary">
@@ -192,7 +192,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-06-16 11:50:44" itemprop="dateModified" datetime="2022-06-16T11:50:44+08:00">2022-06-16</time>
+                <time title="修改时间：2022-06-17 16:50:10" itemprop="dateModified" datetime="2022-06-17T16:50:10+08:00">2022-06-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -216,7 +216,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Few-shot-TTS-解决方案"><a href="#Few-shot-TTS-解决方案" class="headerlink" title="Few-shot TTS 解决方案"></a>Few-shot TTS 解决方案</h1><h3 id="目前的解决方案"><a href="#目前的解决方案" class="headerlink" title="== 目前的解决方案"></a>== 目前的解决方案</h3><p>目前自研的解决方案是：</p>
+        <h1 id="few-shot-tts-解决方案">Few-shot TTS 解决方案</h1>
+<h3 id="目前的解决方案">== 目前的解决方案</h3>
+<p>目前自研的解决方案是：</p>
 <ul>
 <li>需要30条target speaker的语音（3分钟）</li>
 <li>训练10分钟</li>
@@ -226,119 +228,285 @@
 <li>RTF：200ms/10s = 0,02，甚至可以再做压缩。</li>
 </ul>
 <p><strong>痛点：</strong></p>
-<ol>
+<ol style="list-style-type: decimal">
 <li>把10分钟训练时间砍掉，尽量做到实时的</li>
 <li>30条语音数据需要的质量较高，采集有难度：方向1）降低数据所需质量，2）降低数据所需数量</li>
 </ol>
-<h2 id="With-open-source-code"><a href="#With-open-source-code" class="headerlink" title="With open-source code"></a>With open-source code</h2><h3 id="Waiting-Code-1-Realtime-Voice-Clone-for-Chinese-Mocking-Bird"><a href="#Waiting-Code-1-Realtime-Voice-Clone-for-Chinese-Mocking-Bird" class="headerlink" title="== [Waiting] Code 1: Realtime Voice Clone for Chinese (Mocking Bird)"></a>== [Waiting] Code 1: Realtime Voice Clone for Chinese (Mocking Bird)</h3><p>改自 仅支持英语的<a target="_blank" rel="noopener" href="https://github.com/CorentinJ/Real-Time-Voice-Cloning">Real-Time-Voice-Cloning</a>  分叉出来的支持中文的Repo</p>
+<h2 id="with-open-source-code">With open-source code</h2>
+<p>Quick Overview</p>
+<table style="width:75%;">
+<colgroup>
+<col width="5%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Code #</th>
+<th>Model</th>
+<th>Date</th>
+<th>Institution</th>
+<th>Author</th>
+<th>Architecture</th>
+<th># of tgt audios</th>
+<th>MOS</th>
+<th>Similarity</th>
+<th>RTF</th>
+<th>memo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4</td>
+<td>YourTTS</td>
+<td>Feb 2022</td>
+<td>Brazil</td>
+<td>Edresson Casanova</td>
+<td>VITS+spk emb+language emb+SCL</td>
+<td>1</td>
+<td>3.97</td>
+<td>3.07</td>
+<td>2</td>
+<td>🌟🌟🌟英文</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>Meta-StyleSpeech</td>
+<td>Jun 2021(ICML)</td>
+<td>KAIST</td>
+<td>Dongchan Min</td>
+<td>FastSpeech+GST+episodic meta learning</td>
+<td>1</td>
+<td>3.82</td>
+<td>2.6</td>
+<td>NA</td>
+<td>🌟🌟英文</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>Tortoise</td>
+<td>Apr 2022</td>
+<td>Google</td>
+<td>Jbetker</td>
+<td>autoregressive decoder+clvp+cvvp+diffusion decoder+vocoder+...</td>
+<td>1~5</td>
+<td>3.5</td>
+<td>2.3</td>
+<td>12</td>
+<td>🌟英文</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Unet-TTS</td>
+<td>ICASSP 2022</td>
+<td>CloudMinds</td>
+<td>Rui Li</td>
+<td>Unet</td>
+<td>1</td>
+<td>3.3</td>
+<td>2.5</td>
+<td>NA</td>
+<td>🌟中文</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>BaiduVC</td>
+<td>Oct 2018</td>
+<td>Baidu</td>
+<td>Sercan Ö. Arık</td>
+<td>Spk adaption</td>
+<td>10</td>
+<td>3.16</td>
+<td>3.16</td>
+<td>NA</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>OneModel</td>
+<td>Jul 2021</td>
+<td>HKUST</td>
+<td>Mutian He</td>
+<td>byte</td>
+<td>10</td>
+<td>3.7</td>
+<td>NA</td>
+<td>NA</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>SV2TTS-CN</td>
+<td>NA</td>
+<td>Mocking Bird</td>
+<td>NA</td>
+<td>Tacotron2/Transformer+spk emb</td>
+<td>1</td>
+<td>2.9</td>
+<td>2.5</td>
+<td>NA</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Zero-shot VITS</td>
+<td>Jan 2019</td>
+<td>Seoul National University</td>
+<td>Minchan Kim</td>
+<td>VITS+wav2vec</td>
+<td>10min</td>
+<td>4.42</td>
+<td>NA</td>
+<td>NA</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>AdaSpeech 1&amp;2</td>
+<td>March&amp;Apr 2021</td>
+<td>Microsoft</td>
+<td>Xu Tan</td>
+<td>Fastspeech+ConLayerNorm</td>
+<td>10-20</td>
+<td>3.45</td>
+<td>3.59</td>
+<td>NA</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>SV2TTS</td>
+<td>Jan 2019</td>
+<td>Google</td>
+<td>Ye Jia</td>
+<td>Tacotron2+spk emb</td>
+<td>1</td>
+<td>4.2</td>
+<td>3.28</td>
+<td>NA</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="code-1-realtime-voice-clone-for-chinese-mocking-bird">== [✅] Code 1: Realtime Voice Clone for Chinese (Mocking Bird)</h3>
+<p>改自 仅支持英语的<a target="_blank" rel="noopener" href="https://github.com/CorentinJ/Real-Time-Voice-Cloning">Real-Time-Voice-Cloning</a> 分叉出来的支持中文的Repo</p>
 <p>支持的功能点有：</p>
-<ol>
+<ol style="list-style-type: decimal">
 <li>Voice cloning 语音克隆</li>
 <li>语音转换 （PPG-based）</li>
 <li>支持中文、英文</li>
 </ol>
-<h3 id="Waiting-Code-2-Unet-TTS-Improving-Unseen-Speaker-and-Style-Transfer-in-One-shot-Voice-Cloning"><a href="#Waiting-Code-2-Unet-TTS-Improving-Unseen-Speaker-and-Style-Transfer-in-One-shot-Voice-Cloning" class="headerlink" title="== [Waiting] Code 2: Unet-TTS: Improving Unseen Speaker and Style Transfer in One-shot Voice Cloning"></a>== [Waiting] Code 2: Unet-TTS: Improving Unseen Speaker and Style Transfer in One-shot Voice Cloning</h3><p>支持的功能点有：</p>
-<ol>
+<p><strong>Conclusion</strong> 听demo效果有点差，电音很严重，mos估计3.0左右</p>
+<h3 id="code-2-unet-tts-improving-unseen-speaker-and-style-transfer-in-one-shot-voice-cloning">== [✅] Code 2: Unet-TTS: Improving Unseen Speaker and Style Transfer in One-shot Voice Cloning</h3>
+<p>支持的功能点有：</p>
+<ol style="list-style-type: decimal">
 <li>一句参考语音可进行克隆TTS; 一句话语音风格迁移系统，给定reference audio，能够克隆目标说话人的语音和韵律，可实现多情感合成，但是MOS较低</li>
-<li>支持中文、英文</li>
+<li>支持中文</li>
 </ol>
-<h3 id="Waiting-Code-3-Neural-Voice-Cloning-with-a-Few-Samples-Sercan-Ö-Arik-Baidu-2018-Dec"><a href="#Waiting-Code-3-Neural-Voice-Cloning-with-a-Few-Samples-Sercan-Ö-Arik-Baidu-2018-Dec" class="headerlink" title="== [Waiting] Code 3: Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.)"></a>== [Waiting] Code 3: Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.)</h3><p>支持的功能点有：</p>
-<ol>
+<p><strong>Conclusion</strong> 复现mos3.0左右，但可实现多情感；也有预训练好的中文模型，不需要从0训练</p>
+<h3 id="waiting-code-3-neural-voice-cloning-with-a-few-samples-sercan-o.-arık-baidu-2018-dec.">== [Waiting] Code 3: Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.)</h3>
+<p>支持的功能点有：</p>
+<ol style="list-style-type: decimal">
 <li>一句参考语音可进行克隆TTS</li>
 </ol>
-<h3 id="x-Code-4-YourTTS-Towards-Zero-Shot-Multi-Speaker-TTS-and-Zero-Shot-Voice-Conversion-for-everyone-Edresson-Casanova-Universidade-de-Sa-̃o-Paulo-2022-Feb"><a href="#x-Code-4-YourTTS-Towards-Zero-Shot-Multi-Speaker-TTS-and-Zero-Shot-Voice-Conversion-for-everyone-Edresson-Casanova-Universidade-de-Sa-̃o-Paulo-2022-Feb" class="headerlink" title="== [x] Code 4: YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb)"></a>== [x] Code 4: YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb)</h3><p>支持的功能点有：</p>
-<ol>
+<h3 id="code-4-yourtts-towards-zero-shot-multi-speaker-tts-and-zero-shot-voice-conversion-for-everyone-edresson-casanova-universidade-de-sa-o-paulo-2022-feb">== [✅] Code 4: YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb)</h3>
+<p>支持的功能点有：</p>
+<ol style="list-style-type: decimal">
 <li>单语种多说话人数据训练模型，实现单语种的zero-shot tts</li>
-<li>bi/tri-lingual </li>
+<li>bi/tri-lingual</li>
 <li>tri-lingual for single language plus</li>
 <li>Zero-shot cross-lingual VC</li>
-<li>Speaker Adaption </li>
+<li>Speaker Adaption</li>
 </ol>
-<p><strong>Conclusion:</strong> 复现过，效果差。</p>
-<p>coquiTTS的 <a target="_blank" rel="noopener" href="https://github.com/coqui-ai/TTS/releases/download/v0.6.0_models/tts_models--multilingual--multi-dataset--your_tts.zip">tts_models—multilingual—multi-dataset—your_tts.zip</a> 测试了之后，可以实现one-shot TTS，</p>
-<ul>
-<li><p>MOS: 3.8 连贯性还ok，问题1: 噪声， 问题2: 韵律 ||| 论文里的MOS 3.97左右</p>
-</li>
-<li><p>Similarity: 2.5 比较难以听出是target speaker的声音，如果两个对比的话可以区分出来一点点区别 ||| 论文里的 Similarity 3.07 </p>
-</li>
-<li><p>RTF: 2 </p>
-</li>
-</ul>
+<p><strong>Conclusion:</strong> - MOS: 3.8 连贯性还ok，问题1: 噪声， 问题2: 韵律 ||| 论文里的MOS 3.97左右 - Similarity: 3.0 比较难以听出是target speaker的声音，如果两个对比的话可以区分出来一点点区别 ||| 论文里的 Similarity 3.07 - RTF: 2 - coquiTTS的 <a target="_blank" rel="noopener" href="https://github.com/coqui-ai/TTS/releases/download/v0.6.0_models/tts_models--multilingual--multi-dataset--your_tts.zip">tts_models--multilingual--multi-dataset--your_tts.zip</a> 测试了之后，可以实现one-shot TTS。 - 没有提供训练的方案，难以在其他语言中复现。</p>
 <p>论文里的speaker adaption MOS提升了0.07左右，Similarity持平，并且听Demo也比较差，相似度低，仍存在zero-shot 的噪声和韵律问题，所以不准备再尝试了。</p>
-<h3 id="Ongoing-Code-5-Meta-StyleSpeech-Multi-Style-Adaptive-Text-to-Speech-Generation"><a href="#Ongoing-Code-5-Meta-StyleSpeech-Multi-Style-Adaptive-Text-to-Speech-Generation" class="headerlink" title="== [Ongoing] Code 5: Meta-StyleSpeech: Multi-Style Adaptive Text to Speech Generation"></a>== [Ongoing] Code 5: Meta-StyleSpeech: Multi-Style Adaptive Text to Speech Generation</h3><p>支持的功能点有：</p>
-<ol>
+<h3 id="code-5-meta-stylespeech-multi-style-adaptive-text-to-speech-generation">== [✅] Code 5: Meta-StyleSpeech: Multi-Style Adaptive Text to Speech Generation</h3>
+<p>支持的功能点有：</p>
+<ol style="list-style-type: decimal">
 <li>单语种zero-shot tts 且包含口音</li>
 </ol>
-<h3 id="x-Code-6-Transfer-Learning-Framework-for-Low-Resource-Text-to-Speech-using-a-Large-Scale-Unlabeled-Speech-Corpus"><a href="#x-Code-6-Transfer-Learning-Framework-for-Low-Resource-Text-to-Speech-using-a-Large-Scale-Unlabeled-Speech-Corpus" class="headerlink" title="== [x] Code 6: Transfer Learning Framework for Low-Resource Text-to-Speech using a Large-Scale Unlabeled Speech Corpus"></a>== [x] Code 6: Transfer Learning Framework for Low-Resource Text-to-Speech using a Large-Scale Unlabeled Speech Corpus</h3><p>支持的功能点有：</p>
-<ol>
+<p><strong>Conclusion:</strong> MOS: 3.5, Similarity: 2.5。英文效果来说不及YourTTS</p>
+<h3 id="code-6-transfer-learning-framework-for-low-resource-text-to-speech-using-a-large-scale-unlabeled-speech-corpus">== [❌] Code 6: Transfer Learning Framework for Low-Resource Text-to-Speech using a Large-Scale Unlabeled Speech Corpus</h3>
+<p>支持的功能点有：</p>
+<ol style="list-style-type: decimal">
 <li>只需要最少10min的labeled数据集，利用了大量的unlabed的数据集</li>
 </ol>
 <p><strong>Conclusion:</strong> 10min数据太长了，目前只需要3min</p>
-<h3 id="x-Code-7-AdaSpeech"><a href="#x-Code-7-AdaSpeech" class="headerlink" title="== [x] Code 7: AdaSpeech"></a>== [x] Code 7: AdaSpeech</h3><p>AdaSpeech </p>
-<ol>
+<h3 id="code-7-adaspeech">== [❌] Code 7: AdaSpeech</h3>
+<p>AdaSpeech</p>
+<ol style="list-style-type: decimal">
 <li>voice cloning given (10~20)+ sentences of any speaker, adaptively training 2k steps</li>
 <li>需要：1) LibriTTS (2456 speakers, 586 hours)</li>
 </ol>
 <p>AdaSpeech 2</p>
-<ol>
+<ol style="list-style-type: decimal">
 <li>voice cloning given 50 unlabeled sentences of any speaker, adaptively training1w+2k steps</li>
 <li>需要：1) LibriTTS (2456 speakers, 586 hours)</li>
 </ol>
 <p><strong>Conclusion:</strong> 不及现有算法。samples和training time都达不到目前的算法预期。</p>
-<h3 id="Ongoing-Code-8-One-model-to-speak-them-all"><a href="#Ongoing-Code-8-One-model-to-speak-them-all" class="headerlink" title="== [Ongoing] Code 8: One model to speak them all"></a>== [Ongoing] Code 8: One model to speak them all</h3><ol>
+<h3 id="waiting-code-8-one-model-to-speak-them-all">== [Waiting] Code 8: One model to speak them all</h3>
+<ol style="list-style-type: decimal">
 <li>Byte2Speech, 10 samples 实现voice cloning 和 low-resources languages tts</li>
 </ol>
-<h3 id="x-Code-9-Transfer-Learning-from-Speaker-Verification-to-Multispeaker-Text-To-Speech-Synthesis"><a href="#x-Code-9-Transfer-Learning-from-Speaker-Verification-to-Multispeaker-Text-To-Speech-Synthesis" class="headerlink" title="== [x] Code 9:  Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis"></a>== [x] Code 9:  Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis</h3><p><strong>Conclusion:</strong> 复现过，效果差。以前复现过中文，效果一般</p>
-<h3 id="x-Code-10-TorToiSe"><a href="#x-Code-10-TorToiSe" class="headerlink" title="== [x] Code 10: TorToiSe"></a>== [x] Code 10: TorToiSe</h3><p><strong>Conclusion:</strong> 英文复现效果还可以，2-5条可以得到不错的效果，但是生成速度略慢，按照原文是2分钟生成10s左右的语音。rtf：12。但是没有提供训练的方案，难以在其他语言中复现。</p>
-<p>模型细节：</p>
-<ol>
-<li>由5个独立训练的模型组成: autoregressive decoder</li>
-</ol>
-<h4 id="—-reference-clips"><a href="#—-reference-clips" class="headerlink" title="— reference clips"></a>— reference clips</h4><p> 被ViT(一组reducing convolutions + 一组全注意力的transformers)的模块所读取，在head处，我们取序列中所有元素的mean。然后，我们取所有reference clip的latent的mean来生成一个single reference latent，在代码里被称作conditioning latent。</p>
-<h4 id="—-语音和文本输入"><a href="#—-语音和文本输入" class="headerlink" title="— 语音和文本输入"></a>— 语音和文本输入</h4><p>自回归解码器主要负责从文本到语音的转换。首先，语音被采样到22kHz，再将其降采样 1024x，即将其编码为Mel频谱（一个256x的压缩），然后再通过一个在mel频谱上训练的VQVAE将其降低4x。</p>
+<h3 id="code-9-transfer-learning-from-speaker-verification-to-multispeaker-text-to-speech-synthesis">== [❌] Code 9: Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis</h3>
+<p><strong>Conclusion:</strong> 复现过，效果差。以前复现过中文，效果一般，可以参照Mocking Bird的B站demo，mos估计3.0左右</p>
+<h3 id="code-10-tortoise">== [✅] Code 10: TorToiSe</h3>
+<p><strong>Conclusion:</strong> 1. 英文复现在部分说话人上还可以（比如ljspeech），2-5条可以得到不错的效果，但在任意给定的自然人上效果一般。 2. 生成速度略慢，按照原文是2分钟生成10s左右的语音。rtf：12。 3. 没有提供训练的方案，难以在其他语言中复现。</p>
+<p>模型细节： 1. 由5个独立训练的模型组成: autoregressive decoder</p>
+<h4 id="reference-clips">-- reference clips</h4>
+<p>被ViT(一组reducing convolutions + 一组全注意力的transformers)的模块所读取，在head处，我们取序列中所有元素的mean。然后，我们取所有reference clip的latent的mean来生成一个single reference latent，在代码里被称作conditioning latent。</p>
+<h4 id="语音和文本输入">-- 语音和文本输入</h4>
+<p>自回归解码器主要负责从文本到语音的转换。首先，语音被采样到22kHz，再将其降采样 1024x，即将其编码为Mel频谱（一个256x的压缩），然后再通过一个在mel频谱上训练的VQVAE将其降低4x。</p>
 <p>当压缩了1024x后，生成的语音有相较于对应文本2x的空间维度。这样，这个问题将变成一个容易处理的问题，即通过一个nlp中使用的flat transformer即可处理。</p>
 <p>文本首先通过一个经典的256-token的BPE词典来转化为tokens，这个词典是在所使用的语音数据库的文本侧来训练的。语音通过上述提到的VQVAE方法，被转换为8192tokens。</p>
-<h4 id="—-模型"><a href="#—-模型" class="headerlink" title="— 模型"></a>— 模型</h4><p>对于实际模型来说，我采用了多层transformer结构来实验。最吸引人的选项是标准的encoder-decoder结构。然而，当我伸缩decoder的深度或者隐藏层的大小时，我遇到了收敛问题。由于这个原因，我选择建立一个只有decoder的结构，就像DALLE中所完成的那样。类似于DALLE，我使用了一个从Huggingface Transformer library中的 <em>GPT-2模型</em> ，且做了一点小的改进以支持多种模态。</p>
+<h4 id="模型">-- 模型</h4>
+<p>对于实际模型来说，我采用了多层transformer结构来实验。最吸引人的选项是标准的encoder-decoder结构。然而，当我伸缩decoder的深度或者隐藏层的大小时，我遇到了收敛问题。由于这个原因，我选择建立一个只有decoder的结构，就像DALLE中所完成的那样。类似于DALLE，我使用了一个从Huggingface Transformer library中的 <em>GPT-2模型</em> ，且做了一点小的改进以支持多种模态。</p>
 <p>通过使用GPT-2， 我能够在一组transformer layers中执行所有的计算。就像通过OpenAI研究所展示的那样，这样模型的类型很难变换且在多模态情况下完成的更好。最终的GPT结构由30层组成，每一层有16个attention heads和一个1024维的隐藏层。这个总体上有420M参数。作为对比，GPT-2有1.5B参数，DALLE是12B，GPT-3是175B。</p>
 <p>与DALLE不同的是，我在所有层上选择了全联接。</p>
 <p>我在提交到全尺寸版本的时候训练了一系列的玩具模型，并且发布到了Tortoise。 更小的模型是成功的，但是他们的多说话人的能力比较差。我强烈相信，这个模型是一个用于伸缩变换的杰出的候选人。它欠拟合于数据，在3个epoch内收敛，且在训练和验证集之间没有显著差异。</p>
-<h4 id="—-组成输入"><a href="#—-组成输入" class="headerlink" title="— 组成输入"></a>— 组成输入</h4><p>一旦文本和语音都被tokenized，并且条件隐状态被计算了，每个文本和语音序列都被他们自己的START和STOP tokens来padded，然后通过分别的embeddings来输入。然后我们建立了<em>GPT-2</em> transformer 的inputs通过拼接3个inputs如下：【conditioning_point_latent, text_embeddings, voice_embeddings】</p>
+<h4 id="组成输入">-- 组成输入</h4>
+<p>一旦文本和语音都被tokenized，并且条件隐状态被计算了，每个文本和语音序列都被他们自己的START和STOP tokens来padded，然后通过分别的embeddings来输入。然后我们建立了<em>GPT-2</em> transformer 的inputs通过拼接3个inputs如下：【conditioning_point_latent, text_embeddings, voice_embeddings】</p>
 <p>输出的模型是一个 next-token-prediction模型配套了一个转换：它能够预测文本和语音tokens，后者通过首先给模型一些text tokens和一个START voice token。</p>
-<h4 id="—-问题"><a href="#—-问题" class="headerlink" title="— 问题"></a>— 问题</h4><p>这个模型包含了一个概率性的理解，文本和语音如何关系到彼此通过给定上下文的声音。然而，如果你简单的常识解码高度压缩的语音表示，它将近乎不智能。这是因为这样巨大的压缩比例使得大部分的音频信息丢失。</p>
+<h4 id="问题">-- 问题</h4>
+<p>这个模型包含了一个概率性的理解，文本和语音如何关系到彼此通过给定上下文的声音。然而，如果你简单的常识解码高度压缩的语音表示，它将近乎不智能。这是因为这样巨大的压缩比例使得大部分的音频信息丢失。</p>
 <p>这个模型的另一个问题是，解码本身是“有挑战性的”。执行束搜索和贪婪解码会使得，语音像一个长的“uhhhhhhhhhh”或者仅仅简单的静音。这个是自回归解码众所周知的问题。</p>
 <p>以上问题的解决方案通过如下来解决。</p>
-<h4 id="—-CLVP"><a href="#—-CLVP" class="headerlink" title="— CLVP"></a>— CLVP</h4><p>Contrastive Language-voice pretraining (CLVP)模型被构建来解决上述提到的解码器的问题。为了解决这个问题，我用了类似于DALLE的解决方案。nucleus sampling被使用来从自回归解码器生成大量的候选者，然后CLVP模型被用来从这些候选者之中选择最可能的text和voice对。</p>
+<h4 id="clvp">-- CLVP</h4>
+<p>Contrastive Language-voice pretraining (CLVP)模型被构建来解决上述提到的解码器的问题。为了解决这个问题，我用了类似于DALLE的解决方案。nucleus sampling被使用来从自回归解码器生成大量的候选者，然后CLVP模型被用来从这些候选者之中选择最可能的text和voice对。</p>
 <p>在实际操作中，这个步骤进展的很顺利，除了一个缺点，即你必须首先从自回归模型中计算出许多candidates。</p>
-<h4 id="—-The-model"><a href="#—-The-model" class="headerlink" title="— The model"></a>— The model</h4><p>CLVP与CLIP的结构很相似，除了图像作为第二模态，CLVP吸收了自回归解码器生成的tokenized outputs （其实是高度压缩的语音片段）。tokenized inputs被使用而不是原始语音或者频谱，因为，解码这些tokens来省城语音采样点是非常计算昂贵的。CLVP倾向于在token-space运转的非常好。</p>
+<h4 id="the-model">-- The model</h4>
+<p>CLVP与CLIP的结构很相似，除了图像作为第二模态，CLVP吸收了自回归解码器生成的tokenized outputs （其实是高度压缩的语音片段）。tokenized inputs被使用而不是原始语音或者频谱，因为，解码这些tokens来省城语音采样点是非常计算昂贵的。CLVP倾向于在token-space运转的非常好。</p>
 <p>CLVP的文本和语音编码器由一组12层全注意力的transformer层来组成。隐藏层维度是512维且包含8个注意力头。模型总共是67M参数</p>
-<h4 id="—-CVVP"><a href="#—-CVVP" class="headerlink" title="— CVVP"></a>— CVVP</h4><p>Contrastive voice-voice pretraining (CVVP)是一个对比模型学习pair一个clip of 某人说某事通过自回归解码器的tokenized outputs 当输入某个人说某件事。它的目的是steer自回归解码器以相似于reference clip的vocal质量。</p>
+<h4 id="cvvp">-- CVVP</h4>
+<p>Contrastive voice-voice pretraining (CVVP)是一个对比模型学习pair一个clip of 某人说某事通过自回归解码器的tokenized outputs 当输入某个人说某件事。它的目的是steer自回归解码器以相似于reference clip的vocal质量。</p>
 <p>CVVP与CLVP几乎是完全相似的，除了它输入文本而不是音频。</p>
 <p>CVVP对Tortoise的贡献很小。它能够被完全忽略，并且你用剩下的部分仍旧能够获得一个很好的TTS程序。我没有一种方式来量化它对Tortoise的贡献，但我能主观上分辨出CVVP生成的输出与那些没有CVVP的输出</p>
-<h4 id="—-Diffusion-decoder"><a href="#—-Diffusion-decoder" class="headerlink" title="— Diffusion decoder"></a>— Diffusion decoder</h4><p>剩下我们需要解决的问题就是解码高度压缩的语音表示回能够用计算机播放的真实语音。即，一个super-resolution的问题。Diffusion models 是super-resolution问题的king（实际上Diffusion models是所有生成模型的king）。所以我自然的选择了这个模型。</p>
+<h4 id="diffusion-decoder">-- Diffusion decoder</h4>
+<p>剩下我们需要解决的问题就是解码高度压缩的语音表示回能够用计算机播放的真实语音。即，一个super-resolution的问题。Diffusion models 是super-resolution问题的king（实际上Diffusion models是所有生成模型的king）。所以我自然的选择了这个模型。</p>
 <p>Diffusion decoder采取自回归transformer的输出和reference clips并且用这两个输入来构建真实的mel频谱</p>
-<h4 id="—-Model"><a href="#—-Model" class="headerlink" title="— Model"></a>— Model</h4><p>自回归输出首先被一组4x全注意力模块来预处理，并且一个额外的3组全注意力/resnet模块。</p>
-<p>The reference clips被一个ViT风格的transformer栈来预处理为point-latent，相似于reference clips被自回归解码器预处理的方式。这个模块的输出称为”conditioning latent”.</p>
+<h4 id="model">-- Model</h4>
+<p>自回归输出首先被一组4x全注意力模块来预处理，并且一个额外的3组全注意力/resnet模块。</p>
+<p>The reference clips被一个ViT风格的transformer栈来预处理为point-latent，相似于reference clips被自回归解码器预处理的方式。这个模块的输出称为&quot;conditioning latent&quot;.</p>
 <p>The conditioning latent 被用来scale和shift mean和variance of the codes latents。这些突变的codes然后被拼接回diffusion decoder的输入在输入到主要的transformer stack之前。</p>
 <p>大多数文献中的diffusion models 是Unets和full attention在底层。因为diffusion decoder 仅仅在mel频谱数据上操作，也是深度压缩的，我能够采用一个简单的结构。The diffusion decoder 由一组 10个可替换的full-attention层和残差卷积模块。隐藏维度是1024和16个attention heads。这个模块最终是292M 参数。</p>
 <p>就像在文献中提到的，diffusion timestep 信号被输入到网络结构，且被用于计算残差模块输出的mean和variance。</p>
-<h4 id="—-The-vocoder"><a href="#—-The-vocoder" class="headerlink" title="— The vocoder"></a>— The vocoder</h4><p>以上述描述的结构，我们有一个能生成mel频谱的模型当给定文本和一些reference语音数据。最后一步是将mel频谱转换为语音。</p>
+<h4 id="the-vocoder">-- The vocoder</h4>
+<p>以上述描述的结构，我们有一个能生成mel频谱的模型当给定文本和一些reference语音数据。最后一步是将mel频谱转换为语音。</p>
 <p>幸运的是，这种框架在TTS领域是很常见的，所以过去一些年，大部分研究被投入其中，开源的声码器如WaveGlow和Univnet提供了显著的效果来将mel频谱转化为语音，甚至能够对集外的声音进行转换。</p>
 <p>由于这个原因，我选择使用off-the-shelf vocoder：univnet。这个vocoder与waveglow对比有显著的优势，但是推理更快，模型更小。</p>
 <p>这个结论的一个结果是，我被迫在univnet期待的采样率输出语音：24KHz。这与Tortoise模型的其他部分不同，是在22kHz上运作的。相似的，我被迫使用从Tacotron中生成的Mel频谱来与univnet交互，而不是Pytorch libraries（这两种生成略微有点区别的频谱）。</p>
-<h4 id="—-Why-vocoder"><a href="#—-Why-vocoder" class="headerlink" title="— Why vocoder"></a>— Why vocoder</h4><p>其实Diffusion models已经能够输出原始语音了，那为何我还要采用一个vocoder？实际上我花费了大量的时间来用diffusion models直接输出语音。发现如下：</p>
-<ol>
-<li>在高维数据上进行操作意味着我不需要使用U-net结构，这个相对我使用的flat结构效果差些；</li>
-<li>在高维数据上运作意味着diffusion U-net不得不有一个非常小的channel 在顶层，这导致了严重的性能损失</li>
-<li>重复性的在高维空间操作convolutions在计算上是低效的（因为diffusion models在推理阶段是必须的）</li>
-<li>Vocoders开源好用</li>
-</ol>
-<h4 id="—-System-Level-Description"><a href="#—-System-Level-Description" class="headerlink" title="— System Level Description"></a>— System Level Description</h4><p>最后我们整体上描述Tortoise的结构，来理解他们如何生成语音：</p>
-<ol>
-<li>自回归解码器输入文本和reference clips。输出latents和对应的token codes来代表高度压缩的语音数据<br> 1） Nucleus sampling被用作decoding strategy<br> 2） 这个步骤被执行了多次来生成许多“candidate” latents</li>
-<li>CLVP和CVVP模型选择最好的candidate：<br> 1） CLVP模型在输入文本和每个candidate code sequence之间生成来一个相似分数<br> 2） CVVP模型啦在reference clips和每个candidate之间生成一个相似分数<br> 3） 两个相似度分数被结合到一起。<br> 4） candidate和最高的整体相似度被选择进行下一步骤</li>
-<li>Diffusion decoder输入自回归latents和reference clips来生成mel频谱代表某些语音输出</li>
-<li>Univnet声码器被用来将Mel频谱转换为实际的语音数据。</li>
-</ol>
+<h4 id="why-vocoder">-- Why vocoder</h4>
+<p>其实Diffusion models已经能够输出原始语音了，那为何我还要采用一个vocoder？实际上我花费了大量的时间来用diffusion models直接输出语音。发现如下： 1. 在高维数据上进行操作意味着我不需要使用U-net结构，这个相对我使用的flat结构效果差些； 2. 在高维数据上运作意味着diffusion U-net不得不有一个非常小的channel 在顶层，这导致了严重的性能损失 3. 重复性的在高维空间操作convolutions在计算上是低效的（因为diffusion models在推理阶段是必须的） 4. Vocoders开源好用</p>
+<h4 id="system-level-description">-- System Level Description</h4>
+<p>最后我们整体上描述Tortoise的结构，来理解他们如何生成语音： 1. 自回归解码器输入文本和reference clips。输出latents和对应的token codes来代表高度压缩的语音数据 1） Nucleus sampling被用作decoding strategy 2） 这个步骤被执行了多次来生成许多“candidate” latents 2. CLVP和CVVP模型选择最好的candidate： 1） CLVP模型在输入文本和每个candidate code sequence之间生成来一个相似分数 2） CVVP模型啦在reference clips和每个candidate之间生成一个相似分数 3） 两个相似度分数被结合到一起。 4） candidate和最高的整体相似度被选择进行下一步骤 3. Diffusion decoder输入自回归latents和reference clips来生成mel频谱代表某些语音输出 4. Univnet声码器被用来将Mel频谱转换为实际的语音数据。</p>
 
     </div>
 
@@ -419,7 +587,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Few-shot-TTS-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">Few-shot TTS 解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%89%8D%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.0.1.</span> <span class="nav-text">&#x3D;&#x3D; 目前的解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#With-open-source-code"><span class="nav-number">1.1.</span> <span class="nav-text">With open-source code</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Waiting-Code-1-Realtime-Voice-Clone-for-Chinese-Mocking-Bird"><span class="nav-number">1.1.1.</span> <span class="nav-text">&#x3D;&#x3D; [Waiting] Code 1: Realtime Voice Clone for Chinese (Mocking Bird)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Waiting-Code-2-Unet-TTS-Improving-Unseen-Speaker-and-Style-Transfer-in-One-shot-Voice-Cloning"><span class="nav-number">1.1.2.</span> <span class="nav-text">&#x3D;&#x3D; [Waiting] Code 2: Unet-TTS: Improving Unseen Speaker and Style Transfer in One-shot Voice Cloning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Waiting-Code-3-Neural-Voice-Cloning-with-a-Few-Samples-Sercan-O%CC%88-Arik-Baidu-2018-Dec"><span class="nav-number">1.1.3.</span> <span class="nav-text">&#x3D;&#x3D; [Waiting] Code 3: Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x-Code-4-YourTTS-Towards-Zero-Shot-Multi-Speaker-TTS-and-Zero-Shot-Voice-Conversion-for-everyone-Edresson-Casanova-Universidade-de-Sa-%CC%83o-Paulo-2022-Feb"><span class="nav-number">1.1.4.</span> <span class="nav-text">&#x3D;&#x3D; [x] Code 4: YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ongoing-Code-5-Meta-StyleSpeech-Multi-Style-Adaptive-Text-to-Speech-Generation"><span class="nav-number">1.1.5.</span> <span class="nav-text">&#x3D;&#x3D; [Ongoing] Code 5: Meta-StyleSpeech: Multi-Style Adaptive Text to Speech Generation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x-Code-6-Transfer-Learning-Framework-for-Low-Resource-Text-to-Speech-using-a-Large-Scale-Unlabeled-Speech-Corpus"><span class="nav-number">1.1.6.</span> <span class="nav-text">&#x3D;&#x3D; [x] Code 6: Transfer Learning Framework for Low-Resource Text-to-Speech using a Large-Scale Unlabeled Speech Corpus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x-Code-7-AdaSpeech"><span class="nav-number">1.1.7.</span> <span class="nav-text">&#x3D;&#x3D; [x] Code 7: AdaSpeech</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ongoing-Code-8-One-model-to-speak-them-all"><span class="nav-number">1.1.8.</span> <span class="nav-text">&#x3D;&#x3D; [Ongoing] Code 8: One model to speak them all</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x-Code-9-Transfer-Learning-from-Speaker-Verification-to-Multispeaker-Text-To-Speech-Synthesis"><span class="nav-number">1.1.9.</span> <span class="nav-text">&#x3D;&#x3D; [x] Code 9:  Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x-Code-10-TorToiSe"><span class="nav-number">1.1.10.</span> <span class="nav-text">&#x3D;&#x3D; [x] Code 10: TorToiSe</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%94-reference-clips"><span class="nav-number">1.1.10.1.</span> <span class="nav-text">— reference clips</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%94-%E8%AF%AD%E9%9F%B3%E5%92%8C%E6%96%87%E6%9C%AC%E8%BE%93%E5%85%A5"><span class="nav-number">1.1.10.2.</span> <span class="nav-text">— 语音和文本输入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%94-%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.10.3.</span> <span class="nav-text">— 模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%94-%E7%BB%84%E6%88%90%E8%BE%93%E5%85%A5"><span class="nav-number">1.1.10.4.</span> <span class="nav-text">— 组成输入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%94-%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.10.5.</span> <span class="nav-text">— 问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%94-CLVP"><span class="nav-number">1.1.10.6.</span> <span class="nav-text">— CLVP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%94-The-model"><span class="nav-number">1.1.10.7.</span> <span class="nav-text">— The model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%94-CVVP"><span class="nav-number">1.1.10.8.</span> <span class="nav-text">— CVVP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%94-Diffusion-decoder"><span class="nav-number">1.1.10.9.</span> <span class="nav-text">— Diffusion decoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%94-Model"><span class="nav-number">1.1.10.10.</span> <span class="nav-text">— Model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%94-The-vocoder"><span class="nav-number">1.1.10.11.</span> <span class="nav-text">— The vocoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%94-Why-vocoder"><span class="nav-number">1.1.10.12.</span> <span class="nav-text">— Why vocoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%94-System-Level-Description"><span class="nav-number">1.1.10.13.</span> <span class="nav-text">— System Level Description</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#few-shot-tts-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">Few-shot TTS 解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%89%8D%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.0.1.</span> <span class="nav-text">&#x3D;&#x3D; 目前的解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#with-open-source-code"><span class="nav-number">1.1.</span> <span class="nav-text">With open-source code</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#code-1-realtime-voice-clone-for-chinese-mocking-bird"><span class="nav-number">1.1.1.</span> <span class="nav-text">&#x3D;&#x3D; [✅] Code 1: Realtime Voice Clone for Chinese (Mocking Bird)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-2-unet-tts-improving-unseen-speaker-and-style-transfer-in-one-shot-voice-cloning"><span class="nav-number">1.1.2.</span> <span class="nav-text">&#x3D;&#x3D; [✅] Code 2: Unet-TTS: Improving Unseen Speaker and Style Transfer in One-shot Voice Cloning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#waiting-code-3-neural-voice-cloning-with-a-few-samples-sercan-o.-ar%C4%B1k-baidu-2018-dec."><span class="nav-number">1.1.3.</span> <span class="nav-text">&#x3D;&#x3D; [Waiting] Code 3: Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-4-yourtts-towards-zero-shot-multi-speaker-tts-and-zero-shot-voice-conversion-for-everyone-edresson-casanova-universidade-de-sa-o-paulo-2022-feb"><span class="nav-number">1.1.4.</span> <span class="nav-text">&#x3D;&#x3D; [✅] Code 4: YourTTS: Towards Zero-Shot Multi-Speaker TTS and Zero-Shot Voice Conversion for everyone (Edresson Casanova, Universidade de Sa ̃o Paulo, 2022 Feb)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-5-meta-stylespeech-multi-style-adaptive-text-to-speech-generation"><span class="nav-number">1.1.5.</span> <span class="nav-text">&#x3D;&#x3D; [✅] Code 5: Meta-StyleSpeech: Multi-Style Adaptive Text to Speech Generation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-6-transfer-learning-framework-for-low-resource-text-to-speech-using-a-large-scale-unlabeled-speech-corpus"><span class="nav-number">1.1.6.</span> <span class="nav-text">&#x3D;&#x3D; [❌] Code 6: Transfer Learning Framework for Low-Resource Text-to-Speech using a Large-Scale Unlabeled Speech Corpus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-7-adaspeech"><span class="nav-number">1.1.7.</span> <span class="nav-text">&#x3D;&#x3D; [❌] Code 7: AdaSpeech</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#waiting-code-8-one-model-to-speak-them-all"><span class="nav-number">1.1.8.</span> <span class="nav-text">&#x3D;&#x3D; [Waiting] Code 8: One model to speak them all</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-9-transfer-learning-from-speaker-verification-to-multispeaker-text-to-speech-synthesis"><span class="nav-number">1.1.9.</span> <span class="nav-text">&#x3D;&#x3D; [❌] Code 9: Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-10-tortoise"><span class="nav-number">1.1.10.</span> <span class="nav-text">&#x3D;&#x3D; [✅] Code 10: TorToiSe</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#reference-clips"><span class="nav-number">1.1.10.1.</span> <span class="nav-text">-- reference clips</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%AD%E9%9F%B3%E5%92%8C%E6%96%87%E6%9C%AC%E8%BE%93%E5%85%A5"><span class="nav-number">1.1.10.2.</span> <span class="nav-text">-- 语音和文本输入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.10.3.</span> <span class="nav-text">-- 模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E6%88%90%E8%BE%93%E5%85%A5"><span class="nav-number">1.1.10.4.</span> <span class="nav-text">-- 组成输入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.10.5.</span> <span class="nav-text">-- 问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clvp"><span class="nav-number">1.1.10.6.</span> <span class="nav-text">-- CLVP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-model"><span class="nav-number">1.1.10.7.</span> <span class="nav-text">-- The model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cvvp"><span class="nav-number">1.1.10.8.</span> <span class="nav-text">-- CVVP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#diffusion-decoder"><span class="nav-number">1.1.10.9.</span> <span class="nav-text">-- Diffusion decoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#model"><span class="nav-number">1.1.10.10.</span> <span class="nav-text">-- Model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-vocoder"><span class="nav-number">1.1.10.11.</span> <span class="nav-text">-- The vocoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#why-vocoder"><span class="nav-number">1.1.10.12.</span> <span class="nav-text">-- Why vocoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#system-level-description"><span class="nav-number">1.1.10.13.</span> <span class="nav-text">-- System Level Description</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
