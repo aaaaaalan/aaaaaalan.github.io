@@ -3000,7 +3000,9 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
 <li><a href="https://arxiv.org/pdf/2010.12423.pdf">GraphSpeech</a> | ICASSP 2021 | 新加坡国立大学 李海洲团队</li>
 <li><a href="https://arxiv.org/pdf/2012.02626.pdf">GraphPB</a> | SLT 2021 | 平安科技TTS团队</li>
 <li><a href="https://www1.se.cuhk.edu.hk/~hccl/publications/pub/202106_ICASSP_ChangheSONG.pdf">SYNTACTIC REPRESENTATION LEARNING FOR NEURAL NETWORK BASED TTS WITH SYNTACTIC PARSE TREE TRAVERSAL</a> | ICASSP 2021 | 清华大学深研院 吴致勇团队</li>
-<li><a href="https://arxiv.org/pdf/2104.06835v1.pdf">Dependency Parsing based Semantic Representation Learning with Graph Neural Network for Enhancing Expressiveness of Text-to-Speech</a> | Interspeech 2021? | 清华大学深研院 吴致勇团队</li>
+<li><a href="https://arxiv.org/pdf/2104.06835v3.pdf">Enhancing Word-Level Semantic Representation via Dependency Structure for Expressive Text-to-Speech Synthesis</a> | Interspeech 2021? | 清华大学深研院 吴致勇团队</li>
+<li><a href="https://arxiv.org/pdf/2204.11792.pdf">SyntaSpeech: Syntax-Aware Generative Adversarial Text-to-Speech</a> | IJCAI 2022 | 浙江大学 赵洲 任意团队</li>
+<li><a href="https://arxiv-export1.library.cornell.edu/pdf/2203.15276v1">Applying Syntax–Prosody Mapping Hypothesis and Prosodic Well-Formedness Constraints to Neural Sequence-to-Sequence Speech Synthesis</a> | Japan</li>
 </ol>
 ]]></content>
       <categories>
@@ -3630,7 +3632,7 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
 <li>支持中文</li>
 </ol>
 <p><strong>Conclusion</strong> 复现mos3.0左右，但可实现多情感；也有预训练好的中文模型，不需要从0训练</p>
-<h3 id="waiting-code-3-neural-voice-cloning-with-a-few-samples-sercan-o.-arık-baidu-2018-dec.">== [Waiting] Code 3: Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.)</h3>
+<h3 id="code-3-neural-voice-cloning-with-a-few-samples-sercan-o.-arık-baidu-2018-dec.">== [❌] Code 3: Neural Voice Cloning with a Few Samples (Sercan Ö. Arık, Baidu, 2018 Dec.)</h3>
 <p>支持的功能点有：</p>
 <ol style="list-style-type: decimal">
 <li>一句参考语音可进行克隆TTS</li>
@@ -3672,7 +3674,9 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
 <p><strong>Conclusion:</strong> 不及现有算法。samples和training time都达不到目前的算法预期。</p>
 <h3 id="waiting-code-8-one-model-to-speak-them-all">== [Waiting] Code 8: One model to speak them all</h3>
 <ol style="list-style-type: decimal">
-<li>Byte2Speech, 10 samples 实现voice cloning 和 low-resources languages tts</li>
+<li>Byte2Speech, 40s 语音 实现voice cloning 和 low-resources languages tts。</li>
+<li>可以使biaobei说英文，ljspeech说中文。</li>
+<li>可以尝试小数据量下的粤语模型实现（按照github的recipe，30-100条【文本，音频】可以得到有效的粤语模型）</li>
 </ol>
 <h3 id="code-9-transfer-learning-from-speaker-verification-to-multispeaker-text-to-speech-synthesis">== [❌] Code 9: Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis</h3>
 <p><strong>Conclusion:</strong> 复现过，效果差。以前复现过中文，效果一般，可以参照Mocking Bird的B站demo，mos估计3.0左右</p>
