@@ -3751,4 +3751,32 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
         <category>工作</category>
       </categories>
   </entry>
+  <entry>
+    <title>有关VC, SSL以及Feature Distanglement的论文总结</title>
+    <url>/2022/12/11/vc/</url>
+    <content><![CDATA[<h1 id="有关VC-SSL-Feature-Distanglement-的论文总结"><a href="#有关VC-SSL-Feature-Distanglement-的论文总结" class="headerlink" title="有关VC, SSL, Feature Distanglement 的论文总结"></a>有关VC, SSL, Feature Distanglement 的论文总结</h1><h2 id="Voice-Conversion-VC"><a href="#Voice-Conversion-VC" class="headerlink" title="=== Voice Conversion (VC)"></a>=== Voice Conversion (VC)</h2><p><a href="https://www.isca-speech.org/archive/pdfs/interspeech_2021/eskimez21_interspeech.pdf">One-Shot Voice Conversion with Speaker-Agnostic StarGAN</a> | Microsoft | Interspeech 2021 | <a href="https://github.com/liusongxiang/StarGAN-Voice-Conversion">repo</a></p>
+<p><a href="https://arxiv.org/pdf/2106.00043.pdf">StarGAN-ZSVC: Towards Zero-Shot Voice Conversion in Low-Resource Contexts</a> | Stellenbosch University | SACAIR 2021 | <a href="https://github.com/Top34051/stargan-zsvc">repo</a></p>
+<p><a href="https://arxiv.org/pdf/1904.05742.pdf">One-shot Voice Conversion by Separating Speaker and Content Representations with Instance Normalization</a> | National Taiwan University | Interspeech 2019 | <a href="https://github.com/jjery2243542/adaptive_voice_conversion">repo</a></p>
+<p><a href="https://arxiv.org/pdf/1905.05879.pdf">AUTOVC: Zero-Shot Voice Style Transfer with Only Autoencoder Loss</a> | MIT-IBM | ICML 2019 | <a href="https://github.com/CODEJIN/AutoVC">repo</a></p>
+<p><a href="https://arxiv.org/pdf/2006.04154.pdf">VQVC+: One-Shot Voice Conversion by Vector Quantization and U-Net architecture</a> | National Taiwan University | Interspeech 2020 | <a href="https://github.com/ericwudayi/SkipVQVC">repo</a></p>
+<p><a href="https://arxiv.org/pdf/2011.00316.pdf">AGAIN-VC: A ONE-SHOT VOICE CONVERSION USING ACTIVATION GUIDANCE AND ADAPTIVE INSTANCE NORMALIZATION</a> | National Taiwan University | ICASSP 2021 | <a href="https://github.com/KimythAnly/AGAIN-VC">repo</a></p>
+<p><a href="https://ieeexplore.ieee.org/document/9053854">One-Shot Voice Conversion by Vector Quantization</a>| National Taiwan University | ICASSP 2020</p>
+<p><a href="https://www1.se.cuhk.edu.hk/~hccl/publications/pub/201909_INTERSPEECH_HuiLU.pdf">One-shot Voice Conversion with Global Speaker Embeddings</a> | Tsinghua-CUHK | Interspeech 2019</p>
+<p><a href="https://arxiv.org/pdf/2010.12788.pdf">GAZEV: GAN-Based Zero-Shot Voice Conversion over Non-parallel Speech Corpus</a> | Yitu Technology | Interspeech 2020</p>
+<h2 id="Self-supervised-Learning-SSL"><a href="#Self-supervised-Learning-SSL" class="headerlink" title="=== Self-supervised Learning (SSL)"></a>=== Self-supervised Learning (SSL)</h2><p><a href="https://www.isca-speech.org/archive/pdfs/interspeech_2019/schneider19_interspeech.pdf">wav2vec: Unsupervised Pre-training for Speech Recognition</a> | Facebook AI Research | INTERSPEECH 2019 | <a href="https://github.com/eastonYi/wav2vec">repo</a></p>
+<p><a href="https://proceedings.neurips.cc/paper/2020/file/92d1e1eb1cd6f9fba3227870bb6d7f07-Paper.pdf">wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations</a> | Facebook AI | Neurips 2020 | <a href="https://github.com/TencentGameMate/chinese_speech_pretrain">repo</a></p>
+<p><a href="https://arxiv.org/pdf/2106.07447.pdf">HuBERT: Self-Supervised Speech Representation Learning by Masked Prediction of Hidden Units</a> | Abdelrahman Mohamed | TASLP 2021 | <a href="https://github.com/bshall/hubert">repo</a></p>
+<p><a href="https://proceedings.mlr.press/v162/qian22b/qian22b.pdf">ContentVec: An Improved Self-Supervised Speech Representation by Disentangling Speakers</a> | MIT-IBM Watson AI Lab | PMLR 2022 | <a href="https://proceedings.mlr.press/v162/qian22b/qian22b.pdf">repo</a></p>
+<p><a href="https://arxiv.org/pdf/2106.05933.pdf">PARP: Prune, Adjust and Re-Prune for Self-Supervised Speech Recognition</a> | MIT CSAIL | Neurips 2021 | <a href="https://github.com/pytorch/fairseq/blob/master/examples/
+ wav2vec/README.md">repo</a></p>
+<h2 id="Feature-Disentanglement"><a href="#Feature-Disentanglement" class="headerlink" title="=== Feature Disentanglement"></a>=== Feature Disentanglement</h2><p><a href="https://arxiv.org/pdf/2203.14156.pdf">SpeechSplit 2.0: Unsupervised speech disentanglement for voice conversion Without tuning autoencoder Bottlenecks</a> | MIT-IBM Watson AI Lab | ICASSP 2022 | <a href="https://github.com/biggytruck/SpeechSplit2">repo</a></p>
+<p><a href="https://arxiv.org/pdf/2210.13771.pdf">Disentangled Speech Representation Learning for One-Shot Cross-lingual Voice Conversion Using β-VAE</a> | CUHK | SLT 2022 | <a href="无">repo</a></p>
+<p><a href="https://arxiv.org/pdf/2208.08757v1.pdf">Speech Representation Disentanglement with Adversarial Mutual Information Learning for One-shot Voice Conversion</a> | Tsinghua | Interspeech 2022 | <a href="https://github.com/YoungSeng/SRD-VC">repo</a></p>
+<p><a href="https://arxiv.org/pdf/2203.01829.pdf">A Brief Overview of Unsupervised Neural Speech Representation Learning</a> | University of Copenhagen | AAAI SAS 2022</p>
+<p><a href="https://openreview.net/pdf?id=TgSVWXw22FQ">Improving Zero-shot Voice Style Transfer via Disentangled Representation Learning</a> | Duke Uni | ICLR 2021</p>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+  </entry>
 </search>
