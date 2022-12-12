@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文为ICML2021发表的end-to-end TTS的代表性论文，且论文代码已经开源。">
+  <meta name="description" content="本文为有关VC, SSL以及Feature Distanglement的论文总结。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="有关VC, SSL以及Feature Distanglement的论文总结">
 <meta property="og:url" content="http://example.com/2022/12/11/vc/index.html">
 <meta property="og:site_name" content="海阔天空蓝">
-<meta property="og:description" content="本文为ICML2021发表的end-to-end TTS的代表性论文，且论文代码已经开源。">
+<meta property="og:description" content="本文为有关VC, SSL以及Feature Distanglement的论文总结。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-12-11T08:13:06.000Z">
-<meta property="article:modified_time" content="2022-12-12T10:06:22.428Z">
+<meta property="article:modified_time" content="2022-12-12T10:24:21.995Z">
 <meta property="article:author" content="Alan Sun">
 <meta property="article:tag" content="text-to-speech (TTS), speech synthesis, 跆拳道(TKD), 舞狮(lion dancing), 单板滑雪，花样轮滑">
 <meta name="twitter:card" content="summary">
@@ -192,7 +192,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-12 18:06:22" itemprop="dateModified" datetime="2022-12-12T18:06:22+08:00">2022-12-12</time>
+                <time title="修改时间：2022-12-12 18:24:21" itemprop="dateModified" datetime="2022-12-12T18:24:21+08:00">2022-12-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -205,7 +205,7 @@
             </span>
 
           
-            <div class="post-description">本文为ICML2021发表的end-to-end TTS的代表性论文，且论文代码已经开源。</div>
+            <div class="post-description">本文为有关VC, SSL以及Feature Distanglement的论文总结。</div>
 
         </div>
       </header>
@@ -216,7 +216,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="有关VC-SSL-Feature-Distanglement-的论文总结"><a href="#有关VC-SSL-Feature-Distanglement-的论文总结" class="headerlink" title="有关VC, SSL, Feature Distanglement 的论文总结"></a>有关VC, SSL, Feature Distanglement 的论文总结</h1><h2 id="Voice-Conversion-VC"><a href="#Voice-Conversion-VC" class="headerlink" title="=== Voice Conversion (VC)"></a>=== Voice Conversion (VC)</h2><p><a target="_blank" rel="noopener" href="https://www.isca-speech.org/archive/pdfs/interspeech_2021/eskimez21_interspeech.pdf">One-Shot Voice Conversion with Speaker-Agnostic StarGAN</a> | Microsoft | Interspeech 2021 | <a target="_blank" rel="noopener" href="https://github.com/liusongxiang/StarGAN-Voice-Conversion">repo</a></p>
+        <h1 id="有关vc-ssl-feature-distanglement-的论文总结">有关VC, SSL, Feature Distanglement 的论文总结</h1>
+<h2 id="voice-conversion-vc">=== Voice Conversion (VC)</h2>
+<p><a target="_blank" rel="noopener" href="https://www.isca-speech.org/archive/pdfs/interspeech_2021/eskimez21_interspeech.pdf">One-Shot Voice Conversion with Speaker-Agnostic StarGAN</a> | Microsoft | Interspeech 2021 | <a target="_blank" rel="noopener" href="https://github.com/liusongxiang/StarGAN-Voice-Conversion">repo</a></p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2106.00043.pdf">StarGAN-ZSVC: Towards Zero-Shot Voice Conversion in Low-Resource Contexts</a> | Stellenbosch University | SACAIR 2021 | <a target="_blank" rel="noopener" href="https://github.com/Top34051/stargan-zsvc">repo</a></p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.05742.pdf">One-shot Voice Conversion by Separating Speaker and Content Representations with Instance Normalization</a> | National Taiwan University | Interspeech 2019 | <a target="_blank" rel="noopener" href="https://github.com/jjery2243542/adaptive_voice_conversion">repo</a></p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.05879.pdf">AUTOVC: Zero-Shot Voice Style Transfer with Only Autoencoder Loss</a> | MIT-IBM | ICML 2019 | <a target="_blank" rel="noopener" href="https://github.com/CODEJIN/AutoVC">repo</a></p>
@@ -225,13 +227,14 @@
 <p><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/9053854">One-Shot Voice Conversion by Vector Quantization</a>| National Taiwan University | ICASSP 2020</p>
 <p><a target="_blank" rel="noopener" href="https://www1.se.cuhk.edu.hk/~hccl/publications/pub/201909_INTERSPEECH_HuiLU.pdf">One-shot Voice Conversion with Global Speaker Embeddings</a> | Tsinghua-CUHK | Interspeech 2019</p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2010.12788.pdf">GAZEV: GAN-Based Zero-Shot Voice Conversion over Non-parallel Speech Corpus</a> | Yitu Technology | Interspeech 2020</p>
-<h2 id="Self-supervised-Learning-SSL"><a href="#Self-supervised-Learning-SSL" class="headerlink" title="=== Self-supervised Learning (SSL)"></a>=== Self-supervised Learning (SSL)</h2><p><a target="_blank" rel="noopener" href="https://www.isca-speech.org/archive/pdfs/interspeech_2019/schneider19_interspeech.pdf">wav2vec: Unsupervised Pre-training for Speech Recognition</a> | Facebook AI Research | INTERSPEECH 2019 | <a target="_blank" rel="noopener" href="https://github.com/eastonYi/wav2vec">repo</a></p>
+<h2 id="self-supervised-learning-ssl">=== Self-supervised Learning (SSL)</h2>
+<p><a target="_blank" rel="noopener" href="https://www.isca-speech.org/archive/pdfs/interspeech_2019/schneider19_interspeech.pdf">wav2vec: Unsupervised Pre-training for Speech Recognition</a> | Facebook AI Research | INTERSPEECH 2019 | <a target="_blank" rel="noopener" href="https://github.com/eastonYi/wav2vec">repo</a></p>
 <p><a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/2020/file/92d1e1eb1cd6f9fba3227870bb6d7f07-Paper.pdf">wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations</a> | Facebook AI | Neurips 2020 | <a target="_blank" rel="noopener" href="https://github.com/TencentGameMate/chinese_speech_pretrain">repo</a></p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2106.07447.pdf">HuBERT: Self-Supervised Speech Representation Learning by Masked Prediction of Hidden Units</a> | Abdelrahman Mohamed | TASLP 2021 | <a target="_blank" rel="noopener" href="https://github.com/bshall/hubert">repo</a></p>
 <p><a target="_blank" rel="noopener" href="https://proceedings.mlr.press/v162/qian22b/qian22b.pdf">ContentVec: An Improved Self-Supervised Speech Representation by Disentangling Speakers</a> | MIT-IBM Watson AI Lab | PMLR 2022 | <a target="_blank" rel="noopener" href="https://proceedings.mlr.press/v162/qian22b/qian22b.pdf">repo</a></p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2106.05933.pdf">PARP: Prune, Adjust and Re-Prune for Self-Supervised Speech Recognition</a> | MIT CSAIL | Neurips 2021 | <a target="_blank" rel="noopener" href="https://github.com/pytorch/fairseq/blob/master/examples/
- wav2vec/README.md">repo</a></p>
-<h2 id="Feature-Disentanglement"><a href="#Feature-Disentanglement" class="headerlink" title="=== Feature Disentanglement"></a>=== Feature Disentanglement</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2203.14156.pdf">SpeechSplit 2.0: Unsupervised speech disentanglement for voice conversion Without tuning autoencoder Bottlenecks</a> | MIT-IBM Watson AI Lab | ICASSP 2022 | <a target="_blank" rel="noopener" href="https://github.com/biggytruck/SpeechSplit2">repo</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2106.05933.pdf">PARP: Prune, Adjust and Re-Prune for Self-Supervised Speech Recognition</a> | MIT CSAIL | Neurips 2021 | <a target="_blank" rel="noopener" href="https://github.com/pytorch/fairseq/blob/master/examples/%20wav2vec/README.md">repo</a></p>
+<h2 id="feature-disentanglement">=== Feature Disentanglement</h2>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2203.14156.pdf">SpeechSplit 2.0: Unsupervised speech disentanglement for voice conversion Without tuning autoencoder Bottlenecks</a> | MIT-IBM Watson AI Lab | ICASSP 2022 | <a target="_blank" rel="noopener" href="https://github.com/biggytruck/SpeechSplit2">repo</a></p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2210.13771.pdf">Disentangled Speech Representation Learning for One-Shot Cross-lingual Voice Conversion Using β-VAE</a> | CUHK | SLT 2022 | <a href="无">repo</a></p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2208.08757v1.pdf">Speech Representation Disentanglement with Adversarial Mutual Information Learning for One-shot Voice Conversion</a> | Tsinghua | Interspeech 2022 | <a target="_blank" rel="noopener" href="https://github.com/YoungSeng/SRD-VC">repo</a></p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2203.01829.pdf">A Brief Overview of Unsupervised Neural Speech Representation Learning</a> | University of Copenhagen | AAAI SAS 2022</p>
@@ -313,7 +316,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E5%85%B3VC-SSL-Feature-Distanglement-%E7%9A%84%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">有关VC, SSL, Feature Distanglement 的论文总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Voice-Conversion-VC"><span class="nav-number">1.1.</span> <span class="nav-text">&#x3D;&#x3D;&#x3D; Voice Conversion (VC)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Self-supervised-Learning-SSL"><span class="nav-number">1.2.</span> <span class="nav-text">&#x3D;&#x3D;&#x3D; Self-supervised Learning (SSL)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Feature-Disentanglement"><span class="nav-number">1.3.</span> <span class="nav-text">&#x3D;&#x3D;&#x3D; Feature Disentanglement</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E5%85%B3vc-ssl-feature-distanglement-%E7%9A%84%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">有关VC, SSL, Feature Distanglement 的论文总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#voice-conversion-vc"><span class="nav-number">1.1.</span> <span class="nav-text">&#x3D;&#x3D;&#x3D; Voice Conversion (VC)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#self-supervised-learning-ssl"><span class="nav-number">1.2.</span> <span class="nav-text">&#x3D;&#x3D;&#x3D; Self-supervised Learning (SSL)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#feature-disentanglement"><span class="nav-number">1.3.</span> <span class="nav-text">&#x3D;&#x3D;&#x3D; Feature Disentanglement</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
