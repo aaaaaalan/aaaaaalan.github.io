@@ -3430,17 +3430,17 @@ E_{α ̄,\epsilon} [|| \epsilon_{\theta}(y ̃, x, \sqrt  α ̄ ) - \epsilon||_1]
 <li>[x] AudioLM: a Language Modeling Approach to Audio Generation(2022), Zalán Borsos et al. <a href="https://arxiv.org/pdf/2209.03143">[PDF]</a></li>
 </ul>
 <h3 id="Audio-SSL-and-UL-models"><a href="#Audio-SSL-and-UL-models" class="headerlink" title="Audio SSL and UL models"></a>Audio SSL and UL models</h3><ul>
-<li>[] vq-wav2vec: Self-Supervised Learning of Discrete Speech Representations(2019), Alexei Baevski et al. <a href="https://arxiv.org/pdf/1910.05453.pdf">[PDF]</a></li>
+<li>[x] vq-wav2vec: Self-Supervised Learning of Discrete Speech Representations(2019), Alexei Baevski et al. <a href="https://arxiv.org/pdf/1910.05453.pdf">[PDF]</a></li>
 <li>MuLan: A Joint Embedding of Music Audio and Natural Language (2022) Qingqing Huang et al. <a href="https://arxiv.org/pdf/2208.12415">[PDF]</a></li>
-<li>[] W2v-BERT: Combining Contrastive Learning and Masked Language Modeling for Self-Supervised Speech Pre-Training (2021) <a href="https://arxiv.org/pdf/2108.06209">[PDF]</a></li>
-<li>[] HuBERT: Self-Supervised Speech Representation Learning by Masked Prediction of Hidden Units (2021) Wei-Ning Hsu et al. <a href="https://arxiv.org/pdf/2106.07447.pdf">[PDF]</a>,</li>
-<li>[] wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations (2020), Alexei Baevski et al. <a href="https://arxiv.org/pdf/2006.11477.pdf">[PDF]</a></li>
-<li>[] Data2vec: A general framework for self-supervised learning in speech, vision and language (2022), Alexei Baevski et al. <a href="https://arxiv.org/pdf/2202.03555.pdf">[PDF]</a></li>
+<li>[x] W2v-BERT: Combining Contrastive Learning and Masked Language Modeling for Self-Supervised Speech Pre-Training (2021) <a href="https://arxiv.org/pdf/2108.06209">[PDF]</a></li>
+<li>[x] HuBERT: Self-Supervised Speech Representation Learning by Masked Prediction of Hidden Units (2021) Wei-Ning Hsu et al. <a href="https://arxiv.org/pdf/2106.07447.pdf">[PDF]</a>,</li>
+<li>[x] wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations (2020), Alexei Baevski et al. <a href="https://arxiv.org/pdf/2006.11477.pdf">[PDF]</a></li>
+<li>[x] Data2vec: A general framework for self-supervised learning in speech, vision and language (2022), Alexei Baevski et al. <a href="https://arxiv.org/pdf/2202.03555.pdf">[PDF]</a></li>
 <li>[x] SpeechT5: Unified-Modal Encoder-Decoder Pre-Training for Spoken Language Processing (2022), Junyi Ao. <a href="https://arxiv.org/pdf/2110.07205.pdf">[PDF]</a></li>
 <li>[x] CLAP: Learning Audio Concepts From Natural Language Supervision (2022), Benjamin Elizalde <a href="https://arxiv.org/pdf/2206.04769.pdf">[PDF]</a></li>
 <li>[x] AudioGen: Textually Guided Audio Generation (2023), Felix Kreuk. <a href="https://arxiv.org/pdf/2209.15352.pdf">[PDF]</a></li>
 <li>[x] WavLM: Large-Scale Self-Supervised Pre-Training for Full Stack Speech Processing (2022), Sanyuan Chen <a href="https://arxiv.org/pdf/2110.13900.pdf">[PDF]</a></li>
-<li>[] Wav2vec: Unsupervised Pre-training for Speech Recognition (2019), Steffen Schneider <a href="https://arxiv.org/pdf/1904.05862.pdf">[PDF]</a></li>
+<li>[x] Wav2vec: Unsupervised Pre-training for Speech Recognition (2019), Steffen Schneider <a href="https://arxiv.org/pdf/1904.05862.pdf">[PDF]</a></li>
 <li>[x] A Brief Overview of Unsupervised Neural Speech Representation Learning (2022), Lasse Borgholt <a href="https://arxiv.org/pdf/2203.01829.pdf">[PDF]</a></li>
 <li>[x] ContentVec: An Improved Self-Supervised Speech Representation by Disentangling Speakers (2022), Kaizhi Qian <a href="https://arxiv.org/abs/2204.09224">[PDF]</a></li>
 <li>[x] IQDUBBING: Prosody modeling based on discrete self-supervised speech representation for expressive voice conversion (2022), Wendong Gan <a href="https://arxiv.org/pdf/2201.00269.pdf">[PDF]</a></li>
